@@ -7,57 +7,55 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var \App\Services\UserService
      */
-    public function index()
+    private $user;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  \App\Services\UserService  $user
+     * @return void
+     */
+    public function __construct(
+        \App\Services\UserService $user
+    )
     {
-        //
+        $this->user = $user;
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Login.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        //
+
+        $params = $request->all();
+
+        $result = $this->user->login($params);
+
+        return response()->json($result['data'], $result['status']);
+
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Login.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function loginOtp(Request $request)
     {
-        //
+
+        $params = $request->all();
+
+        $result = $this->user->loginOtp($params);
+
+        return response()->json($result['data'], $result['status']);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

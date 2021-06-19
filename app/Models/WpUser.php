@@ -29,4 +29,5 @@ class WpUser extends Model
     protected $hidden = [
         'user_pass',
     ];
+
 }

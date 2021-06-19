@@ -25,14 +25,7 @@ class OtpController extends Controller
      */
     public function store(Request $request)
     {
-        $params = $request->all();
-        $otp = rand(100000, 999999);
-        $params['otp'] = $otp;
-        $params['user_id'] = 123;
-
-        $otp = WpOtp::create($params);
-
-        return response($otp);
+        //
     }
 
     /**

@@ -3,24 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Models\WpUser;
 use Twilio\Rest\Client;
 
 class UserController extends Controller
 {
+    /**
+     * @var \App\Services\UserService
+     */
+    private $user;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \App\Http\Controllers\OtpController  $otp
+     * @param  \App\Services\UserService  $user
      * @return void
      */
     public function __construct(
-        OtpController $otp
+        \App\Services\UserService $user
     )
     {
-        $this->otp = $otp;
+        $this->user = $user;
     }
 
 
@@ -38,36 +40,17 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'user_phone_number' => 'required|regex:/[+](62)[0-9]/',
-        ]);
-
         $params = $request->all();
         $params['user_type'] =  'customer';
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->errors()->first('user_phone_number')
-            ], 422);
-        }
+        $result = $this->user->create($params);
 
-        $isUserExist = WpUser::where('user_phone_number', $params['user_phone_number'])->first();
-        if($isUserExist) {
-            return response(['message' => 'User already exist'], 409)->header('Content-Type', 'application/json');
-        }
-
-        $user = WpUser::create($params);
-
-        $otp = $this->otp->store($request);
-        $otp = json_decode($otp->getContent())->otp;
-
-        self::sendMessage(' this is your Mitraruma OTP '.$otp, $user['user_phone_number']);
-        return response(['message' => 'Please check your message'], 200)->header('Content-Type', 'application/json');
+        return response()->json($result['data'], $result['status']);
     }
 
     /**

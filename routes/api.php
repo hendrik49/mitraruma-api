@@ -20,5 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/login', [AuthController::class, 'index']);
+Route::POST('/login', [AuthController::class, 'login']);
+Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
 Route::POST('/user/register', [UserController::class, 'store']);

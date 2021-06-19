@@ -14,15 +14,23 @@ class UserService
     private $otp;
 
     /**
+     * @var JwtService
+     */
+    private $jwt;
+
+    /**
      * Create a new controller instance.
      *
      * @param  \App\Services\OtpService  $otp
+     * @param  \App\Services\JwtService  $jwt
      * @return void
      */
     public function __construct(
-        OtpService $otp
+        OtpService $otp,
+        JwtService $jwt
     ) {
         $this->otp = $otp;
+        $this->jwt = $jwt;
     }
 
     public function create($params){
@@ -115,10 +123,10 @@ class UserService
         $params['user_id'] = $user['ID'];
         $otp = $this->otp->isOtpValid($params);
         if($otp) {
-            $otp = json_decode($otp)->otp;
+            $token = $this->jwt->generate($user);
             return [
                 'status' => 200,
-                'data' => ['message' => 'Login Success'],
+                'data' => ['token' => $token],
             ];
 
         } else {

@@ -33,6 +33,23 @@ class UserService
         $this->jwt = $jwt;
     }
 
+    public function show($id) {
+
+        $user = WpUser::where('ID', $id)->first();
+        if(!$user) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'User not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $user,
+        ];
+
+    }
+
     public function create($params){
 
         $validator = Validator::make($params, [

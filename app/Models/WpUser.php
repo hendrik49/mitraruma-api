@@ -30,4 +30,14 @@ class WpUser extends Model
         'user_pass',
     ];
 
+
+    /**
+     * Get the address record associated with the user.
+     */
+    public function address()
+    {
+        return $this->belongsToMany(WpUserAddress::class, 'wp_user_addresses', 'user_id', 'ID')->withPivot('id', 'created_at', 'updated_at');
+
+    }
+
 }

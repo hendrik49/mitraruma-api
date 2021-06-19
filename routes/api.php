@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApplicatorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 
@@ -21,5 +22,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::POST('/login', [AuthController::class, 'login']);
-Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
+Route::POST('/login/otp', [AuthController::class, 'loginOtp']);;
+Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
 Route::POST('/user/register', [UserController::class, 'store']);

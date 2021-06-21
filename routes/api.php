@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserExtensionAttributeController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,13 @@ Route::POST('/login', [AuthController::class, 'login']);
 Route::POST('/login/otp', [AuthController::class, 'loginOtp']);;
 Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
 Route::POST('/user/register', [UserController::class, 'store']);
-Route::GET('/user/{id}', [UserController::class, 'show']);
+
+Route::GET('/user/profile', [UserProfileController::class, 'get'])->middleware('jwt.user');
+Route::PUT('/user/profile', [UserProfileController::class, 'update'])->middleware('jwt.user');
+Route::GET('/user/profile/address', [UserAddressController::class, 'index'])->middleware('jwt.user');
+Route::POST('/user/profile/address', [UserAddressController::class, 'store'])->middleware('jwt.user');
+Route::PUT('/user/profile/address/{id}', [UserAddressController::class, 'update'])->middleware('jwt.user');
+Route::DELETE('/user/profile/address/{id}', [UserAddressController::class, 'destroy'])->middleware('jwt.user');
 
 Route::GET('/user/address', [UserAddressController::class, 'index']);
 Route::POST('/user/address', [UserAddressController::class, 'store']);
@@ -40,3 +47,6 @@ Route::POST('/user/extension-attribute', [UserExtensionAttributeController::clas
 Route::PUT('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'update']);
 Route::DELETE('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'destroy']);
 Route::GET('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'show']);
+
+
+Route::GET('/user/{id}', [UserController::class, 'show']);

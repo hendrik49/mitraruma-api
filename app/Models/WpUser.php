@@ -9,6 +9,8 @@ class WpUser extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'ID';
+
     /**
      * The attributes that are mass assignable.
      *

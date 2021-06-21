@@ -8,9 +8,16 @@ use Firebase\JWT\JWT;
 class JwtService
 {
 
-    public function generate($params) {
+    public function encode($params) {
 
         $jwt = JWT::encode($params, getenv('JWT_SECRET'));
+
+        return $jwt;
+    }
+
+    public function decode($params) {
+
+        $jwt = JWT::decode($params, getenv('JWT_SECRET'), array('HS256'));
 
         return $jwt;
     }

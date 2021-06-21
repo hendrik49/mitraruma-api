@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 
-class UserAddressController extends Controller
+class UserProfileController extends Controller
 {
+    /**
+     * @var \App\Services\UserService
+     */
+    private $user;
+
     /**
      * @var \App\Services\UserAddressService
      */
@@ -15,43 +20,29 @@ class UserAddressController extends Controller
     /**
      * Create a new controller instance.
      *
+     * @param  \App\Services\UserService  $user
      * @param  \App\Services\UserAddressService  $userAddress
      * @return void
      */
     public function __construct(
+        \App\Services\UserService $user,
         \App\Services\UserAddressService $userAddress
     )
     {
+        $this->user = $user;
         $this->userAddress = $userAddress;
     }
 
-
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function get(Request $request)
     {
         $params = $request->all();
-
-        $result = $this->userAddress->index($params);
-
-        return response()->json($result['data'], $result['status']);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function store(Request $request)
-    {
-        $params = $request->all();
-
-        $result = $this->userAddress->create($params);
+        $result = $this->user->show($params['user_id']);
 
         return response()->json($result['data'], $result['status']);
     }
@@ -59,41 +50,28 @@ class UserAddressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $result = $this->userAddress->show($id);
-
-        return response()->json($result['data'], $result['status']);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $params = $request->all();
 
-        $result = $this->userAddress->update($params, $id);
+        $result = $this->user->update($params, $params['user_id']);
 
         return response()->json($result['data'], $result['status']);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Display a listing of the resource.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function listAddress(Request $request)
     {
-        $result = $this->userAddress->destroy($id);
+        $params = $request->all();
+        $result = $this->userAddress->index($params);
 
         return response()->json($result['data'], $result['status']);
     }

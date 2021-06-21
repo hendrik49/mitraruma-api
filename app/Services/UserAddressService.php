@@ -24,9 +24,9 @@ class UserAddressService
         $this->user = $user;
     }
 
-    public function index(){
+    public function index($params){
 
-        $address = WpUserAddress::where('user_id', 1)->get();
+        $address = WpUserAddress::where('user_id', $params['user_id'])->get();
         if (!$address) {
             return [
                 'status' => 404,

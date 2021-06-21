@@ -76,13 +76,71 @@ class UserService
 
         $user = WpUser::create($params);
 
-        $otp = $this->otp->generateToken($user['ID']);
-        $otp = json_decode($otp)->otp;
+        $otp = $this->otp->generateToken($user['id']);
 
         self::sendMessage(' this is your Mitraruma OTP '.$otp, $user['user_phone_number']);
         return [
             'status' => 201,
             'data' => ['message' => 'Please check your message'],
+        ];
+    }
+
+    public function update($params, $id){
+
+        $validator = Validator::make($params, [
+            'user_phone_number' => 'regex:/[+](62)[0-9]/',
+            'user_email' => 'email',
+            'display_name' => 'string',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $params['user_type'] =  'vendor';
+
+        $isUserExist = WpUser::query();
+        if (isset($params['user_phone_number'])) {
+            $isUserExist->where('user_phone_number', $params['user_phone_number']);
+        }
+        if ($params['user_email']) {
+            $isUserExist->where('user_email', $params['user_email']);
+        }
+        $isUserExist->get();
+
+        $isUserExist = $isUserExist->first();
+
+        if($isUserExist && $isUserExist['ID'] != $id) {
+            return [
+                'status' => 409,
+                'data' => ['message' => 'User already exist'],
+            ];
+        }
+
+        $user = WpUser::where('id', $id)->first();
+        if (!$user) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'User not found'],
+            ];
+        }
+
+        $user->user_email = $params['user_email'];
+//        $user->user_phone_number = $params['user_phone_number'];
+//        $user->display_name = $params['user_email'];
+        try {
+            $user->save();
+        }
+        catch (\Throwable $e){
+            die($e->getMessage());
+        }
+
+        return [
+            'status' => 200,
+            'data' => $user,
         ];
     }
 
@@ -140,7 +198,7 @@ class UserService
         $params['user_id'] = $user['ID'];
         $otp = $this->otp->isOtpValid($params);
         if($otp) {
-            $token = $this->jwt->generate($user);
+            $token = $this->jwt->encode($user);
             return [
                 'status' => 200,
                 'data' => ['token' => $token],
@@ -153,7 +211,6 @@ class UserService
             ];
         }
     }
-
 
     private function sendMessage($message, $recipients)
     {

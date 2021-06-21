@@ -90,18 +90,4 @@ class UserController extends Controller
         //
     }
 
-
-    private function sendMessage($message, $recipients)
-    {
-        $account_sid = getenv("TWILIO_SID");
-        $auth_token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_number = getenv("TWILIO_NUMBER");
-        $client = new Client($account_sid, $auth_token);
-        try {
-            $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
-        }
-        catch (Throwable $e) {
-            report($e);
-        }
-    }
 }

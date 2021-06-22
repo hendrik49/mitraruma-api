@@ -31,6 +31,7 @@ Route::POST('/user/register', [UserController::class, 'store']);
 
 Route::GET('/user/profile', [UserProfileController::class, 'get'])->middleware('jwt.user');
 Route::PUT('/user/profile', [UserProfileController::class, 'update'])->middleware('jwt.user');
+
 Route::GET('/user/profile/address', [UserAddressController::class, 'index'])->middleware('jwt.user');
 Route::POST('/user/profile/address', [UserAddressController::class, 'store'])->middleware('jwt.user');
 Route::PUT('/user/profile/address/{id}', [UserAddressController::class, 'update'])->middleware('jwt.user');

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\WpUserAddress;
 use Illuminate\Support\Facades\Validator;
 
 class UserAddressService
@@ -13,20 +12,27 @@ class UserAddressService
     private $user;
 
     /**
+     * @var \App\Repositories\UserAddressAttributeRepository
+     */
+    private $userAddr;
+
+    /**
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService  $user
      * @return void
      */
     public function __construct(
-        UserService $user
+        UserService $user,
+        \App\Repositories\UserAddressAttributeRepository $userAddr
     ) {
         $this->user = $user;
+        $this->userAddr = $userAddr;
     }
 
     public function index($params){
 
-        $address = WpUserAddress::where('user_id', $params['user_id'])->get();
+        $address = $this->userAddr->find($params);
         if (!$address) {
             return [
                 'status' => 404,
@@ -42,7 +48,7 @@ class UserAddressService
 
     public function show($id){
 
-        $address = WpUserAddress::where('id', $id)->first();
+        $address = $this->userAddr->findById($id);
         if (!$address) {
             return [
                 'status' => 404,
@@ -82,7 +88,7 @@ class UserAddressService
             ];
         }
 
-        $address = WpUserAddress::create($params);
+        $address = $this->userAddr->create($params);
 
         return [
             'status' => 201,
@@ -116,22 +122,14 @@ class UserAddressService
             ];
         }
 
-        $address = WpUserAddress::where('id', $id)->first();
+        $address = $this->userAddr->update($params, $id);
+
         if (!$address) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Address not found'],
             ];
         }
-
-        $address->province = $params['province'];
-        $address->city = $params['city'];
-        $address->district = $params['district'];
-        $address->subdistrict = $params['subdistrict'];
-        $address->zipcode = $params['zipcode'];
-        $address->street = $params['street'];
-        $address->save();
-
         return [
             'status' => 200,
             'data' => $address,
@@ -148,14 +146,13 @@ class UserAddressService
             ];
         }
 
-        $address = WpUserAddress::where('id', $id)->first();
+        $address = $this->userAddr->deleteById($id);
         if (!$address) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Address not found'],
             ];
         }
-        $address->delete();
 
         return [
             'status' => 202 ,

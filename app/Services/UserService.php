@@ -68,12 +68,12 @@ class UserService
         }
 
         $isUserExist = $this->user->findOne($params);
-        if($isUserExist) {
-            return [
-                'status' => 409,
-                'data' => ['message' => 'User already exist'],
-            ];
-        }
+//        if($isUserExist) {
+//            return [
+//                'status' => 409,
+//                'data' => ['message' => 'User already exist'],
+//            ];
+//        }
 
         $user = $this->user->create($params);
 
@@ -85,6 +85,7 @@ class UserService
             'status' => 201,
             'data' => [
                 'message' => 'Please check your message',
+                'ID' => $user['ID'],
                 'valid_date' => $otp['valid_date']
             ],
         ];

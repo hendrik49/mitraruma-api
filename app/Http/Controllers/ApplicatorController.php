@@ -7,35 +7,36 @@ use Illuminate\Http\Request;
 class ApplicatorController extends Controller
 {
     /**
-     * @var \App\Services\UserService
+     * @var \App\Services\ApplicatorService
      */
-    private $user;
+    private $applicator;
 
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\UserService $user
-     * @return void
+     * @param \App\Services\ApplicatorService $applicator
      */
     public function __construct(
-        \App\Services\UserService $user
+        \App\Services\ApplicatorService $applicator
     )
     {
-        $this->user = $user;
+        $this->applicator = $applicator;
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $params = $request->all();
         $params['user_type'] = 'vendor';
 
-        return response($this->user->create($params));
+        $result = $this->applicator->create($params);
+
+        return response()->json($result['data'], $result['status']);
     }
 
 }

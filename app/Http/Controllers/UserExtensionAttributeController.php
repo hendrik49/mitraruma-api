@@ -29,11 +29,15 @@ class UserExtensionAttributeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $result = $this->userExt->index();
+
+        $params = $request->all();
+
+        $result = $this->userExt->index($params);
 
         return response()->json($result['data'], $result['status']);
     }

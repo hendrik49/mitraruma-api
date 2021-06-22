@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\WpUserExtensionAttribute;
 use Illuminate\Support\Facades\Validator;
 
 class UserExtensionAttributeService
@@ -11,22 +10,29 @@ class UserExtensionAttributeService
      * @var UserService
      */
     private $user;
+    /**
+     * @var \App\Repositories\UserExtensionAttributeRepository
+     */
+    private $userExt;
 
     /**
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService  $user
+     * @param  \App\Repositories\UserExtensionAttributeRepository $userExt
      * @return void
      */
     public function __construct(
-        UserService $user
+        UserService $user,
+        \App\Repositories\UserExtensionAttributeRepository $userExt
     ) {
         $this->user = $user;
+        $this->userExt = $userExt;
     }
 
-    public function index(){
+    public function index($params){
 
-        $address = WpUserExtensionAttribute::where('user_id', 1)->get();
+        $address = $this->userExt->find($params);
         if (!$address) {
             return [
                 'status' => 404,
@@ -42,7 +48,7 @@ class UserExtensionAttributeService
 
     public function show($id){
 
-        $address = WpUserExtensionAttribute::where('id', $id)->first();
+        $address = $this->userExt->findById($id);
         if (!$address) {
             return [
                 'status' => 404,
@@ -79,7 +85,7 @@ class UserExtensionAttributeService
         }
 
         $params['value'] =  json_encode($params['value']);
-        $extensionAttribute = WpUserExtensionAttribute::create($params);
+        $extensionAttribute =$this->userExt->create($params);
 
         $extensionAttribute['value'] = json_decode($extensionAttribute['value']);
         return [
@@ -110,21 +116,13 @@ class UserExtensionAttributeService
             ];
         }
 
-        $extensionAttribute = WpUserExtensionAttribute::where('id', $id)->first();
+        $extensionAttribute = $this->userExt->update($params, $id);
         if (!$extensionAttribute) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
             ];
         }
-
-        $params['value'] =  json_encode($params['value']);
-
-        $extensionAttribute->name = $params['name'];
-        $extensionAttribute->value = $params['value'];
-        $extensionAttribute->save();
-
-        $extensionAttribute['value'] = json_decode($extensionAttribute['value']);
 
         return [
             'status' => 200,
@@ -142,19 +140,19 @@ class UserExtensionAttributeService
             ];
         }
 
-        $extensionAttribute = WpUserExtensionAttribute::where('id', $id)->first();
+        $extensionAttribute = $this->userExt->deleteById($id);
         if (!$extensionAttribute) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
             ];
         }
-        $extensionAttribute->delete();
 
         return [
             'status' => 202,
             'data' => ['message' => 'Success deleted data'],
         ];
+
     }
 
 

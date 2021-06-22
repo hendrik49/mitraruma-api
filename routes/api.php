@@ -36,6 +36,11 @@ Route::POST('/user/profile/address', [UserAddressController::class, 'store'])->m
 Route::PUT('/user/profile/address/{id}', [UserAddressController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/user/profile/address/{id}', [UserAddressController::class, 'destroy'])->middleware('jwt.user');
 
+Route::GET('/user/profile/extension-attribute', [UserExtensionAttributeController::class, 'index'])->middleware('jwt.user');
+Route::POST('/user/profile/extension-attribute', [UserExtensionAttributeController::class, 'store'])->middleware('jwt.user');
+Route::PUT('/user/profile/extension-attribute/{id}', [UserExtensionAttributeController::class, 'update'])->middleware('jwt.user');
+Route::DELETE('/user/profile/extension-attribute/{id}', [UserExtensionAttributeController::class, 'destroy'])->middleware('jwt.user');
+
 Route::GET('/user/address', [UserAddressController::class, 'index']);
 Route::POST('/user/address', [UserAddressController::class, 'store']);
 Route::PUT('/user/address/{id}', [UserAddressController::class, 'update']);

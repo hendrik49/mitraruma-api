@@ -23,6 +23,7 @@ class CreateWpUserAddressesTable extends Migration
             $table->string('zipcode');
             $table->string('street');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

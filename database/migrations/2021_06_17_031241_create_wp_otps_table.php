@@ -17,6 +17,7 @@ class CreateWpOtpsTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->integer('otp');
+            $table->dateTime('valid_date');
             $table->timestamps();
         });
     }

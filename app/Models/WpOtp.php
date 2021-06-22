@@ -17,6 +17,7 @@ class WpOtp extends Model
     protected $fillable = [
         'user_id',
         'otp',
+        'valid_date',
     ];
 
 }

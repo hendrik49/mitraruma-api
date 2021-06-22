@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\WpUser;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 
@@ -18,24 +17,28 @@ class UserService
      */
     private $jwt;
 
+    private $user;
+
     /**
      * Create a new controller instance.
      *
      * @param  \App\Services\OtpService  $otp
      * @param  \App\Services\JwtService  $jwt
+     * @param  \App\Repositories\UserRepository  $user
      * @return void
      */
     public function __construct(
         OtpService $otp,
-        JwtService $jwt
+        JwtService $jwt,
+        \App\Repositories\UserRepository $user
     ) {
         $this->otp = $otp;
         $this->jwt = $jwt;
+        $this->user = $user;
     }
 
     public function show($id) {
-
-        $user = WpUser::where('ID', $id)->first();
+        $user = $this->user->findById($id);
         if(!$user) {
             return [
                 'status' => 404,
@@ -64,9 +67,7 @@ class UserService
             ];
         }
 
-        $params['user_type'] =  'vendor';
-
-        $isUserExist = WpUser::where('user_phone_number', $params['user_phone_number'])->first();
+        $isUserExist = $this->user->findOne($params);
         if($isUserExist) {
             return [
                 'status' => 409,
@@ -74,14 +75,18 @@ class UserService
             ];
         }
 
-        $user = WpUser::create($params);
+        $user = $this->user->create($params);
 
-        $otp = $this->otp->generateToken($user['id']);
+        $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP '.$otp, $user['user_phone_number']);
+        self::sendMessage(' this is your Mitraruma OTP '.$otp['otp'], $user['user_phone_number']);
+
         return [
             'status' => 201,
-            'data' => ['message' => 'Please check your message'],
+            'data' => [
+                'message' => 'Please check your message',
+                'valid_date' => $otp['valid_date']
+            ],
         ];
     }
 
@@ -100,18 +105,7 @@ class UserService
             ];
         }
 
-        $params['user_type'] =  'vendor';
-
-        $isUserExist = WpUser::query();
-        if (isset($params['user_phone_number'])) {
-            $isUserExist->where('user_phone_number', $params['user_phone_number']);
-        }
-        if ($params['user_email']) {
-            $isUserExist->where('user_email', $params['user_email']);
-        }
-        $isUserExist->get();
-
-        $isUserExist = $isUserExist->first();
+        $isUserExist = $this->user->findOne($params);
 
         if($isUserExist && $isUserExist['ID'] != $id) {
             return [
@@ -120,22 +114,12 @@ class UserService
             ];
         }
 
-        $user = WpUser::where('id', $id)->first();
-        if (!$user) {
+        $user = $this->user->update($params, $id);
+        if(!$user) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'User not found'],
             ];
-        }
-
-        $user->user_email = $params['user_email'];
-//        $user->user_phone_number = $params['user_phone_number'];
-//        $user->display_name = $params['user_email'];
-        try {
-            $user->save();
-        }
-        catch (\Throwable $e){
-            die($e->getMessage());
         }
 
         return [
@@ -157,7 +141,7 @@ class UserService
             ];
         }
 
-        $user = WpUser::where('user_phone_number', $params['user_phone_number'])->first();
+        $user = $this->user->findOne($params);
         if(!$user) {
             return [
                 'status' => 409,
@@ -166,13 +150,15 @@ class UserService
         }
 
         $otp = $this->otp->generateToken($user['ID']);
-        $otp = json_decode($otp)->otp;
 
-        self::sendMessage(' this is your Mitraruma OTP '.$otp, $user['user_phone_number']);
+        self::sendMessage(' this is your Mitraruma OTP '.$otp['otp'], $user['user_phone_number']);
 
         return [
             'status' => 201,
-            'data' => ['message' => 'Please check your message'],
+            'data' => [
+                'message' => 'Please check your message',
+                'valid_date' => $otp['valid_date']
+            ],
         ];
     }
 
@@ -190,9 +176,12 @@ class UserService
             ];
         }
 
-        $user = WpUser::where('user_phone_number', $params['user_phone_number'])->first();
+        $user = $this->user->findOne($params);
         if(!$user) {
-            return response(['message' => 'User is not exist'], 409)->header('Content-Type', 'application/json');
+            return [
+                'status' => 409,
+                'data' => ['message' => 'User is not exist'],
+            ];
         }
 
         $params['user_id'] = $user['ID'];

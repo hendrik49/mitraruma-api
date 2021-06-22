@@ -19,6 +19,7 @@ class CreateWpUserExtensionAttributesTable extends Migration
             $table->string('name');
             $table->json('value');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

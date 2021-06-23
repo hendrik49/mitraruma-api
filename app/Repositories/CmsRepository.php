@@ -2,30 +2,28 @@
 
 namespace App\Repositories;
 
-use App\Models\WpUserExtensionAttribute;
+use App\Models\WpCms;
 
-class UserExtensionAttributeRepository
+class CmsRepository
 {
 
     public function findById($id){
-        return WpUserExtensionAttribute::where('ID', $id)->first();
+        return WpCms::where('ID', $id)->first();
     }
 
     public function find($params){
-        $userExt = WpUserExtensionAttribute::query();
-        if(isset($params['user_id'])) {
-            $userExt->where('user_id', $params['user_id']);
-        }
+        $userExt = WpCms::query();
+
         return $userExt->get();
     }
 
     public function create($params) {
-        return WpUserExtensionAttribute::create($params);
+        return WpCms::create($params);
     }
 
     public function update($params, $id){
 
-        $userExt = WpUserExtensionAttribute::where('id', $id)->first();
+        $userExt = WpCms::where('id', $id)->first();
         if(!$userExt) {
             return  $userExt;
         }
@@ -44,7 +42,7 @@ class UserExtensionAttributeRepository
     }
 
     public function deleteByParams($params, $id) {
-        $userExt = WpUserExtensionAttribute::query();
+        $userExt = WpCms::query();
         $userExt->where('id', $id);
         if(isset($params['user_id'])) {
             $userExt->where('user_id', $params['user_id']);
@@ -54,7 +52,7 @@ class UserExtensionAttributeRepository
     }
 
     public function deleteById($id) {
-        return WpUserExtensionAttribute::where('id', $id)->delete();
+        return WpCms::where('id', $id)->delete();
     }
 
 }

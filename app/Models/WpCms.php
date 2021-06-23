@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class WpUserExtensionAttribute extends Model
+class WpCms extends Model
 {
     use HasFactory;
 
@@ -18,7 +18,6 @@ class WpUserExtensionAttribute extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
         'name',
         'value',
     ];
@@ -26,5 +25,4 @@ class WpUserExtensionAttribute extends Model
     protected $casts = [
         'value' => 'array'
     ];
-
 }

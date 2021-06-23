@@ -4,36 +4,32 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Validator;
 
-class UserExtensionAttributeService
+class CmsService
 {
     /**
-     * @var UserService
+     * @var \App\Repositories\CmsRepository
      */
-    private $user;
-    /**
-     * @var \App\Repositories\UserExtensionAttributeRepository
-     */
-    private $userExt;
+    private $cms;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\UserService  $user
-     * @param  \App\Repositories\UserExtensionAttributeRepository $userExt
+     * @param  \App\Services\UserService $user
+     * @param  \App\Repositories\CmsRepository $cms
      * @return void
      */
     public function __construct(
-        UserService $user,
-        \App\Repositories\UserExtensionAttributeRepository $userExt
+        \App\Services\UserService $user,
+        \App\Repositories\CmsRepository $cms
     ) {
         $this->user = $user;
-        $this->userExt = $userExt;
+        $this->cms = $cms;
     }
 
     public function index($params){
 
-        $address = $this->userExt->find($params);
-        if (!$address) {
+        $cms = $this->cms->find($params);
+        if (!$cms) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -42,14 +38,14 @@ class UserExtensionAttributeService
 
         return [
             'status' => 200,
-            'data' => $address,
+            'data' => $cms,
         ];
     }
 
     public function show($id){
 
-        $address = $this->userExt->findById($id);
-        if (!$address) {
+        $cms = $this->cms->findById($id);
+        if (!$cms) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -58,7 +54,7 @@ class UserExtensionAttributeService
 
         return [
             'status' => 200,
-            'data' => $address,
+            'data' => $cms,
         ];
     }
 
@@ -84,7 +80,7 @@ class UserExtensionAttributeService
             ];
         }
 
-        $extensionAttribute =$this->userExt->create($params);
+        $extensionAttribute =$this->cms->create($params);
 
         return [
             'status' => 201,
@@ -114,7 +110,7 @@ class UserExtensionAttributeService
             ];
         }
 
-        $extensionAttribute = $this->userExt->update($params, $id);
+        $extensionAttribute = $this->cms->update($params, $id);
         if (!$extensionAttribute) {
             return [
                 'status' => 404,
@@ -138,7 +134,7 @@ class UserExtensionAttributeService
             ];
         }
 
-        $extensionAttribute = $this->userExt->deleteById($id);
+        $extensionAttribute = $this->cms->deleteById($id);
         if (!$extensionAttribute) {
             return [
                 'status' => 404,

@@ -13,16 +13,24 @@ class AuthController extends Controller
     private $user;
 
     /**
+     * @var \App\Services\AuthService
+     */
+    private $auth;
+
+    /**
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService  $user
+     * @param  \App\Services\AuthService  $auth
      * @return void
      */
     public function __construct(
-        \App\Services\UserService $user
+        \App\Services\UserService $user,
+        \App\Services\AuthService $auth
     )
     {
         $this->user = $user;
+        $this->auth = $auth;
     }
 
     /**
@@ -109,6 +117,23 @@ class AuthController extends Controller
             $this->user->createByEmail($params);
             return $userLogin = $this->user->loginByEmail($params);
         }
+    }
+
+    /**
+     * Obtain the user information from Google.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loginGoogleToken(Request $request)
+    {
+
+        $params = $request->all();
+
+        $result = $this->auth->loginGoogleByToken($params);
+
+        return response()->json($result['data'], $result['status']);
+
     }
 
 }

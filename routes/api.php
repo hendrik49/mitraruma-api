@@ -31,6 +31,8 @@ Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
 //Route::POST('/login/email', [AuthController::class, 'loginByEmail']); //This route is only for testing
 Route::GET('/login/google', [AuthController::class, 'loginGoogleRedirect'])->middleware(['web']);
 Route::GET('/login/google/callback', [AuthController::class, 'handleGoogleCallback'])->middleware(['web']);
+Route::POST('/login/google/token', [AuthController::class, 'loginGoogleToken']);
+
 
 Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
 Route::POST('/user/register', [UserController::class, 'store']);

@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Validator;
 
-class UserAddressService
+class ProjectService
 {
     /**
      * @var UserService
@@ -12,9 +12,9 @@ class UserAddressService
     private $user;
 
     /**
-     * @var \App\Repositories\UserAddressAttributeRepository
+     * @var \App\Repositories\ProjectRepository
      */
-    private $userAddr;
+    private $project;
 
     /**
      * Create a new controller instance.
@@ -24,47 +24,54 @@ class UserAddressService
      */
     public function __construct(
         UserService $user,
-        \App\Repositories\UserAddressAttributeRepository $userAddr
+        \App\Repositories\ProjectRepository $project
     ) {
         $this->user = $user;
-        $this->userAddr = $userAddr;
+        $this->project = $project;
     }
 
     public function index($params){
 
-        $address = $this->userAddr->find($params);
-        if (!$address) {
+        $project = $this->project->find($params);
+        if (!$project) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Address not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
 
         return [
             'status' => 200,
-            'data' => $address,
+            'data' => $project,
         ];
     }
 
     public function show($id){
 
-        $address = $this->userAddr->findById($id);
-        if (!$address) {
+        $project = $this->project->findById($id);
+        if (!$project) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Address not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
 
         return [
             'status' => 200,
-            'data' => $address,
+            'data' => $project,
         ];
     }
 
     public function create($params){
 
         $validator = Validator::make($params, [
+            'user_id' => 'required|integer',
+            'vendor_user_id' => 'integer',
+            'description' => 'required|string',
+            'images' => 'array',
+            'estimated_budget' => 'numeric',
+            'customer_name' => 'required|string',
+            'customer_contact' => 'required|string',
             'province' => 'required|string',
             'city' => 'required|string',
             'district' => 'required|string',
@@ -88,11 +95,13 @@ class UserAddressService
             ];
         }
 
-        $address = $this->userAddr->create($params);
+        $params['status'] = 'PRE-PURCHASE';
+        $params['sub_status'] = 'Start of conversation';
+        $project = $this->project->create($params);
 
         return [
             'status' => 201,
-            'data' => $address,
+            'data' => $project,
         ];
     }
 
@@ -122,17 +131,17 @@ class UserAddressService
             ];
         }
 
-        $address = $this->userAddr->update($params, $id);
+        $project = $this->project->update($params, $id);
 
-        if (!$address) {
+        if (!$project) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Address not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
         return [
             'status' => 200,
-            'data' => $address,
+            'data' => $project,
         ];
     }
 
@@ -146,11 +155,11 @@ class UserAddressService
             ];
         }
 
-        $address = $this->userAddr->deleteById($id);
-        if (!$address) {
+        $project = $this->project->deleteById($id);
+        if (!$project) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Address not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
 

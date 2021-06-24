@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Twilio\Rest\Client;
 
 class UserProfileController extends Controller
 {

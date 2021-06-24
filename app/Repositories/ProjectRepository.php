@@ -2,17 +2,17 @@
 
 namespace App\Repositories;
 
-use App\Models\WpUserAddress;
+use App\Models\WpProject;
 
-class UserAddressAttributeRepository
+class ProjectRepository
 {
 
     public function findById($id){
-        return WpUserAddress::where('ID', $id)->first();
+        return WpProject::where('ID', $id)->first();
     }
 
     public function find($params){
-        $userExt = WpUserAddress::query();
+        $userExt = WpProject::query();
         if(isset($params['user_id'])) {
             $userExt->where('user_id', $params['user_id']);
         }
@@ -20,16 +20,22 @@ class UserAddressAttributeRepository
     }
 
     public function create($params) {
-        return WpUserAddress::create($params);
+        return WpProject::create($params);
     }
 
     public function update($params, $id){
 
-        $userExt = WpUserAddress::where('id', $id)->first();
+        $userExt = WpProject::where('id', $id)->first();
         if(!$userExt) {
             return  $userExt;
         }
 
+        if(isset($params['description'])) {
+            $userExt->description = $params['description'];
+        }
+        if(isset($params['estimated_budget'])) {
+            $userExt->estimated_budget = $params['estimated_budget'];
+        }
         if(isset($params['province'])) {
             $userExt->province = $params['province'];
         }
@@ -48,6 +54,12 @@ class UserAddressAttributeRepository
         if(isset($params['street'])) {
             $userExt->street = $params['street'];
         }
+        if(isset($params['status'])) {
+            $userExt->status = $params['status'];
+        }
+        if(isset($params['sub_status'])) {
+            $userExt->sub_status = $params['sub_status'];
+        }
         try {
             $userExt->save();
         }
@@ -59,7 +71,7 @@ class UserAddressAttributeRepository
     }
 
     public function deleteByParams($params, $id) {
-        $userExt = WpUserAddress::query();
+        $userExt = WpProject::query();
         $userExt->where('id', $id);
         if(isset($params['user_id'])) {
             $userExt->where('user_id', $params['user_id']);
@@ -69,7 +81,7 @@ class UserAddressAttributeRepository
     }
 
     public function deleteById($id) {
-        return WpUserAddress::where('id', $id)->delete();
+        return WpProject::where('id', $id)->delete();
     }
 
 }

@@ -4,24 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UserAddressController extends Controller
+class ProjectController extends Controller
 {
     /**
-     * @var \App\Services\UserAddressService
+     * @var \App\Services\ProjectService
      */
-    private $userAddress;
+    private $project;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\UserAddressService  $userAddress
+     * @param  \App\Services\ProjectService  $project
      * @return void
      */
     public function __construct(
-        \App\Services\UserAddressService $userAddress
+        \App\Services\ProjectService $project
     )
     {
-        $this->userAddress = $userAddress;
+        $this->project = $project;
     }
 
 
@@ -35,7 +35,7 @@ class UserAddressController extends Controller
     {
         $params = $request->all();
 
-        $result = $this->userAddress->index($params);
+        $result = $this->project->index($params);
 
         return response()->json($result['data'], $result['status']);
     }
@@ -50,7 +50,7 @@ class UserAddressController extends Controller
     {
         $params = $request->all();
 
-        $result = $this->userAddress->create($params);
+        $result = $this->project->create($params);
 
         return response()->json($result['data'], $result['status']);
     }
@@ -63,7 +63,7 @@ class UserAddressController extends Controller
      */
     public function show($id)
     {
-        $result = $this->userAddress->show($id);
+        $result = $this->project->show($id);
 
         return response()->json($result['data'], $result['status']);
     }
@@ -79,7 +79,7 @@ class UserAddressController extends Controller
     {
         $params = $request->all();
 
-        $result = $this->userAddress->update($params, $id);
+        $result = $this->project->update($params, $id);
 
         return response()->json($result['data'], $result['status']);
     }
@@ -92,7 +92,7 @@ class UserAddressController extends Controller
      */
     public function destroy($id)
     {
-        $result = $this->userAddress->destroy($id);
+        $result = $this->project->destroy($id);
 
         return response()->json($result['data'], $result['status']);
     }

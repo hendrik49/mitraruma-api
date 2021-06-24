@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicatorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmsController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserExtensionAttributeController;
@@ -55,7 +56,7 @@ Route::PUT('/user/extension-attribute/{id}', [UserExtensionAttributeController::
 Route::DELETE('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'destroy']);
 Route::GET('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'show']);
 
-
+Route::GET('/user/{id}', [UserController::class, 'show']);
 
 Route::GET('/cms', [CmsController::class, 'index'])->middleware('jwt.user');
 Route::POST('/cms', [CmsController::class, 'store'])->middleware('jwt.user');
@@ -63,5 +64,10 @@ Route::PUT('/cms/{id}', [CmsController::class, 'update'])->middleware('jwt.user'
 Route::DELETE('/cms/{id}', [CmsController::class, 'destroy'])->middleware('jwt.user');
 Route::GET('/cms/{id}', [CmsController::class, 'show'])->middleware('jwt.user');
 
+Route::GET('/project', [ProjectController::class, 'index'])->middleware('jwt.user');
+Route::POST('/project', [ProjectController::class, 'store'])->middleware('jwt.user');
+Route::PUT('/project/{id}', [ProjectController::class, 'update'])->middleware('jwt.user');
+Route::DELETE('/project/{id}', [ProjectController::class, 'destroy'])->middleware('jwt.user');
+Route::GET('/project/{id}', [ProjectController::class, 'show'])->middleware('jwt.user');
 
-Route::GET('/user/{id}', [UserController::class, 'show']);
+

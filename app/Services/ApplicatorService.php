@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Validator;
-use Twilio\Rest\Client;
 
 class ApplicatorService
 {

@@ -4,13 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class WpUserAddress extends Model
+class WpProject extends Model
 {
     use HasFactory;
-
-    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -19,11 +16,25 @@ class WpUserAddress extends Model
      */
     protected $fillable = [
         'user_id',
-        'city',
+        'vendor_user_id',
+        'description',
+        'images',
+        'estimated_budget',
+        'customer_name',
+        'customer_contact',
         'province',
+        'city',
         'district',
         'sub_district',
         'zipcode',
         'street',
+        'status',
+        'sub_status',
     ];
+
+
+    protected $casts = [
+        'images' => 'array'
+    ];
+
 }

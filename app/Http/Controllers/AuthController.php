@@ -97,7 +97,7 @@ class AuthController extends Controller
     /**
      * Obtain the user information from Google.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function handleGoogleCallback()
     {

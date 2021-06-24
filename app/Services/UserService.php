@@ -91,6 +91,32 @@ class UserService
         ];
     }
 
+    public function createByEmail($params){
+
+        $validator = Validator::make($params, [
+            'user_email' => 'required|email',
+            'user_type' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $isUserExist = $this->user->findOne($params);
+        if($isUserExist) {
+            return [
+                'status' => 409,
+                'data' => ['message' => 'User already exist'],
+            ];
+        }
+
+        $user = $this->user->create($params);
+
+    }
+
     public function update($params, $id){
 
         $validator = Validator::make($params, [
@@ -200,6 +226,34 @@ class UserService
                 'data' => ['message' => 'OTP is not valid']
             ];
         }
+    }
+
+    public function loginByEmail($params){
+
+        $validator = Validator::make($params, [
+            'user_email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $user = $this->user->findOne($params);
+        if(!$user) {
+            return [
+                'status' => 409,
+                'data' => ['message' => 'User is not exist'],
+            ];
+        }
+
+        $token = $this->jwt->encode($user);
+        return [
+            'status' => 200,
+            'data' => ['token' => $token],
+        ];
     }
 
     private function sendMessage($message, $recipients)

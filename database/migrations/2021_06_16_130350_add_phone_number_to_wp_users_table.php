@@ -14,7 +14,7 @@ class AddPhoneNumberToWpUsersTable extends Migration
     public function up()
     {
         Schema::table('wp_users', function (Blueprint $table) {
-            $table->string('user_phone_number');
+            $table->string('user_phone_number')->nullable(true);
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });

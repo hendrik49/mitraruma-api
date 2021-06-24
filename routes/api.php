@@ -27,13 +27,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::POST('/login', [AuthController::class, 'login']);
-Route::POST('/login/otp', [AuthController::class, 'loginOtp']);;
+Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
+//Route::POST('/login/email', [AuthController::class, 'loginByEmail']); //This route is only for testing
+Route::GET('/login/google', [AuthController::class, 'loginGoogleRedirect'])->middleware(['web']);
+Route::GET('/login/google/callback', [AuthController::class, 'handleGoogleCallback'])->middleware(['web']);
+
 Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
 Route::POST('/user/register', [UserController::class, 'store']);
 
 Route::GET('/user/profile', [UserProfileController::class, 'get'])->middleware('jwt.user');
 Route::PUT('/user/profile', [UserProfileController::class, 'update'])->middleware('jwt.user');
-
 Route::GET('/user/profile/address', [UserAddressController::class, 'index'])->middleware('jwt.user');
 Route::POST('/user/profile/address', [UserAddressController::class, 'store'])->middleware('jwt.user');
 Route::PUT('/user/profile/address/{id}', [UserAddressController::class, 'update'])->middleware('jwt.user');

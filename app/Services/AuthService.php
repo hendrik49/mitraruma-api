@@ -37,6 +37,7 @@ class AuthService
                 if ($userLogin['status'] == 200) {
                     return $userLogin;
                 } else {
+                    $params['display_name'] = $payload['name'];
                     $params['user_type'] = 'customer';
                     $this->user->createByEmail($params);
                     return $this->user->loginByEmail($params);

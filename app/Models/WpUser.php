@@ -18,6 +18,7 @@ class WpUser extends Model
      */
     protected $fillable = [
         'display_name',
+        'user_picture_url',
         'user_email',
         'user_phone_number',
         'user_type',

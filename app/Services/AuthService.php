@@ -39,6 +39,7 @@ class AuthService
                     return $userLogin;
                 } else {
                     $params['display_name'] = $payload['name'];
+                    $params['user_picture_url'] = $payload['picture'];
                     $params['user_type'] = 'customer';
                     $this->user->createByEmail($params);
                     return $this->user->loginByEmail($params);

@@ -69,7 +69,7 @@ Route::GET('/cms', [CmsController::class, 'index'])->middleware('jwt.user');
 Route::POST('/cms', [CmsController::class, 'store'])->middleware('jwt.user');
 Route::PUT('/cms/{id}', [CmsController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/cms/{id}', [CmsController::class, 'destroy'])->middleware('jwt.user');
-Route::GET('/cms/{id}', [CmsController::class, 'show'])->middleware('jwt.user');
+Route::GET('/cms/{id}', [CmsController::class, 'show']);
 
 Route::GET('/project', [ProjectController::class, 'index'])->middleware('jwt.user');
 Route::POST('/project', [ProjectController::class, 'store'])->middleware('jwt.user');

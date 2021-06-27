@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -47,8 +48,14 @@ class UserController extends Controller
         $params = $request->all();
         $params['user_type'] =  'customer';
 
+        DB::beginTransaction();
         $result = $this->user->create($params);
+        if($result['status'] != 201) {
+            DB::rollBack();
+            return response()->json($result['data'], $result['status']);
+        }
 
+        DB::commit();
         return response()->json($result['data'], $result['status']);
     }
 

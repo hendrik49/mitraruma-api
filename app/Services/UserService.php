@@ -22,24 +22,26 @@ class UserService
     /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\OtpService  $otp
-     * @param  \App\Services\JwtService  $jwt
-     * @param  \App\Repositories\UserRepository  $user
+     * @param \App\Services\OtpService $otp
+     * @param \App\Services\JwtService $jwt
+     * @param \App\Repositories\UserRepository $user
      * @return void
      */
     public function __construct(
         OtpService $otp,
         JwtService $jwt,
         \App\Repositories\UserRepository $user
-    ) {
+    )
+    {
         $this->otp = $otp;
         $this->jwt = $jwt;
         $this->user = $user;
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $user = $this->user->findById($id);
-        if(!$user) {
+        if (!$user) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'User not found'],
@@ -53,7 +55,8 @@ class UserService
 
     }
 
-    public function create($params){
+    public function create($params)
+    {
 
         $validator = Validator::make($params, [
             'user_phone_number' => 'required|regex:/[+](62)[0-9]/',
@@ -68,7 +71,7 @@ class UserService
         }
 
         $isUserExist = $this->user->findOne($params);
-        if($isUserExist) {
+        if ($isUserExist) {
             return [
                 'status' => 409,
                 'data' => ['message' => 'User already exist'],
@@ -79,19 +82,21 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP '.$otp['otp'], $user['user_phone_number']);
+        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'], $user['user_phone_number']);
 
         return [
             'status' => 201,
             'data' => [
                 'message' => 'Please check your message',
-                'ID' => $user['ID'],
-                'valid_date' => $otp['valid_date']
+                'value' => [
+                    'valid_date' => $otp['valid_date']
+                ]
             ],
         ];
     }
 
-    public function createByEmail($params){
+    public function createByEmail($params)
+    {
 
         $validator = Validator::make($params, [
             'user_email' => 'required|email',
@@ -106,7 +111,7 @@ class UserService
         }
 
         $isUserExist = $this->user->findOne($params);
-        if($isUserExist) {
+        if ($isUserExist) {
             return [
                 'status' => 409,
                 'data' => ['message' => 'User already exist'],
@@ -117,7 +122,8 @@ class UserService
 
     }
 
-    public function update($params, $id){
+    public function update($params, $id)
+    {
 
         $validator = Validator::make($params, [
             'user_phone_number' => 'regex:/[+](62)[0-9]/',
@@ -134,7 +140,7 @@ class UserService
 
         $isUserExist = $this->user->findOne($params);
 
-        if($isUserExist && $isUserExist['ID'] != $id) {
+        if ($isUserExist && $isUserExist['ID'] != $id) {
             return [
                 'status' => 409,
                 'data' => ['message' => 'User already exist'],
@@ -142,7 +148,7 @@ class UserService
         }
 
         $user = $this->user->update($params, $id);
-        if(!$user) {
+        if (!$user) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'User not found'],
@@ -155,7 +161,8 @@ class UserService
         ];
     }
 
-    public function login($params){
+    public function login($params)
+    {
 
         $validator = Validator::make($params, [
             'user_phone_number' => 'required|regex:/[+](62)[0-9]/'
@@ -169,7 +176,7 @@ class UserService
         }
 
         $user = $this->user->findOne($params);
-        if(!$user) {
+        if (!$user) {
             return [
                 'status' => 409,
                 'data' => ['message' => 'User is not exist'],
@@ -178,18 +185,21 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP '.$otp['otp'], $user['user_phone_number']);
+        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'], $user['user_phone_number']);
 
         return [
             'status' => 201,
             'data' => [
                 'message' => 'Please check your message',
-                'valid_date' => $otp['valid_date']
+                'value' => [
+                    'valid_date' => $otp['valid_date']
+                ]
             ],
         ];
     }
 
-    public function loginOtp($params){
+    public function loginOtp($params)
+    {
 
         $validator = Validator::make($params, [
             'user_phone_number' => 'required|regex:/[+](62)[0-9]/',
@@ -204,7 +214,7 @@ class UserService
         }
 
         $user = $this->user->findOne($params);
-        if(!$user) {
+        if (!$user) {
             return [
                 'status' => 409,
                 'data' => ['message' => 'User is not exist'],
@@ -213,7 +223,7 @@ class UserService
 
         $params['user_id'] = $user['ID'];
         $otp = $this->otp->isOtpValid($params);
-        if($otp) {
+        if ($otp) {
             $token = $this->jwt->encode($user);
             return [
                 'status' => 200,
@@ -228,7 +238,8 @@ class UserService
         }
     }
 
-    public function loginByEmail($params){
+    public function loginByEmail($params)
+    {
 
         $validator = Validator::make($params, [
             'user_email' => 'required|email',
@@ -242,7 +253,7 @@ class UserService
         }
 
         $user = $this->user->findOne($params);
-        if(!$user) {
+        if (!$user) {
             return [
                 'status' => 409,
                 'data' => ['message' => 'User is not exist'],
@@ -264,8 +275,7 @@ class UserService
         $client = new Client($account_sid, $auth_token);
         try {
             $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
-        }
-        catch (Throwable $e) {
+        } catch (Throwable $e) {
             report($e);
         }
     }

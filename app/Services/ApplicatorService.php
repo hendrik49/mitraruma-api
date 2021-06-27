@@ -36,7 +36,7 @@ class ApplicatorService
         $user = $this->user->create($params);
 
         if($user['status'] == 201) {
-            $userId = $user['data']['ID'];
+            $userId = $user['data']['value']['ID'];
             foreach ($params['extension_attributes'] as $extension_attribute) {
                 $extension_attribute['user_id'] = $userId;
                 $this->userExt->create($extension_attribute);

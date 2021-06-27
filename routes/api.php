@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicatorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmsController;
+use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
@@ -74,5 +76,11 @@ Route::POST('/project', [ProjectController::class, 'store'])->middleware('jwt.us
 Route::PUT('/project/{id}', [ProjectController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/project/{id}', [ProjectController::class, 'destroy'])->middleware('jwt.user');
 Route::GET('/project/{id}', [ProjectController::class, 'show'])->middleware('jwt.user');
+
+Route::GET('/consultation', [ConsultationController::class, 'index'])->middleware('jwt.user');
+Route::POST('/consultation', [ConsultationController::class, 'store'])->middleware('jwt.user');
+Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.user');
+Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.user');
+Route::GET('/consultation/{id}', [ConsultationController::class, 'show'])->middleware('jwt.user');
 
 

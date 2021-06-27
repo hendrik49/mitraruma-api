@@ -80,11 +80,11 @@ class CmsService
             ];
         }
 
-        $extensionAttribute =$this->cms->create($params);
+        $cms = $this->cms->create($params);
 
         return [
             'status' => 201,
-            'data' => $extensionAttribute,
+            'data' => $cms,
         ];
     }
 
@@ -110,8 +110,8 @@ class CmsService
             ];
         }
 
-        $extensionAttribute = $this->cms->update($params, $id);
-        if (!$extensionAttribute) {
+        $cms = $this->cms->update($params, $id);
+        if (!$cms) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -120,7 +120,7 @@ class CmsService
 
         return [
             'status' => 200,
-            'data' => $extensionAttribute,
+            'data' => $cms,
         ];
     }
 
@@ -134,8 +134,8 @@ class CmsService
             ];
         }
 
-        $extensionAttribute = $this->cms->deleteById($id);
-        if (!$extensionAttribute) {
+        $cms = $this->cms->deleteById($id);
+        if (!$cms) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],

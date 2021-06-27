@@ -12,9 +12,9 @@ class CmsRepository
     }
 
     public function find($params){
-        $userExt = WpCms::query();
+        $cms = WpCms::query();
 
-        return $userExt->get();
+        return $cms->get();
     }
 
     public function create($params) {
@@ -23,32 +23,32 @@ class CmsRepository
 
     public function update($params, $id){
 
-        $userExt = WpCms::where('id', $id)->first();
-        if(!$userExt) {
-            return  $userExt;
+        $cms = WpCms::where('id', $id)->first();
+        if(!$cms) {
+            return  $cms;
         }
 
         if(isset($params['value'])) {
-            $userExt->value = $params['value'];
+            $cms->value = $params['value'];
         }
         try {
-            $userExt->save();
+            $cms->save();
         }
         catch (\Throwable $e){
             report($e->getMessage());
         }
 
-        return  $userExt;
+        return  $cms;
     }
 
     public function deleteByParams($params, $id) {
-        $userExt = WpCms::query();
-        $userExt->where('id', $id);
+        $cms = WpCms::query();
+        $cms->where('id', $id);
         if(isset($params['user_id'])) {
-            $userExt->where('user_id', $params['user_id']);
+            $cms->where('user_id', $params['user_id']);
 
         }
-        return $userExt->delete();
+        return $cms->delete();
     }
 
     public function deleteById($id) {

@@ -65,10 +65,7 @@ class UserAddressService
     public function create($params){
 
         $validator = Validator::make($params, [
-            'province' => 'required|string',
             'city' => 'required|string',
-            'district' => 'required|string',
-            'sub_district' => 'required|string',
             'zipcode' => 'required|string',
             'street' => 'required|string',
         ]);
@@ -99,10 +96,7 @@ class UserAddressService
     public function update($params, $id){
 
         $validator = Validator::make($params, [
-            'province' => 'required|string',
             'city' => 'required|string',
-            'district' => 'required|string',
-            'sub_district' => 'required|string',
             'zipcode' => 'required|string',
             'street' => 'required|string',
         ]);

@@ -129,8 +129,9 @@ class AuthController extends Controller
     {
 
         $params = $request->all();
+        $userAgent = strtoupper($request->header('user-agent'));
 
-        $result = $this->auth->loginGoogleByToken($params);
+        $result = $this->auth->loginGoogleByToken($params, $userAgent);
 
         return response()->json($result['data'], $result['status']);
 

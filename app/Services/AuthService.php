@@ -25,9 +25,10 @@ class AuthService
         $this->user = $user;
     }
 
-    public function loginGoogleByToken($params)
+    public function loginGoogleByToken($params, $userAgent)
     {
-        $client = new Google_Client(['client_id' => getenv('GOOGLE_CLIENT_APP_ID')]);  // Specify the CLIENT_ID of the app that accesses the backend
+        $clientAppId = getenv('GOOGLE_CLIENT_'.$userAgent.'_ID');
+        $client = new Google_Client(['client_id' => $clientAppId]);  // Specify the CLIENT_ID of the app that accesses the backend
         try {
 
             $payload = $client->verifyIdToken($params['token']);

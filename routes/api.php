@@ -4,9 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicatorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatroomController;
 use App\Http\Controllers\CmsController;
 use App\Http\Controllers\ConsultationController;
-use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
@@ -82,5 +82,11 @@ Route::POST('/consultation', [ConsultationController::class, 'store'])->middlewa
 Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.user');
 Route::GET('/consultation/{id}', [ConsultationController::class, 'show'])->middleware('jwt.user');
+
+Route::GET('/chatroom', [ChatroomController::class, 'index'])->middleware('jwt.user');
+Route::POST('/chatroom', [ChatroomController::class, 'store'])->middleware('jwt.user');
+Route::PUT('/chatroom/{id}', [ChatroomController::class, 'update'])->middleware('jwt.user');
+Route::DELETE('/chatroom/{id}', [ChatroomController::class, 'destroy'])->middleware('jwt.user');
+Route::GET('/chatroom/{id}', [ChatroomController::class, 'show'])->middleware('jwt.user');
 
 

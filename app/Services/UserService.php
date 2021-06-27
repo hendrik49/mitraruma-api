@@ -161,6 +161,24 @@ class UserService
         ];
     }
 
+
+    public function destroy($id){
+
+        $user = $this->user->deleteById($id);
+        if (!$user) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 202,
+            'data' => ['message' => 'Success deleted data'],
+        ];
+
+    }
+
     public function login($params)
     {
 

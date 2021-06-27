@@ -52,4 +52,8 @@ class UserRepository
         return  $user;
     }
 
+    public function deleteById($id) {
+        return WpUser::where('id', $id)->delete();
+    }
+
 }

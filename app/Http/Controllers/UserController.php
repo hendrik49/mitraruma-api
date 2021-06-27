@@ -93,7 +93,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $result = $this->user->destroy($id);
+
+        return response()->json($result['data'], $result['status']);
     }
 
 }

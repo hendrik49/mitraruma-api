@@ -64,6 +64,7 @@ Route::DELETE('/user/extension-attribute/{id}', [UserExtensionAttributeControlle
 Route::GET('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'show']);
 
 Route::GET('/user/{id}', [UserController::class, 'show']);
+Route::DELETE('/user/{id}', [UserController::class, 'destroy']);
 
 Route::GET('/cms', [CmsController::class, 'index'])->middleware('jwt.user');
 Route::POST('/cms', [CmsController::class, 'store'])->middleware('jwt.user');

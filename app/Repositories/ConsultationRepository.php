@@ -18,7 +18,19 @@ class ConsultationRepository
     }
 
     public function find($params){
-        return $this->model;
+
+        $model = $this->model;
+        if(isset($params['user_id'])) {
+            $model = $model->where('userId', '=', 1);
+        }
+        $snapshot = $model->documents();
+
+        $consultation = [];
+        foreach ($snapshot as $document) {
+            array_push($consultation, $document->data());
+        }
+
+        return $consultation;
     }
 
     public function create($params) {

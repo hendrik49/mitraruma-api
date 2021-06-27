@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ConsultationResource;
 use Illuminate\Support\Facades\Validator;
 
 class ConsultationService
@@ -41,6 +42,8 @@ class ConsultationService
             ];
         }
 
+        $consultation = ConsultationResource::fromFirebaseArray($consultation);
+
         return [
             'status' => 200,
             'data' => $consultation,
@@ -56,6 +59,8 @@ class ConsultationService
                 'data' => ['message' => 'Data not found'],
             ];
         }
+
+        $consultation = ConsultationResource::fromFirebase($consultation);
 
         return [
             'status' => 200,
@@ -74,7 +79,7 @@ class ConsultationService
             'contact' => 'required|string',
             'city' => 'required|string',
             'zipcode' => 'required|string',
-            'address' => 'required|string',
+            'street' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -92,12 +97,14 @@ class ConsultationService
             ];
         }
 
-        $params['email'] = $user['data']['user_email'];
-        $extensionAttribute =$this->consultation->create($params);
+        $params['user_email'] = $user['data']['user_email'];
+        $params['display_name'] = $user['data']['display_name'];
+        $newParams = ConsultationResource::toFirebase($params);
+        $consultation =$this->consultation->create($newParams);
 
         return [
             'status' => 201,
-            'data' => $extensionAttribute,
+            'data' => $consultation,
         ];
     }
 

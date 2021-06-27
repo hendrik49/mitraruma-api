@@ -26,4 +26,14 @@ class WpUserAddress extends Model
         'zipcode',
         'street',
     ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'deleted_at',
+    ];
+
 }

@@ -25,4 +25,14 @@ class WpCms extends Model
     protected $casts = [
         'value' => 'array'
     ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'deleted_at',
+    ];
+
 }

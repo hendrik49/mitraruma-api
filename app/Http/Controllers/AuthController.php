@@ -108,6 +108,7 @@ class AuthController extends Controller
         }
 
         $params['user_email'] = $user->getEmail();
+        $params['user_picture_url'] = $user->getAvatar();
         $userLogin = $this->user->loginByEmail($params);
         if($userLogin['status'] == 200) {
             return response()->json($userLogin['data'], $userLogin['status']);

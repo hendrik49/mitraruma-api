@@ -34,6 +34,7 @@ class AuthService
             $payload = $client->verifyIdToken($params['token']);
             if ($payload) {
                 $params['user_email'] = $payload['email'];
+                $params['user_picture_url'] = $payload['picture'];
                 $userLogin = $this->user->loginByEmail($params);
                 if ($userLogin['status'] == 200) {
                     return $userLogin;

@@ -296,7 +296,7 @@ class UserService
         $client = new Client($account_sid, $auth_token);
         try {
             $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             report($e);
         }
     }

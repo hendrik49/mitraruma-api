@@ -276,6 +276,9 @@ class UserService
                 'status' => 409,
                 'data' => ['message' => 'User is not exist'],
             ];
+        }else{
+            $user->update($params);
+            $user->save();
         }
 
         $token = $this->jwt->encode($user);

@@ -54,6 +54,7 @@ class ChatroomResource
 
     private static function convertFromFirebase($param){
         return [
+            'id' => $param['id'],
             'user_id' => $param['userId'],
             'user_email' => $param['email'] ?? '',
             'display_name' => $param['name'] ?? '',

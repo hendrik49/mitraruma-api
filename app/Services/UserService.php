@@ -291,6 +291,7 @@ class UserService
 
     private function sendMessage($message, $recipients)
     {
+        return true;
         $account_sid = getenv("TWILIO_SID");
         $auth_token = getenv("TWILIO_AUTH_TOKEN");
         $twilio_number = getenv("TWILIO_NUMBER");

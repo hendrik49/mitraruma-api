@@ -10,6 +10,8 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
+use App\Http\Controllers\UserChatroomController;
+use App\Http\Controllers\UserConsultationController;
 use App\Http\Controllers\UserExtensionAttributeController;
 use App\Http\Controllers\UserProfileController;
 
@@ -51,6 +53,20 @@ Route::POST('/user/profile/extension-attribute', [UserExtensionAttributeControll
 Route::PUT('/user/profile/extension-attribute/{id}', [UserExtensionAttributeController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/user/profile/extension-attribute/{id}', [UserExtensionAttributeController::class, 'destroy'])->middleware('jwt.user');
 
+Route::GET('/user/consultation', [UserConsultationController::class, 'index'])->middleware('jwt.user');
+Route::POST('/user/consultation', [UserConsultationController::class, 'store'])->middleware('jwt.user');
+Route::PUT('/user/consultation/{id}', [UserConsultationController::class, 'update'])->middleware('jwt.user');
+Route::DELETE('/user/consultation/{id}', [UserConsultationController::class, 'destroy'])->middleware('jwt.user');
+Route::GET('/user/consultation/{id}', [UserConsultationController::class, 'show'])->middleware('jwt.user');
+
+Route::GET('/user/chatroom', [UserChatroomController::class, 'index'])->middleware('jwt.user');
+Route::POST('/user/chatroom', [UserChatroomController::class, 'store'])->middleware('jwt.user');
+Route::PUT('/user/chatroom/{id}', [UserChatroomController::class, 'update'])->middleware('jwt.user');
+Route::DELETE('/user/chatroom/{id}', [UserChatroomController::class, 'destroy'])->middleware('jwt.user');
+Route::GET('/user/chatroom/{id}', [UserChatroomController::class, 'show'])->middleware('jwt.user');
+
+
+//ADMIN SITE
 Route::GET('/user/address', [UserAddressController::class, 'index']);
 Route::POST('/user/address', [UserAddressController::class, 'store']);
 Route::PUT('/user/address/{id}', [UserAddressController::class, 'update']);
@@ -78,13 +94,13 @@ Route::PUT('/project/{id}', [ProjectController::class, 'update'])->middleware('j
 Route::DELETE('/project/{id}', [ProjectController::class, 'destroy'])->middleware('jwt.user');
 Route::GET('/project/{id}', [ProjectController::class, 'show'])->middleware('jwt.user');
 
-Route::GET('/consultation', [ConsultationController::class, 'index'])->middleware('jwt.user');
+Route::GET('/consultation', [ConsultationController::class, 'index']) ;
 Route::POST('/consultation', [ConsultationController::class, 'store'])->middleware('jwt.user');
 Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.user');
 Route::GET('/consultation/{id}', [ConsultationController::class, 'show'])->middleware('jwt.user');
 
-Route::GET('/chatroom', [ChatroomController::class, 'index'])->middleware('jwt.user');
+Route::GET('/chatroom', [ChatroomController::class, 'index']);
 Route::POST('/chatroom', [ChatroomController::class, 'store'])->middleware('jwt.user');
 Route::PUT('/chatroom/{id}', [ChatroomController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/chatroom/{id}', [ChatroomController::class, 'destroy'])->middleware('jwt.user');

@@ -14,7 +14,13 @@ class ChatroomRepository
     }
 
     public function findById($id){
-        return $this->model->document($id)->snapshot()->data();
+        $model = $this->model->document($id)->snapshot();
+        if($model->data()){
+            $chatroom = $model->data();
+            $chatroom['id'] = $model->id();
+            return $chatroom;
+        }
+        return null;
     }
 
     public function find($params){
@@ -25,12 +31,14 @@ class ChatroomRepository
         }
         $snapshot = $model->documents();
 
-        $consultation = [];
+        $chatrooms = [];
         foreach ($snapshot as $document) {
-            array_push($consultation, $document->data());
+            $chatroom = $document->data();
+            $chatroom['id'] = $document->id();
+            array_push($chatrooms, $chatroom);
         }
 
-        return $consultation;
+        return $chatrooms;
     }
 
     public function create($params) {

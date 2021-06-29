@@ -14,7 +14,13 @@ class ConsultationRepository
     }
 
     public function findById($id){
-        return $this->model->document($id)->snapshot()->data();
+        $model = $this->model->document($id)->snapshot();
+        if($model->data()){
+            $consultation = $model->data();
+            $consultation['id'] = $model->id();
+            return $consultation;
+        }
+        return null;
     }
 
     public function find($params){
@@ -25,12 +31,14 @@ class ConsultationRepository
         }
         $snapshot = $model->documents();
 
-        $consultation = [];
+        $consultations = [];
         foreach ($snapshot as $document) {
-            array_push($consultation, $document->data());
+            $consultation = $document->data();
+            $consultation['id'] = $document->id();
+            array_push($consultations, $consultation);
         }
 
-        return $consultation;
+        return $consultations;
     }
 
     public function create($params) {

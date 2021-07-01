@@ -7,7 +7,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatroomController;
 use App\Http\Controllers\CmsController;
 use App\Http\Controllers\ConsultationController;
-use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserChatroomController;
@@ -67,43 +66,37 @@ Route::GET('/user/chatroom/{id}', [UserChatroomController::class, 'show'])->midd
 
 
 //ADMIN SITE
-Route::GET('/user/address', [UserAddressController::class, 'index']);
-Route::POST('/user/address', [UserAddressController::class, 'store']);
-Route::PUT('/user/address/{id}', [UserAddressController::class, 'update']);
-Route::DELETE('/user/address/{id}', [UserAddressController::class, 'destroy']);
-Route::GET('/user/address/{id}', [UserAddressController::class, 'show']);
+Route::GET('/user/address', [UserAddressController::class, 'index'])->middleware('jwt.admin');
+Route::POST('/user/address', [UserAddressController::class, 'store'])->middleware('jwt.admin');
+Route::PUT('/user/address/{id}', [UserAddressController::class, 'update'])->middleware('jwt.admin');
+Route::DELETE('/user/address/{id}', [UserAddressController::class, 'destroy'])->middleware('jwt.admin');
+Route::GET('/user/address/{id}', [UserAddressController::class, 'show'])->middleware('jwt.admin');
 
-Route::GET('/user/extension-attribute', [UserExtensionAttributeController::class, 'index']);
-Route::POST('/user/extension-attribute', [UserExtensionAttributeController::class, 'store']);
-Route::PUT('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'update']);
-Route::DELETE('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'destroy']);
-Route::GET('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'show']);
+Route::GET('/user/extension-attribute', [UserExtensionAttributeController::class, 'index'])->middleware('jwt.admin');
+Route::POST('/user/extension-attribute', [UserExtensionAttributeController::class, 'store'])->middleware('jwt.admin');
+Route::PUT('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'update'])->middleware('jwt.admin');
+Route::DELETE('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'destroy'])->middleware('jwt.admin');
+Route::GET('/user/extension-attribute/{id}', [UserExtensionAttributeController::class, 'show'])->middleware('jwt.admin');
 
-Route::GET('/user/{id}', [UserController::class, 'show']);
-Route::DELETE('/user/{id}', [UserController::class, 'destroy']);
+Route::GET('/user/{id}', [UserController::class, 'show'])->middleware('jwt.admin');
+Route::DELETE('/user/{id}', [UserController::class, 'destroy'])->middleware('jwt.admin');
 
-Route::GET('/cms', [CmsController::class, 'index'])->middleware('jwt.user');
-Route::POST('/cms', [CmsController::class, 'store'])->middleware('jwt.user');
-Route::PUT('/cms/{id}', [CmsController::class, 'update'])->middleware('jwt.user');
-Route::DELETE('/cms/{id}', [CmsController::class, 'destroy'])->middleware('jwt.user');
+Route::GET('/cms', [CmsController::class, 'index'])->middleware('jwt.admin');
+Route::POST('/cms', [CmsController::class, 'store'])->middleware('jwt.admin');
+Route::PUT('/cms/{id}', [CmsController::class, 'update'])->middleware('jwt.admin');
+Route::DELETE('/cms/{id}', [CmsController::class, 'destroy'])->middleware('jwt.admin');
 Route::GET('/cms/{id}', [CmsController::class, 'show']);
 
-Route::GET('/project', [ProjectController::class, 'index'])->middleware('jwt.user');
-Route::POST('/project', [ProjectController::class, 'store'])->middleware('jwt.user');
-Route::PUT('/project/{id}', [ProjectController::class, 'update'])->middleware('jwt.user');
-Route::DELETE('/project/{id}', [ProjectController::class, 'destroy'])->middleware('jwt.user');
-Route::GET('/project/{id}', [ProjectController::class, 'show'])->middleware('jwt.user');
+Route::GET('/consultation', [ConsultationController::class, 'index'])->middleware('jwt.admin') ;
+Route::POST('/consultation', [ConsultationController::class, 'store'])->middleware('jwt.admin');
+Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.admin');
+Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.admin');
+Route::GET('/consultation/{id}', [ConsultationController::class, 'show'])->middleware('jwt.admin');
 
-Route::GET('/consultation', [ConsultationController::class, 'index']) ;
-Route::POST('/consultation', [ConsultationController::class, 'store'])->middleware('jwt.user');
-Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.user');
-Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.user');
-Route::GET('/consultation/{id}', [ConsultationController::class, 'show'])->middleware('jwt.user');
-
-Route::GET('/chatroom', [ChatroomController::class, 'index']);
-Route::POST('/chatroom', [ChatroomController::class, 'store'])->middleware('jwt.user');
-Route::PUT('/chatroom/{id}', [ChatroomController::class, 'update'])->middleware('jwt.user');
-Route::DELETE('/chatroom/{id}', [ChatroomController::class, 'destroy'])->middleware('jwt.user');
-Route::GET('/chatroom/{id}', [ChatroomController::class, 'show'])->middleware('jwt.user');
+Route::GET('/chatroom', [ChatroomController::class, 'index'])->middleware('jwt.admin');
+Route::POST('/chatroom', [ChatroomController::class, 'store'])->middleware('jwt.admin');
+Route::PUT('/chatroom/{id}', [ChatroomController::class, 'update'])->middleware('jwt.admin');
+Route::DELETE('/chatroom/{id}', [ChatroomController::class, 'destroy'])->middleware('jwt.admin');
+Route::GET('/chatroom/{id}', [ChatroomController::class, 'show'])->middleware('jwt.admin');
 
 

@@ -2,35 +2,41 @@
 
 namespace App\Services;
 
-use App\Http\Resources\ChatroomResource;
+use App\Repositories\OrderStatusRepository;
 use Illuminate\Support\Facades\Validator;
 
-class ChatroomService
+class OrderStatusService
 {
+
     /**
-     * @var \App\Repositories\ChatroomRepository
+     * @var orderStatusRepository
      */
-    private $chatroom;
+    private $orderStatus;
+
+    /**
+     * @var UserService
+     */
+    private $user;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\UserService $user
-     * @param  \App\Repositories\ChatroomRepository $chatroom
+     * @param  OrderStatusRepository $orderStatus
+     * @param UserService $user
      * @return void
      */
     public function __construct(
-        \App\Services\UserService $user,
-        \App\Repositories\ChatroomRepository $chatroom
+        OrderStatusRepository $orderStatus,
+        UserService $user
     ) {
+        $this->orderStatus = $orderStatus;
         $this->user = $user;
-        $this->chatroom = $chatroom;
     }
 
     public function index($params){
 
-        $chatroom = $this->chatroom->find($params);
-        if (!$chatroom) {
+        $orderStatus = $this->orderStatus->find($params);
+        if (!$orderStatus) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -39,14 +45,14 @@ class ChatroomService
 
         return [
             'status' => 200,
-            'data' => $chatroom,
+            'data' => $orderStatus,
         ];
     }
 
     public function show($id){
 
-        $chatroom = $this->chatroom->findById($id);
-        if (!$chatroom) {
+        $orderStatus = $this->orderStatus->findById($id);
+        if (!$orderStatus) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -55,7 +61,7 @@ class ChatroomService
 
         return [
             'status' => 200,
-            'data' => $chatroom,
+            'data' => $orderStatus,
         ];
     }
 
@@ -89,20 +95,27 @@ class ChatroomService
         }
 
         $params['user_email'] = $user['data']['user_email'];
-        $newParams = ChatroomResource::toFirebase($params);
-        $chatroom = $this->chatroom->create($newParams);
+        $params['display_name'] = $user['data']['display_name'];
+        $orderStatus =$this->orderStatus->create($params);
 
         return [
             'status' => 201,
-            'data' => $chatroom,
+            'data' => $orderStatus,
         ];
     }
 
     public function update($params, $id){
 
         $validator = Validator::make($params, [
-            'name' => 'required|string',
-            'value' => 'required',
+            'user_id' => 'required|integer',
+            'vendor_user_id' => 'integer',
+            'description' => 'required|string',
+            'photos' => 'array',
+            'estimated_budget' => 'numeric',
+            'contact' => 'required|string',
+            'city' => 'required|string',
+            'zipcode' => 'required|string',
+            'address' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -120,10 +133,9 @@ class ChatroomService
             ];
         }
 
-        $params['user_email'] = $user['data']['user_email'];
-        $newParams = ChatroomResource::toFirebase($params);
-        $chatroom = $this->chatroom->update($params, $id);
-        if (!$chatroom) {
+        $params['email'] = $user['data']['user_email'];
+        $orderStatus = $this->orderStatus->update($params, $id);
+        if (!$orderStatus) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -132,7 +144,7 @@ class ChatroomService
 
         return [
             'status' => 200,
-            'data' => $chatroom,
+            'data' => $orderStatus,
         ];
     }
 
@@ -146,8 +158,8 @@ class ChatroomService
             ];
         }
 
-        $chatroom = $this->chatroom->deleteById($id);
-        if (!$chatroom) {
+        $orderStatus = $this->orderStatus->deleteById($id);
+        if (!$orderStatus) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -160,22 +172,5 @@ class ChatroomService
         ];
 
     }
-
-    public function showByFilter($params){
-
-        $chatroom = $this->chatroom->find($params);
-        if (!$chatroom) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'Data not found'],
-            ];
-        }
-
-        return [
-            'status' => 200,
-            'data' => $chatroom,
-        ];
-    }
-
 
 }

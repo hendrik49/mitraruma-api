@@ -98,4 +98,30 @@ class ConsultationController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showStatus($id)
+    {
+        $result = $this->consultation->showStatus($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showChatFiles($id)
+    {
+        $result = $this->consultation->showChatFiles($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
 }

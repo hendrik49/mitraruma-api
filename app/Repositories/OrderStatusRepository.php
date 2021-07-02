@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-class ConsultationRepository
+class OrderStatusRepository
 {
 
     private $model;
@@ -10,15 +10,15 @@ class ConsultationRepository
     public function __construct(
         \App\Services\FirebaseService $firebase
     ) {
-        $this->model = $firebase->database('consultation');
+        $this->model = $firebase->database('orderStatus');
     }
 
     public function findById($id){
         $model = $this->model->document($id)->snapshot();
         if($model->data()){
-            $consultation = $model->data();
-            $consultation['id'] = $model->id();
-            return $consultation;
+            $consultationStatus = $model->data();
+            $consultationStatus['id'] = $model->id();
+            return $consultationStatus;
         }
         return null;
     }
@@ -29,14 +29,14 @@ class ConsultationRepository
         $model = $this->filterBuilder($model, $params);
         $snapshot = $model->documents();
 
-        $consultations = [];
+        $consultationStatuss = [];
         foreach ($snapshot as $document) {
-            $consultation = $document->data();
-            $consultation['id'] = $document->id();
-            array_push($consultations, $consultation);
+            $consultationStatus = $document->data();
+            $consultationStatus['id'] = $document->id();
+            array_push($consultationStatuss, $consultationStatus);
         }
 
-        return $consultations;
+        return $consultationStatuss;
     }
 
     public function create($params) {
@@ -60,9 +60,8 @@ class ConsultationRepository
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
         $model = $model->limit($params['limit'] ?? 10);
-        $model = $model->orderBy('consultationId');
+        $model = $model->orderBy('roomId');
         $model = $model->startAfter([$params['start_after'] ?? '']);
-        $model = $model->endAt([$params['end_at'] ?? '']);
 
         return $model;
 

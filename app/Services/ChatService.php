@@ -2,35 +2,38 @@
 
 namespace App\Services;
 
-use App\Http\Resources\ChatroomResource;
 use Illuminate\Support\Facades\Validator;
 
-class ChatroomService
+class ChatService
 {
     /**
-     * @var \App\Repositories\ChatroomRepository
+     * @var \App\Repositories\ChatRepository
      */
-    private $chatroom;
+    private $chat;
+    /**
+     * @var UserService
+     */
+    private $user;
 
     /**
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService $user
-     * @param  \App\Repositories\ChatroomRepository $chatroom
+     * @param  \App\Repositories\ChatRepository $chat
      * @return void
      */
-    public function __construct(
+    public function __construct(api
         \App\Services\UserService $user,
-        \App\Repositories\ChatroomRepository $chatroom
+        \App\Repositories\ChatRepository $chat
     ) {
         $this->user = $user;
-        $this->chatroom = $chatroom;
+        $this->chat = $chat;
     }
 
     public function index($params){
 
-        $chatroom = $this->chatroom->find($params);
-        if (!$chatroom) {
+        $chat = $this->chat->find($params);
+        if (!$chat) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -39,14 +42,14 @@ class ChatroomService
 
         return [
             'status' => 200,
-            'data' => $chatroom,
+            'data' => $chat,
         ];
     }
 
     public function show($id){
 
-        $chatroom = $this->chatroom->findById($id);
-        if (!$chatroom) {
+        $chat = $this->chat->findById($id);
+        if (!$chat) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -55,7 +58,7 @@ class ChatroomService
 
         return [
             'status' => 200,
-            'data' => $chatroom,
+            'data' => $chat,
         ];
     }
 
@@ -89,12 +92,11 @@ class ChatroomService
         }
 
         $params['user_email'] = $user['data']['user_email'];
-        $newParams = ChatroomResource::toFirebase($params);
-        $chatroom = $this->chatroom->create($newParams);
+        $chat = $this->chat->create($params);
 
         return [
             'status' => 201,
-            'data' => $chatroom,
+            'data' => $chat,
         ];
     }
 
@@ -121,9 +123,8 @@ class ChatroomService
         }
 
         $params['user_email'] = $user['data']['user_email'];
-        $newParams = ChatroomResource::toFirebase($params);
-        $chatroom = $this->chatroom->update($params, $id);
-        if (!$chatroom) {
+        $chat = $this->chat->update($params, $id);
+        if (!$chat) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -132,7 +133,7 @@ class ChatroomService
 
         return [
             'status' => 200,
-            'data' => $chatroom,
+            'data' => $chat,
         ];
     }
 
@@ -146,8 +147,8 @@ class ChatroomService
             ];
         }
 
-        $chatroom = $this->chatroom->deleteById($id);
-        if (!$chatroom) {
+        $chat = $this->chat->deleteById($id);
+        if (!$chat) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -161,10 +162,10 @@ class ChatroomService
 
     }
 
-    public function showByFilter($params){
+    public function showFilesById($id){
 
-        $chatroom = $this->chatroom->find($params);
-        if (!$chatroom) {
+        $chat = $this->chat->findFilesById($id);
+        if (!$chat) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -173,7 +174,7 @@ class ChatroomService
 
         return [
             'status' => 200,
-            'data' => $chatroom,
+            'data' => $chat,
         ];
     }
 

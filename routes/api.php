@@ -92,6 +92,8 @@ Route::POST('/consultation', [ConsultationController::class, 'store'])->middlewa
 Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.admin');
 Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.admin');
 Route::GET('/consultation/{id}', [ConsultationController::class, 'show'])->middleware('jwt.admin');
+Route::GET('/consultation/{id}/status', [ConsultationController::class, 'showStatus'])->middleware('jwt.admin');
+Route::GET('/consultation/{id}/chat-files', [ConsultationController::class, 'showChatFiles'])->middleware('jwt.admin');
 
 Route::GET('/chatroom', [ChatroomController::class, 'index'])->middleware('jwt.admin');
 Route::POST('/chatroom', [ChatroomController::class, 'store'])->middleware('jwt.admin');

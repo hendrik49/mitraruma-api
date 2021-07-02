@@ -3,36 +3,63 @@
 namespace App\Services;
 
 use App\Http\Resources\ConsultationResource;
+use App\Repositories\ConsultationRepository;
 use Illuminate\Support\Facades\Validator;
 
 class ConsultationService
 {
+
+    /**
+     * @var ConsultationRepository
+     */
+    private $consultation;
+
+    /**
+     * @var ChatroomService
+     */
+    private $chatroom;
+
+    /**
+     * @var ChatService
+     */
+    private $chat;
+
     /**
      * @var UserService
      */
     private $user;
 
     /**
-     * @var \App\Repositories\ConsultationRepository
+     * @var OrderStatusService
      */
-    private $consultation;
-
+    private $orderStatus;
     /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\UserService $user
-     * @param  \App\Repositories\ConsultationRepository $consultation
+     * @param ConsultationRepository $consultation
+     * @param ChatroomService $chatroom
+     * @param ChatService $chat
+     * @param OrderStatusService $orderStatus
+     * @param UserService $user
      * @return void
      */
     public function __construct(
-        \App\Services\UserService $user,
-        \App\Repositories\ConsultationRepository $consultation
-    ) {
-        $this->user = $user;
+        ConsultationRepository $consultation,
+        ChatroomService $chatroom,
+        ChatService $chat,
+        OrderStatusService $orderStatus,
+        UserService $user
+    )
+    {
         $this->consultation = $consultation;
+        $this->chatroom = $chatroom;
+        $this->chat = $chat;
+        $this->orderStatus = $orderStatus;
+        $this->user = $user;
     }
 
-    public function index($params){
+    public function index($params)
+    {
 
         $consultation = $this->consultation->find($params);
         if (!$consultation) {
@@ -50,7 +77,8 @@ class ConsultationService
         ];
     }
 
-    public function show($id){
+    public function show($id)
+    {
 
         $consultation = $this->consultation->findById($id);
         if (!$consultation) {
@@ -68,7 +96,8 @@ class ConsultationService
         ];
     }
 
-    public function create($params){
+    public function create($params)
+    {
 
         $validator = Validator::make($params, [
             'user_id' => 'required|integer',
@@ -90,7 +119,7 @@ class ConsultationService
         }
 
         $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
+        if ($user['status'] != 200) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'User not found'],
@@ -100,7 +129,7 @@ class ConsultationService
         $params['user_email'] = $user['data']['user_email'];
         $params['display_name'] = $user['data']['display_name'];
         $newParams = ConsultationResource::toFirebase($params);
-        $consultation =$this->consultation->create($newParams);
+        $consultation = $this->consultation->create($newParams);
 
         return [
             'status' => 201,
@@ -108,7 +137,8 @@ class ConsultationService
         ];
     }
 
-    public function update($params, $id){
+    public function update($params, $id)
+    {
 
         $validator = Validator::make($params, [
             'user_id' => 'required|integer',
@@ -130,7 +160,7 @@ class ConsultationService
         }
 
         $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
+        if ($user['status'] != 200) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'User not found'],
@@ -152,10 +182,11 @@ class ConsultationService
         ];
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
         $user = $this->user->show(1);
-        if($user['status'] != 200) {
+        if ($user['status'] != 200) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'User not found'],
@@ -175,6 +206,57 @@ class ConsultationService
             'data' => ['message' => 'Success deleted data'],
         ];
 
+    }
+
+    public function showStatus($id)
+    {
+
+        $params['consultation_id'] = $id;
+        $consultation = $this->chatroom->showByFilter($params);
+        if (!$consultation) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $consultationStatus = [];
+        foreach ($consultation['data'] as $data) {
+            $orderStatus = $this->orderStatus->show($data['roomId']);
+            if ($orderStatus['status'] == 200) {
+                array_push($consultationStatus, $orderStatus['data']['data']);
+            }
+        }
+
+        return [
+            'status' => 200,
+            'data' => $consultationStatus,
+        ];
+    }
+
+    public function showChatFiles($id)
+    {
+
+        $params['consultation_id'] = $id;
+        $consultation = $this->chatroom->showByFilter($params);
+        if (!$consultation) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+        $chatFiles = [];
+        foreach ($consultation['data'] as $data) {
+            $chat = $this->chat->showFilesById($data['roomId']);
+            if ($chat['status'] == 200) {
+                array_push($chatFiles, $chat['data']);
+            }
+        }
+
+        return [
+            'status' => 200,
+            'data' => $chatFiles,
+        ];
     }
 
 

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-class ConsultationRepository
+class ChatRepository
 {
 
     private $model;
@@ -10,17 +10,32 @@ class ConsultationRepository
     public function __construct(
         \App\Services\FirebaseService $firebase
     ) {
-        $this->model = $firebase->database('consultation');
+        $this->firebase = $firebase;
+        $this->model = $firebase->database('chat');
     }
 
     public function findById($id){
-        $model = $this->model->document($id)->snapshot();
-        if($model->data()){
-            $consultation = $model->data();
-            $consultation['id'] = $model->id();
-            return $consultation;
+        $model = $this->firebase->database("chat/$id/data");
+        $model = $model->where('file' ,'!=', 'null');
+        $result = $model->documents();
+        $chat = [];
+        foreach ($result as $value) {
+            $data = $value->data();
+            array_push($chat, $data);
         }
-        return null;
+        return $chat;
+    }
+
+    public function findFilesById($id){
+        $model = $this->firebase->database("chat/$id/data");
+        $model = $model->where('file' ,'!=', 'null');
+        $result = $model->documents();
+        $chat = [];
+        foreach ($result as $value) {
+            $data = $value->data();
+            array_push($chat, $data);
+        }
+        return $chat;
     }
 
     public function find($params){
@@ -29,14 +44,14 @@ class ConsultationRepository
         $model = $this->filterBuilder($model, $params);
         $snapshot = $model->documents();
 
-        $consultations = [];
+        $chatrooms = [];
         foreach ($snapshot as $document) {
-            $consultation = $document->data();
-            $consultation['id'] = $document->id();
-            array_push($consultations, $consultation);
+            $chatroom = $document->data();
+            $chatroom['id'] = $document->id();
+            array_push($chatrooms, $chatroom);
         }
 
-        return $consultations;
+        return $chatrooms;
     }
 
     public function create($params) {
@@ -60,9 +75,8 @@ class ConsultationRepository
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
         $model = $model->limit($params['limit'] ?? 10);
-        $model = $model->orderBy('consultationId');
+        $model = $model->orderBy('roomId');
         $model = $model->startAfter([$params['start_after'] ?? '']);
-        $model = $model->endAt([$params['end_at'] ?? '']);
 
         return $model;
 

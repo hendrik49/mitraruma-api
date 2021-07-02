@@ -26,9 +26,7 @@ class ChatroomRepository
     public function find($params){
 
         $model = $this->model;
-        if(isset($params['user_id'])) {
-            $model = $model->where('userId', '=', 1);
-        }
+        $model = $this->filterBuilder($model, $params);
         $snapshot = $model->documents();
 
         $chatrooms = [];
@@ -51,6 +49,22 @@ class ChatroomRepository
 
     public function deleteById($id) {
         return $this->model->document($id)->delete();
+    }
+
+    private function filterBuilder($model, $params) {
+
+        if(isset($params['user_id'])) {
+            $model = $model->where('userId', '=', $params['user_id']);
+        }
+        if(isset($params['consultation_id'])) {
+            $model = $model->where('consultationId', '=', $params['consultation_id']);
+        }
+        $model = $model->limit($params['limit'] ?? 10);
+        $model = $model->orderBy('roomId');
+        $model = $model->startAfter([$params['start_after'] ?? '']);
+
+        return $model;
+
     }
 
 }

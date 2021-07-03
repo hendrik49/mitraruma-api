@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class CmsSeeder extends Seeder
 {
-    private $cmsName = ['skill-set','area-coverage', 'category-list', 'benefit-video', 'benefits-list'];
+    private $cmsName = ['skill-set','area-coverage', 'category-list', 'benefit-video', 'benefits-list', 'banner'];
 
     /**
      * Run the database seeds.

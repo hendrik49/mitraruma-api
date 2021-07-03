@@ -25,10 +25,6 @@ use App\Http\Controllers\UserProfileController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::POST('/login', [AuthController::class, 'login']);
 Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
 //Route::POST('/login/email', [AuthController::class, 'loginByEmail']); //This route is only for testing
@@ -86,8 +82,9 @@ Route::POST('/cms', [CmsController::class, 'store'])->middleware('jwt.admin');
 Route::PUT('/cms/{id}', [CmsController::class, 'update'])->middleware('jwt.admin');
 Route::DELETE('/cms/{id}', [CmsController::class, 'destroy'])->middleware('jwt.admin');
 Route::GET('/cms/{id}', [CmsController::class, 'show']);
+Route::GET('/cms/name/{name}', [CmsController::class, 'showByName']);
 
-Route::GET('/consultation', [ConsultationController::class, 'index'])->middleware('jwt.admin') ;
+Route::GET('/consultation', [ConsultationController::class, 'index'])->middleware('jwt.admin');
 Route::POST('/consultation', [ConsultationController::class, 'store'])->middleware('jwt.admin');
 Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.admin');
 Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.admin');

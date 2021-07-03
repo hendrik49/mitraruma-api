@@ -13,6 +13,7 @@ class CmsRepository
 
     public function find($params){
         $cms = WpCms::query();
+        $cms = $this->filterBuilder($cms, $params);
 
         return $cms->get();
     }
@@ -53,6 +54,16 @@ class CmsRepository
 
     public function deleteById($id) {
         return WpCms::where('id', $id)->delete();
+    }
+
+    private function filterBuilder($model, $params) {
+
+        if(isset($params['name'])) {
+            $model = $model->where('name', '=', $params['name']);
+        }
+
+        return $model;
+
     }
 
 }

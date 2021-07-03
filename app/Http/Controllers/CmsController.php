@@ -53,6 +53,21 @@ class CmsController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showByName($name)
+    {
+
+        $params['name'] = $name;
+        $result = $this->cms->showByName($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

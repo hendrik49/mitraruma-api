@@ -22,7 +22,7 @@ class ChatService
      * @param  \App\Repositories\ChatRepository $chat
      * @return void
      */
-    public function __construct(api
+    public function __construct(
         \App\Services\UserService $user,
         \App\Repositories\ChatRepository $chat
     ) {

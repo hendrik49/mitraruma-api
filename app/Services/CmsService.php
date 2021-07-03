@@ -58,6 +58,22 @@ class CmsService
         ];
     }
 
+    public function showByName($params){
+
+        $cms = $this->cms->find($params);
+        if (!$cms || sizeof($cms) == 0) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $cms[0],
+        ];
+    }
+
     public function create($params){
 
         $validator = Validator::make($params, [

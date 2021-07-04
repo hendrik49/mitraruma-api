@@ -33,6 +33,7 @@ class ConsultationService
      * @var OrderStatusService
      */
     private $orderStatus;
+
     /**
      * Create a new controller instance.
      *
@@ -224,7 +225,7 @@ class ConsultationService
         foreach ($consultation['data'] as $data) {
             $orderStatus = $this->orderStatus->show($data['roomId']);
             if ($orderStatus['status'] == 200) {
-                array_push($consultationStatus, $orderStatus['data']['data']);
+                array_push($consultationStatus, ['room_type' => $data['roomType'], 'value' => $orderStatus['data']]);
             }
         }
 
@@ -249,7 +250,7 @@ class ConsultationService
         foreach ($consultation['data'] as $data) {
             $chat = $this->chat->showFilesById($data['roomId']);
             if ($chat['status'] == 200) {
-                array_push($chatFiles, $chat['data']);
+                array_push($chatFiles, ['room_type' => $data['roomType'], 'value' => $chat['data']]);
             }
         }
 

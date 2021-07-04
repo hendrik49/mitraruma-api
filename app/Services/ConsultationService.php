@@ -108,7 +108,7 @@ class ConsultationService
             'estimated_budget' => 'numeric',
             'contact' => 'required|string',
             'city' => 'required|string',
-            'zipcode' => 'required|string',
+            'zipcode' => 'string',
             'street' => 'required|string',
         ]);
 
@@ -149,7 +149,7 @@ class ConsultationService
             'estimated_budget' => 'numeric',
             'contact' => 'required|string',
             'city' => 'required|string',
-            'zipcode' => 'required|string',
+            'zipcode' => 'string',
             'address' => 'required|string',
         ]);
 

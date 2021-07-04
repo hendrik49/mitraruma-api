@@ -60,8 +60,8 @@ class ConsultationRepository
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
         $model = $model->limit($params['limit'] ?? 10);
-        $model = $model->orderBy('consultationId');
         if(isset($params['start_after'])) {
+            $model = $model->orderBy('consultationId');
             $model = $model->startAfter([$params['start_after'] ?? '']);
         }
         if(isset($params['end_at'])) {

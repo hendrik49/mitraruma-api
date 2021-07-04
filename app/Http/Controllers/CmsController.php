@@ -86,14 +86,15 @@ class CmsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $params = $request->all();
 
-        $result = $this->cms->update($params, $params['user_id']);
+        $result = $this->cms->update($params, $id);
 
         return response()->json($result['data'], $result['status']);
     }

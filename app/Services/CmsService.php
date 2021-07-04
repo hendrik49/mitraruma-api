@@ -88,14 +88,6 @@ class CmsService
             ];
         }
 
-        $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-
         $cms = $this->cms->create($params);
 
         return [
@@ -115,14 +107,6 @@ class CmsService
             return [
                 'status' => 422,
                 'data' => ['message' => $validator->errors()->first()]
-            ];
-        }
-
-        $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
             ];
         }
 

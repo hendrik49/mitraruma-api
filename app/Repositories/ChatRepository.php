@@ -14,9 +14,8 @@ class ChatRepository
         $this->model = $firebase->database('chat');
     }
 
-    public function findById($id){
-        $model = $this->firebase->database("chat/$id/data");
-        $model = $model->where('file' ,'!=', 'null');
+    public function findById($roomId){
+        $model = $this->firebase->database("chat/$roomId/data");
         $result = $model->documents();
         $chat = [];
         foreach ($result as $value) {
@@ -54,8 +53,10 @@ class ChatRepository
         return $chatrooms;
     }
 
-    public function create($params) {
-        return $this->model->newDocument()->set($params);
+    public function create($params, $roomId) {
+        $model = $this->model->document($roomId);
+        $model->collection('data')->newDocument()->set($params);
+        return $this->findById($roomId);
     }
 
     public function update($params, $id){

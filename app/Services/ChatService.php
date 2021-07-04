@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ChatResource;
 use Illuminate\Support\Facades\Validator;
 
 class ChatService
@@ -62,18 +63,11 @@ class ChatService
         ];
     }
 
-    public function create($params){
+    public function create($params, $roomId){
 
         $validator = Validator::make($params, [
-            'user_id' => 'required|integer',
-            'vendor_user_id' => 'integer',
-            'description' => 'required|string',
-            'photos' => 'array',
-            'estimated_budget' => 'numeric',
-            'contact' => 'required|string',
-            'city' => 'required|string',
-            'zipcode' => 'required|string',
-            'street' => 'required|string',
+            'chat' => 'required|string',
+            'is_system' => 'boolean',
         ]);
 
         if ($validator->fails()) {
@@ -90,9 +84,13 @@ class ChatService
                 'data' => ['message' => 'User not found'],
             ];
         }
+        $user = $user['data'];
 
-        $params['user_email'] = $user['data']['user_email'];
-        $chat = $this->chat->create($params);
+        $params['room_id'] = $roomId;
+        $params['user_email'] = $user['user_email'];
+        $params['name'] = $user['display_name'];
+        $newParams = ChatResource::toFirebase($params);
+        $chat = $this->chat->create($newParams, $roomId);
 
         return [
             'status' => 201,

@@ -126,11 +126,26 @@ class ConsultationService
                 'data' => ['message' => 'User not found'],
             ];
         }
+        $user = $user['data'];
 
-        $params['user_email'] = $user['data']['user_email'];
-        $params['display_name'] = $user['data']['display_name'];
+        $params['user_email'] = $user['user_email'];
+        $params['display_name'] = $user['display_name'];
         $newParams = ConsultationResource::toFirebase($params);
         $consultation = $this->consultation->create($newParams);
+
+        $params['consultation_id'] = $consultation['id'];
+        $params['room_type'] = 'admin-customer';
+        $params['status'] = 'Pre-Purchase';
+        $params['image_url'] = $user['user_picture_url'] ?? "";
+        $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';
+        $chatroom = $this->chatroom->create($params);
+        $chatroom = $chatroom['data'];
+
+        $chatParams['user_id'] = $user['ID'];
+        $chatParams['chat'] = $consultation['id'];
+        $chatParams['is_system'] = true;
+        $chatParams['room_id'] = $chatroom['id'];
+        $chat = $this->chat->create($chatParams, $chatroom['id']);
 
         return [
             'status' => 201,

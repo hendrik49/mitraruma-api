@@ -40,7 +40,9 @@ class ChatroomRepository
     }
 
     public function create($params) {
-        return $this->model->newDocument()->set($params);
+        $model = $this->model->newDocument();
+        $model->set($params);
+        return $this->findById($model->id());
     }
 
     public function update($params, $id){
@@ -60,8 +62,10 @@ class ChatroomRepository
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
         $model = $model->limit($params['limit'] ?? 10);
-        $model = $model->orderBy('roomId');
-        $model = $model->startAfter([$params['start_after'] ?? '']);
+        if(isset($params['start_after'])) {
+            $model = $model->orderBy('roomId');
+            $model = $model->startAfter([$params['start_after'] ?? '']);
+        }
 
         return $model;
 

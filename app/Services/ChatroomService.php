@@ -62,15 +62,17 @@ class ChatroomService
     public function create($params){
 
         $validator = Validator::make($params, [
-            'user_id' => 'required|integer',
+            'admin_id' => 'integer',
             'vendor_user_id' => 'integer',
-            'description' => 'required|string',
-            'photos' => 'array',
-            'estimated_budget' => 'numeric',
-            'contact' => 'required|string',
-            'city' => 'required|string',
-            'zipcode' => 'required|string',
-            'street' => 'required|string',
+            'user_id' => 'required|integer',
+            'consultation_id' => 'required|string',
+            'date' => 'date',
+            'image_url' => 'string',
+            'is_approve' => 'boolean',
+            'name' => 'string',
+            'room_type' => 'required|string',
+            'status' => 'required|string',
+            'text' => 'required|string'
         ]);
 
         if ($validator->fails()) {

@@ -40,7 +40,9 @@ class ConsultationRepository
     }
 
     public function create($params) {
-        return $this->model->newDocument()->set($params);
+        $model = $this->model->newDocument();
+        $model->set($params);
+        return $this->findById($model->id());
     }
 
     public function update($params, $id){

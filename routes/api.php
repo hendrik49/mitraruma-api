@@ -9,6 +9,7 @@ use App\Http\Controllers\CmsController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
+use App\Http\Controllers\UserChatController;
 use App\Http\Controllers\UserChatroomController;
 use App\Http\Controllers\UserConsultationController;
 use App\Http\Controllers\UserExtensionAttributeController;
@@ -60,6 +61,9 @@ Route::PUT('/user/chatroom/{id}', [UserChatroomController::class, 'update'])->mi
 Route::DELETE('/user/chatroom/{id}', [UserChatroomController::class, 'destroy'])->middleware('jwt.user');
 Route::GET('/user/chatroom/{id}', [UserChatroomController::class, 'show'])->middleware('jwt.user');
 
+
+Route::GET('/user/chat/{roomId}', [UserChatController::class, 'show'])->middleware('jwt.user');
+Route::POST('/user/chat/{roomId}', [UserChatController::class, 'store'])->middleware('jwt.user');
 
 //ADMIN SITE
 Route::GET('/user/address', [UserAddressController::class, 'index'])->middleware('jwt.admin');

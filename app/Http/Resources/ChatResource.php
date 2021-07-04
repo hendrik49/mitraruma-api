@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-class ChatroomResource
+class ChatResource
 {
     /**
      * Transform the resource into an array.
@@ -14,17 +14,10 @@ class ChatroomResource
     {
 
         return [
-            'adminId' => $params['admin_id'] ?? null,
-            'applicatorId' => $params['vendor_user_id'] ?? null,
-            'userId' => $params['user_id'],
-            'consultationId' => $params['consultation_id'],
-            'date' => $params['date'] ?? null,
-            'imageUrl' => $params['image_url'],
+            'chat' => $params['chat'],
+            'isSystem' => $params['is_system'] ?? false,
             'name' => $params['name'],
-            'isApprove' => $params['is_approve'] ?? null,
-            'room_type' => $params['room_type'],
-            'status' => $params['status'],
-            'text' => $params['text'],
+            'roomId' => $params['room_id']
         ];
     }
 

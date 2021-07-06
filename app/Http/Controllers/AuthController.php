@@ -51,6 +51,24 @@ class AuthController extends Controller
     }
 
     /**
+     * Login Admin.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loginAdmin(Request $request)
+    {
+
+        $params = $request->all();
+        $params['user_type'] = 'admin';
+
+        $result = $this->user->login($params);
+
+        return response()->json($result['data'], $result['status']);
+
+    }
+
+    /**
      * Login.
      *
      * @param  \Illuminate\Http\Request  $request

@@ -13,12 +13,7 @@ class UserRepository
 
     public function findOne($params){
         $user = WpUser::query();
-        if(isset($params['user_email'])) {
-            $user->where('user_email', $params['user_email']);
-        }
-        if(isset($params['user_phone_number'])) {
-            $user->where('user_phone_number', $params['user_phone_number']);
-        }
+        $user = $this->filterBuilder($user, $params);
         return $user->first();
     }
 
@@ -54,6 +49,22 @@ class UserRepository
 
     public function deleteById($id) {
         return WpUser::where('id', $id)->delete();
+    }
+
+    private function filterBuilder($model, $params) {
+
+        if(isset($params['user_email'])) {
+            $model->where('user_email', $params['user_email']);
+        }
+        if(isset($params['user_phone_number'])) {
+            $model->where('user_phone_number', $params['user_phone_number']);
+        }
+        if(isset($params['user_type'])) {
+            $model->where('user_type', $params['user_type']);
+        }
+
+        return $model;
+
     }
 
 }

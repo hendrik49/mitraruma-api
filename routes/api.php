@@ -27,6 +27,7 @@ use App\Http\Controllers\UserProfileController;
 */
 
 Route::POST('/login', [AuthController::class, 'login']);
+Route::POST('/login/admin', [AuthController::class, 'loginAdmin']);
 Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
 //Route::POST('/login/email', [AuthController::class, 'loginByEmail']); //This route is only for testing
 Route::GET('/login/google', [AuthController::class, 'loginGoogleRedirect'])->middleware(['web']);

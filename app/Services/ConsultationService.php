@@ -238,6 +238,7 @@ class ConsultationService
 
         $consultationStatus = [];
         foreach ($consultation['data'] as $data) {
+            if(!isset($data['roomId'])) continue;
             $orderStatus = $this->orderStatus->show($data['roomId']);
             if ($orderStatus['status'] == 200) {
                 array_push($consultationStatus, ['room_type' => $data['roomType'], 'value' => $orderStatus['data']]);
@@ -263,6 +264,7 @@ class ConsultationService
         }
         $chatFiles = [];
         foreach ($consultation['data'] as $data) {
+            if(!isset($data['roomId'])) continue;
             $chat = $this->chat->showFilesById($data['roomId']);
             if ($chat['status'] == 200) {
                 array_push($chatFiles, ['room_type' => $data['roomType'], 'value' => $chat['data']]);

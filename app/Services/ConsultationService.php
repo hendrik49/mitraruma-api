@@ -97,6 +97,17 @@ class ConsultationService
         ];
     }
 
+    public function count($params)
+    {
+
+        $consultation = $this->consultation->findCount($params);
+
+        return [
+            'status' => 200,
+            'data' => ["consultation" => $consultation],
+        ];
+    }
+
     public function create($params)
     {
 

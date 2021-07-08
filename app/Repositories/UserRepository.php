@@ -17,6 +17,12 @@ class UserRepository
         return $user->first();
     }
 
+    public function findCount($params){
+        $user = WpUser::query();
+        $user = $this->filterBuilder($user, $params);
+        return $user->count();
+    }
+
     public function create($params) {
         return WpUser::create($params);
     }

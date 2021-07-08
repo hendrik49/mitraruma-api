@@ -55,6 +55,18 @@ class UserService
 
     }
 
+    public function count($params)
+    {
+
+        $user = $this->user->findCount($params);
+
+        return [
+            'status' => 200,
+            'data' => ["user" => $user],
+        ];
+
+    }
+
     public function create($params)
     {
 

@@ -17,7 +17,6 @@ class OrderStatusRepository
         $model = $this->model->document($id)->snapshot();
         if($model->data()){
             $consultationStatus = $model->data()['data'];
-            $consultationStatus['id'] = $model->id();
             return $consultationStatus;
         }
         return null;

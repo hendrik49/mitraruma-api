@@ -23,6 +23,19 @@ class ConsultationRepository
         return null;
     }
 
+    public function findCount($params){
+
+        $model = $this->model;
+        $model = $this->filterBuilder($model, $params);
+        $snapshot = $model->documents();
+
+        $count = 0;
+        foreach ($snapshot as $document) {
+            $count++;
+        }
+        return $count;
+    }
+
     public function find($params){
 
         $model = $this->model;

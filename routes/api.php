@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicatorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChatroomController;
 use App\Http\Controllers\CmsController;
 use App\Http\Controllers\ConsultationController;
@@ -103,4 +104,12 @@ Route::PUT('/chatroom/{id}', [ChatroomController::class, 'update'])->middleware(
 Route::DELETE('/chatroom/{id}', [ChatroomController::class, 'destroy'])->middleware('jwt.admin');
 Route::GET('/chatroom/{id}', [ChatroomController::class, 'show'])->middleware('jwt.admin');
 
+
+Route::GET('/chart/client-count', [ChartController::class, 'clientCount'])->middleware('jwt.admin');
+Route::GET('/chart/applicator-count', [ChartController::class, 'applicatorCount'])->middleware('jwt.admin');
+Route::GET('/chart/consultation-count', [ChartController::class, 'consultationCount'])->middleware('jwt.admin');
+Route::GET('/chart/order-status', [ChartController::class, 'consultationCount'])->middleware('jwt.admin');
+Route::GET('/chart/income-month', [ChartController::class, 'consultationCount'])->middleware('jwt.admin');
+Route::GET('/chart/consultation-month', [ChartController::class, 'consultationCount'])->middleware('jwt.admin');
+Route::GET('/chart/consultation-by-area', [ChartController::class, 'consultationCount'])->middleware('jwt.admin');
 

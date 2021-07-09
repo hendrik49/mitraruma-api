@@ -74,6 +74,10 @@ class ConsultationRepository
         if(isset($params['consultation_id'])) {
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
+        if(isset($params['user_email'])) {
+            $model = $model->where('email', '>=', $params['user_email']);
+            $model = $model->where('email', '<', $params['user_email'].'z');
+        }
         $model = $model->limit($params['limit'] ?? 10);
         if(isset($params['start_after'])) {
             $model = $model->orderBy('consultationId');

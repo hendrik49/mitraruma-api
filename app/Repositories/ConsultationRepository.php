@@ -84,6 +84,7 @@ class ConsultationRepository
             $model = $model->startAfter([$params['start_after'] ?? '']);
         }
         if(isset($params['end_at'])) {
+            $model = $model->orderBy('consultationId');
             $model = $model->endAt([$params['end_at'] ?? '']);
         }
 

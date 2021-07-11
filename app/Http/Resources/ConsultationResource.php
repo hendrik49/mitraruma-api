@@ -24,6 +24,7 @@ class ConsultationResource
             'detail' => $params['description'] ?? '',
             'budget' => $params['estimated_budget'] ?? 0,
             'photos' => $params['photos'] ?? [],
+            'createdAt' => $params['created_at'] ?? [],
         ];
     }
 
@@ -66,6 +67,7 @@ class ConsultationResource
             'description' => $param['detail'] ?? '',
             'estimated_budget' => $param['budget'] ?? 0,
             'photos' => $param['photos'] ?? [],
+            'created_at' => $param['createdAt'] ?? '',
         ];
     }
 }

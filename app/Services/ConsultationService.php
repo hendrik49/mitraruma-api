@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class ConsultationService
@@ -141,6 +142,7 @@ class ConsultationService
 
         $params['user_email'] = $user['user_email'];
         $params['display_name'] = $user['display_name'];
+        $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $newParams = ConsultationResource::toFirebase($params);
         $consultation = $this->consultation->create($newParams);
 

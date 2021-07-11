@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\ChatResource;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class ChatService
@@ -49,7 +50,7 @@ class ChatService
 
     public function show($id){
 
-        $chat = $this->chat->findById($id);
+        $chat = $this->chat->findByRoomId($id);
         if (!$chat) {
             return [
                 'status' => 404,
@@ -89,6 +90,7 @@ class ChatService
         $params['room_id'] = $roomId;
         $params['user_email'] = $user['user_email'];
         $params['name'] = $user['display_name'];
+        $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $newParams = ChatResource::toFirebase($params);
         $chat = $this->chat->create($newParams, $roomId);
 
@@ -162,7 +164,7 @@ class ChatService
 
     public function showFilesById($id){
 
-        $chat = $this->chat->findFilesById($id);
+        $chat = $this->chat->findFilesByRoomId($id);
         if (!$chat) {
             return [
                 'status' => 404,

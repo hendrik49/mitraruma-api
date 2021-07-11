@@ -79,6 +79,7 @@ class ConsultationRepository
             $model = $model->where('email', '<', $params['user_email'].'z');
         }
         $model = $model->limit($params['limit'] ?? 10);
+//        $model = $model->offset($params['offset'] ?? 1);
         if(isset($params['start_after'])) {
             $model = $model->orderBy('consultationId');
             $model = $model->startAfter([$params['start_after'] ?? '']);
@@ -86,7 +87,9 @@ class ConsultationRepository
         if(isset($params['end_before'])) {
             $model = $model->orderBy('consultationId');
             $model = $model->endBefore([$params['end_before'] ?? '']);
+            $model = $model->limitToLast($params['limit'] ?? 10);
         }
+
 
         return $model;
 

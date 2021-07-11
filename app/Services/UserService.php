@@ -38,6 +38,22 @@ class UserService
         $this->user = $user;
     }
 
+    public function findOne($params){
+
+        $user = $this->user->findOne($params);
+        if (!$user) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $user,
+        ];
+    }
+
     public function show($id)
     {
         $user = $this->user->findById($id);

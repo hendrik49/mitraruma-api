@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\Validator;
 class ChatroomService
 {
     /**
+     * @var UserService
+     */
+    private $user;
+
+    /**
+     * @var ChatService
+     */
+    private $chat;
+
+    /**
      * @var \App\Repositories\ChatroomRepository
      */
     private $chatroom;
@@ -16,14 +26,17 @@ class ChatroomService
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService $user
+     * @param  \App\Services\ChatService $chat
      * @param  \App\Repositories\ChatroomRepository $chatroom
      * @return void
      */
     public function __construct(
         \App\Services\UserService $user,
+        \App\Services\ChatService $chat,
         \App\Repositories\ChatroomRepository $chatroom
     ) {
         $this->user = $user;
+        $this->chat = $chat;
         $this->chatroom = $chatroom;
     }
 
@@ -177,6 +190,51 @@ class ChatroomService
             'status' => 200,
             'data' => $chatroom,
         ];
+    }
+
+    public function showUsers($id){
+
+        $chatroom = $this->chatroom->findById($id);
+        if (!$chatroom) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $chatroom = ChatroomResource::fromFirebase($chatroom);
+
+        $user = [];
+        array_push($user, $this->user->show($chatroom['user_id'])['data']);
+        if(isset($chatroom['applicator_id'])) {
+            array_push($user, $this->user->show($chatroom['applicator_id'])['data']);
+        }
+        if(isset($chatroom['admin_id'])) {
+            array_push($user, $this->user->show($chatroom['admin_id'])['data']);
+        }
+
+        return [
+            'status' => 200,
+            'data' => $user,
+        ];
+    }
+
+    public function showChatFiles($id){
+
+        $chatroom = $this->chatroom->findById($id);
+        if (!$chatroom) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $chatroom = ChatroomResource::fromFirebase($chatroom);
+
+        $chatFiles = $this->chat->showFilesById($chatroom['id']);
+
+        return $chatFiles;
+
     }
 
 

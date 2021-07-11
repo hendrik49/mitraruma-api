@@ -62,7 +62,8 @@ Route::POST('/user/chatroom', [UserChatroomController::class, 'store'])->middlew
 Route::PUT('/user/chatroom/{id}', [UserChatroomController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/user/chatroom/{id}', [UserChatroomController::class, 'destroy'])->middleware('jwt.user');
 Route::GET('/user/chatroom/{id}', [UserChatroomController::class, 'show'])->middleware('jwt.user');
-
+Route::GET('/user/chatroom/{id}/users', [UserChatroomController::class, 'showUsers'])->middleware('jwt.user');
+Route::GET('/user/chatroom/{id}/chat-files', [UserChatroomController::class, 'showChatFiles'])->middleware('jwt.user');
 
 Route::GET('/user/chat/{roomId}', [UserChatController::class, 'show'])->middleware('jwt.user');
 Route::POST('/user/chat/{roomId}', [UserChatController::class, 'store'])->middleware('jwt.user');

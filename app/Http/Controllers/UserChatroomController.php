@@ -98,4 +98,30 @@ class UserChatroomController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showUsers($id)
+    {
+        $result = $this->chatroom->showUsers($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showChatFiles($id)
+    {
+        $result = $this->chatroom->showChatFiles($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
 }

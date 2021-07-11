@@ -14,8 +14,9 @@ class ChatRepository
         $this->model = $firebase->database('chat');
     }
 
-    public function findById($roomId){
+    public function findByRoomId($roomId){
         $model = $this->firebase->database("chat/$roomId/data");
+        $model = $model->orderBy('createdAt');
         $result = $model->documents();
         $chat = [];
         foreach ($result as $value) {
@@ -25,7 +26,7 @@ class ChatRepository
         return $chat;
     }
 
-    public function findFilesById($id){
+    public function findFilesByRoomId($id){
         $model = $this->firebase->database("chat/$id/data");
         $model = $model->where('file' ,'!=', 'null');
         $result = $model->documents();
@@ -35,6 +36,16 @@ class ChatRepository
             array_push($chat, $data);
         }
         return $chat;
+    }
+
+    public function findByRoomIdAndId($roomId, $id){
+        $model = $this->firebase->database("chat/$roomId/data")->document($id)->snapshot();
+        if($model->data()){
+            $chat = $model->data();
+            $chat['id'] = $model->id();
+            return $chat;
+        }
+        return null;
     }
 
     public function find($params){
@@ -55,8 +66,9 @@ class ChatRepository
 
     public function create($params, $roomId) {
         $model = $this->model->document($roomId);
-        $model->collection('data')->newDocument()->set($params);
-        return $this->findById($roomId);
+        $chat = $model->collection('data')->newDocument();
+        $chat->set($params);
+        return $this->findByRoomIdAndId($roomId, $chat->id());
     }
 
     public function update($params, $id){

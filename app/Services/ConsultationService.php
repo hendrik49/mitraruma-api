@@ -144,6 +144,9 @@ class ConsultationService
         $newParams = ConsultationResource::toFirebase($params);
         $consultation = $this->consultation->create($newParams);
 
+        $userAdmin = $this->user->findOne(['user_type' => 'admin']);
+        $userAdmin = $userAdmin['data'];
+        $params['admin_id'] = $userAdmin['ID'];
         $params['consultation_id'] = $consultation['id'];
         $params['room_type'] = 'admin-customer';
         $params['status'] = 'Pre-Purchase';

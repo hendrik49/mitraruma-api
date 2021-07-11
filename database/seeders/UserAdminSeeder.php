@@ -15,6 +15,8 @@ class UserAdminSeeder extends Seeder
     public function run()
     {
         DB::table('wp_users')->insert([
+            'user_email' => 'admin@mitraruma.com',
+            'display_name' => 'Super Admin',
             'user_phone_number' => '+62895605113577',
             'user_type' => 'admin',
         ]);

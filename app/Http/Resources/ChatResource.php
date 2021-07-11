@@ -16,8 +16,12 @@ class ChatResource
         return [
             'chat' => $params['chat'],
             'isSystem' => $params['is_system'] ?? false,
+            'email' => $params['user_email'],
+            'userId' => $params['user_id'],
             'name' => $params['name'],
-            'roomId' => $params['room_id']
+            'roomId' => $params['room_id'],
+            'file' => $params['file'] ?? null,
+            'createdAt' => $params['created_at'] ?? null,
         ];
     }
 

@@ -22,7 +22,7 @@ class ChatroomResource
             'imageUrl' => $params['image_url'],
             'name' => $params['name'],
             'isApprove' => $params['is_approve'] ?? null,
-            'room_type' => $params['room_type'],
+            'roomType' => $params['room_type'],
             'status' => $params['status'],
             'text' => $params['text'],
         ];
@@ -60,14 +60,14 @@ class ChatroomResource
             'admin_id' => $param['adminId'],
             'applicator_id' => $param['applicatorId'],
             'user_id' => $param['userId'],
-            'user_email' => $param['email'] ?? '',
-            'display_name' => $param['name'] ?? '',
-            'city' => $param['city'] ?? '',
-            'zipcode' => $param['zipcode'] ?? '',
-            'street' => $param['address'] ?? '',
-            'detail' => $param['description'] ?? '',
-            'estimated_budget' => $param['budget'] ?? 0,
-            'photos' => $param['photos'] ?? [],
+            'consultation_id' => $param['consultationId'] ?? '',
+            'date' => $param['date'] ?? '',
+            'image_url' => $param['imageUrl'] ?? '',
+            'name' => $param['name'] ?? '',
+            'is_approve' => $param['isApprove'] ?? '',
+            'room_type' => $param['roomType'] ?? '',
+            'status' => $param['status'],
+            'text' => $param['text'],
         ];
     }
 }

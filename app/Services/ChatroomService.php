@@ -13,9 +13,9 @@ class ChatroomService
     private $user;
 
     /**
-     * @var ChatService
+     * @var ChatFilesService
      */
-    private $chat;
+    private $chatFiles;
 
     /**
      * @var \App\Repositories\ChatroomRepository
@@ -26,17 +26,17 @@ class ChatroomService
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService $user
-     * @param  \App\Services\ChatService $chat
+     * @param  \App\Services\ChatFilesService $chatFiles
      * @param  \App\Repositories\ChatroomRepository $chatroom
      * @return void
      */
     public function __construct(
         \App\Services\UserService $user,
-        \App\Services\ChatService $chat,
+        \App\Services\ChatFilesService $chatFiles,
         \App\Repositories\ChatroomRepository $chatroom
     ) {
         $this->user = $user;
-        $this->chat = $chat;
+        $this->chatFiles = $chatFiles;
         $this->chatroom = $chatroom;
     }
 
@@ -49,6 +49,8 @@ class ChatroomService
                 'data' => ['message' => 'Data not found'],
             ];
         }
+
+        $chatroom = ChatroomResource::fromFirebaseArray($chatroom);
 
         return [
             'status' => 200,
@@ -65,6 +67,8 @@ class ChatroomService
                 'data' => ['message' => 'Data not found'],
             ];
         }
+
+        $chatroom = ChatroomResource::fromFirebase($chatroom);
 
         return [
             'status' => 200,
@@ -231,7 +235,7 @@ class ChatroomService
 
         $chatroom = ChatroomResource::fromFirebase($chatroom);
 
-        $chatFiles = $this->chat->showFilesById($chatroom['id']);
+        $chatFiles = $this->chatFiles->showFilesById($chatroom['id']);
 
         return $chatFiles;
 

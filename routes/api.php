@@ -15,6 +15,7 @@ use App\Http\Controllers\UserChatroomController;
 use App\Http\Controllers\UserConsultationController;
 use App\Http\Controllers\UserExtensionAttributeController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,9 @@ Route::POST('/login/google/token', [AuthController::class, 'loginGoogleToken']);
 
 Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
 Route::POST('/user/register', [UserController::class, 'store']);
+
+Route::POST('/user/token', [UserTokenController::class, 'store'])->middleware('jwt.user');
+Route::DELETE('/user/token', [UserTokenController::class, 'destroy'])->middleware('jwt.user');
 
 Route::GET('/user/profile', [UserProfileController::class, 'get'])->middleware('jwt.user');
 Route::PUT('/user/profile', [UserProfileController::class, 'update'])->middleware('jwt.user');

@@ -68,6 +68,8 @@ class ChatroomResource
             'room_type' => $param['roomType'] ?? '',
             'status' => $param['status'],
             'text' => $param['text'],
+            'last_chat' => "this is last chat",
+            'unread_chat' => 4,
         ];
     }
 }

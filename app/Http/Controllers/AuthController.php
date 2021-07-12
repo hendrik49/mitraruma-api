@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
@@ -127,14 +128,15 @@ class AuthController extends Controller
 
         $params['user_email'] = $user->getEmail();
         $params['user_picture_url'] = $user->getAvatar();
+        $params['user_type'] = 'admin';
         $userLogin = $this->user->loginByEmail($params);
         if($userLogin['status'] == 200) {
-            return response()->json($userLogin['data'], $userLogin['status']);
+            $url = env('LOGIN_CMS_REDIRECT').'?token='.$userLogin['data']['token'];
+            return Redirect::to($url);
         }
         else {
-            $params['user_type'] = 'customer';
-            $this->user->createByEmail($params);
-            return $userLogin = $this->user->loginByEmail($params);
+            $url = env('LOGIN_CMS_REDIRECT').'?token';
+            return Redirect::to($url);
         }
     }
 

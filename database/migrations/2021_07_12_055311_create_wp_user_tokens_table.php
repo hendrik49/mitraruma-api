@@ -16,7 +16,7 @@ class CreateWpUserTokensTable extends Migration
         Schema::create('wp_user_tokens', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('device_token');
+            $table->text('device_token');
             $table->timestamps();
         });
     }

@@ -21,9 +21,9 @@ class ConsultationService
     private $chatroom;
 
     /**
-     * @var ChatService
+     * @var ChatManagementService
      */
-    private $chat;
+    private $chatManagement;
 
     /**
      * @var UserService
@@ -40,7 +40,7 @@ class ConsultationService
      *
      * @param ConsultationRepository $consultation
      * @param ChatroomService $chatroom
-     * @param ChatService $chat
+     * @param ChatManagementService $chatManagement
      * @param OrderStatusService $orderStatus
      * @param UserService $user
      * @return void
@@ -48,14 +48,14 @@ class ConsultationService
     public function __construct(
         ConsultationRepository $consultation,
         ChatroomService $chatroom,
-        ChatService $chat,
+        ChatManagementService $chatManagement,
         OrderStatusService $orderStatus,
         UserService $user
     )
     {
         $this->consultation = $consultation;
         $this->chatroom = $chatroom;
-        $this->chat = $chat;
+        $this->chatManagement = $chatManagement;
         $this->orderStatus = $orderStatus;
         $this->user = $user;
     }
@@ -281,7 +281,7 @@ class ConsultationService
         $chatFiles = [];
         foreach ($consultation['data'] as $data) {
             if(!isset($data['roomId'])) continue;
-            $chat = $this->chat->showFilesById($data['roomId']);
+            $chat = $this->chatManagement->showFilesById($data['roomId']);
             if ($chat['status'] == 200) {
                 array_push($chatFiles, ['room_type' => $data['roomType'], 'value' => $chat['data']]);
             }

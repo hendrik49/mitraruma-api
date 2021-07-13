@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
+
 class NotificationService
 {
 
@@ -29,6 +32,7 @@ class NotificationService
      */
     public function send($device_tokens, $message)
     {
+        Log::info('firebase-send-notification', ["device_token" => $device_tokens, "message" => $message]);
         $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
 
         // payload data, it will vary according to requirement

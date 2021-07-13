@@ -67,8 +67,9 @@ class RegisterController extends Controller
         return User::create([
             'display_name' => $data['name'],
             'user_email' => $data['email'],
-            'user_login' => $data['email'],
+            'user_login' => $data['name'],
             'user_type' => 'vendor',
+            'user_picture_url' => 'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg',
             'user_registered' => date('y-m-d'),
             'user_pass' => Hash::make($data['password']),
         ]);

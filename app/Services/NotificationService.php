@@ -58,9 +58,8 @@ class NotificationService
 
         $response = curl_exec($ch);
 
-        curl_close($ch);
+        Log::info('firebase-response-notification', ["response" => $response]);
         $response = json_decode($response, true);
-        Log::info('firebase-response-notification', $response);
 
         return $response;
     }

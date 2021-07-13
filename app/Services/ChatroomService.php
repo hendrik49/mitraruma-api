@@ -13,9 +13,9 @@ class ChatroomService
     private $user;
 
     /**
-     * @var ChatFilesService
+     * @var ChatManagementService
      */
-    private $chatFiles;
+    private $chatManagement;
 
     /**
      * @var \App\Repositories\ChatroomRepository
@@ -26,17 +26,17 @@ class ChatroomService
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService $user
-     * @param  \App\Services\ChatFilesService $chatFiles
+     * @param  \App\Services\ChatManagementService $chatManagement
      * @param  \App\Repositories\ChatroomRepository $chatroom
      * @return void
      */
     public function __construct(
         \App\Services\UserService $user,
-        \App\Services\ChatFilesService $chatFiles,
+        \App\Services\ChatManagementService $chatManagement,
         \App\Repositories\ChatroomRepository $chatroom
     ) {
         $this->user = $user;
-        $this->chatFiles = $chatFiles;
+        $this->chatManagement = $chatManagement;
         $this->chatroom = $chatroom;
     }
 
@@ -51,6 +51,10 @@ class ChatroomService
         }
 
         $chatroom = ChatroomResource::fromFirebaseArray($chatroom);
+
+        foreach ($chatroom as $key => $data) {
+            $chatroom[$key]['last_chat'] = $this->chatManagement->showLatest($data['id'])['data']['chat'];
+        }
 
         return [
             'status' => 200,
@@ -223,7 +227,7 @@ class ChatroomService
         ];
     }
 
-    public function showChatFiles($id){
+    public function showchatManagement($id){
 
         $chatroom = $this->chatroom->findById($id);
         if (!$chatroom) {
@@ -235,9 +239,9 @@ class ChatroomService
 
         $chatroom = ChatroomResource::fromFirebase($chatroom);
 
-        $chatFiles = $this->chatFiles->showFilesById($chatroom['id']);
+        $chatManagement = $this->chatManagement->showFilesById($chatroom['id']);
 
-        return $chatFiles;
+        return $chatManagement;
 
     }
 

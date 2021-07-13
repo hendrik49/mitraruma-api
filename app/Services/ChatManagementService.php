@@ -6,7 +6,7 @@ use App\Http\Resources\ChatResource;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
-class ChatFilesService
+class ChatManagementService
 {
     /**
      * @var \App\Repositories\ChatRepository
@@ -39,6 +39,23 @@ class ChatFilesService
         $this->user = $user;
         $this->notificationService = $notificationService;
         $this->chat = $chat;
+    }
+
+    public function showLatest($id)
+    {
+
+        $chat = $this->chat->findLastChatByRoomId($id);
+        if (!$chat) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $chat[0],
+        ];
     }
 
     public function showFilesById($id){

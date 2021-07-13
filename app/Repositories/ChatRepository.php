@@ -48,6 +48,19 @@ class ChatRepository
         return null;
     }
 
+    public function findLastChatByRoomId($id){
+        $model = $this->firebase->database("chat/$id/data");
+        $model = $model->orderBy('createdAt', 'DESC');
+        $model = $model->limit(1);
+        $result = $model->documents();
+        $chat = [];
+        foreach ($result as $value) {
+            $data = $value->data();
+            array_push($chat, $data);
+        }
+        return $chat;
+    }
+
     public function find($params){
 
         $model = $this->model;

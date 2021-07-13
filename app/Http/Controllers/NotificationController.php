@@ -27,9 +27,11 @@ class NotificationController extends Controller
      */
     public function send(Request $request)
     {
-        return $this->notification->send([$request->device_token], array(
+        $result = $this->notification->send([$request->device_token], array(
             "title" => "Sample Message",
             "body" => "This is Test message body"
         ));
+
+        return response()->json($result, 200);
     }
 }

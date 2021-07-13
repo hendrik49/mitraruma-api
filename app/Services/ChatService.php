@@ -149,7 +149,7 @@ class ChatService
         $newParams = ChatResource::toFirebase($params);
         $chat = $this->chat->create($newParams, $roomId);
 
-        $notification =$this->notificationService->send($deviceTokens, array(
+        $this->notificationService->send($deviceTokens, array(
             "title" => "You have new message",
             "body" => $params['chat'],
             "type" => "chat",

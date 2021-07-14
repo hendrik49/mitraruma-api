@@ -163,7 +163,7 @@
             <div class="col-lg-6 col-xs-8">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
-                        <h3 class="card-title">                  
+                        <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
                             Metode Pembayaran
                         </h3>
@@ -175,21 +175,85 @@
                 </div>
             </div>
             <div class="col-lg-6 col-xs-8">
+
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
-                            Jenis Pembayaran
+                            Goal Completion
                         </h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="pieChartPembayaran" style="height: 300px; width: 340px;" height="340" width="500"></canvas>
+                        <div class="progress-group">
+                            Add Products to Cart
+                            <span class="float-right"><b>160</b>/200</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-primary" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <!-- /.progress-group -->
+
+                        <div class="progress-group">
+                            Complete Purchase
+                            <span class="float-right"><b>310</b>/400</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-danger" style="width: 75%"></div>
+                            </div>
+                        </div>
+
+                        <!-- /.progress-group -->
+                        <div class="progress-group">
+                            <span class="progress-text">Visit Premium Page</span>
+                            <span class="float-right"><b>480</b>/800</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-success" style="width: 60%"></div>
+                            </div>
+                        </div>
+
+                        <!-- /.progress-group -->
+                        <div class="progress-group">
+                            Send Inquiries
+                            <span class="float-right"><b>250</b>/500</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-warning" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <!-- /.progress-group -->
+                        <!-- /.progress-group -->
+                        <div class="progress-group">
+                            Send Inquiries
+                            <span class="float-right"><b>250</b>/500</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-warning" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <!-- /.progress-group -->
+                        <!-- /.progress-group -->
+                        <div class="progress-group">
+                            Send Inquiries
+                            <span class="float-right"><b>250</b>/500</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-warning" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <!-- /.progress-group -->
+
+                        <!-- /.progress-group -->
+                        <div class="progress-group">
+                            Send Inquiries
+                            <span class="float-right"><b>250</b>/500</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-warning" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <!-- /.progress-group -->
+                        
                     </div>
                     <!-- /.box-body -->
                 </div>
             </div>
         </div>
-
+        
         <div class="row">
             <!-- ./col -->
             <div class="col-md-12">

@@ -53,7 +53,7 @@ class ChatroomService
         $chatroom = ChatroomResource::fromFirebaseArray($chatroom);
 
         foreach ($chatroom as $key => $data) {
-            $chatroom[$key]['last_chat'] = $this->chatManagement->showLatest($data['id'])['data']['chat'];
+            $chatroom[$key]['last_chat'] = $this->chatManagement->showLatest($data['id'])['data']['chat'] ?? "";
         }
 
         return [

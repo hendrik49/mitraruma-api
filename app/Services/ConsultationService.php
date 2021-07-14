@@ -26,6 +26,11 @@ class ConsultationService
     private $chatManagement;
 
     /**
+     * @var ChatService
+     */
+    private $chat;
+
+    /**
      * @var UserService
      */
     private $user;
@@ -49,6 +54,7 @@ class ConsultationService
         ConsultationRepository $consultation,
         ChatroomService $chatroom,
         ChatManagementService $chatManagement,
+        ChatService $chat,
         OrderStatusService $orderStatus,
         UserService $user
     )
@@ -56,6 +62,7 @@ class ConsultationService
         $this->consultation = $consultation;
         $this->chatroom = $chatroom;
         $this->chatManagement = $chatManagement;
+        $this->chat = $chat;
         $this->orderStatus = $orderStatus;
         $this->user = $user;
     }

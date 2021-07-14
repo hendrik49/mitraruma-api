@@ -161,17 +161,12 @@
         <div class="row">
             <!-- ./col -->
             <div class="col-lg-6 col-xs-8">
-                <div class="card card-success">
-                    <div class="card-header with-border">
-                        <h3 class="card-title">Metode Pembayaran</h3>
-
-                        <div class="card-tools pull-right">
-                            <button type="button" class="btn btn-card-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-card-tool" data-widget="remove"><i
-                                    class="fa fa-times"></i></button>
-                        </div>
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">                  
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Metode Pembayaran
+                        </h3>
                     </div>
                     <div class="card-body">
                         <canvas id="pieChart" style="height: 300px; width: 340px;" height="340" width="500"></canvas>
@@ -180,17 +175,12 @@
                 </div>
             </div>
             <div class="col-lg-6 col-xs-8">
-                <div class="card card-success">
-                    <div class="card-header with-border">
-                        <h3 class="card-title">Jenis Pembayaran</h3>
-
-                        <div class="card-tools pull-right">
-                            <button type="button" class="btn btn-card-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-card-tool" data-widget="remove"><i
-                                    class="fa fa-times"></i></button>
-                        </div>
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Jenis Pembayaran
+                        </h3>
                     </div>
                     <div class="card-body">
                         <canvas id="pieChartPembayaran" style="height: 300px; width: 340px;" height="340" width="500"></canvas>
@@ -203,16 +193,12 @@
         <div class="row">
             <!-- ./col -->
             <div class="col-md-12">
-                <div class="card card-success">
-                    <div class="card-header with-border">
-                        <h3 class="card-title">Pembayaran Bulanan</h3>
-                        <div class="card-tools pull-right">
-                            <button type="button" class="btn btn-card-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-card-tool" data-widget="remove"><i
-                                    class="fa fa-times"></i></button>
-                        </div>
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-bar mr-1"></i>
+                            Pembayaran Bulanan
+                        </h3>
                     </div>
                     <div class="card-body">
                         <canvas id="barChart" style="height: 150px; width: 228px;" height="250" width="456"></canvas>
@@ -225,16 +211,12 @@
         <div class="row">
             <!-- ./col -->
             <div class="col-md-12">
-                <div class="card card-success">
-                    <div class="card-header with-border">
-                        <h3 class="card-title">Pembayaran Bulanan (IDR)</h3>
-                        <div class="card-tools pull-right">
-                            <button type="button" class="btn btn-card-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-card-tool" data-widget="remove"><i
-                                    class="fa fa-times"></i></button>
-                        </div>
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-bar mr-1"></i>
+                            Pembayaran Bulanan (IDR)
+                        </h3>
                     </div>
                     <div class="card-body">
                         <canvas id="barChartAmount" style="height: 150px; width: 228px;" height="250" width="456"></canvas>

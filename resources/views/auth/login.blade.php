@@ -32,14 +32,14 @@
 
                 <div class="input-group mb-3">
                     <input type="email"
-                           name="email"
-                           value="{{ old('email') }}"
+                           name="user_email"
+                           value="{{ old('user_email') }}"
                            placeholder="Email"
-                           class="form-control @error('email') is-invalid @enderror">
+                           class="form-control @error('user_email') is-invalid @enderror">
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="fas fa-envelope"></span></div>
                     </div>
-                    @error('email')
+                    @error('user_email')
                     <span class="error invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>
@@ -78,9 +78,9 @@
             <p class="mb-1">
                 <a href="{{ route('password.request') }}">I forgot my password</a>
             </p>
-            {{-- <p class="mb-0">
+            <p class="mb-0">
                 <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
-            </p> --}}
+            </p>
         </div>
         <!-- /.login-card-body -->
     </div>

@@ -30,7 +30,7 @@ class WpUser extends Model
      * @var array
      */
     protected $hidden = [
-        'user_pass',
+        'user_pass','password'
     ];
 
 

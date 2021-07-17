@@ -61,8 +61,7 @@ class ChatroomService
         $chatroom = ChatroomResource::fromFirebaseArray($chatroom);
 
         foreach ($chatroom as $key => $data) {
-            $chatroom[$key]['last_chat'] = $this->chatManagement->showLatest($data['id'])['data']['chat'] ?? "";
-            $chatroom[$key]['unread_chat'] = $this->userNotification->getCount(['user_id' => $params['user_id'], 'type' => 'chat', 'chat_room_id' => $data['id']])['data'];
+            $chatroom[$key]['unread_chat'] = $this->userNotification->getCount(['user_id' => $params['user_id'] ?? null, 'type' => 'chat', 'chat_room_id' => $data['id']])['data'];
         }
 
         return [
@@ -102,7 +101,7 @@ class ChatroomService
             'name' => 'string',
             'room_type' => 'required|string',
             'status' => 'required|string',
-            'text' => 'required|string'
+            'text' => 'string'
         ]);
 
         if ($validator->fails()) {

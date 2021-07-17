@@ -20,11 +20,11 @@ class ChatroomResource
             'consultationId' => $params['consultation_id'],
             'date' => $params['date'] ?? null,
             'imageUrl' => $params['image_url'],
-            'name' => $params['name'],
+            'name' => $params['name'] ?? "",
             'isApprove' => $params['is_approve'] ?? null,
             'roomType' => $params['room_type'],
             'status' => $params['status'],
-            'text' => $params['text'],
+            'text' => $params['text'] ?? "",
         ];
     }
 
@@ -57,19 +57,18 @@ class ChatroomResource
     private static function convertFromFirebase($param){
         return [
             'id' => $param['id'],
-            'admin_id' => $param['adminId'],
-            'applicator_id' => $param['applicatorId'],
-            'user_id' => $param['userId'],
+            'admin_id' => $param['adminId'] ?? null,
+            'applicator_id' => $param['applicatorId'] ?? null,
+            'user_id' => $param['userId'] ?? null,
             'consultation_id' => $param['consultationId'] ?? '',
             'date' => $param['date'] ?? '',
             'image_url' => $param['imageUrl'] ?? '',
             'name' => $param['name'] ?? '',
             'is_approve' => $param['isApprove'] ?? '',
             'room_type' => $param['roomType'] ?? '',
-            'status' => $param['status'],
-            'text' => $param['text'],
-            'last_chat' => "this is last chat",
-            'unread_chat' => 0,
+            'status' => $param['status'] ?? '',
+            'text' => $param['text'] ?? '',
+            'last_chat' => $param['last_chat'] ?? '',
         ];
     }
 }

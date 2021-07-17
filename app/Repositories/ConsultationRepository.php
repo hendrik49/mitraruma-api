@@ -68,6 +68,7 @@ class ConsultationRepository
 
     private function filterBuilder($model, $params) {
 
+        $model = $model->orderBy('createdAt');
         if(isset($params['user_id'])) {
             $model = $model->where('userId', '=', $params['user_id']);
         }
@@ -78,7 +79,6 @@ class ConsultationRepository
             $model = $model->where('email', '>=', $params['user_email']);
             $model = $model->where('email', '<', $params['user_email'].'z');
         }
-        $model = $model->orderBy('createdAt');
         if(isset($params['limit'])) {
             $model = $model->limit($params['limit'] ?? 10);
         }

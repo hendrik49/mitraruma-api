@@ -111,6 +111,7 @@ Route::GET('/consultation/{id}/chat-files', [ConsultationController::class, 'sho
 
 Route::GET('/chatroom', [ChatroomController::class, 'index'])->middleware('jwt.admin');
 Route::POST('/chatroom', [ChatroomController::class, 'store'])->middleware('jwt.admin');
+Route::POST('/chatroom/vendor', [ChatroomController::class, 'storeVendorRoom'])->middleware('jwt.admin');
 Route::PUT('/chatroom/{id}', [ChatroomController::class, 'update'])->middleware('jwt.admin');
 Route::DELETE('/chatroom/{id}', [ChatroomController::class, 'destroy'])->middleware('jwt.admin');
 Route::GET('/chatroom/{id}', [ChatroomController::class, 'show'])->middleware('jwt.admin');

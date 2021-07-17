@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Exports\ConsultationExport;
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ConsultationService
 {
@@ -298,6 +300,24 @@ class ConsultationService
             'status' => 200,
             'data' => $chatFiles,
         ];
+    }
+
+    public function export($params)
+    {
+
+        $consultation = $this->consultation->find($params);
+        if (!$consultation) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $consultation = ConsultationResource::fromFirebaseArray($consultation);
+
+        $export = new ConsultationExport($consultation);
+        return Excel::download($export, 'consultation.xlsx');
+
     }
 
 

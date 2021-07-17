@@ -28,6 +28,8 @@ use App\Http\Controllers\UserTokenController;
 |
 */
 
+Route::POST('/notification/send', [\App\Http\Controllers\NotificationController::class, 'send']);
+
 Route::POST('/login', [AuthController::class, 'login']);
 Route::POST('/login/admin', [AuthController::class, 'loginAdmin']);
 Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
@@ -67,7 +69,7 @@ Route::PUT('/user/chatroom/{id}', [UserChatroomController::class, 'update'])->mi
 Route::DELETE('/user/chatroom/{id}', [UserChatroomController::class, 'destroy'])->middleware('jwt.user');
 Route::GET('/user/chatroom/{id}', [UserChatroomController::class, 'show'])->middleware('jwt.user');
 Route::GET('/user/chatroom/{id}/users', [UserChatroomController::class, 'showUsers'])->middleware('jwt.user');
-Route::GET('/user/chatroom/{id}/chat-files', [UserChatroomController::class, 'showChatFiles'])->middleware('jwt.user');
+//Route::GET('/user/chatroom/{id}/chat-files', [UserChatroomController::class, 'showChatFiles'])->middleware('jwt.user');
 
 Route::GET('/user/chat/{roomId}', [UserChatController::class, 'show'])->middleware('jwt.user');
 Route::POST('/user/chat/{roomId}', [UserChatController::class, 'store'])->middleware('jwt.user');
@@ -96,6 +98,7 @@ Route::GET('/cms/{id}', [CmsController::class, 'show']);
 Route::GET('/cms/name/{name}', [CmsController::class, 'showByName']);
 
 Route::GET('/consultation', [ConsultationController::class, 'index'])->middleware('jwt.admin');
+Route::GET('/consultation/export', [ConsultationController::class, 'export'])->middleware('jwt.admin');
 Route::POST('/consultation', [ConsultationController::class, 'store'])->middleware('jwt.admin');
 Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.admin');
 Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.admin');

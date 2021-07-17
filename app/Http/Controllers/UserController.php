@@ -36,8 +36,7 @@ class UserController extends Controller
     {
         $params = $request->all();
 
-        $params['user_type'] = 'vendor';
-        $result = $this->user->find($params);
+        $result = $this->user->findVendor($params);
 
         return response()->json($result['data'], $result['status']);
 

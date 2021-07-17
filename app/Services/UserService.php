@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\UserVendorResource;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 
@@ -51,6 +52,24 @@ class UserService
         return [
             'status' => 200,
             'data' => $user,
+        ];
+    }
+
+    public function findVendor($params){
+
+        $params['user_type'] = 'vendor';
+        $user = $this->user->find($params);
+        if (!$user) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+
+        return [
+            'status' => 200,
+            'data' => UserVendorResource::collection($user),
         ];
     }
 

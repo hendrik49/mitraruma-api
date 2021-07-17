@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\ChatroomResource;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class ChatroomService
@@ -120,6 +121,7 @@ class ChatroomService
         }
 
         $params['user_email'] = $user['data']['user_email'];
+        $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $newParams = ChatroomResource::toFirebase($params);
         $chatroom = $this->chatroom->create($newParams);
 

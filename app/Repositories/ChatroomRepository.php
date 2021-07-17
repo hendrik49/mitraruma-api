@@ -55,6 +55,8 @@ class ChatroomRepository
 
     private function filterBuilder($model, $params) {
 
+        $model = $model->orderBy('createdAt' , 'desc');
+
         if(isset($params['user_id'])) {
             $model = $model->where('userId', '=', $params['user_id']);
         }
@@ -63,7 +65,6 @@ class ChatroomRepository
         }
         $model = $model->limit($params['limit'] ?? 10);
         if(isset($params['start_after'])) {
-            $model = $model->orderBy('roomId');
             $model = $model->startAfter([$params['start_after'] ?? '']);
         }
 

@@ -30,6 +30,11 @@ class ChatService
     private $userTokenService;
 
     /**
+     * @var UserNotificationService
+     */
+    private $userNotificationService;
+
+    /**
      * @var ChatRepository
      */
     private $chat;
@@ -41,6 +46,7 @@ class ChatService
      * @param ChatroomService $chatroomService
      * @param NotificationService $notificationService
      * @param UserTokenService $userTokenService
+     * @param UserNotificationService $userNotificationService
      * @param ChatRepository $chat
      */
     public function __construct(
@@ -48,6 +54,7 @@ class ChatService
         ChatroomService $chatroomService,
         NotificationService $notificationService,
         UserTokenService $userTokenService,
+        UserNotificationService $userNotificationService,
         ChatRepository $chat
     )
     {
@@ -55,6 +62,7 @@ class ChatService
         $this->chatroomService = $chatroomService;
         $this->notificationService = $notificationService;
         $this->userTokenService = $userTokenService;
+        $this->userNotificationService = $userNotificationService;
         $this->chat = $chat;
     }
 
@@ -108,9 +116,13 @@ class ChatService
         }
 
         $chatroom = $this->chatroomService->show($roomId);
-        if ($chatroom['status'] == 200) {
-            $chatroom = $chatroom['data'];
+        if ($chatroom['status'] != 200) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Chatroom not found'],
+            ];
         }
+        $chatroom = $chatroom['data'];
 
         $userIds = [];
         if(isset($chatroom['user_id']) && $params['user_id'] != $chatroom['user_id']) {
@@ -159,9 +171,35 @@ class ChatService
             ]
         ));
 
+        $this->userNotificationService->store(['user_id' => $params['user_id'], 'type' => 'chat', 'chat_room_id' => $roomId]);
+
         return [
             'status' => 201,
             'data' => $chat,
+        ];
+    }
+
+    public function readChat($params, $roomId)
+    {
+
+        $notification = $this->userNotificationService->destroyByParams(
+            [
+                'user_id' => $params['user_id'],
+                'type' => 'chat',
+                'chat_room_id' => $roomId
+            ]
+        );
+
+        if (!$notification) {
+            return [
+                'status' => 200,
+                'data' => ['message' => 'Already read the messages'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $notification,
         ];
     }
 

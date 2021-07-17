@@ -69,7 +69,7 @@ class ChatroomResource
             'status' => $param['status'],
             'text' => $param['text'],
             'last_chat' => "this is last chat",
-            'unread_chat' => 4,
+            'unread_chat' => 0,
         ];
     }
 }

@@ -73,6 +73,7 @@ Route::GET('/user/chatroom/{id}/users', [UserChatroomController::class, 'showUse
 
 Route::GET('/user/chat/{roomId}', [UserChatController::class, 'show'])->middleware('jwt.user');
 Route::POST('/user/chat/{roomId}', [UserChatController::class, 'store'])->middleware('jwt.user');
+Route::DELETE('/user/chat/{roomId}/read', [UserChatController::class, 'readChat'])->middleware('jwt.user');
 
 //ADMIN SITE
 Route::GET('/user/address', [UserAddressController::class, 'index'])->middleware('jwt.admin');

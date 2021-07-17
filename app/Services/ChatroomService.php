@@ -13,6 +13,11 @@ class ChatroomService
     private $user;
 
     /**
+     * @var UserNotificationService
+     */
+    private $userNotification;
+
+    /**
      * @var ChatManagementService
      */
     private $chatManagement;
@@ -26,16 +31,19 @@ class ChatroomService
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService $user
+     * @param  \App\Services\UserNotificationService $userNotification
      * @param  \App\Services\ChatManagementService $chatManagement
      * @param  \App\Repositories\ChatroomRepository $chatroom
      * @return void
      */
     public function __construct(
         \App\Services\UserService $user,
+        \App\Services\UserNotificationService $userNotification,
         \App\Services\ChatManagementService $chatManagement,
         \App\Repositories\ChatroomRepository $chatroom
     ) {
         $this->user = $user;
+        $this->userNotification = $userNotification;
         $this->chatManagement = $chatManagement;
         $this->chatroom = $chatroom;
     }
@@ -54,6 +62,7 @@ class ChatroomService
 
         foreach ($chatroom as $key => $data) {
             $chatroom[$key]['last_chat'] = $this->chatManagement->showLatest($data['id'])['data']['chat'] ?? "";
+            $chatroom[$key]['unread_chat'] = $this->userNotification->getCount(['user_id' => $params['user_id'], 'type' => 'chat', 'chat_room_id' => $data['id']])['data'];
         }
 
         return [
@@ -225,24 +234,6 @@ class ChatroomService
             'status' => 200,
             'data' => $user,
         ];
-    }
-
-    public function showchatManagement($id){
-
-        $chatroom = $this->chatroom->findById($id);
-        if (!$chatroom) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'Data not found'],
-            ];
-        }
-
-        $chatroom = ChatroomResource::fromFirebase($chatroom);
-
-        $chatManagement = $this->chatManagement->showFilesById($chatroom['id']);
-
-        return $chatManagement;
-
     }
 
 

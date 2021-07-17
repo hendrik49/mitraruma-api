@@ -38,6 +38,22 @@ class UserService
         $this->user = $user;
     }
 
+    public function find($params){
+
+        $user = $this->user->find($params);
+        if (!$user) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $user,
+        ];
+    }
+
     public function findOne($params){
 
         $user = $this->user->findOne($params);
@@ -74,7 +90,7 @@ class UserService
     public function count($params)
     {
 
-        $user = $this->user->findCount($params);
+        $user = $this->user->count($params);
 
         return [
             'status' => 200,

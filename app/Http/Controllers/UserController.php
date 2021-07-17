@@ -29,11 +29,18 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function showVendor(Request $request)
     {
-        //
+        $params = $request->all();
+
+        $params['user_type'] = 'vendor';
+        $result = $this->user->find($params);
+
+        return response()->json($result['data'], $result['status']);
+
     }
 
     /**

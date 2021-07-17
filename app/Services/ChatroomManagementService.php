@@ -88,7 +88,7 @@ class ChatroomManagementService
         }
         $consultation = $consultation['data'];
 
-        $user = $this->user->show($consultation['user_id']);
+        $user = $this->user->show($consultation['vendor_user_id']);
         if ($user['status'] != 200) {
             return [
                 'status' => 404,
@@ -97,18 +97,17 @@ class ChatroomManagementService
         }
         $user = $user['data'];
 
-        $userAdmin = $this->user->findOne(['user_type' => 'admin']);
-        $userAdmin = $userAdmin['data'];
-        $params['admin_id'] = $userAdmin['ID'];
+        $params['admin_id'] = $consultation['admin_id'];
         $params['vendor_id'] = $params['vendor_user_id'] ?? null;
-        $params['user_id'] = $user['ID'];
+        $params['user_id'] = $consultation['user_id'];
         $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
+        $params['name'] = $user['display_name'] ?? "vendor-".$user['ID'];
         $chatroom = $this->chatroomService->create($params);
         $chatroom = $chatroom['data'];
 
-        $chatParams['user_id'] = $userAdmin['ID'];
+        $chatParams['user_id'] = $consultation['admin_id'];
         $chatParams['chat'] = $consultation['id'];
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];

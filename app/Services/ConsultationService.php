@@ -162,6 +162,7 @@ class ConsultationService
         $params['room_type'] = 'admin-customer';
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
+        $params['name'] = $user['display_name'];
         $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';
         $chatroom = $this->chatroom->create($params);
         $chatroom = $chatroom['data'];

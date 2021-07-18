@@ -145,9 +145,9 @@ class ChatroomService
             ];
         }
 
-        $newParams = ChatroomResource::toFirebasePatch($params);
-//        $chatroom = $this->chatroom->update($newParams, $id);
-        $chatroom = "";
+        $newParams = ChatroomResource::toFirebase($params);
+        $chatroom = $this->chatroom->update($newParams, $id);
+
         if (!$chatroom) {
             return [
                 'status' => 404,

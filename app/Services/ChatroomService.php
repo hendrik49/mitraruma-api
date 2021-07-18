@@ -134,8 +134,8 @@ class ChatroomService
     public function update($params, $id){
 
         $validator = Validator::make($params, [
-            'name' => 'required|string',
-            'value' => 'required',
+            'name' => 'string',
+            'last_chat' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -145,17 +145,8 @@ class ChatroomService
             ];
         }
 
-        $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-
-        $params['user_email'] = $user['data']['user_email'];
-        $newParams = ChatroomResource::toFirebase($params);
-        $chatroom = $this->chatroom->update($params, $id);
+        $newParams = ChatroomResource::toFirebasePatch($params);
+        $chatroom = $this->chatroom->update($newParams, $id);
         if (!$chatroom) {
             return [
                 'status' => 404,

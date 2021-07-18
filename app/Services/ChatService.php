@@ -123,6 +123,7 @@ class ChatService
             ];
         }
         $chatroom = $chatroom['data'];
+        $this->chatroomService->update(['last_chat' => $params['chat']], $chatroom['id']);
 
         $userIds = [];
         if(isset($chatroom['user_id']) && $params['user_id'] != $chatroom['user_id']) {

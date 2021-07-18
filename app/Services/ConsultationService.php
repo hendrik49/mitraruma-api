@@ -164,6 +164,7 @@ class ConsultationService
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'];
         $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';
+        $params['last_chat'] = 'Hai Admin saya berminat untuk berkonsultasi';
         $chatroom = $this->chatroom->create($params);
         $chatroom = $chatroom['data'];
 

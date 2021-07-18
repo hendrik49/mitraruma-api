@@ -63,6 +63,9 @@ class ChatroomRepository
         if(isset($params['consultation_id'])) {
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
+        if(isset($params['room_type'])) {
+            $model = $model->where('roomType', '=', $params['room_type']);
+        }
         $model = $model->limit($params['limit'] ?? 10);
         if(isset($params['start_after'])) {
             $model = $model->startAfter([$params['start_after'] ?? '']);

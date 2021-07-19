@@ -82,6 +82,7 @@ Route::DELETE('/user/chat/{roomId}/read', [UserChatController::class, 'readChat'
 //VENDOR
 Route::GET('/vendor/consultation', [VendorConsultationController::class, 'index'])->middleware('jwt.user');
 Route::GET('/vendor/consultation/export', [VendorConsultationController::class, 'export'])->middleware('jwt.user');
+Route::GET('/user/consultation/{id}', [VendorConsultationController::class, 'show'])->middleware('jwt.user');
 Route::GET('/vendor/consultation/{id}/status', [VendorConsultationController::class, 'showStatus'])->middleware('jwt.user');
 Route::GET('/vendor/consultation/{id}/chat-files', [VendorConsultationController::class, 'showChatFiles'])->middleware('jwt.user');
 

@@ -42,6 +42,19 @@ class VendorConsultationController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        $result = $this->consultation->show($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param  \Illuminate\Http\Request  $request

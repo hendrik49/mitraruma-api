@@ -98,4 +98,20 @@ class UserConsultationController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function export(Request $request)
+    {
+        $params = $request->all();
+
+        $params['vendor_user_id'] = $params['user_id'];
+        $params['user_id'] = null;
+        return $this->consultation->export($params);
+
+    }
+
 }

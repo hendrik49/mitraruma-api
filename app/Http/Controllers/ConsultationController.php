@@ -136,7 +136,6 @@ class ConsultationController extends Controller
 
         return $this->consultation->export($params);
 
-//        return response()->json($result['data'], $result['status']);
     }
 
 }

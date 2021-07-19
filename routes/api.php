@@ -59,6 +59,7 @@ Route::PUT('/user/profile/extension-attribute/{id}', [UserExtensionAttributeCont
 Route::DELETE('/user/profile/extension-attribute/{id}', [UserExtensionAttributeController::class, 'destroy'])->middleware('jwt.user');
 
 Route::GET('/user/consultation', [UserConsultationController::class, 'index'])->middleware('jwt.user');
+Route::GET('/user/consultation/export', [ConsultationController::class, 'export'])->middleware('jwt.user');
 Route::POST('/user/consultation', [UserConsultationController::class, 'store'])->middleware('jwt.user');
 Route::PUT('/user/consultation/{id}', [UserConsultationController::class, 'update'])->middleware('jwt.user');
 Route::DELETE('/user/consultation/{id}', [UserConsultationController::class, 'destroy'])->middleware('jwt.user');
@@ -78,6 +79,8 @@ Route::DELETE('/user/chat/{roomId}/read', [UserChatController::class, 'readChat'
 
 //VENDOR
 Route::GET('/vendor/consultation', [VendorConsultationController::class, 'index'])->middleware('jwt.user');
+Route::GET('/vendor/consultation/export', [VendorConsultationController::class, 'export'])->middleware('jwt.user');
+
 Route::GET('/vendor/chatroom', [VendorChatroomController::class, 'index'])->middleware('jwt.user');
 
 //ADMIN SITE

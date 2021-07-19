@@ -16,6 +16,7 @@ use App\Http\Controllers\UserConsultationController;
 use App\Http\Controllers\UserExtensionAttributeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserTokenController;
+use App\Http\Controllers\VendorChatroomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +75,9 @@ Route::GET('/user/chatroom/{id}/users', [UserChatroomController::class, 'showUse
 Route::GET('/user/chat/{roomId}', [UserChatController::class, 'show'])->middleware('jwt.user');
 Route::POST('/user/chat/{roomId}', [UserChatController::class, 'store'])->middleware('jwt.user');
 Route::DELETE('/user/chat/{roomId}/read', [UserChatController::class, 'readChat'])->middleware('jwt.user');
+
+//VENDOR
+Route::GET('/vendor/chatroom', [VendorChatroomController::class, 'index'])->middleware('jwt.user');
 
 //ADMIN SITE
 Route::GET('/user/vendor', [UserController::class, 'showVendor'])->middleware('jwt.admin');

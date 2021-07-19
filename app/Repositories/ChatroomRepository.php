@@ -60,6 +60,9 @@ class ChatroomRepository
         if(isset($params['user_id'])) {
             $model = $model->where('userId', '=', $params['user_id']);
         }
+        if(isset($params['vendor_user_id'])) {
+            $model = $model->where('applicatorId', '=', $params['vendor_user_id']);
+        }
         if(isset($params['consultation_id'])) {
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }

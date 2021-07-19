@@ -123,14 +123,15 @@ class ConsultationService
 
         $validator = Validator::make($params, [
             'user_id' => 'required|integer',
+            'admin_user_id' => 'integer',
             'vendor_user_id' => 'integer',
             'description' => 'required|string',
             'photos' => 'array',
             'estimated_budget' => 'numeric',
             'contact' => 'required|string',
-            'city' => 'required|string',
-            'zipcode' => 'string',
             'street' => 'required|string',
+            'orderNumber' => 'integer',
+            'orderStatus' => 'integer',
         ]);
 
         if ($validator->fails()) {
@@ -149,14 +150,21 @@ class ConsultationService
         }
         $user = $user['data'];
 
+        //get user admin
+        $userAdmin = $this->user->findOne(['user_type' => 'admin']);
+        $userAdmin = $userAdmin['data'];
+
+        //create consultation
+        $params['admin_user_id'] = $userAdmin['ID'];
+        $params['admin_name'] = $userAdmin['display_name'];
         $params['user_email'] = $user['user_email'];
         $params['display_name'] = $user['display_name'];
         $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $params['order_number'] = mt_rand(1000000, 9999999);
         $newParams = ConsultationResource::toFirebase($params);
         $consultation = $this->consultation->create($newParams);
 
-        $userAdmin = $this->user->findOne(['user_type' => 'admin']);
-        $userAdmin = $userAdmin['data'];
+        //create chatroom
         $params['admin_id'] = $userAdmin['ID'];
         $params['consultation_id'] = $consultation['id'];
         $params['room_type'] = 'admin-customer';
@@ -174,6 +182,8 @@ class ConsultationService
         $chatParams['room_id'] = $chatroom['id'];
         $chat = $this->chat->create($chatParams, $chatroom['id']);
 
+
+        $consultation = ConsultationResource::fromFirebase($consultation);
         return [
             'status' => 201,
             'data' => $consultation,

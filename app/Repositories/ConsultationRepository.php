@@ -68,7 +68,7 @@ class ConsultationRepository
 
     private function filterBuilder($model, $params) {
 
-        $model = $model->orderBy('createdAt');
+        $model = $model->orderBy('createdAt', 'desc');
         if(isset($params['user_id'])) {
             $model = $model->where('userId', '=', $params['user_id']);
         }

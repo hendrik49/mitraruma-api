@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class ChatroomManagementService
@@ -63,7 +64,7 @@ class ChatroomManagementService
     }
 
 
-    public function create($params)
+    public function createRoomVendor($params)
     {
 
         $validator = Validator::make($params, [
@@ -79,16 +80,7 @@ class ChatroomManagementService
             ];
         }
 
-        $consultation = $this->consultationService->show($params['consultation_id']);
-        if ($consultation['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-        $consultation = $consultation['data'];
-
-        $user = $this->user->show($consultation['vendor_user_id']);
+        $user = $this->user->show($params['vendor_user_id']);
         if ($user['status'] != 200) {
             return [
                 'status' => 404,
@@ -97,18 +89,30 @@ class ChatroomManagementService
         }
         $user = $user['data'];
 
-        $params['admin_id'] = $consultation['admin_id'];
+        $consultation = $this->consultationService->show($params['consultation_id']);
+        if ($consultation['status'] != 200) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'User not found'],
+            ];
+        }
+        $consultation = $consultation['data'];
+        $consultation['vendor_user_id'] = $user['ID'];
+        $consultation['vendor_name'] = $user['display_name'];
+        $consultation = $this->consultationService->update($consultation, $consultation['id']);
+        $consultation = $consultation['data'];
+
+        $params['admin_user_id'] = $consultation['admin_user_id'];
         $params['vendor_id'] = $params['vendor_user_id'] ?? null;
-        $params['user_id'] = $consultation['user_id'];
         $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $user['display_name'] ?? "vendor-".$user['ID'];
+        $params['name'] = $user['display_name'].'-AV-'.Carbon::now('GMT+7')->format('dmHi');;
         $params['text'] = 'Halo bisa mengerjakan projek ini';
         $chatroom = $this->chatroomService->create($params);
         $chatroom = $chatroom['data'];
 
-        $chatParams['user_id'] = $consultation['admin_id'];
+        $chatParams['user_id'] = $consultation['admin_user_id'];
         $chatParams['chat'] = $consultation['id'];
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
@@ -119,7 +123,6 @@ class ChatroomManagementService
             'data' => $chatroom,
         ];
     }
-
 
 
 }

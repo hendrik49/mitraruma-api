@@ -92,9 +92,9 @@ class ChatroomService
     public function create($params){
 
         $validator = Validator::make($params, [
-            'admin_id' => 'integer',
+            'admin_user_id' => 'integer',
             'vendor_user_id' => 'integer',
-            'user_id' => 'required|integer',
+            'user_id' => 'integer',
             'consultation_id' => 'required|string',
             'date' => 'date',
             'image_url' => 'string',
@@ -112,15 +112,6 @@ class ChatroomService
             ];
         }
 
-        $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-
-        $params['user_email'] = $user['data']['user_email'];
         $dateNow=  Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $params['date'] = $dateNow;
         $params['created_at'] = $dateNow;
@@ -220,8 +211,8 @@ class ChatroomService
         if(isset($chatroom['applicator_id'])) {
             array_push($user, $this->user->show($chatroom['applicator_id'])['data']);
         }
-        if(isset($chatroom['admin_id'])) {
-            array_push($user, $this->user->show($chatroom['admin_id'])['data']);
+        if(isset($chatroom['admin_user_id'])) {
+            array_push($user, $this->user->show($chatroom['admin_user_id'])['data']);
         }
 
         return [

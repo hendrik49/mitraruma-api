@@ -165,7 +165,7 @@ class ConsultationService
         $consultation = $this->consultation->create($newParams);
 
         //create chatroom
-        $params['admin_id'] = $userAdmin['ID'];
+        $params['admin_user_id'] = $userAdmin['ID'];
         $params['consultation_id'] = $consultation['id'];
         $params['room_type'] = 'admin-customer';
         $params['status'] = 'Pre-Purchase';
@@ -181,7 +181,6 @@ class ConsultationService
         $chatParams['room_id'] = $chatroom['id'];
         $chat = $this->chat->create($chatParams, $chatroom['id']);
 
-
         $consultation = ConsultationResource::fromFirebase($consultation);
         return [
             'status' => 201,
@@ -194,14 +193,12 @@ class ConsultationService
 
         $validator = Validator::make($params, [
             'user_id' => 'required|integer',
+            'admin_user_id' => 'integer',
             'vendor_user_id' => 'integer',
             'description' => 'required|string',
             'photos' => 'array',
             'estimated_budget' => 'numeric',
             'contact' => 'required|string',
-            'city' => 'required|string',
-            'zipcode' => 'string',
-            'address' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -220,7 +217,9 @@ class ConsultationService
         }
 
         $params['email'] = $user['data']['user_email'];
-        $consultation = $this->consultation->update($params, $id);
+        $newParams = ConsultationResource::toFirebase($params);
+        $consultation = $this->consultation->update($newParams, $id);
+        $consultation = ConsultationResource::fromFirebase($consultation);
         if (!$consultation) {
             return [
                 'status' => 404,

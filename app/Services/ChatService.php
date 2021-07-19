@@ -134,8 +134,8 @@ class ChatService
         if(isset($chatroom['applicator_id']) && $params['user_id'] != $chatroom['applicator_id']) {
             array_push($userIds, $chatroom['applicator_id']);
         }
-        if(isset($chatroom['admin_id']) && $params['user_id'] != $chatroom['admin_id']) {
-            array_push($userIds, $chatroom['admin_id']);
+        if(isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
+            array_push($userIds, $chatroom['admin_user_id']);
         }
 
         $tokens = $this->userTokenService->get(['user_ids' => $userIds]);

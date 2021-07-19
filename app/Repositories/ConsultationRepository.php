@@ -59,7 +59,8 @@ class ConsultationRepository
     }
 
     public function update($params, $id){
-        return $this->model->document($id)->set($params);
+        $this->model->document($id)->set($params);
+        return $this->findById($id);
     }
 
     public function deleteById($id) {

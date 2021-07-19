@@ -14,9 +14,9 @@ class ChatroomResource
     {
 
         return [
-            'adminId' => $params['admin_id'] ?? null,
+            'adminId' => $params['admin_user_id'] ?? null,
             'applicatorId' => $params['vendor_user_id'] ?? null,
-            'userId' => $params['user_id'],
+            'userId' => $params['user_id'] ?? null,
             'consultationId' => $params['consultation_id'],
             'date' => $params['date'] ?? null,
             'imageUrl' => $params['image_url'],
@@ -58,8 +58,8 @@ class ChatroomResource
     private static function convertFromFirebase($param){
         return [
             'id' => $param['id'],
-            'admin_id' => $param['adminId'] ?? null,
-            'applicator_id' => $param['applicatorId'] ?? null,
+            'admin_user_id' => $param['adminId'] ?? null,
+            'vendor_user_id' => $param['applicatorId'] ?? null,
             'user_id' => $param['userId'] ?? null,
             'consultation_id' => $param['consultationId'] ?? '',
             'date' => $param['date'] ?? '',

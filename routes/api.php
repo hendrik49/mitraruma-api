@@ -15,6 +15,7 @@ use App\Http\Controllers\UserChatroomController;
 use App\Http\Controllers\UserConsultationController;
 use App\Http\Controllers\UserExtensionAttributeController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserTokenController;
 use App\Http\Controllers\VendorConsultationController;
 use App\Http\Controllers\VendorChatroomController;
 

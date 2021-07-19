@@ -123,7 +123,8 @@ class ChatService
             ];
         }
         $chatroom = $chatroom['data'];
-        $chatroom['last_chat'] = $params['chat'];
+        $chatroom['date'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $chatroom['text'] = $params['chat'];
         $this->chatroomService->update($chatroom, $chatroom['id']);
 
         $userIds = [];

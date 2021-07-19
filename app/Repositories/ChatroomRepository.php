@@ -55,7 +55,7 @@ class ChatroomRepository
 
     private function filterBuilder($model, $params) {
 
-        $model = $model->orderBy('createdAt' , 'desc');
+        $model = $model->orderBy('date' , 'desc');
 
         if(isset($params['user_id'])) {
             $model = $model->where('userId', '=', $params['user_id']);

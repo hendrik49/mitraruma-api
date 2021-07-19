@@ -25,25 +25,8 @@ class ChatroomResource
             'roomType' => $params['room_type'],
             'status' => $params['status'],
             'text' => $params['text'] ?? "",
-            'lastChat' => $params['last_chat'] ?? "",
             'createdAt' => $params['created_at'] ?? "",
         ];
-    }
-    /**
-     * Transform the resource into an array.
-     *
-     * @param $params
-     * @return array
-     */
-    public static function toFirebasePatch($params)
-    {
-
-        $newParams = [];
-
-        if($params['last_chat']) $newParams['lastChat'] = $params['last_chat'];
-
-        return $newParams;
-
     }
 
     /**
@@ -86,7 +69,6 @@ class ChatroomResource
             'room_type' => $param['roomType'] ?? '',
             'status' => $param['status'] ?? '',
             'text' => $param['text'] ?? '',
-            'last_chat' => $param['lastChat'] ?? '',
             'created_at' => $param['createdAt'] ?? '',
         ];
     }

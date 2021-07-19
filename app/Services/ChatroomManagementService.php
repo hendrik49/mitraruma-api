@@ -104,7 +104,7 @@ class ChatroomManagementService
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'] ?? "vendor-".$user['ID'];
-        $params['last_chat'] = 'Halo bisa mengerjakan projek ini';
+        $params['text'] = 'Halo bisa mengerjakan projek ini';
         $chatroom = $this->chatroomService->create($params);
         $chatroom = $chatroom['data'];
 

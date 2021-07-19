@@ -121,7 +121,9 @@ class ChatroomService
         }
 
         $params['user_email'] = $user['data']['user_email'];
-        $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $dateNow=  Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $params['date'] = $dateNow;
+        $params['created_at'] = $dateNow;
         $newParams = ChatroomResource::toFirebase($params);
         $chatroom = $this->chatroom->create($newParams);
 
@@ -135,7 +137,6 @@ class ChatroomService
 
         $validator = Validator::make($params, [
             'name' => 'string',
-            'last_chat' => 'string'
         ]);
 
         if ($validator->fails()) {

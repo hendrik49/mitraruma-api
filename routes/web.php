@@ -22,3 +22,5 @@ Route::middleware('auth')->get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
+
+Route::get("/admin/proyek", "ProjectController@index");

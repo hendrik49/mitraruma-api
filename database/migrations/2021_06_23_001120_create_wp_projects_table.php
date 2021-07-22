@@ -20,6 +20,26 @@ class CreateWpProjectsTable extends Migration
             $table->text('description');
             $table->json('images');
             $table->double('estimated_budget');
+            $table->double('amount_spk_customer_gross');
+            $table->double('amount_spk_customer');
+            $table->double('amount_spk_vendor');
+            $table->double('discount');
+            $table->double('commision');
+
+            $table->double('termin_customer_1');
+            $table->double('termin_customer_2');
+            $table->double('termin_customer_3');
+            $table->double('termin_customer_4');
+            $table->double('termin_customer_5');
+
+            $table->double('termin_vendor_1');
+            $table->double('termin_vendor_2');
+            $table->double('termin_vendor_3');
+            $table->double('termin_vendor_4');
+            $table->double('termin_vendor_5');
+
+            $table->string('vendor_name');
+            $table->string('vendor_contact');
             $table->string('customer_name');
             $table->string('customer_contact');
             $table->string('province')->nullable(true);

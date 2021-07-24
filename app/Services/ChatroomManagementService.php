@@ -103,16 +103,63 @@ class ChatroomManagementService
         $consultation = $consultation['data'];
 
         $params['admin_user_id'] = $consultation['admin_user_id'];
-        $params['vendor_id'] = $params['vendor_user_id'] ?? null;
+        $params['vendor_user_id'] = $params['vendor_user_id'] ?? null;
         $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $user['display_name'].'-AV-'.Carbon::now('GMT+7')->format('dmHi');;
+        $params['name'] = $user['display_name'].'-AV-'.Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Halo bisa mengerjakan projek ini';
+        $params['room_type'] = 'admin-vendor';
         $chatroom = $this->chatroomService->create($params);
         $chatroom = $chatroom['data'];
 
         $chatParams['user_id'] = $consultation['admin_user_id'];
+        $chatParams['chat'] = $consultation['id'];
+        $chatParams['is_system'] = true;
+        $chatParams['room_id'] = $chatroom['id'];
+        $this->chatService->create($chatParams, $chatroom['id']);
+
+        return [
+            'status' => 201,
+            'data' => $chatroom,
+        ];
+    }
+
+
+    public function createRoomVendorCustomer($consultationId)
+    {
+
+        $consultation = $this->consultationService->show($consultationId);
+        if ($consultation['status'] != 200) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'User not found'],
+            ];
+        }
+        $consultation = $consultation['data'];
+
+        $user = $this->user->show($consultation['user_id']);
+        if ($user['status'] != 200) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'User not found'],
+            ];
+        }
+        $user = $user['data'];
+
+        $params['admin_user_id'] = $consultation['admin_user_id'];
+        $params['vendor_user_id'] = $consultation['vendor_user_id'];
+        $params['user_id'] = $consultation['user_id'];
+        $params['consultation_id'] = $consultation['id'];
+        $params['status'] = 'Pre-Purchase';
+        $params['image_url'] = $user['user_picture_url'] ?? "";
+        $params['name'] = $user['display_name'].'-AVC-'.Carbon::now('GMT+7')->format('dmHi');
+        $params['text'] = 'Halo bisa mengerjakan projek ini';
+        $params['room_type'] = 'admin-vendor-customer';
+        $chatroom = $this->chatroomService->create($params);
+        $chatroom = $chatroom['data'];
+
+        $chatParams['user_id'] = $consultation['vendor_user_id'];
         $chatParams['chat'] = $consultation['id'];
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];

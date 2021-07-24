@@ -87,7 +87,6 @@ class ChatroomController extends Controller
     {
 
         $params = $request->all();
-        $params['room_type'] = 'admin-vendor';
 
         $result = $this->chatroomManagementService->createRoomVendor($params);
 

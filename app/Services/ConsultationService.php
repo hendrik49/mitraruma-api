@@ -43,6 +43,22 @@ class ConsultationService
     private $orderStatus;
 
     /**
+     * @var Validator
+     */
+    private $validator = [
+        'user_id' => 'required|integer',
+        'admin_user_id' => 'integer',
+        'vendor_user_id' => 'integer',
+        'description' => 'required|string',
+        'photos' => 'array',
+        'estimated_budget' => 'numeric',
+        'contact' => 'required|string',
+        'street' => 'required|string',
+        'orderNumber' => 'integer',
+        'orderStatus' => 'integer',
+    ];
+
+    /**
      * Create a new controller instance.
      *
      * @param ConsultationRepository $consultation
@@ -121,18 +137,7 @@ class ConsultationService
     public function create($params)
     {
 
-        $validator = Validator::make($params, [
-            'user_id' => 'required|integer',
-            'admin_user_id' => 'integer',
-            'vendor_user_id' => 'integer',
-            'description' => 'required|string',
-            'photos' => 'array',
-            'estimated_budget' => 'numeric',
-            'contact' => 'required|string',
-            'street' => 'required|string',
-            'orderNumber' => 'integer',
-            'orderStatus' => 'integer',
-        ]);
+        $validator = Validator::make($params, $this->validator);
 
         if ($validator->fails()) {
             return [
@@ -191,15 +196,7 @@ class ConsultationService
     public function update($params, $id)
     {
 
-        $validator = Validator::make($params, [
-            'user_id' => 'required|integer',
-            'admin_user_id' => 'integer',
-            'vendor_user_id' => 'integer',
-            'description' => 'required|string',
-            'photos' => 'array',
-            'estimated_budget' => 'numeric',
-            'contact' => 'required|string',
-        ]);
+        $validator = Validator::make($params, $this->validator);
 
         if ($validator->fails()) {
             return [

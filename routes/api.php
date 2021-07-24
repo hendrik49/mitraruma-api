@@ -88,6 +88,7 @@ Route::GET('/vendor/consultation/{id}/status', [VendorConsultationController::cl
 Route::GET('/vendor/consultation/{id}/chat-files', [VendorConsultationController::class, 'showChatFiles'])->middleware('jwt.user');
 
 Route::GET('/vendor/chatroom', [VendorChatroomController::class, 'index'])->middleware('jwt.user');
+Route::GET('/vendor/chatroom/{id}/users', [VendorChatroomController::class, 'showUsers'])->middleware('jwt.user');
 
 //ADMIN SITE
 Route::GET('/user/vendor', [UserController::class, 'showVendor'])->middleware('jwt.admin');

@@ -207,12 +207,17 @@ class ChatroomService
         $chatroom = ChatroomResource::fromFirebase($chatroom);
 
         $user = [];
-        array_push($user, $this->user->show($chatroom['user_id'])['data']);
-        if(isset($chatroom['applicator_id'])) {
-            array_push($user, $this->user->show($chatroom['applicator_id'])['data']);
+        if(isset($chatroom['user_id'])) {
+            $userData = $this->user->show($chatroom['user_id']);
+            $userData['status'] == 200 ? array_push($user, $this->user->show($chatroom['user_id'])['data']) : null;
+        }
+        if(isset($chatroom['vendor_user_id'])) {
+            $vendorData = $this->user->show($chatroom['vendor_user_id']);
+            $vendorData['status'] == 200 ? array_push($user, $this->user->show($chatroom['vendor_user_id'])['data']) : null;
         }
         if(isset($chatroom['admin_user_id'])) {
-            array_push($user, $this->user->show($chatroom['admin_user_id'])['data']);
+            $adminData = $this->user->show($chatroom['admin_user_id']);
+            $adminData['status'] == 200 ? array_push($user, $this->user->show($chatroom['admin_user_id'])['data']) : null;
         }
 
         return [

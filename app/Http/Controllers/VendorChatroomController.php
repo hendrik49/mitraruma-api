@@ -41,4 +41,17 @@ class VendorChatroomController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showUsers($id)
+    {
+        $result = $this->chatroom->showUsers($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
 }

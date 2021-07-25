@@ -11,6 +11,20 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    window.JSZip = require("jszip");
+    //require( "pdfmake" );
+    require('datatables.net');
+    //require('datatables.net-buttons-bs4');
+    require('datatables.net-colreorder-bs4');
+    require('datatables.net-fixedcolumns-bs4');
+    require('datatables.net-responsive-bs4');
+    require('datatables.net-rowreorder-bs4');
+    require('datatables.net-scroller-bs4');
+    require('datatables.net-keytable');
+    require('datatables.net-rowgroup');
+    require('datatables.net-responsive-bs4');
+    require('datatables.net-searchbuilder-bs4');
+    require('datatables.net-searchpanes-bs4');
 } catch (e) {
 }
 

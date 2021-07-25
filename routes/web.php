@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +24,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get("proyek", "ProjectController");
+Route::prefix('admin')->group(function () {
+    Route::resource('proyek', ProjectController::class);
 });

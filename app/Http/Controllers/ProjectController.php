@@ -3,99 +3,168 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+use App\Models\WpProject;
+
 
 class ProjectController extends Controller
 {
     /**
-     * @var \App\Services\ProjectService
-     */
-    private $project;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\ProjectService  $project
      * @return void
      */
-    public function __construct(
-        \App\Services\ProjectService $project
-    )
+    public function __construct()
     {
-        $this->project = $project;
+        $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(Request $request)
+    public function index()
     {
-        $params = $request->all();
-
-        $result = $this->project->index($params);
-
-        return view('project.index',compact('result'));
+        $start_date = $end_date = date('Y-m-d H:i:s');
+        $projects = WpProject::get();
+        return view('project.index', compact('projects', 'start_date', 'end_date'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show($id)
+    public function create()
     {
-        $result = $this->project->show($id);
-
-        return response()->json($result['data'], $result['status']);
+        return view('project.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+    public function projectStatus($id, $status)
+    {
+        $user = Auth::user();
+
+        $project = WpProject::findOrFail($id);
+        if ($project) {
+            $project->status = $status;
+            $project->created_by = $user->id;
+            $project->save();
+        }
+
+        return redirect()->route('project.index')->with('status', 'Item updated successfully.');
+    }
+
     public function store(Request $request)
     {
+        try {
 
-        $params = $request->all();
+            $this->validate($request, [
+                'bank' => 'required|min:3',
+                'account' => 'nullable|min:5',
+                'label' => 'required|min:3',
+                'tipe' => 'required|min:3',
+                'owner' => 'required|min:3',
+                'logo' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
+            ]);
 
-        $result = $this->project->create($params);
+            DB::beginTransaction();
 
-        return response()->json($result['data'], $result['status']);
+            $project = new WpProject;
+            $foto = $request->file('logo');
+            if ($foto) {
+                $project_path = $foto->store('fotoproject', 'public');
+                $project->dokumentasi = $project_path;
+            }
+            $project->bank    = strtolower($request->bank);
+            $project->account  = $request->account;
+            $project->branch  = $request->label;
+            $project->tipe  = $request->tipe;
+            $project->owner  = $request->owner;
+            $project->created_by = Auth::user()->id;
+            $project->judul_panduan_pembayaran1 = $request->judul_panduan_pembayaran1;
+            $project->judul_panduan_pembayaran2 = $request->judul_panduan_pembayaran2;
+            $project->judul_panduan_pembayaran3 = $request->judul_panduan_pembayaran3;
+            $project->panduan_pembayaran1 = $request->panduan_pembayaran1;
+            $project->panduan_pembayaran2 = $request->panduan_pembayaran2;
+            $project->panduan_pembayaran3 = $request->panduan_pembayaran3;
+
+            $project->save();
+
+            DB::commit();
+
+            return redirect()->route('project.index')->with('status', 'Data project berhasil disimpan');
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return redirect()->back()->with('errors', $e->validator->getMessageBag());
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('gagal', 'Simpan project gagal. ' . $e->getMessage());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
+    public function show($id)
+    {
+        $proker = DB::table('projects')
+            ->where('id', '=', $id)
+            ->first();
+        return view('project.show', ['show' => $proker]);
+    }
+
+    public function edit($id)
+    {
+        $project = WpProject::findOrfail($id);
+        return view('project.edit', ['project' => $project]);
+    }
+
     public function update(Request $request, $id)
     {
-        $params = $request->all();
 
-        $result = $this->project->update($params, $id);
+        try {
 
-        return response()->json($result['data'], $result['status']);
+            $this->validate($request, [
+                'bank' => 'required|min:3',
+                'account' => 'nullable|numeric',
+                'label' => 'required|min:1',
+                'tipe' => 'required|min:3',
+                'owner' => 'required|min:3',
+                'logo' => 'image|mimes:jpeg,png,jpg,svg|max:1024'
+            ]);
+
+            $project = WpProject::findOrfail($id);
+
+            $foto = $request->file('logo');
+            if ($foto) {
+                if ($project->dokumentasi && file_exists(storage_path('app/public/' . $project->dokumentasi))) {
+                    Storage::delete('public/' . $project->dokumentasi);
+                }
+                $foto_path = $foto->store('fotoproject', 'public');
+                $project->dokumentasi = $foto_path;
+            }
+            $project->bank    = strtolower($request->bank);
+            $project->account  = $request->account;
+            $project->tipe  = $request->tipe;
+            $project->branch  = $request->label;
+            $project->owner  = $request->owner;
+            $project->updated_by    = Auth::user()->name;
+            $project->judul_panduan_pembayaran1 = $request->judul_panduan_pembayaran1;
+            $project->judul_panduan_pembayaran2 = $request->judul_panduan_pembayaran2;
+            $project->judul_panduan_pembayaran3 = $request->judul_panduan_pembayaran3;
+            $project->panduan_pembayaran1 = $request->panduan_pembayaran1;
+            $project->panduan_pembayaran2 = $request->panduan_pembayaran2;
+            $project->panduan_pembayaran3 = $request->panduan_pembayaran3;
+
+            $project->save();
+
+            DB::commit();
+
+            return redirect()->route('project.index')->with('status', 'Data project berhasil diubah');
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return redirect()->back()->with('errors', $e->validator->getMessageBag());
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('gagal', 'Ubah project gagal. ' . $e->getMessage());
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function destroy($id)
     {
-
-        $result = $this->project->destroy($id);
-
-        return response()->json($result['data'], $result['status']);
+        $project = WpProject::findOrfail($id);
+        $project->delete();
+        return redirect()->back()->with('status', 'Data project Telah Dihapus');
     }
-
 }

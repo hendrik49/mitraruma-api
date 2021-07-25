@@ -12,13 +12,7 @@
                     <div class="alert alert-danger">
                         {{ session('gagal') }}
                     </div>
-                @endif   
-                <div class="mt-2">
-                    <div class="form-group">
-                        From: <input type="date" name="date_start" id="date_start" class="datepicker" />
-                        To: <input type="date" name="date_end" id="date_end" class="datepicker" />
-                    </div>
-                </div>
+                @endif
                 <div class="box">
                     <div class="box-body">
                         <table class="table table-bordered table-striped" id="projectrange">
@@ -71,11 +65,6 @@
     @parent
     <script type="text/javascript">
         $(function() {
-            vStartDate = "{{ $start_date }}";
-            vEndDate = "{{ $end_date }}";
-            document.getElementById("date_start").valueAsDate = vStartDate ? new Date(vStartDate) : new Date();
-            document.getElementById("date_end").valueAsDate = vEndDate ? new Date(vEndDate) : new Date();
-
             var dTable = $('#projectrange').dataTable({
                 'paging': true,
                 'lengthChange': true,
@@ -92,26 +81,6 @@
                     }
                 }, ]
             });
-
-            $("#date_start").keyup(function() {
-                searchByDate();
-            });
-            $("#date_start").change(function() {
-                searchByDate();
-            });
-            $("#date_end").keyup(function() {
-                searchByDate();
-            });
-            $("#date_end").change(function() {
-                searchByDate();
-            });
-
-            function searchByDate() {
-                var dateStart = $('#date_start').val();
-                var dateEnd = $('#date_end').val();
-                var url = 'project?date_start=' + dateStart + '&date_end=' + dateEnd;
-                window.open(url, "_self")
-            }
         });
     </script>
 @endsection

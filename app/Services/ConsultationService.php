@@ -48,7 +48,7 @@ class ConsultationService
     private $validator = [
         'user_id' => 'required|integer',
         'admin_user_id' => 'nullable|integer',
-        'vendor_user_id' => 'integer',
+        'vendor_user_id' => 'nullable|integer',
         'description' => 'required|string',
         'photos' => 'array',
         'estimated_budget' => 'numeric',

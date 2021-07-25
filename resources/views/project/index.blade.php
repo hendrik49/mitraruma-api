@@ -19,9 +19,9 @@
                         To: <input type="date" name="date_end" id="date_end" class="datepicker" />
                     </div>
                 </div>
-                <div class="box" style="margin-top: 0px;">
+                <div class="box">
                     <div class="box-body">
-                        <table class="table display table-bordered table-striped" id="projectrange" style="width: 100%">
+                        <table class="table table-bordered table-striped" id="projectrange">
                             <thead>
                                 <tr>
                                     <th>No.</th>

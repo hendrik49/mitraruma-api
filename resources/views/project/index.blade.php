@@ -2,7 +2,7 @@
 @section('title') Daftar project @endsection
 @section('content')
     <div class="row">
-        <div class="container col-sm-12">
+        <div class="container mt-2">
             <div class="col-md-12">
                 @if (session('status'))
                     <div class="alert alert-success">
@@ -24,7 +24,6 @@
                                     <th>Customer Name</th>
                                     <th>Applicator Name</th>
                                     <th>Consulation</th>
-                                    <th>Est. Budget</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Actions</th>
@@ -39,7 +38,6 @@
                                         <td>{{ $project->customer_name }}</td>
                                         <td>{{ $project->vendor_name }}</td>
                                         <td>{{ $project->description }}</td>
-                                        <td class="text-right">{{ $project->estimated_budget }}</td>
                                         <td>{{ $project->status }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
                                         <td width="15%">
@@ -70,16 +68,10 @@
                 'lengthChange': true,
                 'searching': true,
                 'ordering': true,
-                'responsive': true,
+                // 'responsive': true,
                 'info': true,
                 'scrollX': true,
-                'dom': 'Bfrtip',
-                'buttons': [{
-                    extend: 'excel',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-                    }
-                }, ]
+                // 'dom': 'Bfrtip'      
             });
         });
     </script>

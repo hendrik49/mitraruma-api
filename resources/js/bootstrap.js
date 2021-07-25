@@ -14,7 +14,7 @@ try {
     window.JSZip = require("jszip");
     //require( "pdfmake" );
     require('datatables.net');
-    //require('datatables.net-buttons-bs4');
+    require('datatables.net-buttons-bs4');
     require('datatables.net-colreorder-bs4');
     require('datatables.net-fixedcolumns-bs4');
     require('datatables.net-responsive-bs4');

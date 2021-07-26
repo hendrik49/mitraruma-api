@@ -70,7 +70,6 @@ class ChatroomManagementService
         $validator = Validator::make($params, [
             'consultation_id' => 'required|string',
             'vendor_user_id' => 'required|integer',
-            'room_type' => 'required|string',
         ]);
 
         if ($validator->fails()) {

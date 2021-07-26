@@ -125,7 +125,9 @@ class ChatService
         $chatroom = $chatroom['data'];
         $chatroom['date'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $chatroom['text'] = $params['chat'];
-        $this->chatroomService->update($chatroom, $chatroom['id']);
+        if(!$params['is_system']){
+            $this->chatroomService->update($chatroom, $chatroom['id']);
+        }
 
         $userIds = [];
         if(isset($chatroom['user_id']) && $params['user_id'] != $chatroom['user_id']) {

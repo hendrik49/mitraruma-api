@@ -133,8 +133,8 @@ class ChatService
         if(isset($chatroom['user_id']) && $params['user_id'] != $chatroom['user_id']) {
             array_push($userIds, $chatroom['user_id']);
         }
-        if(isset($chatroom['applicator_id']) && $params['user_id'] != $chatroom['applicator_id']) {
-            array_push($userIds, $chatroom['applicator_id']);
+        if(isset($chatroom['vendor_user_id']) && $params['user_id'] != $chatroom['vendor_user_id']) {
+            array_push($userIds, $chatroom['vendor_user_id']);
         }
         if(isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
             array_push($userIds, $chatroom['admin_user_id']);

@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ConsultationExport implements ShouldAutoSize, WithStyles, WithColumnFormatting, FromArray
+class CustomerConsultationExport implements ShouldAutoSize, WithStyles, WithColumnFormatting, FromArray
 {
 
     /**
@@ -35,14 +35,12 @@ class ConsultationExport implements ShouldAutoSize, WithStyles, WithColumnFormat
             [
                 '', '', '',
                 'Term of payment from customer', '', '', '', '', '',
-                'Term of payment from applicator', '', '', '', '', '',
-                '', '', '', '', '',
+                '', '', '', '',
             ],
             [
                 'project description', 'total value project', 'Discount',
                 'Booking/Design', 'term 1', 'term 2', 'term 3', 'term 4', 'term 5',
-                'Booking/Design', 'term 1', 'term 2', 'term 3', 'term 4', 'term 5',
-                'commission', 'Updated At', '', '', ''
+                'Updated At', '', '', ''
             ]
         ];
     }
@@ -62,13 +60,6 @@ class ConsultationExport implements ShouldAutoSize, WithStyles, WithColumnFormat
                 'termin_customer_3' => $consultation['termin_customer_3'] ?? 0,
                 'termin_customer_4' => $consultation['termin_customer_4'] ?? 0,
                 'termin_customer_5' => $consultation['termin_customer_5'] ?? 0,
-                'book_2' => $consultation['book_2'] ?? '',
-                'termin_vendor_1' => $consultation['termin_vendor_1'] ?? 0,
-                'termin_vendor_2' => $consultation['termin_vendor_2'] ?? 0,
-                'termin_vendor_3' => $consultation['termin_vendor_3'] ?? 0,
-                'termin_vendor_4' => $consultation['termin_vendor_4'] ?? 0,
-                'termin_vendor_5' => $consultation['termin_vendor_5'] ?? 0,
-                'commission' => $consultation['commission'] ?? '',
                 'updated_at' => $formatUpdatedAt ?? '',
             ]);
         }
@@ -87,20 +78,12 @@ class ConsultationExport implements ShouldAutoSize, WithStyles, WithColumnFormat
             'H' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
             'I' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
             'J' => NumberFormat::FORMAT_GENERAL,
-            'K' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
-            'L' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
-            'M' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
-            'N' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
-            'O' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
-            'P' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
-            'Q' => NumberFormat::FORMAT_GENERAL,
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
         $sheet->mergeCells('D1:I1');
-        $sheet->mergeCells('J1:P1');
         $lastRow = $sheet->getCellCollection()->getCurrentRow();
         $style = [
             1 => ['font' => ['size' => 12, 'bold' => true]],

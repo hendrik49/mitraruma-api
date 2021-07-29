@@ -115,8 +115,6 @@ class UserConsultationController extends Controller
     {
         $params = $request->all();
 
-        $params['vendor_user_id'] = $params['user_id'];
-        $params['user_id'] = null;
         return $this->consultation->export($params);
 
     }

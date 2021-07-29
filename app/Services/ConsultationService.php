@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exports\ConsultationExport;
+use App\Exports\CustomerConsultationExport;
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
 use Carbon\Carbon;
@@ -325,8 +326,14 @@ class ConsultationService
 
         $consultation = ConsultationResource::fromFirebaseArray($consultation);
 
-        $export = new ConsultationExport($consultation);
-        return Excel::download($export, 'consultation.xlsx');
+        if(isset($params['user_id'])) {
+            $export = new CustomerConsultationExport($consultation);
+            return Excel::download($export, 'consultation.xlsx');
+        }
+        else{
+            $export = new ConsultationExport($consultation);
+            return Excel::download($export, 'consultation.xlsx');
+        }
 
     }
 

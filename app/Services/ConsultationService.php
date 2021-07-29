@@ -179,6 +179,7 @@ class ConsultationService
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'].'-AC-'.Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';
+        $params['consultation_description'] = $consultation['description'];
         $chatroom = $this->chatroom->create($params);
         $chatroom = $chatroom['data'];
 

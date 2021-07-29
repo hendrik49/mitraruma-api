@@ -26,6 +26,7 @@ class ChatroomResource
             'roomType' => $params['room_type'],
             'status' => $params['status'],
             'text' => $params['text'] ?? "",
+            'consultationDescription' => $params['consultation_description'] ?? "",
             'createdAt' => $params['created_at'] ?? "",
         ];
     }
@@ -71,6 +72,7 @@ class ChatroomResource
             'room_type' => $param['roomType'] ?? '',
             'status' => $param['status'] ?? '',
             'text' => $param['text'] ?? '',
+            'consultation_description' => $param['consultationDescription'] ?? '',
             'created_at' => $param['createdAt'] ?? '',
         ];
     }

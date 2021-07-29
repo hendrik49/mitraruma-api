@@ -108,6 +108,7 @@ class ChatroomManagementService
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'].'-AV-'.Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Halo bisa mengerjakan projek ini?';
+        $params['consultation_description'] = $consultation['description'];
         $params['room_type'] = 'admin-vendor';
         $chatroom = $this->chatroomService->create($params);
         $chatroom = $chatroom['data'];
@@ -155,6 +156,7 @@ class ChatroomManagementService
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'].'-AVC-'.Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Halo saya siap berdiskusi dengan projek ini';
+        $params['consultation_description'] = $consultation['description'];
         $params['room_type'] = 'admin-vendor-customer';
         $chatroom = $this->chatroomService->create($params);
         $chatroom = $chatroom['data'];

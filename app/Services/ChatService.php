@@ -146,7 +146,9 @@ class ChatService
         }
 
         $deviceTokens = [];
+        $notificationUserIds = [];
         foreach ($tokens as $token) {
+            array_push($notificationUserIds, $token['user_id']);
             array_push($deviceTokens, $token['device_token']);
         }
 
@@ -176,7 +178,9 @@ class ChatService
             ]
         ));
 
-        $this->userNotificationService->store(['user_id' => $params['user_id'], 'type' => 'chat', 'chat_room_id' => $roomId]);
+        foreach ($notificationUserIds as $notificationUserId) {
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'type' => 'chat', 'chat_room_id' => $roomId]);
+        }
 
         return [
             'status' => 201,

@@ -170,6 +170,7 @@ class ConsultationService
         $params['order_number'] = mt_rand(1000000, 9999999);
         $newParams = ConsultationResource::toFirebase($params);
         $consultation = $this->consultation->create($newParams);
+        $consultation = ConsultationResource::fromFirebase($consultation);
 
         //create chatroom
         $params['admin_user_id'] = $userAdmin['ID'];
@@ -188,9 +189,8 @@ class ConsultationService
         $chatParams['notification_chat'] = 'Hai Admin saya berminat untuk berkonsultasi';
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
-        $chat = $this->chat->create($chatParams, $chatroom['id']);
+        $this->chat->create($chatParams, $chatroom['id']);
 
-        $consultation = ConsultationResource::fromFirebase($consultation);
         return [
             'status' => 201,
             'data' => $consultation,

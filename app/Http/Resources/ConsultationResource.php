@@ -44,6 +44,7 @@ class ConsultationResource
             'terminVendor4' => $params['termin_vendor_4'] ?? 0,
             'terminVendor5' => $params['termin_vendor_5'] ?? 0,
             'createdAt' => $params['created_at'] ?? '',
+            'updatedAt' => $params['updated_at'] ?? '',
         ];
     }
 
@@ -106,6 +107,7 @@ class ConsultationResource
             'termin_vendor_4' => $param['terminVendor4'] ?? '',
             'termin_vendor_5' => $param['terminVendor5'] ?? '',
             'created_at' => $param['createdAt'] ?? '',
+            'updated_at' => $param['updatedAt'] ?? '',
         ];
     }
 }

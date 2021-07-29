@@ -118,6 +118,7 @@ class ChatroomService
         $params['created_at'] = $dateNow;
         $newParams = ChatroomResource::toFirebase($params);
         $chatroom = $this->chatroom->create($newParams);
+        $chatroom = ChatroomResource::fromFirebase($chatroom);
 
         return [
             'status' => 201,
@@ -140,6 +141,7 @@ class ChatroomService
 
         $newParams = ChatroomResource::toFirebase($params);
         $chatroom = $this->chatroom->update($newParams, $id);
+        $chatroom = ChatroomResource::fromFirebase($chatroom);
 
         if (!$chatroom) {
             return [

@@ -182,6 +182,7 @@ class ConsultationService
 
         $chatParams['user_id'] = $user['ID'];
         $chatParams['chat'] = $consultation['id'];
+        $chatParams['notification_chat'] = 'Hai Admin saya berminat untuk berkonsultasi';
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
         $chat = $this->chat->create($chatParams, $chatroom['id']);

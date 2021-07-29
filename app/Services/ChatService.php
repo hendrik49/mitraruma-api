@@ -170,7 +170,7 @@ class ChatService
 
         $this->notificationService->send($deviceTokens, array(
             "title" => "You have new message",
-            "body" => $params['chat'],
+            "body" => $params['notification_chat'] ?? $params['chat'],
             "type" => "chat",
             "value" => [
                 "chat_room" => $chatroom,

@@ -38,7 +38,7 @@ class JwtUser
 
             $decoded = $this->jwt->decode($token);
 
-            $request->request->add(['user_id' => $decoded->ID]);
+            $request->request->add(['user_id' => $decoded->id]);
 
         } catch (\Throwable $e) {
             return response()->json(['message' => $e->getMessage()], 400);

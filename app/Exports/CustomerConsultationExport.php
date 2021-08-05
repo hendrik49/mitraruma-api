@@ -56,8 +56,6 @@ class CustomerConsultationExport implements ShouldAutoSize, WithStyles, WithColu
     {
         $dataBody = [];
         foreach ($this->consultations as $consultation) {
-            if($consultation['order_number'] != 6048240)
-                continue;
 
             $formatTerminCustomerPayment  = '';
             for ($i=1; $i<=6; $i++) {
@@ -76,13 +74,13 @@ class CustomerConsultationExport implements ShouldAutoSize, WithStyles, WithColu
                 'service_type' => $consultation['service_type'] ?? '',
                 'description' => $consultation['description'] ?? '',
                 'order_status_name' => $consultation['order_status_name'] ?? '',
-                'inquiry_date' => $consultation['inquiry_date'] ?? '',
-                'survey_date' => $consultation['survey_date'] ?? '',
-                'quotation' => $consultation['quotation'] ?? '',
-                'design' => $consultation['design'] ?? '',
-                'project_start_date' => $consultation['project_start_date'] ?? '',
-                'handover_date' => $consultation['handover_date'] ?? '',
-                'project_end_date' => $consultation['project_end_date'] ?? '',
+                'inquiry_date' => $this->date->readableDateFirebase($consultation['inquiry_date'] ?? ''),
+                'survey_date' => $this->date->readableDateFirebase($consultation['survey_date'] ?? ''),
+                'quotation' => $this->date->readableDateFirebase($consultation['quotation'] ?? ''),
+                'design' => $this->date->readableDateFirebase($consultation['design'] ?? ''),
+                'project_start_date' => $this->date->readableDateFirebase($consultation['project_start_date'] ?? ''),
+                'handover_date' => $this->date->readableDateFirebase($consultation['handover_date'] ?? ''),
+                'project_end_date' => $this->date->readableDateFirebase($consultation['project_end_date'] ?? ''),
                 'project_value' => $consultation['project_value'] ?? 0,
                 'spk_customer' => $consultation['spk_customer'] ?? 0,
                 'applicator_discount' => $consultation['applicator_discount'] ?? 0,

@@ -57,8 +57,6 @@ class VendorConsultationExport implements ShouldAutoSize, WithStyles, WithColumn
     {
         $dataBody = [];
         foreach ($this->consultations as $consultation) {
-            if($consultation['order_number'] != 6048240)
-                continue;
 
             $formatTerminCustomerPayment  = '';
             for ($i=1; $i<=6; $i++) {
@@ -66,7 +64,7 @@ class VendorConsultationExport implements ShouldAutoSize, WithStyles, WithColumn
             }
             $formatTerminVendorPayment  = '';
             for ($i=1; $i<=6; $i++) {
-                $formatTerminVendorPayment .= $consultation["termin_vendor_percentage_$i"]."%";
+                $formatTerminVendorPayment .= $consultation["termin_vendor_percentage_$i"]."%, ";
             }
 
             array_push($dataBody, [
@@ -77,13 +75,13 @@ class VendorConsultationExport implements ShouldAutoSize, WithStyles, WithColumn
                 'service_type' => $consultation['service_type'] ?? '',
                 'description' => $consultation['description'] ?? '',
                 'order_status_name' => $consultation['order_status_name'] ?? '',
-                'inquiry_date' => $consultation['inquiry_date'] ?? '',
-                'survey_date' => $consultation['survey_date'] ?? '',
-                'quotation' => $consultation['quotation'] ?? '',
-                'design' => $consultation['design'] ?? '',
-                'project_start_date' => $consultation['project_start_date'] ?? '',
-                'handover_date' => $consultation['handover_date'] ?? '',
-                'project_end_date' => $consultation['project_end_date'] ?? '',
+                'inquiry_date' => $this->date->readableDateFirebase($consultation['inquiry_date'] ?? ''),
+                'survey_date' => $this->date->readableDateFirebase($consultation['survey_date'] ?? ''),
+                'quotation' => $this->date->readableDateFirebase($consultation['quotation'] ?? ''),
+                'design' => $this->date->readableDateFirebase($consultation['design'] ?? ''),
+                'project_start_date' => $this->date->readableDateFirebase($consultation['project_start_date'] ?? ''),
+                'handover_date' => $this->date->readableDateFirebase($consultation['handover_date'] ?? ''),
+                'project_end_date' => $this->date->readableDateFirebase($consultation['project_end_date'] ?? ''),
                 'project_value' => $consultation['project_value'] ?? 0,
                 'spk_vendor' => $consultation['spk_vendor'] ?? 0,
                 'spk_vendor_net' => $consultation['spk_vendor_net'] ?? 0,

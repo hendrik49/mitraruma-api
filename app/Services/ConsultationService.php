@@ -327,6 +327,63 @@ class ConsultationService
         }
 
         $consultation = ConsultationResource::fromFirebaseArray($consultation);
+        foreach ($consultation as $indexConsul => $consul) {
+            if($consul['order_number'] != 428890232) {
+                continue;
+            }
+
+            $chatrooms = $this->chatroom->showByFilter(["consultation_id" => $consul["id"]]);
+            $chatroomFlag = false;
+            $chatroomType = "";
+            $chatroomIndex = 0;
+            if($chatrooms['status'] == 200) {
+                $chatrooms = $chatrooms['data'];
+                foreach ($chatrooms as $indexChatroom => $chatroom) {
+                    if($chatroom['room_type'] == 'admin-vendor-customer') {
+                        $chatroomFlag =true;
+                        $chatroomIndex = $indexChatroom;
+                        break;
+                    }
+                    elseif ($chatroom['room_type'] == 'admin-vendor') {
+                        $chatroomFlag =true;
+                        $chatroomType = $chatroom['room_type'];
+                        $chatroomIndex = $indexChatroom;
+                    }
+                    elseif($chatroomType != 'admin-vendor') {
+                        $chatroomFlag =true;
+                        $chatroomIndex = $indexChatroom;
+                    }
+                }
+            }
+
+            if (!$chatroomFlag) continue;
+            $orderStatus = $this->orderStatus->show($chatrooms[$chatroomIndex]['id']);
+            foreach ($orderStatus['data'] as $status) {
+                foreach ($status['list'] as $list) {
+                    if($list['activity'] == "Start of Conversation"){
+                        $consultation[$indexConsul]['inquiry_date'] = $list['createdAt'];
+                    }
+                    elseif($list['activity'] == "Start of Conversation"){
+                        $consultation[$indexConsul]['survey_date'] = $list['createdAt'];
+                    }
+                    elseif($list['activity'] == "Start of Conversation"){
+                        $consultation[$indexConsul]['quotation'] = $list['createdAt'];
+                    }
+                    elseif($list['activity'] == "Start of Conversation"){
+                        $consultation[$indexConsul]['design'] = $list['createdAt'];
+                    }
+                    elseif($list['activity'] == "Start of Conversation"){
+                        $consultation[$indexConsul]['project_start_date'] = $list['createdAt'];
+                    }
+                    elseif($list['activity'] == "Start of Conversation"){
+                        $consultation[$indexConsul]['handover_date'] = $list['createdAt'];
+                    }
+                    elseif($list['activity'] == "Last Payment Paid by Admin"){
+                        $consultation[$indexConsul]['project_end_date'] = $list['createdAt'];
+                    }
+                }
+            }
+        }
 
         if(isset($params['user_id'])) {
             $export = new CustomerConsultationExport($consultation);

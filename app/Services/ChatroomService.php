@@ -190,6 +190,7 @@ class ChatroomService
                 'data' => ['message' => 'Data not found'],
             ];
         }
+        $chatroom = ChatroomResource::fromFirebaseArray($chatroom);
 
         return [
             'status' => 200,

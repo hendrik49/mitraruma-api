@@ -322,9 +322,6 @@ class ConsultationService
 
         $consultation = ConsultationResource::fromFirebaseArray($consultation);
         foreach ($consultation as $indexConsul => $consul) {
-            if($consul['order_number'] != 428890232) {
-                continue;
-            }
 
             $chatrooms = $this->chatroom->showByFilter(["consultation_id" => $consul["id"]]);
             $chatroomFlag = false;
@@ -353,26 +350,32 @@ class ConsultationService
             if (!$chatroomFlag) continue;
             $orderStatus = $this->orderStatus->show($chatrooms[$chatroomIndex]['id']);
             foreach ($orderStatus['data'] as $status) {
+                $consultation[$indexConsul]['order_status_name'] = $status['phase'];
                 foreach ($status['list'] as $list) {
-                    if($list['activity'] == "Start of Conversation"){
+                    if(strtoupper($list['activity']) == strtoupper("Start of Conversation")){
                         $consultation[$indexConsul]['inquiry_date'] = $list['createdAt'];
                     }
-                    elseif($list['activity'] == "Start of Conversation"){
-                        $consultation[$indexConsul]['survey_date'] = $list['createdAt'];
+                    elseif(strpos(strtoupper($list['activity']), strtoupper('Survey'))){
+                        if(!isset($consultation[$indexConsul]['survey_date'])) {
+                            $consultation[$indexConsul]['survey_date'] = $list['activity']." \n";
+                        }
+                        else {
+                            $consultation[$indexConsul]['survey_date'] .= $list['activity']." \n";
+                        }
                     }
-                    elseif($list['activity'] == "Start of Conversation"){
+                    elseif(strtoupper($list['activity']) == strtoupper("quotation Uploaded")){
                         $consultation[$indexConsul]['quotation'] = $list['createdAt'];
                     }
-                    elseif($list['activity'] == "Start of Conversation"){
+                    elseif(strtoupper($list['activity']) == strtoupper("Build of Quantity (BOQ) Uploaded")){
                         $consultation[$indexConsul]['design'] = $list['createdAt'];
                     }
-                    elseif($list['activity'] == "Start of Conversation"){
+                    elseif(strtoupper($list['activity']) == strtoupper("Signed Contract Uploaded by Customer")){
                         $consultation[$indexConsul]['project_start_date'] = $list['createdAt'];
                     }
-                    elseif($list['activity'] == "Start of Conversation"){
+                    elseif(strtoupper($list['activity']) == strtoupper("Acceptance and Check List to Ended The Project")){
                         $consultation[$indexConsul]['handover_date'] = $list['createdAt'];
                     }
-                    elseif($list['activity'] == "Last Payment Paid by Admin"){
+                    elseif(strtoupper($list['activity']) == strtoupper("Last Payment Paid by Admin")){
                         $consultation[$indexConsul]['project_end_date'] = $list['createdAt'];
                     }
                 }

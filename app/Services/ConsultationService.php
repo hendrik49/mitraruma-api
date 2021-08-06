@@ -210,15 +210,6 @@ class ConsultationService
             ];
         }
 
-        $user = $this->user->show($params['user_id']);
-        if ($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-
-        $params['email'] = $user['data']['user_email'];
         $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $newParams = ConsultationResource::toFirebase($params);
         $consultation = $this->consultation->update($newParams, $id);

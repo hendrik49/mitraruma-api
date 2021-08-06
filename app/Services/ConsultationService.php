@@ -211,7 +211,10 @@ class ConsultationService
         }
 
         $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $clearTerminParams = $this->clearDataConsultationTermin($params);
+        $params = $this->buildDataConsultationTermin($clearTerminParams, $params);
         $newParams = ConsultationResource::toFirebase($params);
+
         $consultation = $this->consultation->update($newParams, $id);
         $consultation = ConsultationResource::fromFirebase($consultation);
         if (!$consultation) {
@@ -389,6 +392,32 @@ class ConsultationService
             return Excel::download($export, 'consultation.xlsx');
         }
 
+    }
+
+    private function clearDataConsultationTermin($consultation) {
+        for($i=1; $i<=6; $i++) {
+            $consultation['termin_customer_percentage_'.$i] = 0;
+            $consultation['termin_customer_'.$i] = 0;
+            $consultation['termin_customer_date_'.$i] = '';
+            $consultation['termin_vendor_percentage_'.$i] = 0;
+            $consultation['termin_vendor_'.$i] = 0;
+            $consultation['termin_vendor_date_'.$i] = '';
+        }
+        return $consultation;
+    }
+
+    private function buildDataConsultationTermin($consultationClear, $consultation) {
+        for($i=1; $i<=$consultation['termin_customer_count']; $i++) {
+            $consultationClear['termin_customer_percentage_'.$i] = $consultation['termin_customer_percentage_'.$i];
+            $consultationClear['termin_customer_'.$i] = $consultation['termin_customer_'.$i];
+            $consultationClear['termin_customer_date_'.$i] = $consultation['termin_customer_date_'.$i];
+        }
+        for($i=1; $i<=$consultation['termin_vendor_count']; $i++) {
+            $consultationClear['termin_vendor_percentage_'.$i] = $consultation['termin_vendor_percentage_'.$i];
+            $consultationClear['termin_vendor_'.$i] = $consultation['termin_vendor_'.$i];
+            $consultationClear['termin_vendor_date_'.$i] = $consultation['termin_vendor_date_'.$i];
+        }
+        return $consultationClear;
     }
 
 

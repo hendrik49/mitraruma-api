@@ -84,7 +84,7 @@ class ConsultationResource
             'terminVendorDate6' => $params['termin_vendor_date_6'] ?? '',
             'terminVendorCount' => $params['termin_vendor_count'] ?? 0,
             'retentionPaymentDate' => $params['retention_payment_date'] ?? '',
-            'retention_payment' => $params['retention_payment'] ?? '',
+            'retentionPayment' => $params['retention_payment'] ?? '',
             'createdAt' => $params['created_at'] ?? '',
             'updatedAt' => $params['updated_at'] ?? '',
         ];

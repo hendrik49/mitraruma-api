@@ -350,7 +350,9 @@ class ConsultationService
             if (!$chatroomFlag) continue;
             $orderStatus = $this->orderStatus->show($chatrooms[$chatroomIndex]['id']);
             foreach ($orderStatus['data'] as $status) {
-                $consultation[$indexConsul]['order_status_name'] = $status['phase'];
+                if(sizeof($status['list']) > 0) {
+                    $consultation[$indexConsul]['order_status_name'] = $status['phase'];
+                }
                 foreach ($status['list'] as $list) {
                     if(strtoupper($list['activity']) == strtoupper("Start of Conversation")){
                         $consultation[$indexConsul]['inquiry_date'] = $list['createdAt'];

@@ -70,8 +70,9 @@ Route::DELETE('/user/consultation/{id}', [UserConsultationController::class, 'de
 Route::GET('/user/consultation/{id}', [UserConsultationController::class, 'show'])->middleware('jwt.user');
 Route::GET('/user/consultation/{id}/status', [UserConsultationController::class, 'showStatus'])->middleware('jwt.user');
 Route::GET('/user/consultation/{id}/chat-files', [UserConsultationController::class, 'showChatFiles'])->middleware('jwt.user');
-Route::GET('/user/consultation/{id}/order-status', [UserConsultationOrderStatusController::class, 'show'])->middleware('jwt.user');
 Route::POST('/user/consultation/{id}/approve', [UserConsultationController::class, 'approve'])->middleware('jwt.user');
+Route::GET('/user/consultation/{id}/order-status', [UserConsultationOrderStatusController::class, 'show'])->middleware('jwt.user');
+Route::PUT('/user/consultation/{id}/order-status', [UserConsultationOrderStatusController::class, 'update'])->middleware('jwt.user');
 
 Route::GET('/user/chatroom', [UserChatroomController::class, 'index'])->middleware('jwt.user');
 Route::POST('/user/chatroom', [UserChatroomController::class, 'store'])->middleware('jwt.user');
@@ -92,6 +93,7 @@ Route::GET('/vendor/consultation/{id}', [VendorConsultationController::class, 's
 Route::GET('/vendor/consultation/{id}/status', [VendorConsultationController::class, 'showStatus'])->middleware('jwt.user');
 Route::GET('/vendor/consultation/{id}/chat-files', [VendorConsultationController::class, 'showChatFiles'])->middleware('jwt.user');
 Route::GET('/vendor/consultation/{id}/order-status', [VendorConsultationOrderStatusController::class, 'show'])->middleware('jwt.user');
+Route::PUT('/vendor/consultation/{id}/order-status', [VendorConsultationOrderStatusController::class, 'update'])->middleware('jwt.user');
 
 Route::GET('/vendor/chatroom', [VendorChatroomController::class, 'index'])->middleware('jwt.user');
 Route::GET('/vendor/chatroom/{id}/users', [VendorChatroomController::class, 'showUsers'])->middleware('jwt.user');

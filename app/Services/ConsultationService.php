@@ -221,7 +221,7 @@ class ConsultationService
         $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $clearTerminParams = $this->clearDataConsultationTermin($params);
         $params = $this->buildDataConsultationTermin($clearTerminParams, $params);
-        $newParams = ConsultationResource::toFirebase($params);
+        $newParams = $this->consultationResource->toFirebase($params);
 
         $consultation = $this->consultation->update($newParams, $id);
         $consultation = $this->consultationResource->fromFirebase($consultation);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Http\Request;
+
 class VendorConsultationOrderStatusController extends Controller
 {
     /**
@@ -31,6 +33,22 @@ class VendorConsultationOrderStatusController extends Controller
     public function show($id)
     {
         $result = $this->consultationOrderStatusService->show($id, 'vendor');
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $params = $request->all();
+
+        $result = $this->consultationOrderStatusService->update($params, $id);
 
         return response()->json($result['data'], $result['status']);
     }

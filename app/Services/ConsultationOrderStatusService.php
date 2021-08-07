@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Helpers\OrderStatus;
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class ConsultationOrderStatusService
 {
@@ -58,6 +60,42 @@ class ConsultationOrderStatusService
         return [
             'status' => 200,
             'data' => $orderStatus,
+        ];
+    }
+
+
+    public function update($params, $id)
+    {
+
+
+        $validator = Validator::make($params, [
+            'order_status' => 'integer|required'
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $consultation = $this->consultationRepository->findById($id);
+        if (!$consultation) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $consultation['orderStatus'] =  $params['order_status'];
+        $consultation['updatedAt'] =  Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+
+        $consultation = $this->consultationRepository->update($consultation, $id);
+
+        $consultation = $this->consultationResource->fromFirebase($consultation);
+        return [
+            'status' => 200,
+            'data' => $consultation,
         ];
     }
 

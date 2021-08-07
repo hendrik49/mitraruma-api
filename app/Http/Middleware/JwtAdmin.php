@@ -38,7 +38,8 @@ class JwtAdmin
 
             $decoded = $this->jwt->decode($token);
 
-            if($decoded->userType !== 'admin') {
+            $userType = $decoded->userType ?? $decoded->user_type;
+            if($userType !== 'admin') {
                 return response()->json(['message' =>'User not authorize'], 400);
             }
 

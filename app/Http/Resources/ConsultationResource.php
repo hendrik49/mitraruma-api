@@ -2,15 +2,30 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\OrderStatus;
+
 class ConsultationResource
 {
+
+    /**
+     * @var OrderStatus
+     */
+    private $orderStatus;
+
+    public function __construct(
+        OrderStatus $orderStatus
+    )
+    {
+        $this->orderStatus = $orderStatus;
+    }
+
     /**
      * Transform the resource into an array.
      *
      * @param $params
      * @return array
      */
-    public static function toFirebase($params)
+    public function toFirebase($params)
     {
 
         return [
@@ -96,7 +111,7 @@ class ConsultationResource
      * @param $params
      * @return array
      */
-    public static function fromFirebase($params)
+    public function fromFirebase($params)
     {
         return self::convertFromFirebase($params);
     }
@@ -107,7 +122,7 @@ class ConsultationResource
      * @param $params
      * @return array
      */
-    public static function fromFirebaseArray($params)
+    public function fromFirebaseArray($params)
     {
         $result = [];
         foreach ($params as $param) {
@@ -116,7 +131,7 @@ class ConsultationResource
         return $result;
     }
 
-    private static function convertFromFirebase($param){
+    private function convertFromFirebase($param){
         return [
             'id' => $param['id'],
             'user_id' => $param['userId'],
@@ -134,6 +149,7 @@ class ConsultationResource
             'photos' => $param['photos'] ?? [],
             'order_number' => $param['orderNumber'] ?? '',
             'order_status' => $param['orderStatus'] ?? '',
+            'order_status_name' =>  $this->orderStatus->getPhaseByCode($param['orderStatus']) ?? '',
             'applicator_discount' => $param['applicatorDiscount'] ?? 0,
             'mitraruma_discount' => $param['mitrarumaDiscount'] ?? 0,
             'mitraruma_material_buy' => $param['mitrarumaMaterialBuy'] ?? 0,

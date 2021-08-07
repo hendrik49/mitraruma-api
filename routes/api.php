@@ -8,15 +8,18 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChatroomController;
 use App\Http\Controllers\CmsController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\ConsultationOrderStatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserChatController;
 use App\Http\Controllers\UserChatroomController;
 use App\Http\Controllers\UserConsultationController;
+use App\Http\Controllers\UserConsultationOrderStatusController;
 use App\Http\Controllers\UserExtensionAttributeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserTokenController;
 use App\Http\Controllers\VendorConsultationController;
+use App\Http\Controllers\VendorConsultationOrderStatusController;
 use App\Http\Controllers\VendorChatroomController;
 
 /*
@@ -67,6 +70,7 @@ Route::DELETE('/user/consultation/{id}', [UserConsultationController::class, 'de
 Route::GET('/user/consultation/{id}', [UserConsultationController::class, 'show'])->middleware('jwt.user');
 Route::GET('/user/consultation/{id}/status', [UserConsultationController::class, 'showStatus'])->middleware('jwt.user');
 Route::GET('/user/consultation/{id}/chat-files', [UserConsultationController::class, 'showChatFiles'])->middleware('jwt.user');
+Route::GET('/user/consultation/{id}/order-status', [UserConsultationOrderStatusController::class, 'show'])->middleware('jwt.user');
 Route::POST('/user/consultation/{id}/approve', [UserConsultationController::class, 'approve'])->middleware('jwt.user');
 
 Route::GET('/user/chatroom', [UserChatroomController::class, 'index'])->middleware('jwt.user');
@@ -87,6 +91,7 @@ Route::GET('/vendor/consultation/export', [VendorConsultationController::class, 
 Route::GET('/vendor/consultation/{id}', [VendorConsultationController::class, 'show'])->middleware('jwt.user');
 Route::GET('/vendor/consultation/{id}/status', [VendorConsultationController::class, 'showStatus'])->middleware('jwt.user');
 Route::GET('/vendor/consultation/{id}/chat-files', [VendorConsultationController::class, 'showChatFiles'])->middleware('jwt.user');
+Route::GET('/vendor/consultation/{id}/order-status', [VendorConsultationOrderStatusController::class, 'show'])->middleware('jwt.user');
 
 Route::GET('/vendor/chatroom', [VendorChatroomController::class, 'index'])->middleware('jwt.user');
 Route::GET('/vendor/chatroom/{id}/users', [VendorChatroomController::class, 'showUsers'])->middleware('jwt.user');
@@ -124,6 +129,7 @@ Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])-
 Route::GET('/consultation/{id}', [ConsultationController::class, 'show'])->middleware('jwt.admin');
 Route::GET('/consultation/{id}/status', [ConsultationController::class, 'showStatus'])->middleware('jwt.admin');
 Route::GET('/consultation/{id}/chat-files', [ConsultationController::class, 'showChatFiles'])->middleware('jwt.admin');
+Route::GET('/consultation/{id}/order-status', [ConsultationOrderStatusController::class, 'show'])->middleware('jwt.admin');
 
 Route::GET('/chatroom', [ChatroomController::class, 'index'])->middleware('jwt.admin');
 Route::POST('/chatroom', [ChatroomController::class, 'store'])->middleware('jwt.admin');
@@ -131,7 +137,6 @@ Route::POST('/chatroom/vendor', [ChatroomController::class, 'storeVendorRoom'])-
 Route::PUT('/chatroom/{id}', [ChatroomController::class, 'update'])->middleware('jwt.admin');
 Route::DELETE('/chatroom/{id}', [ChatroomController::class, 'destroy'])->middleware('jwt.admin');
 Route::GET('/chatroom/{id}', [ChatroomController::class, 'show'])->middleware('jwt.admin');
-
 
 Route::GET('/chart/client-count', [ChartController::class, 'clientCount'])->middleware('jwt.admin');
 Route::GET('/chart/applicator-count', [ChartController::class, 'applicatorCount'])->middleware('jwt.admin');

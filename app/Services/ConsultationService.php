@@ -45,6 +45,11 @@ class ConsultationService
     private $orderStatus;
 
     /**
+     * @var ConsultationResource
+     */
+    private $consultationResource;
+
+    /**
      * @var Validator
      */
     private $validator = [
@@ -66,9 +71,10 @@ class ConsultationService
      * @param ConsultationRepository $consultation
      * @param ChatroomService $chatroom
      * @param ChatManagementService $chatManagement
+     * @param ChatService $chat
      * @param OrderStatusService $orderStatus
      * @param UserService $user
-     * @return void
+     * @param ConsultationResource $consultationResource
      */
     public function __construct(
         ConsultationRepository $consultation,
@@ -76,7 +82,8 @@ class ConsultationService
         ChatManagementService $chatManagement,
         ChatService $chat,
         OrderStatusService $orderStatus,
-        UserService $user
+        UserService $user,
+        ConsultationResource $consultationResource
     )
     {
         $this->consultation = $consultation;
@@ -85,6 +92,7 @@ class ConsultationService
         $this->chat = $chat;
         $this->orderStatus = $orderStatus;
         $this->user = $user;
+        $this->consultationResource = $consultationResource;
     }
 
     public function index($params)
@@ -98,7 +106,7 @@ class ConsultationService
             ];
         }
 
-        $consultation = ConsultationResource::fromFirebaseArray($consultation);
+        $consultation = $this->consultationResource->fromFirebaseArray($consultation);
 
         return [
             'status' => 200,
@@ -117,7 +125,7 @@ class ConsultationService
             ];
         }
 
-        $consultation = ConsultationResource::fromFirebase($consultation);
+        $consultation = $this->consultationResource->fromFirebase($consultation);
 
         return [
             'status' => 200,
@@ -169,9 +177,9 @@ class ConsultationService
         $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $params['order_number'] = mt_rand(1000000, 9999999);
-        $newParams = ConsultationResource::toFirebase($params);
+        $newParams = $this->consultationResource->toFirebase($params);
         $consultation = $this->consultation->create($newParams);
-        $consultation = ConsultationResource::fromFirebase($consultation);
+        $consultation = $this->consultationResource->fromFirebase($consultation);
 
         //create chatroom
         $params['admin_user_id'] = $userAdmin['ID'];
@@ -179,7 +187,7 @@ class ConsultationService
         $params['room_type'] = 'admin-customer';
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $user['display_name'].'-AC-'.Carbon::now('GMT+7')->format('dmHi');
+        $params['name'] = $user['display_name'] . '-AC-' . Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';
         $params['consultation_description'] = $consultation['description'];
         $chatroom = $this->chatroom->create($params);
@@ -216,7 +224,7 @@ class ConsultationService
         $newParams = ConsultationResource::toFirebase($params);
 
         $consultation = $this->consultation->update($newParams, $id);
-        $consultation = ConsultationResource::fromFirebase($consultation);
+        $consultation = $this->consultationResource->fromFirebase($consultation);
         if (!$consultation) {
             return [
                 'status' => 404,
@@ -270,7 +278,7 @@ class ConsultationService
 
         $consultationStatus = [];
         foreach ($consultation['data'] as $data) {
-            if(!isset($data['roomId'])) continue;
+            if (!isset($data['roomId'])) continue;
             $orderStatus = $this->orderStatus->show($data['roomId']);
             if ($orderStatus['status'] == 200) {
                 array_push($consultationStatus, ['room_type' => $data['roomType'], 'value' => $orderStatus['data']]);
@@ -296,7 +304,7 @@ class ConsultationService
         }
         $chatFiles = [];
         foreach ($consultation['data'] as $data) {
-            if(!isset($data['roomId'])) continue;
+            if (!isset($data['roomId'])) continue;
             $chat = $this->chatManagement->showFilesById($data['roomId']);
             if ($chat['status'] == 200) {
                 array_push($chatFiles, ['room_type' => $data['roomType'], 'value' => $chat['data']]);
@@ -320,28 +328,26 @@ class ConsultationService
             ];
         }
 
-        $consultation = ConsultationResource::fromFirebaseArray($consultation);
+        $consultation = $this->consultationResource->fromFirebaseArray($consultation);
         foreach ($consultation as $indexConsul => $consul) {
 
             $chatrooms = $this->chatroom->showByFilter(["consultation_id" => $consul["id"]]);
             $chatroomFlag = false;
             $chatroomType = "";
             $chatroomIndex = 0;
-            if($chatrooms['status'] == 200) {
+            if ($chatrooms['status'] == 200) {
                 $chatrooms = $chatrooms['data'];
                 foreach ($chatrooms as $indexChatroom => $chatroom) {
-                    if($chatroom['room_type'] == 'admin-vendor-customer') {
-                        $chatroomFlag =true;
+                    if ($chatroom['room_type'] == 'admin-vendor-customer') {
+                        $chatroomFlag = true;
                         $chatroomIndex = $indexChatroom;
                         break;
-                    }
-                    elseif ($chatroom['room_type'] == 'admin-vendor') {
-                        $chatroomFlag =true;
+                    } elseif ($chatroom['room_type'] == 'admin-vendor') {
+                        $chatroomFlag = true;
                         $chatroomType = $chatroom['room_type'];
                         $chatroomIndex = $indexChatroom;
-                    }
-                    elseif($chatroomType != 'admin-vendor') {
-                        $chatroomFlag =true;
+                    } elseif ($chatroomType != 'admin-vendor') {
+                        $chatroomFlag = true;
                         $chatroomIndex = $indexChatroom;
                     }
                 }
@@ -350,77 +356,71 @@ class ConsultationService
             if (!$chatroomFlag) continue;
             $orderStatus = $this->orderStatus->show($chatrooms[$chatroomIndex]['id']);
             foreach ($orderStatus['data'] as $status) {
-                if(sizeof($status['list']) > 0) {
+                if (sizeof($status['list']) > 0) {
                     $consultation[$indexConsul]['order_status_name'] = $status['phase'];
                 }
                 foreach ($status['list'] as $list) {
-                    if(strtoupper($list['activity']) == strtoupper("Start of Conversation")){
+                    if (strtoupper($list['activity']) == strtoupper("Start of Conversation")) {
                         $consultation[$indexConsul]['inquiry_date'] = $list['createdAt'];
-                    }
-                    elseif(strpos(strtoupper($list['activity']), strtoupper('Survey'))){
-                        if(!isset($consultation[$indexConsul]['survey_date'])) {
-                            $consultation[$indexConsul]['survey_date'] = $list['activity']." \n";
+                    } elseif (strpos(strtoupper($list['activity']), strtoupper('Survey'))) {
+                        if (!isset($consultation[$indexConsul]['survey_date'])) {
+                            $consultation[$indexConsul]['survey_date'] = $list['activity'] . " \n";
+                        } else {
+                            $consultation[$indexConsul]['survey_date'] .= $list['activity'] . " \n";
                         }
-                        else {
-                            $consultation[$indexConsul]['survey_date'] .= $list['activity']." \n";
-                        }
-                    }
-                    elseif(strtoupper($list['activity']) == strtoupper("quotation Uploaded")){
+                    } elseif (strtoupper($list['activity']) == strtoupper("quotation Uploaded")) {
                         $consultation[$indexConsul]['quotation'] = $list['createdAt'];
-                    }
-                    elseif(strtoupper($list['activity']) == strtoupper("Build of Quantity (BOQ) Uploaded")){
+                    } elseif (strtoupper($list['activity']) == strtoupper("Build of Quantity (BOQ) Uploaded")) {
                         $consultation[$indexConsul]['design'] = $list['createdAt'];
-                    }
-                    elseif(strtoupper($list['activity']) == strtoupper("Signed Contract Uploaded by Customer")){
+                    } elseif (strtoupper($list['activity']) == strtoupper("Signed Contract Uploaded by Customer")) {
                         $consultation[$indexConsul]['project_start_date'] = $list['createdAt'];
-                    }
-                    elseif(strtoupper($list['activity']) == strtoupper("Acceptance and Check List to Ended The Project")){
+                    } elseif (strtoupper($list['activity']) == strtoupper("Acceptance and Check List to Ended The Project")) {
                         $consultation[$indexConsul]['handover_date'] = $list['createdAt'];
-                    }
-                    elseif(strtoupper($list['activity']) == strtoupper("Last Payment Paid by Admin")){
+                    } elseif (strtoupper($list['activity']) == strtoupper("Last Payment Paid by Admin")) {
                         $consultation[$indexConsul]['project_end_date'] = $list['createdAt'];
                     }
                 }
             }
         }
 
-        if(isset($params['user_id'])) {
+        if (isset($params['user_id'])) {
             $export = new CustomerConsultationExport($consultation);
             return Excel::download($export, 'consultation.xlsx');
         }
-        if(isset($params['vendor_user_id'])) {
+        if (isset($params['vendor_user_id'])) {
             $export = new VendorConsultationExport($consultation);
             return Excel::download($export, 'consultation.xlsx');
-        }
-        else{
+        } else {
             $export = new ConsultationExport($consultation);
             return Excel::download($export, 'consultation.xlsx');
         }
 
     }
 
-    private function clearDataConsultationTermin($consultation) {
-        for($i=1; $i<=6; $i++) {
-            $consultation['termin_customer_percentage_'.$i] = 0;
-            $consultation['termin_customer_'.$i] = 0;
-            $consultation['termin_customer_date_'.$i] = '';
-            $consultation['termin_vendor_percentage_'.$i] = 0;
-            $consultation['termin_vendor_'.$i] = 0;
-            $consultation['termin_vendor_date_'.$i] = '';
+    private function clearDataConsultationTermin($consultation)
+    {
+        for ($i = 1; $i <= 6; $i++) {
+            $consultation['termin_customer_percentage_' . $i] = 0;
+            $consultation['termin_customer_' . $i] = 0;
+            $consultation['termin_customer_date_' . $i] = '';
+            $consultation['termin_vendor_percentage_' . $i] = 0;
+            $consultation['termin_vendor_' . $i] = 0;
+            $consultation['termin_vendor_date_' . $i] = '';
         }
         return $consultation;
     }
 
-    private function buildDataConsultationTermin($consultationClear, $consultation) {
-        for($i=1; $i<=$consultation['termin_customer_count']; $i++) {
-            $consultationClear['termin_customer_percentage_'.$i] = $consultation['termin_customer_percentage_'.$i];
-            $consultationClear['termin_customer_'.$i] = $consultation['termin_customer_'.$i];
-            $consultationClear['termin_customer_date_'.$i] = $consultation['termin_customer_date_'.$i];
+    private function buildDataConsultationTermin($consultationClear, $consultation)
+    {
+        for ($i = 1; $i <= $consultation['termin_customer_count']; $i++) {
+            $consultationClear['termin_customer_percentage_' . $i] = $consultation['termin_customer_percentage_' . $i];
+            $consultationClear['termin_customer_' . $i] = $consultation['termin_customer_' . $i];
+            $consultationClear['termin_customer_date_' . $i] = $consultation['termin_customer_date_' . $i];
         }
-        for($i=1; $i<=$consultation['termin_vendor_count']; $i++) {
-            $consultationClear['termin_vendor_percentage_'.$i] = $consultation['termin_vendor_percentage_'.$i];
-            $consultationClear['termin_vendor_'.$i] = $consultation['termin_vendor_'.$i];
-            $consultationClear['termin_vendor_date_'.$i] = $consultation['termin_vendor_date_'.$i];
+        for ($i = 1; $i <= $consultation['termin_vendor_count']; $i++) {
+            $consultationClear['termin_vendor_percentage_' . $i] = $consultation['termin_vendor_percentage_' . $i];
+            $consultationClear['termin_vendor_' . $i] = $consultation['termin_vendor_' . $i];
+            $consultationClear['termin_vendor_date_' . $i] = $consultation['termin_vendor_date_' . $i];
         }
         return $consultationClear;
     }

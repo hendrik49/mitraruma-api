@@ -79,6 +79,9 @@ class ConsultationRepository
         if(isset($params['consultation_id'])) {
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
+        if(isset($params['order_number'])) {
+            $model = $model->where('orderNumber', '=', (int) $params['order_number']);
+        }
         if(isset($params['user_email'])) {
             $model = $model->where('email', '>=', $params['user_email']);
             $model = $model->where('email', '<', $params['user_email'].'z');

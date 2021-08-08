@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\OrderStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,6 +39,16 @@ class ChatroomManagementService
     private $chatroomService;
 
     /**
+     * @var OrderStatusService
+     */
+    private $orderStatusService;
+
+    /**
+     * @var OrderStatus
+     */
+    private $orderStatusHelper;
+
+    /**
      * Create a new controller instance.
      *
      * @param UserService $user
@@ -46,6 +57,8 @@ class ChatroomManagementService
      * @param ChatManagementService $chatManagementService
      * @param ConsultationService $consultationService
      * @param ChatroomService $chatroomService
+     * @param OrderStatusService $orderStatusService
+     * @param OrderStatus $orderStatusHelper
      */
     public function __construct(
         UserService $user,
@@ -53,7 +66,9 @@ class ChatroomManagementService
         ChatService $chatService,
         ChatManagementService $chatManagementService,
         ConsultationService $consultationService,
-        ChatroomService $chatroomService
+        ChatroomService $chatroomService,
+        OrderStatusService $orderStatusService,
+        OrderStatus $orderStatusHelper
     ) {
         $this->user = $user;
         $this->userNotification = $userNotification;
@@ -61,12 +76,13 @@ class ChatroomManagementService
         $this->consultationService = $consultationService;
         $this->chatManagementService = $chatManagementService;
         $this->chatroomService = $chatroomService;
+        $this->orderStatusService = $orderStatusService;
+        $this->orderStatusHelper = $orderStatusHelper;
     }
 
 
     public function createRoomVendor($params)
     {
-
         $validator = Validator::make($params, [
             'consultation_id' => 'required|string',
             'vendor_user_id' => 'required|integer',
@@ -86,18 +102,20 @@ class ChatroomManagementService
                 'data' => ['message' => 'User not found'],
             ];
         }
-        $user = $user['data'];
+        $user = $user['data']; //TODO need changes to integratrion
 
         $consultation = $this->consultationService->show($params['consultation_id']);
         if ($consultation['status'] != 200) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'User not found'],
+                'data' => ['message' => 'Consultation not found'],
             ];
         }
+
         $consultation = $consultation['data'];
         $consultation['vendor_user_id'] = $user['ID'];
         $consultation['vendor_name'] = $user['display_name'];
+        $consultation['order_status'] = 130;
         $consultation = $this->consultationService->update($consultation, $consultation['id']);
         $consultation = $consultation['data'];
 
@@ -112,6 +130,16 @@ class ChatroomManagementService
         $params['room_type'] = 'admin-vendor';
         $chatroom = $this->chatroomService->create($params);
         $chatroom = $chatroom['data'];
+
+        $orderStatus = $this->orderStatusService->show($params['chatroom_id']);
+        $orderStatus = $orderStatus['data'];
+        $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode(130);
+        foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
+            if($keyOrderValue['phase'] == $newOrderStatus['phase']) {
+                array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
+            }
+        }
+        $this->orderStatusService->update($orderStatus, $chatroom['id']);
 
         $chatParams['user_id'] = $consultation['admin_user_id'];
         $chatParams['chat'] = $consultation['id'];
@@ -167,6 +195,8 @@ class ChatroomManagementService
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
         $this->chatService->create($chatParams, $chatroom['id']);
+
+        //todo create notification
 
         return [
             'status' => 201,

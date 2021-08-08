@@ -210,7 +210,7 @@ class OrderStatus
 
     }
 
-    public function getOrderStatusByCode($code, $userType = 'customer')
+    public function getOrderStatusByCode($code)
     {
         $orderStatuses = json_decode($this->data, true);
         return $orderStatuses[$code];
@@ -218,7 +218,7 @@ class OrderStatus
 
     public function initOrderStatus(){
         $phase  = $this->getPhase();
-        $newOrderStatus = $this->getOrderStatusByCode(120);
+        $newOrderStatus = $this->getOrderStatusByCode(110);
         array_push($phase[$newOrderStatus['phase']], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
         $newStatus = [];
         foreach ($phase as $keyPhase => $valuePhase) {

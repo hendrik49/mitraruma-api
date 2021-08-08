@@ -360,6 +360,7 @@ class ConsultationService
             if (!$chatroomFlag) continue;
             $orderStatus = $this->orderStatus->show($chatrooms[$chatroomIndex]['id']);
             foreach ($orderStatus['data'] as $status) {
+                if (!isset($status['list'])) continue;
                 if (sizeof($status['list']) > 0) {
                     $consultation[$indexConsul]['order_status_name'] = $status['phase'];
                 }

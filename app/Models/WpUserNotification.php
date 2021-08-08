@@ -13,5 +13,6 @@ class WpUserNotification extends Model
         'user_id',
         'type',
         'chat_room_id',
+        'text',
     ];
 }

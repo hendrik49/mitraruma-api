@@ -26,21 +26,42 @@ class ConsultationOrderStatusService
     private $consultationRepository;
 
     /**
+     * @var OrderStatusService
+     */
+    private $orderStatusService;
+
+    /**
+     * @var OrderStatus
+     */
+    private $orderStatusHelper;
+
+    /**
+     * @var UserNotificationService
+     */
+    private $userNotificationService;
+
+    /**
      * Create a new controller instance.
      *
      * @param ConsultationRepository $consultationRepository
      * @param ConsultationResource $consultationResource
-     * @param OrderStatus $orderStatus
+     * @param OrderStatusService $orderStatusService
+     * @param OrderStatus $orderStatusHelper
+     * @param UserNotificationService $userNotificationService
      */
     public function __construct(
         ConsultationRepository $consultationRepository,
         ConsultationResource $consultationResource,
-        OrderStatus $orderStatus
+        OrderStatusService $orderStatusService,
+        OrderStatus $orderStatusHelper,
+        UserNotificationService $userNotificationService
     )
     {
         $this->consultationRepository = $consultationRepository;
         $this->consultationResource = $consultationResource;
-        $this->orderStatus = $orderStatus;
+        $this->orderStatusService = $orderStatusService;
+        $this->orderStatusHelper = $orderStatusHelper;
+        $this->userNotificationService = $userNotificationService;
     }
 
     public function show($id, $userType = 'customer')
@@ -55,7 +76,7 @@ class ConsultationOrderStatusService
         }
 
         $consultation = $this->consultationResource->fromFirebase($consultation);
-        $orderStatus  =$this->orderStatus->getConsultationStatus($consultation['order_status'], $userType);
+        $orderStatus = $this->orderStatus->getConsultationStatus($consultation['order_status'], $userType);
 
         return [
             'status' => 200,
@@ -66,7 +87,6 @@ class ConsultationOrderStatusService
 
     public function update($params, $id)
     {
-
 
         $validator = Validator::make($params, [
             'order_status' => 'integer|required'
@@ -87,12 +107,38 @@ class ConsultationOrderStatusService
             ];
         }
 
-        $consultation['orderStatus'] =  $params['order_status'];
-        $consultation['updatedAt'] =  Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $consultation['orderStatus'] = $params['order_status'];
+        $consultation['updatedAt'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
 
         $consultation = $this->consultationRepository->update($consultation, $id);
 
         $consultation = $this->consultationResource->fromFirebase($consultation);
+
+        $orderStatus = $this->orderStatusService->show($params['chatroom_id']);
+        $orderStatus = $orderStatus['data'];
+        $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode($params['order_status']);
+        foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
+            if ($keyOrderValue['phase'] == $newOrderStatus['phase']) {
+                array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
+            }
+        }
+        $this->orderStatusService->update($orderStatus, $params['chatroom_id']);
+
+        $userIds = [];
+        if (isset($consultation['user_id']) && $params['user_id'] != $consultation['user_id']) {
+            array_push($userIds, $consultation['user_id']);
+        }
+        if (isset($consultation['vendor_user_id']) && $params['user_id'] != $consultation['vendor_user_id']) {
+            array_push($userIds, $consultation['vendor_user_id']);
+        }
+        if (isset($consultation['admin_user_id']) && $params['user_id'] != $consultation['admin_user_id']) {
+            array_push($userIds, $consultation['admin_user_id']);
+        }
+
+        foreach ($userIds as $userId) {
+            $this->userNotificationService->store(['user_id' => $userId, 'type' => 'notification', 'text' => $newOrderStatus['activity'] ,'chat_room_id' => $params['chatroom_id']]);
+        }
+
         return [
             'status' => 200,
             'data' => $consultation,

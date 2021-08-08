@@ -3,6 +3,8 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
+
 class OrderStatus
 {
 
@@ -178,6 +180,11 @@ class OrderStatus
               }
             }';
 
+    public function getPhase()
+    {
+        return $this->phase;
+    }
+
     public function getPhaseByCode($code)
     {
 
@@ -191,7 +198,7 @@ class OrderStatus
         $phase = $this->phase;
         $orderStatuses = json_decode($this->data, true);
         foreach($orderStatuses as $key => $data) {
-            if((int) $key >= $code) {
+            if((int) $key >= $code && $key != 120) {
                 if($data['by'] == '' || $data['by'] == $userType) {
                     $objectData = $data;
                     $objectData['code'] = $key;
@@ -201,6 +208,30 @@ class OrderStatus
         }
         return $phase;
 
+    }
+
+    public function getOrderStatusByCode($code, $userType = 'customer')
+    {
+        $orderStatuses = json_decode($this->data, true);
+        return $orderStatuses[$code];
+    }
+
+    public function initOrderStatus(){
+        $phase  = $this->getPhase();
+        $newOrderStatus = $this->getOrderStatusByCode(120);
+        array_push($phase[$newOrderStatus['phase']], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
+        $newStatus = [];
+        foreach ($phase as $keyPhase => $valuePhase) {
+            $data = [];
+            $data['phase'] = $keyPhase;
+            $data['list'] = $valuePhase;
+            $data['active'] = false;
+            if(sizeof($valuePhase) > 0) {
+                $data['active'] = true;
+            }
+            array_push($newStatus, $data);
+        }
+        return $newStatus;
     }
 
 }

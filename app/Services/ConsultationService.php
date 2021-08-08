@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exports\ConsultationExport;
 use App\Exports\CustomerConsultationExport;
 use App\Exports\VendorConsultationExport;
+use App\Helpers\OrderStatus;
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
 use Carbon\Carbon;
@@ -50,6 +51,11 @@ class ConsultationService
     private $consultationResource;
 
     /**
+     * @var OrderStatus
+     */
+    private $orderStatusHelper;
+
+    /**
      * @var Validator
      */
     private $validator = [
@@ -83,7 +89,8 @@ class ConsultationService
         ChatService $chat,
         OrderStatusService $orderStatus,
         UserService $user,
-        ConsultationResource $consultationResource
+        ConsultationResource $consultationResource,
+        OrderStatus $orderStatusHelper
     )
     {
         $this->consultation = $consultation;
@@ -93,6 +100,7 @@ class ConsultationService
         $this->orderStatus = $orderStatus;
         $this->user = $user;
         $this->consultationResource = $consultationResource;
+        $this->orderStatusHelper = $orderStatusHelper;
     }
 
     public function index($params)
@@ -156,15 +164,6 @@ class ConsultationService
             ];
         }
 
-        $user = $this->user->show($params['user_id']);
-        if ($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-        $user = $user['data'];
-
         //get user admin
         $userAdmin = $this->user->findOne(['user_type' => 'admin']);
         $userAdmin = $userAdmin['data'];
@@ -172,8 +171,9 @@ class ConsultationService
         //create consultation
         $params['admin_user_id'] = $userAdmin['ID'];
         $params['admin_name'] = $userAdmin['display_name'];
-        $params['user_email'] = $user['user_email'];
-        $params['display_name'] = $user['display_name'];
+        $params['user_email'] = $params['user_jwt_email'];
+        $params['display_name'] = $params['user_jwt_name'];
+        $params['order_status'] = 120;
         $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $params['order_number'] = mt_rand(1000000, 9999999);
@@ -187,13 +187,17 @@ class ConsultationService
         $params['room_type'] = 'admin-customer';
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $user['display_name'] . '-AC-' . Carbon::now('GMT+7')->format('dmHi');
+        $params['name'] = $params['user_jwt_name'] . '-AC-' . Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';
         $params['consultation_description'] = $consultation['description'];
         $chatroom = $this->chatroom->create($params);
         $chatroom = $chatroom['data'];
 
-        $chatParams['user_id'] = $user['ID'];
+        //create order status
+        $initOrderStatus  = $this->orderStatusHelper->initOrderStatus();
+        $this->orderStatus->update($initOrderStatus, $chatroom['id']);
+
+        $chatParams['user_id'] = $params['user_id'];
         $chatParams['chat'] = $consultation['id'];
         $chatParams['notification_chat'] = 'Hai Admin saya berminat untuk berkonsultasi';
         $chatParams['is_system'] = true;

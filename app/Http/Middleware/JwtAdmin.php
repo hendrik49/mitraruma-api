@@ -44,7 +44,7 @@ class JwtAdmin
             }
 
         } catch (\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage()], 403);
         }
         if(!isset($token)) {
 

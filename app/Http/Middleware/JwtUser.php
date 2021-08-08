@@ -43,7 +43,7 @@ class JwtUser
             $request->request->add(['user_jwt_name' => $decoded->displayName ?? $decoded->display_name]);
 
         } catch (\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage()], 403);
         }
         if(!isset($token)) {
 

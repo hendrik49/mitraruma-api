@@ -9,6 +9,7 @@ use App\Http\Controllers\ChatroomController;
 use App\Http\Controllers\CmsController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationOrderStatusController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserChatController;
@@ -85,6 +86,8 @@ Route::GET('/user/chatroom/{id}/users', [UserChatroomController::class, 'showUse
 Route::GET('/user/chat/{roomId}', [UserChatController::class, 'show'])->middleware('jwt.user');
 Route::POST('/user/chat/{roomId}', [UserChatController::class, 'store'])->middleware('jwt.user');
 Route::DELETE('/user/chat/{roomId}/read', [UserChatController::class, 'readChat'])->middleware('jwt.user');
+
+Route::get('/user/notification', [NotificationController::class, 'index'])->middleware('jwt.user');
 
 //VENDOR
 Route::GET('/vendor/consultation', [VendorConsultationController::class, 'index'])->middleware('jwt.user');

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Models\WpOtp;
 
 class NotificationController extends Controller
 {
@@ -18,6 +18,21 @@ class NotificationController extends Controller
     )
     {
         $this->notification = $notification;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return JsonResponse
+     */
+    public function index(Request $request)
+    {
+        $params = $request->all();
+
+        $result = $this->notification->index($params);
+
+        return response()->json($result['data'], $result['status']);
     }
 
     /**

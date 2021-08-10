@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Log\Logger;
+use App\Http\Resources\UserNotificationResource;
 use Illuminate\Support\Facades\Log;
 
 class NotificationService
@@ -43,8 +43,9 @@ class NotificationService
     public function index($params)
     {
 
-        $chat = $this->userNotificationRepository->find($params);
-        if (!$chat) {
+        $params['type'] = 'notification';
+        $notification = $this->userNotificationRepository->find($params);
+        if (!$notification) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
@@ -53,7 +54,7 @@ class NotificationService
 
         return [
             'status' => 200,
-            'data' => $chat,
+            'data' => UserNotificationResource::collection($notification),
         ];
     }
 

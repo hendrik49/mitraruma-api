@@ -237,7 +237,7 @@ class ChatroomService
 
         $chatFiles = [];
         if ($chat['status'] == 200) {
-            array_push($chatFiles, ['room_type' => $chatroom['roomType'], 'value' => $chat['data']]);
+            $chatFiles =  $chat['data'];
         }
 
         return [

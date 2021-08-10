@@ -230,5 +230,21 @@ class ChatroomService
         ];
     }
 
+    public function showChatFiles($id){
+        $chatroom = $this->chatroom->findById($id);
+
+        $chat = $this->chatManagement->showFilesById($chatroom['id']);
+
+        $chatFiles = [];
+        if ($chat['status'] == 200) {
+            array_push($chatFiles, ['room_type' => $chatroom['roomType'], 'value' => $chat['data']]);
+        }
+
+        return [
+            'status' => 200,
+            'data' => $chatFiles,
+        ];
+    }
+
 
 }

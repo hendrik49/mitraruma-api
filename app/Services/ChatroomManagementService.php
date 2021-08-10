@@ -85,6 +85,7 @@ class ChatroomManagementService
     {
         $validator = Validator::make($params, [
             'consultation_id' => 'required|string',
+            'chatroom_id' => 'required|string',
             'vendor_user_id' => 'required|integer',
         ]);
 

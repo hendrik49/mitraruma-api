@@ -59,7 +59,8 @@ class ConsultationRepository
     }
 
     public function update($params, $id){
-        return $this->model->document($id)->set($params);
+        $this->model->document($id)->set($params);
+        return $this->findById($id);
     }
 
     public function deleteById($id) {
@@ -68,17 +69,23 @@ class ConsultationRepository
 
     private function filterBuilder($model, $params) {
 
+        $model = $model->orderBy('createdAt', 'desc');
         if(isset($params['user_id'])) {
             $model = $model->where('userId', '=', $params['user_id']);
         }
+        if(isset($params['vendor_user_id'])) {
+            $model = $model->where('applicatorId', '=', $params['vendor_user_id']);
+        }
         if(isset($params['consultation_id'])) {
             $model = $model->where('consultationId', '=', $params['consultation_id']);
+        }
+        if(isset($params['order_number'])) {
+            $model = $model->where('orderNumber', '=', (int) $params['order_number']);
         }
         if(isset($params['user_email'])) {
             $model = $model->where('email', '>=', $params['user_email']);
             $model = $model->where('email', '<', $params['user_email'].'z');
         }
-        $model = $model->orderBy('createdAt');
         if(isset($params['limit'])) {
             $model = $model->limit($params['limit'] ?? 10);
         }

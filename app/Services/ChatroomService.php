@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\ChatroomResource;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class ChatroomService
@@ -11,6 +12,11 @@ class ChatroomService
      * @var UserService
      */
     private $user;
+
+    /**
+     * @var UserNotificationService
+     */
+    private $userNotification;
 
     /**
      * @var ChatManagementService
@@ -26,16 +32,19 @@ class ChatroomService
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService $user
+     * @param  \App\Services\UserNotificationService $userNotification
      * @param  \App\Services\ChatManagementService $chatManagement
      * @param  \App\Repositories\ChatroomRepository $chatroom
      * @return void
      */
     public function __construct(
         \App\Services\UserService $user,
+        \App\Services\UserNotificationService $userNotification,
         \App\Services\ChatManagementService $chatManagement,
         \App\Repositories\ChatroomRepository $chatroom
     ) {
         $this->user = $user;
+        $this->userNotification = $userNotification;
         $this->chatManagement = $chatManagement;
         $this->chatroom = $chatroom;
     }
@@ -53,7 +62,7 @@ class ChatroomService
         $chatroom = ChatroomResource::fromFirebaseArray($chatroom);
 
         foreach ($chatroom as $key => $data) {
-            $chatroom[$key]['last_chat'] = $this->chatManagement->showLatest($data['id'])['data']['chat'];
+            $chatroom[$key]['unread_chat'] = $this->userNotification->getCount(['user_id' => $params['user_id'] ?? null, 'type' => 'chat', 'chat_room_id' => $data['id']])['data'];
         }
 
         return [
@@ -83,9 +92,9 @@ class ChatroomService
     public function create($params){
 
         $validator = Validator::make($params, [
-            'admin_id' => 'integer',
+            'admin_user_id' => 'integer',
             'vendor_user_id' => 'integer',
-            'user_id' => 'required|integer',
+            'user_id' => 'integer',
             'consultation_id' => 'required|string',
             'date' => 'date',
             'image_url' => 'string',
@@ -93,7 +102,7 @@ class ChatroomService
             'name' => 'string',
             'room_type' => 'required|string',
             'status' => 'required|string',
-            'text' => 'required|string'
+            'text' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -103,17 +112,13 @@ class ChatroomService
             ];
         }
 
-        $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-
-        $params['user_email'] = $user['data']['user_email'];
+        $dateNow=  Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $params['room_id'] = mt_rand(1000000, 9999999);
+        $params['date'] = $dateNow;
+        $params['created_at'] = $dateNow;
         $newParams = ChatroomResource::toFirebase($params);
         $chatroom = $this->chatroom->create($newParams);
+        $chatroom = ChatroomResource::fromFirebase($chatroom);
 
         return [
             'status' => 201,
@@ -124,8 +129,7 @@ class ChatroomService
     public function update($params, $id){
 
         $validator = Validator::make($params, [
-            'name' => 'required|string',
-            'value' => 'required',
+            'name' => 'string',
         ]);
 
         if ($validator->fails()) {
@@ -135,17 +139,10 @@ class ChatroomService
             ];
         }
 
-        $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-
-        $params['user_email'] = $user['data']['user_email'];
         $newParams = ChatroomResource::toFirebase($params);
-        $chatroom = $this->chatroom->update($params, $id);
+        $chatroom = $this->chatroom->update($newParams, $id);
+        $chatroom = ChatroomResource::fromFirebase($chatroom);
+
         if (!$chatroom) {
             return [
                 'status' => 404,
@@ -193,6 +190,7 @@ class ChatroomService
                 'data' => ['message' => 'Data not found'],
             ];
         }
+        $chatroom = ChatroomResource::fromFirebaseArray($chatroom);
 
         return [
             'status' => 200,
@@ -213,12 +211,17 @@ class ChatroomService
         $chatroom = ChatroomResource::fromFirebase($chatroom);
 
         $user = [];
-        array_push($user, $this->user->show($chatroom['user_id'])['data']);
-        if(isset($chatroom['applicator_id'])) {
-            array_push($user, $this->user->show($chatroom['applicator_id'])['data']);
+        if(isset($chatroom['user_id'])) {
+            $userData = $this->user->show($chatroom['user_id']);
+            $userData['status'] == 200 ? array_push($user, $this->user->show($chatroom['user_id'])['data']) : null;
         }
-        if(isset($chatroom['admin_id'])) {
-            array_push($user, $this->user->show($chatroom['admin_id'])['data']);
+        if(isset($chatroom['vendor_user_id'])) {
+            $vendorData = $this->user->show($chatroom['vendor_user_id']);
+            $vendorData['status'] == 200 ? array_push($user, $this->user->show($chatroom['vendor_user_id'])['data']) : null;
+        }
+        if(isset($chatroom['admin_user_id'])) {
+            $adminData = $this->user->show($chatroom['admin_user_id']);
+            $adminData['status'] == 200 ? array_push($user, $this->user->show($chatroom['admin_user_id'])['data']) : null;
         }
 
         return [
@@ -227,22 +230,20 @@ class ChatroomService
         ];
     }
 
-    public function showchatManagement($id){
-
+    public function showChatFiles($id){
         $chatroom = $this->chatroom->findById($id);
-        if (!$chatroom) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'Data not found'],
-            ];
+
+        $chat = $this->chatManagement->showFilesById($chatroom['id']);
+
+        $chatFiles = [];
+        if ($chat['status'] == 200) {
+            $chatFiles =  $chat['data'];
         }
 
-        $chatroom = ChatroomResource::fromFirebase($chatroom);
-
-        $chatManagement = $this->chatManagement->showFilesById($chatroom['id']);
-
-        return $chatManagement;
-
+        return [
+            'status' => 200,
+            'data' => $chatFiles,
+        ];
     }
 
 

@@ -29,7 +29,7 @@ class OtpService
         $otp = $this->otp->findOne($params);
 
         if($otp) {
-            $this->otp->deleteByUserid($params);
+            $this->otp->deleteByUserid($params['user_id']);
         }
 
         return $otp;

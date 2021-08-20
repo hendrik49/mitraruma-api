@@ -2,25 +2,60 @@
 
 namespace App\Services;
 
-use Illuminate\Log\Logger;
+use App\Http\Resources\UserNotificationResource;
 use Illuminate\Support\Facades\Log;
 
 class NotificationService
 {
+    /**
+     * @var UserService
+     */
+    private $user;
+
+    /**
+     * @var \App\Repositories\CmsRepository
+     */
+    private $cms;
+
+    /**
+     * @var \App\Repositories\UserNotificationRepository
+     */
+    private $userNotificationRepository;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\UserService $user
-     * @param  \App\Repositories\CmsRepository $cms
-     * @return void
+     * @param \App\Services\UserService $user
+     * @param \App\Repositories\CmsRepository $cms
+     * @param \App\Repositories\UserNotificationRepository $userNotificationRepository
      */
     public function __construct(
         \App\Services\UserService $user,
-        \App\Repositories\CmsRepository $cms
-    ) {
+        \App\Repositories\CmsRepository $cms,
+        \App\Repositories\UserNotificationRepository $userNotificationRepository
+    )
+    {
         $this->user = $user;
         $this->cms = $cms;
+        $this->userNotificationRepository = $userNotificationRepository;
+    }
+
+    public function index($params)
+    {
+
+        $params['type'] = 'notification';
+        $notification = $this->userNotificationRepository->find($params);
+        if (!$notification) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => UserNotificationResource::collection($notification),
+        ];
     }
 
     /**

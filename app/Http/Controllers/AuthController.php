@@ -128,7 +128,6 @@ class AuthController extends Controller
 
         $params['user_email'] = $user->getEmail();
         $params['user_picture_url'] = $user->getAvatar();
-        $params['user_type'] = 'admin';
         $userLogin = $this->user->loginByEmail($params);
         if($userLogin['status'] == 200) {
             $url = env('LOGIN_CMS_REDIRECT').'?token='.$userLogin['data']['token'];

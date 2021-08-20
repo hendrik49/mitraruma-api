@@ -67,35 +67,6 @@ class OrderStatusService
 
     public function create($params){
 
-        $validator = Validator::make($params, [
-            'user_id' => 'required|integer',
-            'vendor_user_id' => 'integer',
-            'description' => 'required|string',
-            'photos' => 'array',
-            'estimated_budget' => 'numeric',
-            'contact' => 'required|string',
-            'city' => 'required|string',
-            'zipcode' => 'required|string',
-            'street' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return [
-                'status' => 422,
-                'data' => ['message' => $validator->errors()->first()]
-            ];
-        }
-
-        $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-
-        $params['user_email'] = $user['data']['user_email'];
-        $params['display_name'] = $user['data']['display_name'];
         $orderStatus =$this->orderStatus->create($params);
 
         return [
@@ -106,34 +77,6 @@ class OrderStatusService
 
     public function update($params, $id){
 
-        $validator = Validator::make($params, [
-            'user_id' => 'required|integer',
-            'vendor_user_id' => 'integer',
-            'description' => 'required|string',
-            'photos' => 'array',
-            'estimated_budget' => 'numeric',
-            'contact' => 'required|string',
-            'city' => 'required|string',
-            'zipcode' => 'required|string',
-            'address' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return [
-                'status' => 422,
-                'data' => ['message' => $validator->errors()->first()]
-            ];
-        }
-
-        $user = $this->user->show($params['user_id']);
-        if($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-
-        $params['email'] = $user['data']['user_email'];
         $orderStatus = $this->orderStatus->update($params, $id);
         if (!$orderStatus) {
             return [

@@ -16,7 +16,7 @@ class OrderStatusRepository
     public function findById($id){
         $model = $this->model->document($id)->snapshot();
         if($model->data()){
-            $consultationStatus = $model->data()['data'];
+            $consultationStatus = $model->data();
             return $consultationStatus;
         }
         return null;

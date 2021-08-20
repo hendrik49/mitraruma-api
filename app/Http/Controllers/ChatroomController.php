@@ -2,26 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ChatroomManagementService;
+use App\Services\ChatroomService;
 use Illuminate\Http\Request;
 
 class ChatroomController extends Controller
 {
     /**
-     * @var \App\Services\ChatroomService
+     * @var ChatroomService
      */
     private $chatroom;
 
     /**
+     * @var ChatroomManagementService
+     */
+    private $chatroomManagementService;
+
+    /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\ChatroomService  $chatroom
-     * @return void
+     * @param ChatroomService $chatroom
+     * @param ChatroomManagementService $chatroomManagementService
      */
     public function __construct(
-        \App\Services\ChatroomService $chatroom
+        ChatroomService $chatroom,
+        ChatroomManagementService $chatroomManagementService
     )
     {
         $this->chatroom = $chatroom;
+        $this->chatroomManagementService = $chatroomManagementService;
     }
 
     /**
@@ -64,6 +73,22 @@ class ChatroomController extends Controller
         $params = $request->all();
 
         $result = $this->chatroom->create($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeVendorRoom(Request $request)
+    {
+
+        $params = $request->all();
+
+        $result = $this->chatroomManagementService->createRoomVendor($params);
 
         return response()->json($result['data'], $result['status']);
     }

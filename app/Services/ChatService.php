@@ -30,6 +30,11 @@ class ChatService
     private $userTokenService;
 
     /**
+     * @var UserNotificationService
+     */
+    private $userNotificationService;
+
+    /**
      * @var ChatRepository
      */
     private $chat;
@@ -41,6 +46,7 @@ class ChatService
      * @param ChatroomService $chatroomService
      * @param NotificationService $notificationService
      * @param UserTokenService $userTokenService
+     * @param UserNotificationService $userNotificationService
      * @param ChatRepository $chat
      */
     public function __construct(
@@ -48,6 +54,7 @@ class ChatService
         ChatroomService $chatroomService,
         NotificationService $notificationService,
         UserTokenService $userTokenService,
+        UserNotificationService $userNotificationService,
         ChatRepository $chat
     )
     {
@@ -55,6 +62,7 @@ class ChatService
         $this->chatroomService = $chatroomService;
         $this->notificationService = $notificationService;
         $this->userTokenService = $userTokenService;
+        $this->userNotificationService = $userNotificationService;
         $this->chat = $chat;
     }
 
@@ -108,19 +116,28 @@ class ChatService
         }
 
         $chatroom = $this->chatroomService->show($roomId);
-        if ($chatroom['status'] == 200) {
-            $chatroom = $chatroom['data'];
+        if ($chatroom['status'] != 200) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Chatroom not found'],
+            ];
+        }
+        $chatroom = $chatroom['data'];
+        $chatroom['date'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $chatroom['text'] = $params['chat'];
+        if(!isset($params['is_system'])){
+            $this->chatroomService->update($chatroom, $chatroom['id']);
         }
 
         $userIds = [];
         if(isset($chatroom['user_id']) && $params['user_id'] != $chatroom['user_id']) {
             array_push($userIds, $chatroom['user_id']);
         }
-        if(isset($chatroom['applicator_id']) && $params['user_id'] != $chatroom['applicator_id']) {
-            array_push($userIds, $chatroom['applicator_id']);
+        if(isset($chatroom['vendor_user_id']) && $params['user_id'] != $chatroom['vendor_user_id']) {
+            array_push($userIds, $chatroom['vendor_user_id']);
         }
-        if(isset($chatroom['admin_id']) && $params['user_id'] != $chatroom['admin_id']) {
-            array_push($userIds, $chatroom['admin_id']);
+        if(isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
+            array_push($userIds, $chatroom['admin_user_id']);
         }
 
         $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
@@ -129,7 +146,9 @@ class ChatService
         }
 
         $deviceTokens = [];
+        $notificationUserIds = [];
         foreach ($tokens as $token) {
+            array_push($notificationUserIds, $token['user_id']);
             array_push($deviceTokens, $token['device_token']);
         }
 
@@ -151,7 +170,7 @@ class ChatService
 
         $this->notificationService->send($deviceTokens, array(
             "title" => "You have new message",
-            "body" => $params['chat'],
+            "body" => $params['notification_chat'] ?? $params['chat'],
             "type" => "chat",
             "value" => [
                 "chat_room" => $chatroom,
@@ -159,9 +178,37 @@ class ChatService
             ]
         ));
 
+        foreach ($notificationUserIds as $notificationUserId) {
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'type' => 'chat', 'chat_room_id' => $roomId]);
+        }
+
         return [
             'status' => 201,
             'data' => $chat,
+        ];
+    }
+
+    public function readChat($params, $roomId)
+    {
+
+        $notification = $this->userNotificationService->destroyByParams(
+            [
+                'user_id' => $params['user_id'],
+                'type' => 'chat',
+                'chat_room_id' => $roomId
+            ]
+        );
+
+        if (!$notification) {
+            return [
+                'status' => 200,
+                'data' => ['message' => 'Already read the messages'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $notification,
         ];
     }
 

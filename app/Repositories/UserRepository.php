@@ -7,6 +7,12 @@ use App\Models\WpUser;
 class UserRepository
 {
 
+    public function find($params){
+        $user = WpUser::query();
+        $user = $this->filterBuilder($user, $params);
+        return $user->get();
+    }
+
     public function findById($id){
         return WpUser::where('ID', $id)->first();
     }
@@ -17,7 +23,7 @@ class UserRepository
         return $user->first();
     }
 
-    public function findCount($params){
+    public function count($params){
         $user = WpUser::query();
         $user = $this->filterBuilder($user, $params);
         return $user->count();

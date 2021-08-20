@@ -12,16 +12,23 @@ class UserConsultationController extends Controller
     private $consultation;
 
     /**
+     * @var \App\Services\ChatroomManagementService
+     */
+    private $chatroomManagementService;
+
+    /**
      * Create a new controller instance.
      *
-     * @param  \App\Services\ConsultationService  $consultation
-     * @return void
+     * @param \App\Services\ConsultationService $consultation
+     * @param \App\Services\ChatroomManagementService $chatroomManagementService
      */
     public function __construct(
-        \App\Services\ConsultationService $consultation
+        \App\Services\ConsultationService $consultation,
+        \App\Services\ChatroomManagementService $chatroomManagementService
     )
     {
         $this->consultation = $consultation;
+        $this->chatroomManagementService = $chatroomManagementService;
     }
 
     /**
@@ -97,5 +104,60 @@ class UserConsultationController extends Controller
 
         return response()->json($result['data'], $result['status']);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function export(Request $request)
+    {
+        $params = $request->all();
+
+        return $this->consultation->export($params);
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showStatus($id)
+    {
+        $result = $this->consultation->showStatus($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showChatFiles($id)
+    {
+        $result = $this->consultation->showChatFiles($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function approve($id)
+    {
+
+        $result = $this->chatroomManagementService->createRoomVendorCustomer($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
 
 }

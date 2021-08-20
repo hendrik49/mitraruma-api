@@ -46,7 +46,8 @@ class ChatroomRepository
     }
 
     public function update($params, $id){
-        return $this->model->document($id)->set($params);
+        $this->model->document($id)->set($params);
+        return $this->findById($id);
     }
 
     public function deleteById($id) {
@@ -55,15 +56,22 @@ class ChatroomRepository
 
     private function filterBuilder($model, $params) {
 
+        $model = $model->orderBy('date' , 'desc');
+
         if(isset($params['user_id'])) {
             $model = $model->where('userId', '=', $params['user_id']);
+        }
+        if(isset($params['vendor_user_id'])) {
+            $model = $model->where('applicatorId', '=', $params['vendor_user_id']);
         }
         if(isset($params['consultation_id'])) {
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
+        if(isset($params['room_type'])) {
+            $model = $model->where('roomType', '=', $params['room_type']);
+        }
         $model = $model->limit($params['limit'] ?? 10);
         if(isset($params['start_after'])) {
-            $model = $model->orderBy('roomId');
             $model = $model->startAfter([$params['start_after'] ?? '']);
         }
 

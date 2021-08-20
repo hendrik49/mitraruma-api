@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserChatController extends Controller
@@ -28,7 +29,7 @@ class UserChatController extends Controller
      * Display a listing of the resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -43,7 +44,7 @@ class UserChatController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -57,7 +58,7 @@ class UserChatController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $roomId
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(Request $request, $roomId)
     {
@@ -65,6 +66,20 @@ class UserChatController extends Controller
         $params = $request->all();
 
         $result = $this->chat->create($params, $roomId);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Request $request
+     * @param $roomId
+     * @return JsonResponse
+     */
+    public function readChat(Request $request, $roomId)
+    {
+        $result = $this->chat->readChat($request, $roomId);
 
         return response()->json($result['data'], $result['status']);
     }

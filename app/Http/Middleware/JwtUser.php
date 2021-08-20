@@ -38,10 +38,12 @@ class JwtUser
 
             $decoded = $this->jwt->decode($token);
 
-            $request->request->add(['user_id' => $decoded->ID]);
+            $request->request->add(['user_id' => $decoded->id ?? $decoded->ID]);
+            $request->request->add(['user_jwt_email' => $decoded->email ?? $decoded->user_email]);
+            $request->request->add(['user_jwt_name' => $decoded->displayName ?? $decoded->display_name]);
 
         } catch (\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage()], 403);
         }
         if(!isset($token)) {
 

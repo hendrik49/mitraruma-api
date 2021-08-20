@@ -68,10 +68,12 @@
                 'lengthChange': true,
                 'searching': true,
                 'ordering': true,
-                // 'responsive': true,
+                'responsive': true,
                 'info': true,
                 'scrollX': true,
-                // 'dom': 'Bfrtip'      
+                'buttons': [
+                    'copy', 'excel', 'pdf'
+                ]
             });
         });
     </script>

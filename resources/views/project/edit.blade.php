@@ -194,15 +194,15 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Amount SPK Applicator</label>
+                                            <label for="title">Amount SPK Applikator</label>
                                             <input type="number" class="form-control" name="amount_spk_vendor"
                                                 placeholder="Masukkan amount spk applicator"
                                                 value="{{ $project->amount_spk_vendor }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="title">Termin Applicaktor 1</label>
+                                            <label for="title">Termin Appliaktor 1</label>
                                             <input type="number" class="form-control" name="termin_vendor_1"
-                                                placeholder="termin Appliaktor 1" value="{{ $project->termin_vendor_1 }}"
+                                                placeholder="termin Applikator 1" value="{{ $project->termin_vendor_1 }}"
                                                 required>
                                         </div>
                                     </div>
@@ -210,13 +210,13 @@
                                         <div class="col-sm-6">
                                             <label for="title">Termin Appliaktor 2</label>
                                             <input type="number" class="form-control" name="termin_vendor_2"
-                                                placeholder="termin Appliaktor 2" value="{{ $project->termin_vendor_2 }}"
+                                                placeholder="termin Applikator 2" value="{{ $project->termin_vendor_2 }}"
                                                 required>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Termin Appliaktor 3</label>
                                             <input type="number" class="form-control" name="termin_vendor_3"
-                                                placeholder="termin Appliaktor 3" value="{{ $project->termin_vendor_3 }}"
+                                                placeholder="termin Applikator 3" value="{{ $project->termin_vendor_3 }}"
                                                 required>
                                         </div>
                                     </div>
@@ -224,13 +224,13 @@
                                         <div class="col-sm-6">
                                             <label for="title">Termin Appliaktor 4</label>
                                             <input type="number" class="form-control" name="termin_vendor_4"
-                                                placeholder="termin Appliaktor 4" value="{{ $project->termin_vendor_4 }}"
+                                                placeholder="termin Applikator 4" value="{{ $project->termin_vendor_4 }}"
                                                 required>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Termin Appliaktor 5</label>
                                             <input type="number" class="form-control" name="termin_vendor_5"
-                                                placeholder="termin Appliaktor 5" value="{{ $project->termin_vendor_5 }}"
+                                                placeholder="termin Applikator 5" value="{{ $project->termin_vendor_5 }}"
                                                 required>
                                         </div>
                                     </div>

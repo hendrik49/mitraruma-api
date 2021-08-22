@@ -118,15 +118,15 @@
                                         <div class="col-sm-6">
                                             <label for="title">Status</label>
                                             <select class="form-control" id="status" name="status" required>
-                                                <option value="verified" @if ($project->status == 'verified') selected='selected' @endif>verified
+                                                <option value="verified" @if ($project->status == 'verified') selected='selected' @endif>Pre Purchase
                                                 </option>
-                                                <option value="pending" @if ($project->status == 'pending') selected='selected' @endif>pending
+                                                <option value="pending" @if ($project->status == 'pending') selected='selected' @endif>Design Phase
                                                 </option>
-                                                <option value="cancel" @if ($project->status == 'cancel') selected='selected' @endif>cancel
+                                                <option value="cancel" @if ($project->status == 'cancel') selected='selected' @endif>Construction Phase
                                                 </option>
-                                                <option value="expire" @if ($project->status == 'expire') selected='selected' @endif>expire
+                                                <option value="expire" @if ($project->status == 'expire') selected='selected' @endif>Project Started
                                                 </option>
-                                                <option value="success" @if ($project->status == 'success') selected='selected' @endif>paid</option>
+                                                <option value="success" @if ($project->status == 'success') selected='selected' @endif>Project Ended</option>
                                             </select>
                                         </div>
                                     </div>

@@ -28,8 +28,8 @@
                     </div>
                 @endif
                 <div class="box">
-                    <div class="box-head">
-                        <h2 align="center">Edit Konsultasi</h2>
+                    <div class="box-header">
+                        <h2 align="center" class="box-title">Konsultasi</h2>
                     </div>
                     <div class="box-body">
                         <div class="row">

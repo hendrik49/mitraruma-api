@@ -1,89 +1,196 @@
-@extends('layouts.global')
+@extends('layouts.app')
 
-@section('title')Edit donasi
+@section('title')Edit Konsultasi
 @endsection
 
 @section('content')
 
-<div class="row">
-	<div class="container col-sm-12">
-		<div class="col-md-10">
-			@if(session('status'))
-			<div class="alert alert-success">
-				{{session('status')}}
-			</div>
-			@elseif(session('gagal'))
-			<div class="alert alert-danger">
-				{{session('gagal')}}
-			</div>
-			@endif
-			@if (count($errors) > 0)
-			<div class="alert alert-danger">
-				<strong>Errors!</strong>
-				<ul>
-					@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
-					@endforeach
-				</ul>
-			</div>
-			@endif
-			<div class="box">
-				<div class="box-body">
-					<h2 align="center">Edit Donasi</h2>
-					<form action="{{route('manage-donasi-user.update', ['id' => $donasi->id ])}}" method="POST" class="shadow-sm p-3 bg-white" enctype="multipart/form-data">
-						@csrf
-						<br>
-						<label for="title">No Donasi</label> <br>
-						<input type="text" class="form-control" name="invoice" placeholder="Masukkan no donasi" value="{{ $donasi->invoice }}" readonly>
-						<br>
-						<label for="title">Nama Donatur</label> <br>
-						<input type="text" class="form-control" name="nama" placeholder="Masukkan nama donatur" value="{{ $donasi->nama }}" required>
-						<br>
-						<label for="title">Email Donatur</label> <br>
-						<input type="email" class="form-control" name="email" placeholder="Masukkan email donatur" value="{{ $donasi->email }}" required>
-						<br>
-						<label for="title">No. Telepon</label> <br>
-						<input type="text" class="form-control" name="nohp" placeholder="Masukkan no telepon" value="{{ $donasi->nohp }}" required>
-						<br>
-						<label for="title">Nama Campaign</label> <br>
-						<select name="campaign" class="form-control" required>
-							<option hidden>--Pilih campaign--</option>
-							@foreach($campaigns as $campaign)
-							<option value="{{$campaign->id}}" @if($donasi->campaign_id==$donasi->campaign_id) selected='selected' @endif>{{$campaign->nama_kegiatan}}</option>
-							@endforeach
-						</select>
-						<br>
-						<label for="title">Jumlah Donasi (Rp)</label> <br>
-						<input type="number" min="1" class="form-control" name="jumlah" placeholder="Masukkan jumlah donasi"  onkeypress="return isNumberKey(event)" value="{{ $donasi->jumlah }}" required>
-						<br>
-						<label for="title">Tgl Donasi</label> <br>
-						<input type="date" class="form-control" id="tgl_donasi" name="tgl_donasi" placeholder="Masukkan tanggal donasi" value="{{ $donasi->created_at }}" required>
-						<br>
-						<label for="cover">Bukti Bayar</label>
-						<input type="file" class="form-control" name="bukti_bayar" value="{{ $donasi->foto }}" accept="image/*">
-						@if($donasi->foto)
-						<img src="{{asset('storage/' . $donasi->foto)}}" width="320px" />
-						@endif
-						<small class="text-muted">Format Image:png,jpg</small>
-						<br>
-						<label for="title">Status</label> <br>
-						<select class="form-control" id="status" name="status" required>
-							<option value="verified" @if($donasi->status=='verified') selected='selected' @endif>verified</option>
-							<option value="pending" @if($donasi->status=='pending') selected='selected' @endif>pending</option>
-							<option value="cancel" @if($donasi->status=='cancel') selected='selected' @endif>cancel</option>
-							<option value="expire" @if($donasi->status=='expire') selected='selected' @endif>expire</option>
-							<option value="success" @if($donasi->status=='success') selected='selected' @endif>paid</option>
-						</select>
-						<br>
-						<input type="hidden" value="PUT" name="_method">
-						<button class="btn btn-primary btn-flat" name="save_action" value="PUBLISH">Publish</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<script>
- document.getElementById("tgl_donasi").valueAsDate = new Date();
-</script>
+    <div class="row">
+        <div class="container col-sm-12">
+            <div class="col-md-10">
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @elseif(session('gagal'))
+                    <div class="alert alert-danger">
+                        {{ session('gagal') }}
+                    </div>
+                @endif
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <strong>Errors!</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <div class="box">
+                    <div class="box-body">
+                        <h2 align="center">Edit Konsultasi</h2>
+                        <form action="{{ route('proyek.update', ['proyek' => $project]) }}" method="POST"
+                            class="shadow-sm p-3 bg-white" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-5">
+                                        <br>
+                                        <label for="title">No Konsultasi</label> <br>
+                                        <input type="text" class="form-control" name="order_number"
+                                            placeholder="Masukkan no Konsultasi" value="{{ $project->order_number }}"
+                                            readonly>
+                                        <br>
+                                        <label for="title">No Room</label> <br>
+                                        <input type="text" class="form-control" name="room_id"
+                                            placeholder="Masukkan no room" value="{{ $project->room_id }}" readonly>
+                                        <br>
+                                        <label for="title">Nama Customer</label> <br>
+                                        <input type="text" class="form-control" name="customer_name"
+                                            placeholder="Masukkan nama customer" value="{{ $project->customer_name }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Kontak Customer</label> <br>
+                                        <input type="text" class="form-control" name="customer_name"
+                                            placeholder="Masukkan kontak customer"
+                                            value="{{ $project->customer_contact }}" required>
+                                        <br>
+                                        <label for="title">Nama Applikator </label> <br>
+                                        <input type="email" class="form-control" name="vendor_name"
+                                            placeholder="Masukkan nama applikator" value="{{ $project->vendor_name }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Kontak Applikator</label> <br>
+                                        <input type="text" class="form-control" name="vendor_contact"
+                                            placeholder="Masukkan kontak applikator"
+                                            value="{{ $project->vendor_contact }}" required>
+                                        <br>
+                                        <label for="title">Konsultasi</label> <br>
+                                        <textarea rows="4" class="form-control" name="description"
+                                            placeholder="Masukkan nama donatur"
+                                            required>{{ $project->description }}</textarea>
+                                        <br>
+										<label for="title">Alamat</label> <br>
+                                        <textarea rows="4" class="form-control" name="street"
+                                            placeholder="Masukkan alamat"
+                                            required>{{ $project->street }}</textarea>
+                                        <br>
+                                        <label for="title">Estimasi Budget Konsultasi (Rp)</label> <br>
+                                        <input type="number" min="1" class="form-control" name="estimated_budget"
+                                            placeholder="Masukkan budget" onkeypress="return isNumberKey(event)"
+                                            value="{{ $project->estimated_budget }}" required>
+                                        <br>
+                                        <label for="title">Tgl Konsultasi</label> <br>
+                                        <input type="date" class="form-control" id="tgl_Konsultasi" name="created_at"
+                                            placeholder="Masukkan tanggal Konsultasi" value="{{ $project->created_at }}"
+                                            required>
+                                        <br>
+                                        <label for="cover">Foto</label>
+                                        <input type="file" class="form-control" name="bukti_bayar"
+                                            value="{{ $project->images }}" accept="image/*">
+                                        @if ($project->images)
+                                            <img src="{{ asset('storage/' . $project->images) }}" width="320px" />
+                                        @endif
+                                        <small class="text-muted">Format Image:png,jpg</small>
+                                        <br>
+                                        <label for="title">Status</label> <br>
+                                        <select class="form-control" id="status" name="status" required>
+                                            <option value="verified" @if ($project->status == 'verified') selected='selected' @endif>verified</option>
+                                            <option value="pending" @if ($project->status == 'pending') selected='selected' @endif>pending</option>
+                                            <option value="cancel" @if ($project->status == 'cancel') selected='selected' @endif>cancel</option>
+                                            <option value="expire" @if ($project->status == 'expire') selected='selected' @endif>expire</option>
+                                            <option value="success" @if ($project->status == 'success') selected='selected' @endif>paid</option>
+                                        </select>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <br>
+                                        <label for="title">Amount SPK Customer Gross</label> <br>
+                                        <input type="number" class="form-control" name="amount_spk_customer_gross"
+                                            placeholder="Masukkan no Konsultasi"
+                                            value="{{ $project->amount_spk_customer_gross }}" readonly>
+                                        <br>
+                                        <label for="title">Amount SPK Customer</label> <br>
+                                        <input type="number" class="form-control" name="amount_spk_customer"
+                                            placeholder="Masukkan no Konsultasi"
+                                            value="{{ $project->amount_spk_customer }}">
+                                        <br>
+                                        <label for="title">Diskon </label> <br>
+                                        <input type="number" class="form-control" name="discount"
+                                            placeholder="Masukkan diskon" value="{{ $project->discount }}" required>
+                                        <br>
+                                        <label for="title">Komisi</label> <br>
+                                        <input type="number" class="form-control" name="commision"
+                                            placeholder="Masukkan komisi" value="{{ $project->commision }}" required>
+                                        <br>
+                                        <label for="title">Termin Customer 1</label> <br>
+                                        <input type="number" class="form-control" name="termin_customer_1"
+                                            placeholder="termin customer 1" value="{{ $project->termin_customer_1 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Termin Customer 2</label> <br>
+                                        <input type="number" class="form-control" name="termin_customer_2"
+                                            placeholder="termin customer 2" value="{{ $project->termin_customer_2 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Termin Customer 3</label> <br>
+                                        <input type="number" class="form-control" name="termin_customer_3"
+                                            placeholder="termin customer 3" value="{{ $project->termin_customer_3 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Termin Customer 4</label> <br>
+                                        <input type="number" class="form-control" name="termin_customer_4"
+                                            placeholder="termin customer 4" value="{{ $project->termin_customer_4 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Termin Customer 5</label> <br>
+                                        <input type="number" class="form-control" name="termin_customer_5"
+                                            placeholder="termin customer 5" value="{{ $project->termin_customer_5 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Amount SPK Applicator</label> <br>
+                                        <input type="number" class="form-control" name="amount_spk_vendor"
+                                            placeholder="Masukkan amount spk applicator"
+                                            value="{{ $project->amount_spk_vendor }}" required>
+                                        <br>
+                                        <label for="title">Termin Applicaktor 1</label> <br>
+                                        <input type="number" class="form-control" name="termin_vendor_1"
+                                            placeholder="termin Appliaktor 1" value="{{ $project->termin_vendor_1 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Termin Appliaktor 2</label> <br>
+                                        <input type="number" class="form-control" name="termin_vendor_2"
+                                            placeholder="termin Appliaktor 2" value="{{ $project->termin_vendor_2 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Termin Appliaktor 3</label> <br>
+                                        <input type="number" class="form-control" name="termin_vendor_3"
+                                            placeholder="termin Appliaktor 3" value="{{ $project->termin_vendor_3 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Termin Appliaktor 4</label> <br>
+                                        <input type="number" class="form-control" name="termin_vendor_4"
+                                            placeholder="termin Appliaktor 4" value="{{ $project->termin_vendor_4 }}"
+                                            required>
+                                        <br>
+                                        <label for="title">Termin Appliaktor 5</label> <br>
+                                        <input type="number" class="form-control" name="termin_vendor_5"
+                                            placeholder="termin Appliaktor 5" value="{{ $project->termin_vendor_5 }}"
+                                            required>
+                                        <br>                        
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" value="PUT" name="_method">
+                            <button class="btn btn-primary btn-flat" name="save_action" value="PUBLISH">Publish</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("tgl_Konsultasi").valueAsDate = new Date();
+    </script>
 @stop

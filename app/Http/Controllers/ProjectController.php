@@ -98,10 +98,8 @@ class ProjectController extends Controller
 
     public function show($id)
     {
-        $proker = DB::table('projects')
-            ->where('id', '=', $id)
-            ->first();
-        return view('project.show', ['show' => $proker]);
+        $project = WpProject::findOrfail($id);
+        return view('project.show', ['project' => $project]);
     }
 
     public function edit($id)

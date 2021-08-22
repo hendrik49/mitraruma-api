@@ -28,7 +28,7 @@
                     </div>
                 @endif
                 <div class="box">
-                    <div class="box-header">
+                    <div class="box-header with-border">
                         <h2 align="center" class="box-title">Konsultasi</h2>
                     </div>
                     <div class="box-body">

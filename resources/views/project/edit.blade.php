@@ -148,8 +148,8 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Applikator Diskon </label>
-                                            <input type="number" class="form-control" name="appliaktor_discount"
-                                                placeholder="Masukkan diskon" value="{{ $project->appliaktor_discount }}"
+                                            <input type="number" class="form-control" name="applikator_discount"
+                                                placeholder="Masukkan diskon" value="{{ $project->applikator_discount }}"
                                                 required>
                                         </div>
                                         <div class="col-sm-6">
@@ -170,6 +170,19 @@
                                             <label for="title">Term Payment Customer</label>
                                             <textarea rows="4" class="form-control" name="term_payment_customer"
                                                 placeholder="Masukkan term payment customer">{{ $project->term_payment_customer }}</textarea>
+                                        </div>
+                                    </div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+                                            <label for="title">Total Expanse</label>
+                                            <input type="number" class="form-control" name="total_expanse"
+                                                placeholder="Masukkan total expanse"
+                                                value="{{ $project->total_expanse }}" required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="title">Catatan Expanse</label>
+                                            <textarea rows="4" class="form-control" name="expanse_note"
+                                                placeholder="Masukkan expanse note">{{ $project->expanse_note }}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -339,6 +352,13 @@
                                             <label for="title">Tanggal Termin Applikator 5</label>
                                             <input type="date" class="form-control tgl" name="termin_vendor_5_date"
                                                 placeholder="termin 5" value="{{ $project->termin_vendor_5_date }}">
+                                        </div>
+                                    </div>
+									<div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="title">Tanggal Retensi</label>
+                                            <input type="date" class="form-control tgl" name="payment_retention_date"
+                                                placeholder="termin 5" value="{{ $project->payment_retention_date }}">
                                         </div>
                                     </div>
                                     <input type="hidden" value="PUT" name="_method">

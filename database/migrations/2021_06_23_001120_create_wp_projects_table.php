@@ -32,7 +32,7 @@ class CreateWpProjectsTable extends Migration
             $table->double('total_expanse')->nullable();
             $table->text('expanse_note')->nullable();
             $table->text('project_note')->nullable();
-            $table->string('term_payment_customer');
+            $table->string('term_payment_customer')->nullable();
 
             $table->double('booking_fee')->nullable();
             $table->double('termin_customer_1')->nullable();
@@ -46,7 +46,7 @@ class CreateWpProjectsTable extends Migration
             $table->double('termin_customer_5')->nullable();
             $table->date('termin_customer_5_date')->nullable();
 
-            $table->string('term_payment_vendor');
+            $table->string('term_payment_vendor')->nullable();
             $table->double('termin_vendor_1')->nullable();
             $table->date('termin_vendor_1_date')->nullable();            
             $table->double('termin_vendor_2')->nullable();

@@ -128,7 +128,7 @@ class ProjectController extends Controller
 
             DB::commit();
 
-            return redirect()->route('project.index')->with('status', 'Data project berhasil diubah');
+            return redirect()->route('proyek.index')->with('status', 'Data project berhasil diubah');
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->with('errors', $e->validator->getMessageBag());

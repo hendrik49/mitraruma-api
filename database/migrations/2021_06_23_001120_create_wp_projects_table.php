@@ -25,6 +25,8 @@ class CreateWpProjectsTable extends Migration
             $table->double('amount_spk_customer_gross')->nullable();
             $table->double('amount_spk_customer')->nullable();
             $table->double('amount_spk_vendor')->nullable();
+            $table->double('amount_spk_vendor_net')->nullable();
+            $table->double('project_value')->nullable();
             $table->double('material_buy')->nullable();
             $table->double('mitraruma_discount')->nullable();
             $table->double('applicator_discount')->nullable();

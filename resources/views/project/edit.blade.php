@@ -99,10 +99,58 @@
                                                 value="{{ $project->estimated_budget }}" readonly>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="title">Tgl Konsultasi</label>
-                                            <input type="date" class="form-control tgl" name="created_at"
-                                                placeholder="Masukkan tanggal Konsultasi"
-                                                value="{{ $project->created_at->format('yyyy-MM-dd') }}" readonly>
+                                            <label for="title">Booking Fee</label>
+                                            <input type="number" class="form-control" name="booking_fee"
+                                                placeholder="Masukkan booking fee" value="{{ $project->booking_fee }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="title">Nilai Proyek</label>
+                                            <input type="number" class="form-control" name="project_value"
+                                                placeholder="Masukkan project value"
+                                                value="{{ $project->project_value }}" required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="title">Applikator Diskon </label>
+                                            <input type="number" class="form-control" name="applikator_discount"
+                                                placeholder="Masukkan diskon" value="{{ $project->applikator_discount }}"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div>
+                                                <label for="title">Mitraruma Diskon </label>
+                                                <input type="number" class="form-control" name="mitraruma_discount"
+                                                    placeholder="Masukkan diskon"
+                                                    value="{{ $project->mitraruma_discount }}" required>
+                                            </div>
+                                            <div>
+                                                <label for="title">Other Expanse</label>
+                                                <input type="number" class="form-control" name="other_expanse"
+                                                    placeholder="Masukkan other expanse"
+                                                    value="{{ $project->other_expanse }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="title">Catatan Expanse</label>
+                                            <textarea rows="4" class="form-control" name="expanse_note"
+                                                placeholder="Masukkan expanse note">{{ $project->expanse_note }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="title">Total Expanse</label>
+                                            <input type="number" class="form-control" name="total_expanse"
+                                                placeholder="Masukkan total expanse"
+                                                value="{{ $project->total_expanse }}" required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="title">Amount SPK Customer</label>
+                                            <input type="number" class="form-control" name="amount_spk_customer"
+                                                placeholder="Masukkan nilai spk customer"
+                                                value="{{ $project->amount_spk_customer }}" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -133,56 +181,17 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Amount SPK Customer Gross</label>
-                                            <input type="number" class="form-control" name="amount_spk_customer_gross"
-                                                placeholder="Masukkan amount SPK Customer Gross"
-                                                value="{{ $project->amount_spk_customer_gross }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Mitraruma Diskon </label>
-                                            <input type="number" class="form-control" name="mitraruma_discount"
-                                                placeholder="Masukkan diskon" value="{{ $project->mitraruma_discount }}"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Applikator Diskon </label>
-                                            <input type="number" class="form-control" name="applikator_discount"
-                                                placeholder="Masukkan diskon" value="{{ $project->applikator_discount }}"
-                                                required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Amount SPK Customer</label>
-                                            <input type="number" class="form-control" name="amount_spk_customer"
-                                                placeholder="Masukkan nilai spk customer"
-                                                value="{{ $project->amount_spk_customer }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-										<div class="col-sm-6">
-                                            <label for="title">Biaya Material</label>
-                                            <input type="number" class="form-control" name="material_buy"
-                                                placeholder="Masukkan material buy"
-                                                value="{{ $project->material_buy }}" required>
-                                        </div>
-                                        <div class="col-sm-6">
                                             <label for="title">Term Payment Customer</label>
                                             <textarea rows="4" class="form-control" name="term_payment_customer"
                                                 placeholder="Masukkan term payment customer">{{ $project->term_payment_customer }}</textarea>
                                         </div>
-                                    </div>
-									<div class="form-group row">
-										<div class="col-sm-6">
-                                            <label for="title">Total Expanse</label>
-                                            <input type="number" class="form-control" name="total_expanse"
-                                                placeholder="Masukkan total expanse"
-                                                value="{{ $project->total_expanse }}" required>
-                                        </div>
                                         <div class="col-sm-6">
-                                            <label for="title">Catatan Expanse</label>
-                                            <textarea rows="4" class="form-control" name="expanse_note"
-                                                placeholder="Masukkan expanse note">{{ $project->expanse_note }}</textarea>
+                                            <label for="title">Persentase Termin</label>
+                                            <input type="number" class="form-control" max="100" name="termin_persentase"
+                                                placeholder="termin persentase" value="">
+                                            <label for="title">Amount Termin</label>
+                                            <input type="number" class="form-control" name="termin_persentase"
+                                                placeholder="termin amount" value="" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -268,11 +277,27 @@
                                                 value="{{ $project->amount_spk_vendor }}" required>
                                         </div>
                                     </div>
-									<div class="form-group row">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="title">Amount SPK Applikator Net</label>
+                                            <input type="number" class="form-control" name="amount_spk_vendor_net"
+                                                placeholder="Masukkan amount spk applicator net"
+                                                value="{{ $project->amount_spk_vendor_net }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">                                
                                         <div class="col-sm-6">
                                             <label for="title">Term Payment Applikator</label>
                                             <textarea rows="4" class="form-control" name="term_payment_vendor"
                                                 placeholder="Masukkan term payment applikator">{{ $project->term_payment_vendor }}</textarea>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="title">Persentase Termin</label>
+                                            <input type="number" class="form-control" max="100" name="termin_persentase"
+                                                placeholder="termin persentase" value="">
+                                            <label for="title">Amount Termin</label>
+                                            <input type="number" class="form-control" name="termin_persentase"
+                                                placeholder="termin amount" value="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -354,7 +379,7 @@
                                                 placeholder="termin 5" value="{{ $project->termin_vendor_5_date }}">
                                         </div>
                                     </div>
-									<div class="form-group row">
+                                    <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Tanggal Retensi</label>
                                             <input type="date" class="form-control tgl" name="payment_retention_date"

@@ -18,16 +18,18 @@ class WpProject extends Model
      * @var array
      */
     protected $fillable = [        
-        'amount_spk_customer_gross',
         'amount_spk_customer',
         'amount_spk_vendor',
+        'amount_spk_vendor_net',
         'mitraruma_discount',
         'applicator_discount',
         'commision',
+        'other_expanse',
         'total_expanse',
         'expanse_note',
         'project_note',
         'material_buy',
+        'booking_fee',
         'term_payment_vendor',
         'term_payment_customer',
     

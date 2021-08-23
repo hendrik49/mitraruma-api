@@ -266,26 +266,31 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Komisi</label>
-                                            <input type="number" class="form-control" name="commision"
-                                                placeholder="Masukkan komisi" value="{{ $project->commision }}" required>
-                                        </div>
-                                        <div class="col-sm-6">
                                             <label for="title">Amount SPK Applikator</label>
                                             <input type="number" class="form-control" name="amount_spk_vendor"
                                                 placeholder="Masukkan amount spk applicator"
                                                 value="{{ $project->amount_spk_vendor }}" required>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Amount SPK Applikator Net</label>
+                                            <label for="title">Total Payment To Applikator</label>
                                             <input type="number" class="form-control" name="amount_spk_vendor_net"
                                                 placeholder="Masukkan amount spk applicator net"
                                                 value="{{ $project->amount_spk_vendor_net }}" required>
                                         </div>
                                     </div>
-                                    <div class="form-group row">                                
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="title">Biaya Material</label>
+                                            <input type="number" class="form-control" name="material_buy"
+                                                placeholder="Masukkan material" value="{{ $project->material_buy }}" required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="title">Komisi</label>
+                                            <input type="number" class="form-control" name="commision"
+                                                placeholder="Masukkan komisi" value="{{ $project->commision }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Term Payment Applikator</label>
                                             <textarea rows="4" class="form-control" name="term_payment_vendor"

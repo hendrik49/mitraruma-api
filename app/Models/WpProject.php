@@ -17,7 +17,8 @@ class WpProject extends Model
      *
      * @var array
      */
-    protected $fillable = [
+    protected $fillable = [        
+        'amount_spk_customer_gross',
         'amount_spk_customer',
         'amount_spk_vendor',
         'discount',

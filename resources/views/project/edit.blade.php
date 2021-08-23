@@ -39,13 +39,13 @@
                                     @csrf
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">No Konsultasi</label>
+                                            <label for="title">No. Konsultasi</label>
                                             <input type="text" class="form-control" name="order_number"
                                                 placeholder="Masukkan no Konsultasi" value="{{ $project->order_number }}"
                                                 readonly>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="title">No Room</label>
+                                            <label for="title">No. Room</label>
                                             <input type="text" class="form-control" name="room_id"
                                                 placeholder="Masukkan no room" value="{{ $project->room_id }}" readonly>
                                         </div>
@@ -133,25 +133,20 @@
                                             <label for="title">Amount SPK Customer Gross</label>
                                             <input type="number" class="form-control" name="amount_spk_customer_gross"
                                                 placeholder="Masukkan no Konsultasi"
-                                                value="{{ $project->amount_spk_customer_gross }}" readonly>
+                                                value="{{ $project->amount_spk_customer_gross }}">
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Amount SPK Customer</label>
-                                            <input type="number" class="form-control" name="amount_spk_customer"
-                                                placeholder="Masukkan no Konsultasi"
-                                                value="{{ $project->amount_spk_customer }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
+										<div class="col-sm-6">
                                             <label for="title">Diskon </label>
                                             <input type="number" class="form-control" name="discount"
                                                 placeholder="Masukkan diskon" value="{{ $project->discount }}" required>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Komisi</label>
-                                            <input type="number" class="form-control" name="commision"
-                                                placeholder="Masukkan komisi" value="{{ $project->commision }}" required>
+                                    </div>
+                                    <div class="form-group row">
+										<div class="col-sm-6">
+                                            <label for="title">Amount SPK Customer</label>
+                                            <input type="number" class="form-control" name="amount_spk_customer"
+                                                placeholder="Masukkan no Konsultasi"
+                                                value="{{ $project->amount_spk_customer }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -191,34 +186,48 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+										<div class="col-sm-6">
+                                            <label for="title">Komisi</label>
+                                            <input type="number" class="form-control" name="commision"
+                                                placeholder="Masukkan komisi" value="{{ $project->commision }}" required>
+                                        </div>
                                         <div class="col-sm-6">
                                             <label for="title">Amount SPK Applikator</label>
                                             <input type="number" class="form-control" name="amount_spk_vendor"
                                                 placeholder="Masukkan amount spk applicator"
                                                 value="{{ $project->amount_spk_vendor }}" required>
                                         </div>
-                                        <div class="col-sm-6">
+                                    </div>
+                                    <div class="form-group row">
+										<div class="col-sm-6">
                                             <label for="title">Termin Applikator 1</label>
                                             <input type="number" class="form-control" name="termin_vendor_1"
                                                 placeholder="termin Applikator 1" value="{{ $project->termin_vendor_1 }}"
                                                 required>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Termin Applikator 2</label>
                                             <input type="number" class="form-control" name="termin_vendor_2"
                                                 placeholder="termin Applikator 2" value="{{ $project->termin_vendor_2 }}"
                                                 required>
                                         </div>
-                                        <div class="col-sm-6">
+                                    </div>
+                                    <div class="form-group row">
+										<div class="col-sm-6">
                                             <label for="title">Termin Applikator 3</label>
                                             <input type="number" class="form-control" name="termin_vendor_3"
                                                 placeholder="termin Applikator 3" value="{{ $project->termin_vendor_3 }}"
                                                 required>
                                         </div>
+
+                                        <div class="col-sm-6">
+                                            <label for="title">Termin Applikator 4</label>
+                                            <input type="number" class="form-control" name="termin_vendor_4"
+                                                placeholder="termin Applikator 4" value="{{ $project->termin_vendor_4 }}"
+                                                required>
+                                        </div>
                                     </div>
-                                    <div class="form-group row">
+									<div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Termin Applikator 4</label>
                                             <input type="number" class="form-control" name="termin_vendor_4"

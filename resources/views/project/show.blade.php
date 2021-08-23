@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title')Edit Konsultasi
+@section('title')Konsultasi {{$project->order_number }}
 @endsection
 
 @section('content')

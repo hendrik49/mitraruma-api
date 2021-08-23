@@ -18,7 +18,20 @@ class WpProject extends Model
      * @var array
      */
     protected $fillable = [
-
+        'amount_spk_customer',
+        'amount_spk_vendor',
+        'discount',
+        'commision',
+        'termin_customer_1',
+        'termin_customer_2',
+        'termin_customer_3',
+        'termin_customer_4',
+        'termin_customer_5',
+        'termin_customer_1',
+        'termin_customer_2',
+        'termin_customer_3',
+        'termin_customer_4',
+        'termin_customer_5'
     ];
 
     /**
@@ -29,5 +42,4 @@ class WpProject extends Model
     protected $hidden = [
         'deleted_at',
     ];
-
 }

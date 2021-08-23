@@ -82,13 +82,13 @@
                                         <div class="col-sm-6">
                                             <label for="title">Konsultasi</label>
                                             <textarea rows="4" class="form-control" name="description"
-                                                placeholder="Masukkan nama donatur"
+                                                placeholder="Masukkan nama donatur" readonly
                                                 required>{{ $project->description }}</textarea>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Alamat</label>
-                                            <textarea rows="4" class="form-control" name="street"
-                                                placeholder="Masukkan alamat" required>{{ $project->street }}</textarea>
+                                            <textarea rows="4" class="form-control" name="street" readonly
+                                                placeholder="Masukkan alamat" >{{ $project->street }}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -96,20 +96,18 @@
                                             <label for="title">Estimasi Budget Konsultasi (Rp)</label>
                                             <input type="number" min="1" class="form-control" name="estimated_budget"
                                                 placeholder="Masukkan budget" onkeypress="return isNumberKey(event)"
-                                                value="{{ $project->estimated_budget }}" required>
+                                                value="{{ $project->estimated_budget }}" readonly>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Tgl Konsultasi</label>
                                             <input type="date" class="form-control" id="tgl_Konsultasi" name="created_at"
                                                 placeholder="Masukkan tanggal Konsultasi"
-                                                value="{{ $project->created_at->format('yyyy-MM-dd') }}" required>
+                                                value="{{ $project->created_at->format('yyyy-MM-dd') }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="cover">Foto</label>
-                                            <input type="file" class="form-control" name="bukti_bayar"
-                                                value="{{ $project->images }}" accept="image/*">
                                             @if ($project->images != '[]')
                                                 <img src="{{ asset('storage/' . $project->images) }}" width="320px" />
                                             @endif
@@ -117,7 +115,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Status</label>
-                                            <select class="form-control" id="status" name="status" required>
+                                            <select class="form-control" id="status" name="status" readonly>
                                                 <option value="verified" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
                                                 </option>
                                                 <option value="pending" @if ($project->status == 'design phase') selected='selected' @endif>Design Phase

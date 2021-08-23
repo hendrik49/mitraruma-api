@@ -132,27 +132,7 @@ class ProjectController extends Controller
 
             $project = WpProject::findOrfail($id);
 
-            $foto = $request->file('logo');
-            if ($foto) {
-                if ($project->dokumentasi && file_exists(storage_path('app/public/' . $project->dokumentasi))) {
-                    Storage::delete('public/' . $project->dokumentasi);
-                }
-                $foto_path = $foto->store('fotoproject', 'public');
-                $project->dokumentasi = $foto_path;
-            }
-            $project->bank    = strtolower($request->bank);
-            $project->account  = $request->account;
-            $project->tipe  = $request->tipe;
-            $project->branch  = $request->label;
-            $project->owner  = $request->owner;
-            $project->updated_by    = Auth::user()->name;
-            $project->judul_panduan_pembayaran1 = $request->judul_panduan_pembayaran1;
-            $project->judul_panduan_pembayaran2 = $request->judul_panduan_pembayaran2;
-            $project->judul_panduan_pembayaran3 = $request->judul_panduan_pembayaran3;
-            $project->panduan_pembayaran1 = $request->panduan_pembayaran1;
-            $project->panduan_pembayaran2 = $request->panduan_pembayaran2;
-            $project->panduan_pembayaran3 = $request->panduan_pembayaran3;
-
+            $project->fill($request->all());
             $project->save();
 
             DB::commit();

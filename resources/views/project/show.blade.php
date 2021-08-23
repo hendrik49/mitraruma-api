@@ -29,7 +29,7 @@
                 @endif
                 <div class="box">
                     <div class="box-header with-border">
-                        <h2 align="center" class="box-title">Edit Konsultasi</h2>
+                        <h2 align="center" class="box-title">Konsultasi {{$project->order_number }}</h2>
                     </div>
                     <div class="box-body">
                         <div class="row">

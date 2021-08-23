@@ -71,9 +71,13 @@
                 'responsive': true,
                 'info': true,
                 'scrollX': true,
-                'buttons': [
-                    'copy', 'excel', 'pdf'
-                ]
+                'dom': 'Bfrtip',
+                'buttons': [{
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    }
+                }, ]
             });
         });
     </script>

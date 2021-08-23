@@ -118,15 +118,15 @@
                                         <div class="col-sm-6">
                                             <label for="title">Status</label>
                                             <select class="form-control" id="status" name="status" required>
-                                                <option value="verified" @if ($project->status == 'verified') selected='selected' @endif>Pre Purchase
+                                                <option value="verified" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
                                                 </option>
-                                                <option value="pending" @if ($project->status == 'pending') selected='selected' @endif>Design Phase
+                                                <option value="pending" @if ($project->status == 'design phase') selected='selected' @endif>Design Phase
                                                 </option>
-                                                <option value="cancel" @if ($project->status == 'cancel') selected='selected' @endif>Construction Phase
+                                                <option value="cancel" @if ($project->status == 'construction phase') selected='selected' @endif>Construction Phase
                                                 </option>
-                                                <option value="expire" @if ($project->status == 'expire') selected='selected' @endif>Project Started
+                                                <option value="expire" @if ($project->status == 'project started') selected='selected' @endif>Project Started
                                                 </option>
-                                                <option value="success" @if ($project->status == 'success') selected='selected' @endif>Project Ended</option>
+                                                <option value="success" @if ($project->status == 'project ended') selected='selected' @endif>Project Ended</option>
                                             </select>
                                         </div>
                                     </div>

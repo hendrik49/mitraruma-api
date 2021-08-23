@@ -21,24 +21,43 @@ class CreateWpProjectsTable extends Migration
             $table->string('room_id');
             $table->text('description');
             $table->json('images')->nullable();
-            $table->double('estimated_budget');
+            $table->double('estimated_budget')->nullable();
             $table->double('amount_spk_customer_gross')->nullable();
             $table->double('amount_spk_customer')->nullable();
             $table->double('amount_spk_vendor')->nullable();
-            $table->double('discount')->nullable();
+            $table->double('material_buy')->nullable();
+            $table->double('mitraruma_discount')->nullable();
+            $table->double('applicator_discount')->nullable();
             $table->double('commision')->nullable();
+            $table->double('total_expanse')->nullable();
+            $table->text('expanse_note')->nullable();
+            $table->text('project_note')->nullable();
+            $table->string('term_payment_customer');
 
+            $table->double('booking_fee')->nullable();
             $table->double('termin_customer_1')->nullable();
+            $table->date('termin_customer_1_date')->nullable();
             $table->double('termin_customer_2')->nullable();
+            $table->date('termin_customer_2_date')->nullable();
             $table->double('termin_customer_3')->nullable();
+            $table->date('termin_customer_3_date')->nullable();
             $table->double('termin_customer_4')->nullable();
+            $table->date('termin_customer_4_date')->nullable();
             $table->double('termin_customer_5')->nullable();
+            $table->date('termin_customer_5_date')->nullable();
 
+            $table->string('term_payment_vendor');
             $table->double('termin_vendor_1')->nullable();
+            $table->date('termin_vendor_1_date')->nullable();            
             $table->double('termin_vendor_2')->nullable();
+            $table->date('termin_vendor_2_date')->nullable();            
             $table->double('termin_vendor_3')->nullable();
+            $table->date('termin_vendor_3_date')->nullable();            
             $table->double('termin_vendor_4')->nullable();
+            $table->date('termin_vendor_4_date')->nullable();            
             $table->double('termin_vendor_5')->nullable();
+            $table->date('termin_vendor_5_date')->nullable();            
+            $table->date('payment_retention_date')->nullable();            
 
             $table->string('vendor_name')->nullable();
             $table->string('vendor_contact')->nullable();

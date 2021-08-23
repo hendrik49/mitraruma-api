@@ -114,20 +114,11 @@ class ProjectController extends Controller
         try {
 
             $this->validate($request, [
+                'amount_spk_customer_gross' => 'numeric',
                 'amount_spk_customer' => 'numeric',
                 'amount_spk_vendor' => 'numeric',
                 'discount' => 'numeric',
-                'commision' => 'numeric',
-                'termin_customer_1' => 'numeric',
-                'termin_customer_2' => 'numeric',
-                'termin_customer_3' => 'numeric',
-                'termin_customer_4' => 'numeric',
-                'termin_customer_5' => 'numeric',
-                'termin_customer_1' => 'numeric',
-                'termin_customer_2' => 'numeric',
-                'termin_customer_3' => 'numeric',
-                'termin_customer_4' => 'numeric',
-                'termin_customer_5' => 'numeric'
+                'commision' => 'numeric'                
             ]);
 
             $project = WpProject::findOrfail($id);

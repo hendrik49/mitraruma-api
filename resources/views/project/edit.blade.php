@@ -55,13 +55,13 @@
                                             <label for="title">Nama Customer</label>
                                             <input type="text" class="form-control" name="customer_name"
                                                 placeholder="Masukkan nama customer" value="{{ $project->customer_name }}"
-                                                required>
+                                                readonly>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Kontak Customer</label>
                                             <input type="text" class="form-control" name="customer_name"
                                                 placeholder="Masukkan kontak customer"
-                                                value="{{ $project->customer_contact }}" required>
+                                                value="{{ $project->customer_contact }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -69,13 +69,13 @@
                                             <label for="title">Nama Applikator </label>
                                             <input type="email" class="form-control" name="vendor_name"
                                                 placeholder="Masukkan nama applikator" value="{{ $project->vendor_name }}"
-                                                required>
+                                                readonly>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Kontak Applikator</label>
                                             <input type="text" class="form-control" name="vendor_contact"
                                                 placeholder="Masukkan kontak applikator"
-                                                value="{{ $project->vendor_contact }}" required>
+                                                value="{{ $project->vendor_contact }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -200,7 +200,7 @@
                                                 value="{{ $project->amount_spk_vendor }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 1</label>
+                                            <label for="title">Termin Applikator 1</label>
                                             <input type="number" class="form-control" name="termin_vendor_1"
                                                 placeholder="termin Applikator 1" value="{{ $project->termin_vendor_1 }}"
                                                 required>
@@ -208,13 +208,13 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 2</label>
+                                            <label for="title">Termin Applikator 2</label>
                                             <input type="number" class="form-control" name="termin_vendor_2"
                                                 placeholder="termin Applikator 2" value="{{ $project->termin_vendor_2 }}"
                                                 required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 3</label>
+                                            <label for="title">Termin Applikator 3</label>
                                             <input type="number" class="form-control" name="termin_vendor_3"
                                                 placeholder="termin Applikator 3" value="{{ $project->termin_vendor_3 }}"
                                                 required>
@@ -222,13 +222,13 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 4</label>
+                                            <label for="title">Termin Applikator 4</label>
                                             <input type="number" class="form-control" name="termin_vendor_4"
                                                 placeholder="termin Applikator 4" value="{{ $project->termin_vendor_4 }}"
                                                 required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 5</label>
+                                            <label for="title">Termin Applikator 5</label>
                                             <input type="number" class="form-control" name="termin_vendor_5"
                                                 placeholder="termin Applikator 5" value="{{ $project->termin_vendor_5 }}"
                                                 required>

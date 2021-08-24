@@ -182,10 +182,20 @@ class UserService
             ];
         }
 
+        $resp = $this->postSignUpAPI($params);
+
+        if ($resp['errorCode']) {
+            return [
+                'status' => 400,
+                'data' => ['message' => $resp['error']],
+            ];
+        }
+
         $params['password'] = bcrypt($params['password']);
         $params['user_registered'] = date("Y-m-d H:i:s");
         $params['user_email'] =  $params['user_email'] ? $params['user_email'] : $params['user_phone_number'] . '@gmail.com';
         $params['user_login'] = $params['user_email'];
+        $params['user_nicename'] = $resp['userId'];
 
         $isUserExist = $this->user->findOne($params);
         if ($isUserExist) {
@@ -482,6 +492,15 @@ class UserService
         ]);
 
         $isEmail = !$validatorEmail->fails();
+        $resp = $this->postSignInAPI($params, $isEmail);
+
+        if ($resp['errorCode'] || $resp == null) {
+            return [
+                'status' => 400,
+                'data' => ['message' =>  $resp == null ? 'External API server error' : $resp['error']],
+            ];
+        }
+
         $params['user_login'] = $isEmail ? $params['user_login'] : $params['user_login'] . '@gmail.com';
 
         try {
@@ -499,7 +518,7 @@ class UserService
                 $token = $this->jwt->encode($user);
                 return [
                     'status' => 200,
-                    'data' => ['token' => $token, 'user' => $user],
+                    'data' => ['token' => $token,'externalToken'=>$resp['accessToken'], 'user' => $user],
                 ];
             } else {
                 return [
@@ -525,32 +544,28 @@ class UserService
         }
     }
 
-    public function postSignUpAPI($donasi)
+    public function postSignUpAPI($params)
     {
         try {
-            $client = new GuzzleHttp\Client();
+            $client = new GuzzleHttp\Client(['base_uri' => env('API_MITRARUMA', 'https://qa.mitraruma.com/')]);
 
             $headers = [
-                'Content-Type'          => 'application/x-www-form-urlencoded',
-                'Authorization'         => 'Basic YjNSazRoOmFnMzY1TW5iZ2E='
+                'Content-Type'          => 'application/json'
             ];
-            $campaign = Proker::find($donasi->campaign_id);
 
-            $response = $client->request('POST', 'http://103.247.8.126:8008/apiberkah/', [
+            $json =  [
+                "userType" => "BUYER",
+                "buyerType" => $params['user_type'] == 'customer' ? 'CUSTOMER' : 'APPLICATOR',
+                "fullName" => $params['display_name'],
+                "phoneNo" => $params['user_phone_number'],
+                "useremail" =>  $params['user_email'],
+                "password" =>  $params['password'],
+                "phoneCountryCode" => "+62"
+            ];
+
+            $response = $client->post('buyer-service/auth/signup', [
                 'headers' => $headers,
-                'form_params' => array(
-                    'tag' => 'putdonasi',
-                    "tanggal" => $donasi->created_at->format('Y-m-d H:i:s'),
-                    "nomorhp" => $donasi->nohp,
-                    "nama" => $donasi->nama,
-                    "nomortransaksi" => $donasi->invoice,
-                    "namadonasi" =>  $campaign ? $campaign->nama_kegiatan : $donasi->url,
-                    "nominal" => $donasi->jumlah,
-                    "rekening" =>  $donasi->no_rekening,
-                    "bank" =>  $donasi->type,
-                    "email" =>  $donasi->email,
-                    "akad" =>  $donasi->campaign_type
-                )
+                'json' => $json
             ]);
 
             $data =  json_decode($response->getBody(), true);
@@ -561,32 +576,25 @@ class UserService
         }
     }
 
-    public function postSignInAPI($donasi)
+    public function postSignInAPI($params, $isEmail)
     {
         try {
-            $client = new GuzzleHttp\Client();
+            $client = new GuzzleHttp\Client(['base_uri' => env('API_MITRARUMA', 'https://qa.mitraruma.com/')]);
 
             $headers = [
-                'Content-Type'          => 'application/x-www-form-urlencoded',
-                'Authorization'         => 'Basic YjNSazRoOmFnMzY1TW5iZ2E='
+                'Content-Type'          => 'application/json'
             ];
-            $campaign = Proker::find($donasi->campaign_id);
 
-            $response = $client->request('POST', 'http://103.247.8.126:8008/apiberkah/', [
+            $json =  [
+                "userType" => "BUYER",
+                "useremail" =>  $params['user_login'],
+                "password" =>  $params['password'],
+                "phoneNo" => $isEmail ? null : $params['user_login']
+            ];
+
+            $response = $client->post('buyer-service/auth/login', [
                 'headers' => $headers,
-                'form_params' => array(
-                    'tag' => 'putdonasi',
-                    "tanggal" => $donasi->created_at->format('Y-m-d H:i:s'),
-                    "nomorhp" => $donasi->nohp,
-                    "nama" => $donasi->nama,
-                    "nomortransaksi" => $donasi->invoice,
-                    "namadonasi" =>  $campaign ? $campaign->nama_kegiatan : $donasi->url,
-                    "nominal" => $donasi->jumlah,
-                    "rekening" =>  $donasi->no_rekening,
-                    "bank" =>  $donasi->type,
-                    "email" =>  $donasi->email,
-                    "akad" =>  $donasi->campaign_type
-                )
+                'json' => $json
             ]);
 
             $data =  json_decode($response->getBody(), true);

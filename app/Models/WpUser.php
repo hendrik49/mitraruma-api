@@ -23,6 +23,7 @@ class WpUser extends Model
         'user_phone_number',
         'user_type',
         'password',
+        'user_nicename',
         'user_login',
         'user_registered',
         'company_name'

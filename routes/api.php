@@ -39,7 +39,8 @@ Route::POST('/notification/send', [\App\Http\Controllers\NotificationController:
 Route::POST('/login', [AuthController::class, 'login']);
 Route::POST('/login/admin', [AuthController::class, 'loginAdmin']);
 Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
-//Route::POST('/login/email', [AuthController::class, 'loginByEmail']); //This route is only for testing
+Route::POST('/login/email', [AuthController::class, 'loginByEmail']);
+Route::POST('/login/integration', [AuthController::class, 'loginByPassword']);
 Route::GET('/login/google', [AuthController::class, 'loginGoogleRedirect'])->middleware(['web']);
 Route::GET('/login/google/callback', [AuthController::class, 'handleGoogleCallback'])->middleware(['web']);
 Route::POST('/login/google/token', [AuthController::class, 'loginGoogleToken']);
@@ -47,6 +48,7 @@ Route::POST('/login/google/token', [AuthController::class, 'loginGoogleToken']);
 
 Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
 Route::POST('/user/register', [UserController::class, 'store']);
+Route::POST('/user/register/integration', [UserController::class, 'storeIntegration']);
 
 Route::POST('/user/token', [UserTokenController::class, 'store'])->middleware('jwt.user');
 Route::DELETE('/user/token', [UserTokenController::class, 'destroy'])->middleware('jwt.user');

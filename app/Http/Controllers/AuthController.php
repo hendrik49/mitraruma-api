@@ -103,6 +103,24 @@ class AuthController extends Controller
 
     }
 
+
+     /**
+     * Login.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loginByPassword(Request $request)
+    {
+
+        $params = $request->all();
+
+        $result = $this->user->loginByPassword($params);
+
+        return response()->json($result['data'], $result['status']);
+
+    }
+
     /**
      * Redirect the user to the Google authentication page.
      *

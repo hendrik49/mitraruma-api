@@ -22,6 +22,9 @@ class WpUser extends Model
         'user_email',
         'user_phone_number',
         'user_type',
+        'password',
+        'user_login',
+        'user_registered'
     ];
 
     /**

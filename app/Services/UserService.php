@@ -183,7 +183,6 @@ class UserService
         $params['user_registered'] = date("Y-m-d H:i:s");
         $params['user_email'] =  $params['user_email'] ? $params['user_email'] : $params['user_phone_number'] . '@gmail.com';
         $params['user_login'] = $params['user_email'];
-        $params['user_nicename'] = $params['company_name'] ? $params['company_name'] : '';
 
         $isUserExist = $this->user->findOne($params);
         if ($isUserExist) {

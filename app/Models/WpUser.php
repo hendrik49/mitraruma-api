@@ -24,7 +24,8 @@ class WpUser extends Model
         'user_type',
         'password',
         'user_login',
-        'user_registered'
+        'user_registered',
+        'company_name'
     ];
 
     /**
@@ -33,7 +34,7 @@ class WpUser extends Model
      * @var array
      */
     protected $hidden = [
-        'user_pass', 'password', 'user_activation_key', 'user_nicename', 'user_url'
+        'user_pass', 'password', 'user_activation_key', 'user_url'
     ];
 
 

@@ -20,7 +20,7 @@ class OtpRepository
         if(isset($params['otp'])) {
             $otp->where('otp', $params['otp']);
         }
-        $otp->whereTime('valid_date','>=',Carbon::now());
+        $otp->where('valid_date','>=',Carbon::now());
         return $otp->first();
     }
 

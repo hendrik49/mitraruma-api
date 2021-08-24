@@ -146,7 +146,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes', $user['user_phone_number']);
+        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes', $user['user_phone_number']);
 
         return [
             'status' => 201,
@@ -195,7 +195,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes.', $user['user_phone_number']);
+        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes.', $user['user_phone_number']);
 
         return [
             'status' => 201,
@@ -316,7 +316,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes', $user['user_phone_number']);
+        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes', $user['user_phone_number']);
 
         return [
             'status' => 201,
@@ -394,6 +394,9 @@ class UserService
         $params['user_id'] = $user['ID'];
         $otp = $this->otp->isOtpValid($params);
         if ($otp) {
+            $user->user_status = 1;
+            $user->save();
+
             $token = $this->jwt->encode($user);
             return [
                 'status' => 200,

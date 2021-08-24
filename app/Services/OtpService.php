@@ -26,8 +26,7 @@ class OtpService
     }
 
     public function isOtpValid($params){
-        unset($params['user_phone_number']);
-
+        
         $otp = $this->otp->findOne($params);
 
         if($otp) {

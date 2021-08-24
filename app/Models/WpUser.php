@@ -33,7 +33,7 @@ class WpUser extends Model
      * @var array
      */
     protected $hidden = [
-        'user_pass','password'
+        'user_pass', 'password', 'user_activation_key', 'user_nicename', 'user_url'
     ];
 
 
@@ -43,7 +43,5 @@ class WpUser extends Model
     public function address()
     {
         return $this->belongsToMany(WpUserAddress::class, 'wp_user_addresses', 'user_id', 'ID')->withPivot('id', 'created_at', 'updated_at');
-
     }
-
 }

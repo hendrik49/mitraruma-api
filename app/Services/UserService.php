@@ -164,7 +164,7 @@ class UserService
     {
 
         $validator = Validator::make($params, [
-            'user_phone_number' => 'required|regex:/[+](62)[0-9]/',
+            'user_phone_number' => 'required|regex:/[+](62)[0-9]/|unique:wp_users,user_phone_number',
             'user_type' => 'required',
             'user_email' => 'nullable|email',
             'display_name' => 'required:min:3',
@@ -414,7 +414,7 @@ class UserService
                 'data' => ['message' => $validator->errors()->first()]
             ];
         }
-  
+
         $validatorEmail = Validator::make(['user_login' => $params['user_login']], [
             'user_login' => 'email'
         ]);
@@ -431,14 +431,12 @@ class UserService
                 ];
             } else {
                 $user = $this->user->findOne($params);
-                $user->update($params);
-                $user->save();
             }
 
             $token = $this->jwt->encode($user);
             return [
                 'status' => 200,
-                'data' => ['token' => $token],
+                'data' => ['token' => $token, 'user' => $user],
             ];
         } catch (\Exception $e) {
             // something went wrong whilst attempting to encode the token

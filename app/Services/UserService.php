@@ -430,7 +430,7 @@ class UserService
             $token = $this->jwt->encode($user);
             return [
                 'status' => 200,
-                'data' => ['token' => $token],
+                'data' => ['token' => $token, 'message' => 'otp verified successfully'],
             ];
         } else {
             return [
@@ -518,7 +518,7 @@ class UserService
                 $token = $this->jwt->encode($user);
                 return [
                     'status' => 200,
-                    'data' => ['token' => $token,'externalToken'=>$resp['accessToken'], 'user' => $user],
+                    'data' => ['token' => $token, 'externalToken' => $resp['accessToken'], 'user' => $user],
                 ];
             } else {
                 return [

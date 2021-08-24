@@ -34,7 +34,7 @@
                     <input type="email"
                            name="user_email"
                            value="{{ old('user_email') }}"
-                           placeholder="Email"
+                           placeholder="Email or Phone Number"
                            class="form-control @error('user_email') is-invalid @enderror">
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="fas fa-envelope"></span></div>

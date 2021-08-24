@@ -473,6 +473,7 @@ class UserService
                     'data' => ['message' => 'Wrong password or user login'],
                 ];
             } else {
+                unset($params['password']);
                 $user = $this->user->findOne($params);
             }
             if ($user->user_status != 0) {

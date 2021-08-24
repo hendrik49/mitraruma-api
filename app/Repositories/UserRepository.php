@@ -68,6 +68,9 @@ class UserRepository
         if(isset($params['user_email'])) {
             $model->where('user_email', $params['user_email']);
         }
+        if(isset($params['user_login'])) {
+            $model->where('user_login', $params['user_login']);
+        }
         if(isset($params['user_phone_number'])) {
             $model->where('user_phone_number', $params['user_phone_number']);
         }

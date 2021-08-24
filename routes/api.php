@@ -51,6 +51,8 @@ Route::POST('/user/register', [UserController::class, 'store']);
 Route::POST('/user/register/integration', [UserController::class, 'storeIntegration']);
 Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
 Route::POST('/applicator/register/integration', [ApplicatorController::class, 'storeIntegration']);
+Route::POST('/user/remove', [UserController::class, 'remove']);
+
 
 Route::POST('/user/token', [UserTokenController::class, 'store'])->middleware('jwt.user');
 Route::DELETE('/user/token', [UserTokenController::class, 'destroy'])->middleware('jwt.user');

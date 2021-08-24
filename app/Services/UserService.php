@@ -6,6 +6,9 @@ use App\Http\Resources\UserVendorResource;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Auth;
+use GuzzleHttp;
+use GuzzleHttp\Exception\RequestException;
+use Guzzle\Http\Exception\ClientErrorResponseException;
 
 class UserService
 {
@@ -275,6 +278,22 @@ class UserService
         ];
     }
 
+    public function destroyByUserLogin($params)
+    {
+
+        $user = $this->user->deleteByUserLogin($params);
+        if (!$user) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 202,
+            'data' => ['message' => 'Success deleted data'],
+        ];
+    }
 
     public function destroy($id)
     {
@@ -503,6 +522,78 @@ class UserService
             $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
         } catch (\Throwable $e) {
             report($e);
+        }
+    }
+
+    public function postSignUpAPI($donasi)
+    {
+        try {
+            $client = new GuzzleHttp\Client();
+
+            $headers = [
+                'Content-Type'          => 'application/x-www-form-urlencoded',
+                'Authorization'         => 'Basic YjNSazRoOmFnMzY1TW5iZ2E='
+            ];
+            $campaign = Proker::find($donasi->campaign_id);
+
+            $response = $client->request('POST', 'http://103.247.8.126:8008/apiberkah/', [
+                'headers' => $headers,
+                'form_params' => array(
+                    'tag' => 'putdonasi',
+                    "tanggal" => $donasi->created_at->format('Y-m-d H:i:s'),
+                    "nomorhp" => $donasi->nohp,
+                    "nama" => $donasi->nama,
+                    "nomortransaksi" => $donasi->invoice,
+                    "namadonasi" =>  $campaign ? $campaign->nama_kegiatan : $donasi->url,
+                    "nominal" => $donasi->jumlah,
+                    "rekening" =>  $donasi->no_rekening,
+                    "bank" =>  $donasi->type,
+                    "email" =>  $donasi->email,
+                    "akad" =>  $donasi->campaign_type
+                )
+            ]);
+
+            $data =  json_decode($response->getBody(), true);
+            return $data;
+        } catch (\Exception $e) {
+            $message = $e->getMessage() . ". Line " . $e->getLine();
+            return $message;
+        }
+    }
+
+    public function postSignInAPI($donasi)
+    {
+        try {
+            $client = new GuzzleHttp\Client();
+
+            $headers = [
+                'Content-Type'          => 'application/x-www-form-urlencoded',
+                'Authorization'         => 'Basic YjNSazRoOmFnMzY1TW5iZ2E='
+            ];
+            $campaign = Proker::find($donasi->campaign_id);
+
+            $response = $client->request('POST', 'http://103.247.8.126:8008/apiberkah/', [
+                'headers' => $headers,
+                'form_params' => array(
+                    'tag' => 'putdonasi',
+                    "tanggal" => $donasi->created_at->format('Y-m-d H:i:s'),
+                    "nomorhp" => $donasi->nohp,
+                    "nama" => $donasi->nama,
+                    "nomortransaksi" => $donasi->invoice,
+                    "namadonasi" =>  $campaign ? $campaign->nama_kegiatan : $donasi->url,
+                    "nominal" => $donasi->jumlah,
+                    "rekening" =>  $donasi->no_rekening,
+                    "bank" =>  $donasi->type,
+                    "email" =>  $donasi->email,
+                    "akad" =>  $donasi->campaign_type
+                )
+            ]);
+
+            $data =  json_decode($response->getBody(), true);
+            return $data;
+        } catch (\Exception $e) {
+            $message = $e->getMessage() . ". Line " . $e->getLine();
+            return $message;
         }
     }
 }

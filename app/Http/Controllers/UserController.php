@@ -65,6 +65,28 @@ class UserController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function remove(Request $request)
+    {
+
+        $params = $request->all();
+
+        DB::beginTransaction();
+        $result = $this->user->destroyByUserLogin($params);
+        if($result['status'] != 201) {
+            DB::rollBack();
+            return response()->json($result['data'], $result['status']);
+        }
+
+        DB::commit();
+        return response()->json($result['data'], $result['status']);
+    }
+
 
      /**
      * Store a newly created resource in storage.

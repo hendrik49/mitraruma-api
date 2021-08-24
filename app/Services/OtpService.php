@@ -18,7 +18,7 @@ class OtpService
         $otp = rand(100000, 999999);
         $params['otp'] = $otp;
         $params['user_id'] = $userId;
-        $params['valid_date'] = Carbon::now()->addMinute(2);
+        $params['valid_date'] = Carbon::now()->addMinute(60);
 
         $otp = $this->otp->create($params);
 
@@ -26,6 +26,8 @@ class OtpService
     }
 
     public function isOtpValid($params){
+        unset($params['user_phone_number']);
+
         $otp = $this->otp->findOne($params);
 
         if($otp) {

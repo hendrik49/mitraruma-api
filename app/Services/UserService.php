@@ -146,7 +146,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'], $user['user_phone_number']);
+        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes', $user['user_phone_number']);
 
         return [
             'status' => 201,
@@ -195,7 +195,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'], $user['user_phone_number']);
+        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes.', $user['user_phone_number']);
 
         return [
             'status' => 201,
@@ -316,7 +316,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'], $user['user_phone_number']);
+        self::sendMessage(' this is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes', $user['user_phone_number']);
 
         return [
             'status' => 201,
@@ -335,6 +335,45 @@ class UserService
         $validator = Validator::make($params, [
             'user_phone_number' => 'required|regex:/[+](62)[0-9]/',
             'otp' => 'required|int'
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $user = $this->user->findOne($params);
+        if (!$user) {
+            return [
+                'status' => 409,
+                'data' => ['message' => 'User is not exist'],
+            ];
+        }
+
+        $params['user_id'] = $user['ID'];
+        $otp = $this->otp->isOtpValid($params);
+        if ($otp) {
+            $token = $this->jwt->encode($user);
+            return [
+                'status' => 200,
+                'data' => ['token' => $token],
+            ];
+        } else {
+            return [
+                'status' => 400,
+                'data' => ['message' => 'OTP is not valid']
+            ];
+        }
+    }
+
+    public function verifyOtp($params)
+    {
+
+        $validator = Validator::make($params, [
+            'user_phone_number' => 'required|regex:/[+](62)[0-9]/',
+            'otp' => 'required|int|exists:wp_otps,otp'
         ]);
 
         if ($validator->fails()) {
@@ -427,19 +466,24 @@ class UserService
             if (!$user) {
                 return [
                     'status' => 401,
-                    'data' => ['message' => 'Wrong password or email'],
+                    'data' => ['message' => 'Wrong password or user login'],
                 ];
             } else {
                 $user = $this->user->findOne($params);
             }
-
-            $token = $this->jwt->encode($user);
-            return [
-                'status' => 200,
-                'data' => ['token' => $token, 'user' => $user],
-            ];
+            if ($user->user_status != 0) {
+                $token = $this->jwt->encode($user);
+                return [
+                    'status' => 200,
+                    'data' => ['token' => $token, 'user' => $user],
+                ];
+            } else {
+                return [
+                    'status' => 400,
+                    'data' => ['message' => "plese verify your phone number using sended OTP"],
+                ];
+            }
         } catch (\Exception $e) {
-            // something went wrong whilst attempting to encode the token
             return ['status' => 500, 'data' => ['message' => $e->getMessage()]];
         }
     }

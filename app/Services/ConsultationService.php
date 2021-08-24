@@ -91,8 +91,7 @@ class ConsultationService
         UserService $user,
         ConsultationResource $consultationResource,
         OrderStatus $orderStatusHelper
-    )
-    {
+    ) {
         $this->consultation = $consultation;
         $this->chatroom = $chatroom;
         $this->chatManagement = $chatManagement;
@@ -166,6 +165,12 @@ class ConsultationService
 
         //get user admin
         $userAdmin = $this->user->findOne(['user_type' => 'admin']);
+        if ($userAdmin['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'admin user not found on database']
+            ];
+        }
         $userAdmin = $userAdmin['data'];
 
         //create consultation
@@ -265,7 +270,6 @@ class ConsultationService
             'status' => 202,
             'data' => ['message' => 'Success deleted data'],
         ];
-
     }
 
     public function showStatus($id)
@@ -399,7 +403,6 @@ class ConsultationService
             $export = new ConsultationExport($consultation);
             return Excel::download($export, 'consultation.xlsx');
         }
-
     }
 
     private function clearDataConsultationTermin($consultation)
@@ -429,6 +432,4 @@ class ConsultationService
         }
         return $consultationClear;
     }
-
-
 }

@@ -33,7 +33,7 @@ class ApplicatorService
 
     public function create($params){
 
-        $user = $this->user->create($params);
+        $user = $this->user->createIntegration($params);
 
         if($user['status'] == 201) {
             $userId = $user['data']['value']['ID'];

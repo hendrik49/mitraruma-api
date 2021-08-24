@@ -146,7 +146,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes', $user['user_phone_number']);
+        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes', $user['user_phone_number']);
 
         return [
             'status' => 201,
@@ -168,7 +168,8 @@ class UserService
             'user_type' => 'required',
             'user_email' => 'nullable|email',
             'display_name' => 'required:min:3',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'company_name' => 'nullable|min:3'
         ]);
 
         if ($validator->fails()) {
@@ -182,6 +183,7 @@ class UserService
         $params['user_registered'] = date("Y-m-d H:i:s");
         $params['user_email'] =  $params['user_email'] ? $params['user_email'] : $params['user_phone_number'] . '@gmail.com';
         $params['user_login'] = $params['user_email'];
+        $params['user_nicename'] = $params['company_name'] ? $params['company_name'] : '';
 
         $isUserExist = $this->user->findOne($params);
         if ($isUserExist) {
@@ -195,7 +197,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes.', $user['user_phone_number']);
+        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
 
         return [
             'status' => 201,
@@ -316,7 +318,7 @@ class UserService
 
         $otp = $this->otp->generateToken($user['ID']);
 
-        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'].'. It will expired in 60 minutes', $user['user_phone_number']);
+        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes', $user['user_phone_number']);
 
         return [
             'status' => 201,

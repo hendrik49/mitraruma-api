@@ -47,9 +47,10 @@ Route::GET('/login/google/callback', [AuthController::class, 'handleGoogleCallba
 Route::POST('/login/google/token', [AuthController::class, 'loginGoogleToken']);
 
 
-Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
 Route::POST('/user/register', [UserController::class, 'store']);
 Route::POST('/user/register/integration', [UserController::class, 'storeIntegration']);
+Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
+Route::POST('/applicator/register/integration', [ApplicatorController::class, 'storeIntegration']);
 
 Route::POST('/user/token', [UserTokenController::class, 'store'])->middleware('jwt.user');
 Route::DELETE('/user/token', [UserTokenController::class, 'destroy'])->middleware('jwt.user');

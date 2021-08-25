@@ -39,9 +39,16 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function username()
+    protected function validateLogin(Request $request)
     {
-        return request()->has('user_email') ? 'user_email' : 'email';
+        $request->validate([
+            $this->username() => ['required', 'regex:/[+](62)[0-9]/', 'string', 'exists:wp_users,user_phone_number'],
+            'password' => 'required|string|min:6',
+        ]);
     }
 
+    public function username()
+    {
+        return request()->has('user_phone_number') ? 'user_phone_number' : 'user_login';
+    }
 }

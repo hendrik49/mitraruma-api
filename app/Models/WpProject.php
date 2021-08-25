@@ -69,6 +69,7 @@ class WpProject extends Model
         'customer_name',        
         'customer_contact',        
         'vendor_name',        
+        'admin_name',        
         'vendor_contact',        
         'estimated_budget'        
     ];

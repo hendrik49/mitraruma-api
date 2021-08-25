@@ -8,6 +8,7 @@ use App\Exports\VendorConsultationExport;
 use App\Helpers\OrderStatus;
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
+use App\Repositories\ProjectRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -36,7 +37,7 @@ class ConsultationService
     private $chat;
 
     /**
-     * @var ProjectService
+     * @var ProjectRepository
      */
     private $project;
 
@@ -97,7 +98,7 @@ class ConsultationService
         UserService $user,
         ConsultationResource $consultationResource,
         OrderStatus $orderStatusHelper,
-        ProjectService $projectService
+        ProjectRepository $project
     ) {
         $this->consultation = $consultation;
         $this->chatroom = $chatroom;
@@ -107,7 +108,7 @@ class ConsultationService
         $this->user = $user;
         $this->consultationResource = $consultationResource;
         $this->orderStatusHelper = $orderStatusHelper;
-        $this->projectService = $projectService;
+        $this->projectRepo = $project;
     }
 
     public function index($params)
@@ -198,7 +199,7 @@ class ConsultationService
         $params['admin_user_id'] = $userAdmin['ID'];
         $params['consultation_id'] = $consultation['id'];
         $params['room_type'] = 'admin-customer';
-        $params['status'] = 'Pre-Purchase';
+        $params['status'] = 'pre-purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $params['user_jwt_name'] . '-AC-' . Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';
@@ -230,10 +231,10 @@ class ConsultationService
         $project['customer_contact'] =  $params['contact'];
         $project['description'] = $params['description'];
         $project['status'] =  $params['status'];
-        $project['substatus'] = $params['status'];
+        $project['sub_status'] = $params['status'];
         $project['estimated_budget']= $params['estimated_budget'];
         $project['service_type'] = $params['service_type'];     
-        $this->projectService->create($project);
+        $this->projectRepo->create($project);
 
         return [
             'status' => 201,

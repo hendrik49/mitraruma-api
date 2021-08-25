@@ -184,7 +184,9 @@ class UserService
 
         $resp = $this->postSignUpAPI($params);
 
-        if ($resp['errorCode']) {
+        $isUserExist = $this->user->findOne($params);
+
+        if ($resp['errorCode'] && $isUserExist) {
             return [
                 'status' => 400,
                 'data' => ['message' => $resp['error']],
@@ -197,7 +199,6 @@ class UserService
         $params['user_login'] = $params['user_email'];
         $params['user_nicename'] = $resp['userId'];
 
-        $isUserExist = $this->user->findOne($params);
         if ($isUserExist) {
             return [
                 'status' => 409,
@@ -502,17 +503,33 @@ class UserService
         }
 
         $params['user_login'] = $isEmail ? $params['user_login'] : $params['user_login'] . '@gmail.com';
-
         try {
             $user = Auth::attempt($params);
-            if (!$user) {
+            if (!$user && $resp['errorCode'] != null) {
                 return [
                     'status' => 401,
                     'data' => ['message' => 'Wrong password or user login'],
                 ];
             } else {
-                unset($params['password']);
                 $user = $this->user->findOne($params);
+                if ($user == null) {
+                    $paramNew['user_phone_number'] = $resp['phoneNo'];
+                    $paramNew['user_type'] = 'customer';
+                    $paramNew['user_email'] = $params['user_login'];
+                    $paramNew['display_name'] = $resp['fullName'];
+                    $paramNew['password'] = $params['password'];
+                    $paramNew['company_name'] = '';
+                    $paramNew['user_picture_url'] = 'images/images/img-customer.jpeg';
+                    $paramNew['user_registered'] = date('y-m-d');
+        
+                    $user = $this->user->create($paramNew);
+                    if($user==null){
+                        return [
+                            'status' => 400,
+                            'data' => ['message' =>  $resp == null ? 'External API Integration error' : $resp['error']],
+                        ];
+                    }
+                }
             }
             if ($user->user_status != 0) {
                 $token = $this->jwt->encode($user);

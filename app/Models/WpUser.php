@@ -29,6 +29,7 @@ class WpUser extends Model
         'user_login',
         'user_registered',
         'company_name',
+        'user_status',
         'deleted_at'
     ];
 

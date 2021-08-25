@@ -503,9 +503,12 @@ class UserService
         }
 
         $params['user_login'] = $isEmail ? $params['user_login'] : $params['user_login'] . '@gmail.com';
+
+        $userExsist = $this->user->findOne($params);
+
         try {
             $user = Auth::attempt($params);
-            if (!$user && $resp['errorCode'] != null) {
+            if (!$user && $userExsist && $resp['errorCode'] == null) {
                 return [
                     'status' => 401,
                     'data' => ['message' => 'Wrong password or user login'],
@@ -515,6 +518,7 @@ class UserService
                 if ($user == null) {
                     $paramNew['user_phone_number'] = $resp['phoneNo'];
                     $paramNew['user_type'] = 'customer';
+                    $paramNew['user_nicename'] = $resp['userId'];
                     $paramNew['user_email'] = $params['user_login'];
                     $paramNew['user_login'] = $params['user_login'];
                     $paramNew['display_name'] = $resp['fullName'];

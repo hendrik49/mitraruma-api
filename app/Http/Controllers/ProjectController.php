@@ -28,7 +28,7 @@ class ProjectController extends Controller
         $start_date = $end_date = date('Y-m-d H:i:s');
         
         if ($user->user_type == WpUser::TYPE_CUSTOMER)
-            $projects = WpProject::where('user_id', $user->ID)->orderByDesc('created_at');
+            $projects = WpProject::where('user_aid', $user->ID)->orderByDesc('created_at');
         else if ($user->user_type == WpUser::TYPE_VENDOR)
             $projects = WpProject::where('user_vendor_id', $user->ID)->orderByDesc('created_at');
         else

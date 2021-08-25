@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\CMS\ProjectController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,5 +22,5 @@ Auth::routes();
 
 Route::prefix('admin')->group(function () {
     Route::resource('proyek', ProjectController::class);
-    Route::get('pembayaran',[App\Http\Controllers\ProjectController::class, 'pembayaran']);
+    Route::get('pembayaran',[ProjectController::class, 'pembayaran']);
 });

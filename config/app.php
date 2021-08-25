@@ -168,7 +168,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Kreait\Laravel\Firebase\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
         /*
          * Application Service Providers...
          */

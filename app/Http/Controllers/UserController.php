@@ -99,7 +99,7 @@ class UserController extends Controller
 
         $params = $request->all();
         $params['user_type'] =  'customer';
-        $params['user_picture_url'] = 'images/img-customer.jpeg';
+        $params['user_picture_url'] = '/images/img-customer.jpeg';
 
         DB::beginTransaction();
         $result = $this->user->createIntegration($params);

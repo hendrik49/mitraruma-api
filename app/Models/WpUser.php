@@ -51,4 +51,8 @@ class WpUser extends Model
         return $this->belongsToMany(WpUserAddress::class, 'wp_user_addresses', 'user_id', 'ID')->withPivot('id', 'created_at', 'updated_at');
     }
 
+    public function getUserPictureUrlAttribute()
+    {
+        return url('/') .'/'. $this->attributes['user_picture_url'];
+    }
 }

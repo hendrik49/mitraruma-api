@@ -93,7 +93,7 @@
     </ul>
   </li>  
   <li class="nav-item">
-    <a href="#" class="nav-link">
+    <a href="" class="nav-link">
       <i class="nav-icon fas fa-table"></i>
       <p>
         User Managment
@@ -102,7 +102,7 @@
     </a>
     <ul class="nav nav-treeview" style="display: none;">
       <li class="nav-item">
-        <a href="pages/tables/simple.html" class="nav-link">
+        <a href="/admin/users" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
           <p>Users</p>
         </a>

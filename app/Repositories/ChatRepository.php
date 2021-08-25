@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Helpers\FieldConverter;
+
 class ChatRepository
 {
 
@@ -14,7 +16,8 @@ class ChatRepository
         $this->model = $firebase->database('chat');
     }
 
-    public function findByRoomId($roomId){
+    public function findByRoomId($roomId)
+    {
         $model = $this->firebase->database("chat/$roomId/data");
         $model = $model->orderBy('createdAt');
         $result = $model->documents();
@@ -23,12 +26,14 @@ class ChatRepository
             $data = $value->data();
             array_push($chat, $data);
         }
+        $chat = FieldConverter::keysToUnderscore($chat);
         return $chat;
-    }
+    }   
 
-    public function findFilesByRoomId($id){
+    public function findFilesByRoomId($id)
+    {
         $model = $this->firebase->database("chat/$id/data");
-        $model = $model->where('file' ,'!=', 'null');
+        $model = $model->where('file', '!=', 'null');
         $result = $model->documents();
         $chat = [];
         foreach ($result as $value) {
@@ -38,9 +43,10 @@ class ChatRepository
         return $chat;
     }
 
-    public function findByRoomIdAndId($roomId, $id){
+    public function findByRoomIdAndId($roomId, $id)
+    {
         $model = $this->firebase->database("chat/$roomId/data")->document($id)->snapshot();
-        if($model->data()){
+        if ($model->data()) {
             $chat = $model->data();
             $chat['id'] = $model->id();
             return $chat;
@@ -48,7 +54,8 @@ class ChatRepository
         return null;
     }
 
-    public function findLastChatByRoomId($id){
+    public function findLastChatByRoomId($id)
+    {
         $model = $this->firebase->database("chat/$id/data");
         $model = $model->orderBy('createdAt', 'DESC');
         $model = $model->limit(1);
@@ -61,7 +68,8 @@ class ChatRepository
         return $chat;
     }
 
-    public function find($params){
+    public function find($params)
+    {
 
         $model = $this->model;
         $model = $this->filterBuilder($model, $params);
@@ -77,27 +85,31 @@ class ChatRepository
         return $chatrooms;
     }
 
-    public function create($params, $roomId) {
+    public function create($params, $roomId)
+    {
         $model = $this->model->document($roomId);
         $chat = $model->collection('data')->newDocument();
         $chat->set($params);
         return $this->findByRoomIdAndId($roomId, $chat->id());
     }
 
-    public function update($params, $id){
+    public function update($params, $id)
+    {
         return $this->model->document($id)->set($params);
     }
 
-    public function deleteById($id) {
+    public function deleteById($id)
+    {
         return $this->model->document($id)->delete();
     }
 
-    private function filterBuilder($model, $params) {
+    private function filterBuilder($model, $params)
+    {
 
-        if(isset($params['user_id'])) {
+        if (isset($params['user_id'])) {
             $model = $model->where('userId', '=', $params['user_id']);
         }
-        if(isset($params['consultation_id'])) {
+        if (isset($params['consultation_id'])) {
             $model = $model->where('consultationId', '=', $params['consultation_id']);
         }
         $model = $model->limit($params['limit'] ?? 10);
@@ -105,7 +117,5 @@ class ChatRepository
         $model = $model->startAfter([$params['start_after'] ?? '']);
 
         return $model;
-
     }
-
 }

@@ -29,7 +29,7 @@
       <li class="nav-item">
         <a href="/admin/proyek" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>Refund</p>
+          <p>Jadwal</p>
         </a>
       </li>
     </ul>
@@ -46,19 +46,19 @@
       <li class="nav-item">
         <a href="pages/tables/simple.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>Simple Tables</p>
+          <p>Skill Aplikator</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="pages/tables/data.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>DataTables</p>
+          <p>Banner</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="pages/tables/jsgrid.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>jsGrid</p>
+          <p>Order Status</p>
         </a>
       </li>
     </ul>
@@ -67,7 +67,7 @@
     <a href="#" class="nav-link">
       <i class="nav-icon fas fa-table"></i>
       <p>
-        Payment
+        User Managment
         <i class="fas fa-angle-left right"></i>
       </p>
     </a>
@@ -75,19 +75,19 @@
       <li class="nav-item">
         <a href="pages/tables/simple.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>Simple Tables</p>
+          <p>Aplikator Saya</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="pages/tables/data.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>DataTables</p>
+          <p>Customer Saya</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="pages/tables/jsgrid.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>jsGrid</p>
+          <p>Admin Saya</p>
         </a>
       </li>
     </ul>
@@ -104,19 +104,19 @@
       <li class="nav-item">
         <a href="pages/tables/simple.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>Simple Tables</p>
+          <p>Gambar</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="pages/tables/data.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>DataTables</p>
+          <p>Dokumen</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="pages/tables/jsgrid.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>jsGrid</p>
+          <p>Video</p>
         </a>
       </li>
     </ul>

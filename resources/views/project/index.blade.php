@@ -23,7 +23,8 @@
                                     <th>Room Number</th>
                                     <th>Customer Name</th>
                                     <th>Applicator Name</th>
-                                    <th>Consulation</th>
+                                    <th>Description</th>
+                                    <th>Address</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Actions</th>
@@ -38,6 +39,7 @@
                                         <td>{{ $project->customer_name }}</td>
                                         <td>{{ $project->vendor_name }}</td>
                                         <td>{{ $project->description }}</td>
+                                        <td>{{ $project->street }}</td>
                                         <td>{{ $project->status }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
                                         <td width="15%">

@@ -27,9 +27,9 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h2>10</h2>
+                        <h2>{{ $customer }}</h2>
 
-                        <p>Jumlah Pelanggan</p>
+                        <p>Pelanggan</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-person"></i>
@@ -41,9 +41,9 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h2>20</h2>
+                        <h2>{{ $vendor }}</h2>
 
-                        <p>Jumlah Applicator</p>
+                        <p>Aplikator</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-person"></i>
@@ -56,9 +56,9 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h2>30</h2>
+                        <h2>{{ $admin }}</h2>
 
-                        <p>Jumlah Admin</p>
+                        <p>Admin</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-card"></i>
@@ -70,7 +70,7 @@
                 <!-- small box -->
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h2>20 </h2>
+                        <h2>{{ $projects }} </h2>
 
                         <p>Jumlah Proyek</p>
                     </div>
@@ -84,7 +84,7 @@
                 <!-- small box -->
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h2>200</h2>
+                        <h2>Rp. {{$spk_customer}}</h2>
                         <p>Jumlah SPK Pelanggan</p>
                     </div>
                     <div class="icon">
@@ -98,7 +98,7 @@
                 <!-- small box -->
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h2>400</h2>
+                        <h2>Rp. {{$spk_vendor}}</h2>
 
                         <p>Jumlah SPK Applicator</p>
                     </div>
@@ -113,9 +113,9 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h2>Rp. 500000</h2>
+                        <h2>Rp. {{$project_value}}</h2>
 
-                        <p>Pembayaran Pending</p>
+                        <p>Nilai Proyek</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-cash"></i>
@@ -129,9 +129,9 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h2>Rp. 40000</h2>
+                        <h2>Rp. {{$total_expanse}}</h2>
 
-                        <p>Pembayaran Kadaluarsa</p>
+                        <p>Total Pengeluaran</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-cash"></i>
@@ -145,9 +145,9 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h2>Rp. 150000</h2>
+                        <h2>Rp. {{$amount_spk_vendor_net}}</h2>
 
-                        <p>Pembayaran Terkirim</p>
+                        <p>Pembayaran Ke Aplikator</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-cash"></i>
@@ -247,13 +247,13 @@
                             </div>
                         </div>
                         <!-- /.progress-group -->
-                        
+
                     </div>
                     <!-- /.box-body -->
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <!-- ./col -->
             <div class="col-md-12">

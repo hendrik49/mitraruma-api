@@ -27,7 +27,7 @@ class UserController extends Controller
         $user = Auth::user();
         $start_date = $end_date = date('Y-m-d H:i:s');
 
-        $users = WpUser::whereNotNull('user_type')->orderByDesc('created_at')->orderByDesc('created_at');
+        $users = WpUser::whereNotNull('user_type')->orderByDesc('created_at');
         $users = $users->get();
 
         return view('users.index', compact('users', 'start_date', 'end_date'));

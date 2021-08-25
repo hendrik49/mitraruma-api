@@ -516,9 +516,11 @@ class UserService
                     $paramNew['user_phone_number'] = $resp['phoneNo'];
                     $paramNew['user_type'] = 'customer';
                     $paramNew['user_email'] = $params['user_login'];
+                    $paramNew['user_login'] = $params['user_login'];
                     $paramNew['display_name'] = $resp['fullName'];
-                    $paramNew['password'] = $params['password'];
+                    $paramNew['password'] = bcrypt($params['password']);
                     $paramNew['company_name'] = '';
+                    $paramNew['user_status'] = 1;
                     $paramNew['user_picture_url'] = 'images/images/img-customer.jpeg';
                     $paramNew['user_registered'] = date('y-m-d');
         

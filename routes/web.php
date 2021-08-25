@@ -23,4 +23,5 @@ Auth::routes();
 
 Route::prefix('admin')->group(function () {
     Route::resource('proyek', ProjectController::class);
+    Route::get('pembayaran',[App\Http\Controllers\ProjectController::class, 'pembayaran']);
 });

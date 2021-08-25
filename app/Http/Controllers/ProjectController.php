@@ -39,6 +39,23 @@ class ProjectController extends Controller
         return view('project.index', compact('projects', 'start_date', 'end_date'));
     }
 
+    public function pembayaran()
+    {
+        $user = Auth::user();
+        $start_date = $end_date = date('Y-m-d H:i:s');
+        
+        if ($user->user_type == WpUser::TYPE_CUSTOMER)
+            $projects = WpProject::where('user_id', $user->ID)->orderByDesc('created_at');
+        else if ($user->user_type == WpUser::TYPE_VENDOR)
+            $projects = WpProject::where('user_vendor_id', $user->ID)->orderByDesc('created_at');
+        else
+            $projects = WpProject::orderByDesc('created_at')->orderByDesc('created_at');
+        
+        $projects = $projects->get();
+
+        return view('project.pembayaran', compact('projects', 'start_date', 'end_date'));
+    }
+
     public function create()
     {
         return view('project.create');

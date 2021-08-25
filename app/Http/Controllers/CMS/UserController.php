@@ -26,8 +26,8 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $start_date = $end_date = date('Y-m-d H:i:s');
-        
-        $users = WpUser::orderByDesc('created_at')->orderByDesc('created_at');        
+
+        $users = WpUser::whereNotNull('user_type')->orderByDesc('created_at')->orderByDesc('created_at');
         $users = $users->get();
 
         return view('users.index', compact('users', 'start_date', 'end_date'));
@@ -37,14 +37,14 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $start_date = $end_date = date('Y-m-d H:i:s');
-        
+
         if ($user->user_type == WpUser::TYPE_CUSTOMER)
             $users = WpUser::where('user_id', $user->ID)->orderByDesc('created_at');
         else if ($user->user_type == WpUser::TYPE_VENDOR)
             $users = WpUser::where('user_vendor_id', $user->ID)->orderByDesc('created_at');
         else
             $users = WpUser::orderByDesc('created_at')->orderByDesc('created_at');
-        
+
         $users = $users->get();
 
         return view('users.pembayaran', compact('users', 'start_date', 'end_date'));

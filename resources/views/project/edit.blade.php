@@ -30,6 +30,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h2 align="center" class="box-title">Edit Konsultasi</h2>
+                        <span>{{ $project->consultation_id }}</span>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -282,7 +283,8 @@
                                         <div class="col-sm-6">
                                             <label for="title">Biaya Material</label>
                                             <input type="number" class="form-control" name="material_buy"
-                                                placeholder="Masukkan material" value="{{ $project->material_buy }}" required>
+                                                placeholder="Masukkan material" value="{{ $project->material_buy }}"
+                                                required>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Komisi</label>

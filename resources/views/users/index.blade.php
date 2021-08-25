@@ -39,7 +39,7 @@
                                         <td>{{ $user->user_phone_number }}</td>
                                         <td>{{ $user->user_type }}</td>
                                         <td>{{ $user->user_status ? 'Verified' : 'Unverified' }}</td>
-                                        <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                                        <td width="20%">{{ $user->created_at->format('Y-m-d') }}</td>
                                         <td width="15%">
                                             <a href="{{ route('users.show', ['user' => $user]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>

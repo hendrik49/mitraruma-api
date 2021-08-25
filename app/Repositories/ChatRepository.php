@@ -40,6 +40,7 @@ class ChatRepository
             $data = $value->data();
             array_push($chat, $data);
         }
+        $chat = FieldConverter::keysToUnderscore($chat);
         return $chat;
     }
 
@@ -49,6 +50,7 @@ class ChatRepository
         if ($model->data()) {
             $chat = $model->data();
             $chat['id'] = $model->id();
+            $chat = FieldConverter::keysToUnderscore($chat);
             return $chat;
         }
         return null;
@@ -65,6 +67,7 @@ class ChatRepository
             $data = $value->data();
             array_push($chat, $data);
         }
+        $chat = FieldConverter::keysToUnderscore($chat);
         return $chat;
     }
 

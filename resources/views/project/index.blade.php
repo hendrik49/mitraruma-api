@@ -42,8 +42,8 @@
                                         <td>{{ $project->customer_name }}</td>
                                         <td>{{ $project->customer_contact }}</td>
                                         <td>{{ $project->vendor_name }}</td>
-                                        <td>{{ $project->description }}</td>
-                                        <td>{{ $project->street }}</td>
+                                        <td width="10%">{{ $project->description }}</td>
+                                        <td width="25%">{{ $project->street }}</td>
                                         <td>{{ $project->status }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $project->room_id }}</td>

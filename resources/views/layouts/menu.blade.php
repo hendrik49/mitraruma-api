@@ -104,19 +104,19 @@
       <li class="nav-item">
         <a href="pages/tables/simple.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>Aplikator Saya</p>
+          <p>Aplikator</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="pages/tables/data.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>Customer Saya</p>
+          <p>Customer</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="pages/tables/jsgrid.html" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
-          <p>Admin Saya</p>
+          <p>Admin</p>
         </a>
       </li>
     </ul>

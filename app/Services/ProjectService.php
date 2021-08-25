@@ -23,10 +23,8 @@ class ProjectService
      * @return void
      */
     public function __construct(
-        ProjectService $project,
         \App\Repositories\ProjectRepository $projectService
     ) {
-        $this->project = $project;
         $this->projectService = $projectService;
     }
 
@@ -65,9 +63,16 @@ class ProjectService
     public function create($params){
 
         $validator = Validator::make($params, [
-            'city' => 'required|string',
-            'zipcode' => 'required|string',
+            'order_number' => 'required|numeric',
+            'room_id' => 'required|numeric',
             'street' => 'required|string',
+            'customer_name' => 'required|string',
+            'customer_contact' => 'required|string',
+            'description' => 'required|string',
+            'status' => 'required',
+            'substatus' => 'required',
+            'estimated_budget'=> 'required',
+            'service_type' => 'required|string'
         ]);
 
         if ($validator->fails()) {

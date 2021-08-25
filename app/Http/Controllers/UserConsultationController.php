@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class UserConsultationController extends Controller
 {
+
     /**
      * @var \App\Services\ConsultationService
      */
@@ -21,6 +22,7 @@ class UserConsultationController extends Controller
      *
      * @param \App\Services\ConsultationService $consultation
      * @param \App\Services\ChatroomManagementService $chatroomManagementService
+     * @param \App\Services\ProjectService $project
      */
     public function __construct(
         \App\Services\ConsultationService $consultation,

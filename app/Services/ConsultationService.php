@@ -72,6 +72,7 @@ class ConsultationService
         'estimated_budget' => 'numeric',
         'contact' => 'required|string',
         'street' => 'required|string',
+        'service_type' => 'nullable|string',
         'orderNumber' => 'integer',
         'orderStatus' => 'integer',
     ];
@@ -95,7 +96,8 @@ class ConsultationService
         OrderStatusService $orderStatus,
         UserService $user,
         ConsultationResource $consultationResource,
-        OrderStatus $orderStatusHelper
+        OrderStatus $orderStatusHelper,
+        ProjectService $projectService
     ) {
         $this->consultation = $consultation;
         $this->chatroom = $chatroom;
@@ -105,6 +107,7 @@ class ConsultationService
         $this->user = $user;
         $this->consultationResource = $consultationResource;
         $this->orderStatusHelper = $orderStatusHelper;
+        $this->projectService = $projectService;
     }
 
     public function index($params)
@@ -215,7 +218,22 @@ class ConsultationService
         $this->chat->create($chatParams, $chatroom['id']);
 
         //create sql porjects
-        $this->project->create($params);
+        $project = array();
+        $project['order_number'] = $params['order_number'];
+        $project['user_id'] = $params['user_id'];
+        $project['consultation_id'] = $params['consultation_id'];
+        $project['admin_user_id'] = $params['admin_user_id'];
+        $project['admin_name'] =  $params['admin_name'];
+        $project['room_id'] = $chatroom['id'];
+        $project['street'] =  $params['street'];
+        $project['customer_name'] =  $params['user_jwt_name'];
+        $project['customer_contact'] =  $params['contact'];
+        $project['description'] = $consultation['description'];
+        $project['status'] =  $params['status'];
+        $project['substatus'] = $params['status'];
+        $project['estimated_budget']= $params['estimated_budget'];
+        $project['service_type'] = $params['service_type'];     
+        $this->projectService->create($params);
 
         return [
             'status' => 201,

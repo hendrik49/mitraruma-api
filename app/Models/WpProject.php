@@ -54,7 +54,23 @@ class WpProject extends Model
         'termin_vendor_3_date',
         'termin_vendor_4_date',
         'termin_vendor_5_date',
-        'payment_retention_date'
+        'payment_retention_date',
+        'service_type',
+        'admin_user_id',
+        'vendor_user_id',
+        'user_id',
+        'order_number',
+        'room_id',
+        'consultation_id',
+        'street',
+        'description',
+        'status',
+        'sub_status',
+        'customer_name',        
+        'customer_contact',        
+        'vendor_name',        
+        'vendor_contact',        
+        'estimated_budget'        
     ];
 
     /**

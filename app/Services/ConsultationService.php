@@ -232,8 +232,8 @@ class ConsultationService
         $project['description'] = $params['description'];
         $project['status'] =  $params['status'];
         $project['sub_status'] = $params['status'];
-        $project['estimated_budget']= $params['estimated_budget'];
-        $project['service_type'] = $params['service_type'];     
+        $project['estimated_budget'] = $params['estimated_budget'];
+        $project['service_type'] = isset($params['service_type']) ? $params['service_type'] : 'SERVICE';
         $this->projectRepo->create($project);
 
         return [

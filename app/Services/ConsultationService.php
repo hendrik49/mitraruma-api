@@ -226,6 +226,7 @@ class ConsultationService
         $project['admin_user_id'] = $params['admin_user_id'];
         $project['admin_name'] =  $params['admin_name'];
         $project['room_id'] = $chatroom['id'];
+        $project['room_number'] = $chatroom['room_id'];
         $project['street'] =  $params['street'];
         $project['customer_name'] =  $params['user_jwt_name'];
         $project['customer_contact'] =  $params['contact'];

@@ -20,6 +20,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Order Number</th>
+                                    <th>Room Number</th>
                                     <th>Customer Name</th>
                                     <th>Customer Contact</th>
                                     <th>Applicator Name</th>
@@ -27,8 +28,8 @@
                                     <th>Address</th>
                                     <th>Status</th>
                                     <th>Date</th>
-                                    <th>Room Number</th>
-                                    <th>Consultation Number</th>
+                                    <th>Room ID</th>
+                                    <th>Consultation ID</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -37,6 +38,7 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $project->order_number }}</td>
+                                        <td>{{ $project->room_number }}</td>
                                         <td>{{ $project->customer_name }}</td>
                                         <td>{{ $project->customer_contact }}</td>
                                         <td>{{ $project->vendor_name }}</td>

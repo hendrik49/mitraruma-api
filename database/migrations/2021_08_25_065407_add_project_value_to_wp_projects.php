@@ -14,7 +14,7 @@ class AddProjectValueToWpProjects extends Migration
     public function up()
     {
         Schema::table('wp_projects', function (Blueprint $table) {
-            $table->double('project_value')->nullable(true);
+            // $table->double('project_value')->nullable(true);
             $table->double('amount_spk_vendor_net')->nullable(true);
             
         });
@@ -28,7 +28,7 @@ class AddProjectValueToWpProjects extends Migration
     public function down()
     {
         Schema::table('wp_projects', function (Blueprint $table) {
-            $table->dropColumn('project_value');
+            // $table->dropColumn('project_value');
             $table->dropColumn('amount_spk_vendor_net');
         });
     }

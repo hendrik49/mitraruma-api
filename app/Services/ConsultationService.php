@@ -228,12 +228,12 @@ class ConsultationService
         $project['street'] =  $params['street'];
         $project['customer_name'] =  $params['user_jwt_name'];
         $project['customer_contact'] =  $params['contact'];
-        $project['description'] = $consultation['description'];
+        $project['description'] = $params['description'];
         $project['status'] =  $params['status'];
         $project['substatus'] = $params['status'];
         $project['estimated_budget']= $params['estimated_budget'];
         $project['service_type'] = $params['service_type'];     
-        $this->projectService->create($params);
+        $this->projectService->create($project);
 
         return [
             'status' => 201,

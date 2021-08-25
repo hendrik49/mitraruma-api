@@ -36,6 +36,11 @@ class ConsultationService
     private $chat;
 
     /**
+     * @var ProjectService
+     */
+    private $project;
+
+    /**
      * @var UserService
      */
     private $user;
@@ -208,6 +213,9 @@ class ConsultationService
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
         $this->chat->create($chatParams, $chatroom['id']);
+
+        //create sql porjects
+        $this->project->create($params);
 
         return [
             'status' => 201,

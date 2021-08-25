@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Models\WpProject;
-
+use App\Models\WpUser;
 
 class ProjectController extends Controller
 {
@@ -24,8 +24,18 @@ class ProjectController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
         $start_date = $end_date = date('Y-m-d H:i:s');
-        $projects = WpProject::get();
+        
+        if ($user->user_type == WpUser::TYPE_CUSTOMER)
+            $projects = WpProject::where('user_id', $user->ID)->orderByDesc('created_at');
+        else if ($user->user_type == WpUser::TYPE_VENDOR)
+            $projects = WpProject::where('user_vendor_id', $user->ID)->orderByDesc('created_at');
+        else
+            $projects = WpProject::orderByDesc('created_at')->orderByDesc('created_at');
+        
+        $projects = $projects->get();
+
         return view('project.index', compact('projects', 'start_date', 'end_date'));
     }
 
@@ -118,7 +128,7 @@ class ProjectController extends Controller
                 'amount_spk_customer' => 'numeric',
                 'amount_spk_vendor' => 'numeric',
                 'discount' => 'numeric',
-                'commision' => 'numeric'                
+                'commision' => 'numeric'
             ]);
 
             $project = WpProject::findOrfail($id);

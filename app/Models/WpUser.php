@@ -12,6 +12,9 @@ class WpUser extends Model
     // use SoftDeletes;
 
     protected $primaryKey = 'ID';
+    const TYPE_CUSTOMER = "customer";
+    const TYPE_VENDOR = "vendor";
+    const TYPE_ADMIN = "admin";
 
     /**
      * The attributes that are mass assignable.

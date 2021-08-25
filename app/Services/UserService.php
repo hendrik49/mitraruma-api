@@ -496,9 +496,15 @@ class UserService
         $resp = $this->postSignInAPI($params, $isEmail);
 
         if ($resp['errorCode'] || $resp == null) {
+            $error = $resp['error'];
+            if ($resp['errorCode'] == 'IDP_API_EXCEPTION')
+                $error = "Wrong Password";
+            elseif ($resp['errorCode'] == 'UNABLE_TO_GET_USER_FROM_DB')
+                $error = "Wrong Phone Number or Email";
+
             return [
                 'status' => 400,
-                'data' => ['message' =>  $resp == null ? 'External API server error' : $resp['error']],
+                'data' => ['message' =>  $error],
             ];
         }
 
@@ -527,9 +533,9 @@ class UserService
                     $paramNew['user_status'] = 1;
                     $paramNew['user_picture_url'] = 'images/img-customer.jpeg';
                     $paramNew['user_registered'] = date('y-m-d');
-        
+
                     $user = $this->user->create($paramNew);
-                    if($user==null){
+                    if ($user == null) {
                         return [
                             'status' => 400,
                             'data' => ['message' =>  $resp == null ? 'External API Integration error' : $resp['error']],

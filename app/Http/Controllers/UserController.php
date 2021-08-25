@@ -78,7 +78,7 @@ class UserController extends Controller
 
         DB::beginTransaction();
         $result = $this->user->destroyByUserLogin($params);
-        if($result['status'] != 201) {
+        if($result['status'] != 202) {
             DB::rollBack();
             return response()->json($result['data'], $result['status']);
         }

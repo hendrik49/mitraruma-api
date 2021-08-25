@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WpUser extends Model
 {
     use HasFactory;
+    // use SoftDeletes;
 
     protected $primaryKey = 'ID';
 
@@ -26,7 +28,8 @@ class WpUser extends Model
         'user_nicename',
         'user_login',
         'user_registered',
-        'company_name'
+        'company_name',
+        'deleted_at'
     ];
 
     /**
@@ -35,7 +38,7 @@ class WpUser extends Model
      * @var array
      */
     protected $hidden = [
-        'user_pass', 'password', 'user_activation_key', 'user_url'
+        'user_pass', 'password', 'user_activation_key', 'user_url', 'deleted_at'
     ];
 
 
@@ -46,4 +49,5 @@ class WpUser extends Model
     {
         return $this->belongsToMany(WpUserAddress::class, 'wp_user_addresses', 'user_id', 'ID')->withPivot('id', 'created_at', 'updated_at');
     }
+
 }

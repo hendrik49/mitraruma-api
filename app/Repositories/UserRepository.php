@@ -74,15 +74,35 @@ class UserRepository
 
         if (isset($params['user_email'])) {
             $user = WpUser::where('user_email', $params['user_email'])->first();
-            return $user->delete();
+            if ($user != null) {
+                return $user->delete();
+            } else {
+                return false;
+            }
         }
         if (isset($params['user_login'])) {
             $user = WpUser::where('user_login', $params['user_login'])->first();
-            return $user->delete();
+            if ($user != null) {
+                return $user->delete();
+            } else {
+                return false;
+            }
         }
         if (isset($params['user_phone_number'])) {
             $user = WpUser::where('user_phone_number', $params['user_phone_number'])->first();
-            return $user->delete();
+            if ($user != null) {
+                return $user->delete();
+            } else {
+                return false;
+            }
+        }
+        if (isset($params['id'])) {
+            $user = WpUser::where('id', $params['id'])->first();
+            if ($user != null) {
+                return $user->delete();
+            } else {
+                return false;
+            }
         }
     }
 

@@ -525,7 +525,7 @@ class UserService
                     $paramNew['password'] = bcrypt($params['password']);
                     $paramNew['company_name'] = '';
                     $paramNew['user_status'] = 1;
-                    $paramNew['user_picture_url'] = 'images/images/img-customer.jpeg';
+                    $paramNew['user_picture_url'] = 'images/img-customer.jpeg';
                     $paramNew['user_registered'] = date('y-m-d');
         
                     $user = $this->user->create($paramNew);

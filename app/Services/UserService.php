@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\UserVendorResource;
+use App\Models\WpUser;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Auth;
@@ -521,9 +522,14 @@ class UserService
                 ];
             } else {
                 $user = $this->user->findOne($params);
+                $userProfile = $this->getProfileAPI($resp);
+
                 if ($user == null) {
                     $paramNew['user_phone_number'] = $resp['phoneNo'];
                     $paramNew['user_type'] = 'customer';
+                    if (isset($userProfile['buyerType'])) {
+                        $paramNew['user_type'] = $userProfile['buyerType'] == "CUSTOMER" ? 'customer' : 'vendor';
+                    }
                     $paramNew['user_nicename'] = $resp['userId'];
                     $paramNew['user_email'] = $params['user_login'];
                     $paramNew['user_login'] = $params['user_login'];
@@ -615,6 +621,8 @@ class UserService
             ];
 
             $json =  [
+                "lang" => "id",
+                "orgIdfier" => "scg",
                 "userType" => "BUYER",
                 "useremail" =>  $params['user_login'],
                 "password" =>  $params['password'],
@@ -624,6 +632,28 @@ class UserService
             $response = $client->post('buyer-service/auth/login', [
                 'headers' => $headers,
                 'json' => $json
+            ]);
+
+            $data =  json_decode($response->getBody(), true);
+            return $data;
+        } catch (\Exception $e) {
+            $message = $e->getMessage() . ". Line " . $e->getLine();
+            return $message;
+        }
+    }
+
+    public function getProfileAPI($resp)
+    {
+        try {
+
+            $client = new GuzzleHttp\Client(['base_uri' => env('API_MITRARUMA', 'https://qa.mitraruma.com/')]);
+
+            $headers = [
+                'Authorization' => 'Bearer ' . $resp['accessToken'] . '',
+                'Accept'        => 'application/json',
+            ];
+            $response = $client->request('GET','/buyer-service/profile/' . $resp['userId'] . '', [
+                'headers' => $headers
             ]);
 
             $data =  json_decode($response->getBody(), true);

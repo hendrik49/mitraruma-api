@@ -24,8 +24,7 @@
                                     <th>Customer Name</th>
                                     <th>Customer Contact</th>
                                     <th>Applicator Name</th>
-                                    <th>Description</th>
-                                    <th>Address</th>
+                                    <th>Tipe Proyek</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Room ID</th>
@@ -42,8 +41,7 @@
                                         <td>{{ $project->customer_name }}</td>
                                         <td>{{ $project->customer_contact }}</td>
                                         <td>{{ $project->vendor_name }}</td>
-                                        <td width="10%">{{ $project->description }}</td>
-                                        <td width="25%">{{ $project->street }}</td>
+                                        <td width="10%">{{ $project->service_type }}</td>
                                         <td>{{ $project->status }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $project->room_id }}</td>

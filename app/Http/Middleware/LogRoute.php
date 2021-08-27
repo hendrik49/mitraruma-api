@@ -26,9 +26,9 @@ class LogRoute
                 'RESPONSE' => $response->getContent()
             ];
             if ($response->getStatusCode() == 200 || $response->getStatusCode() == 201 || $response->getStatusCode() == 202)
-                Log::info(json_encode($log));
+                Log::info($request->getUri(), json_encode($log));
             else
-                Log::error(json_encode($log));
+                Log::error($request->getUri(), json_encode($log));
         }
 
         return $response;

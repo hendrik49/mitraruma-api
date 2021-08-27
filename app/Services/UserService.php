@@ -267,12 +267,12 @@ class UserService
             ];
         }
 
-        $isUserExist = $this->user->findOne($params);
+        $isUserExist = $this->user->findById($id);
 
-        if ($isUserExist && $isUserExist['ID'] != $id) {
+        if ($isUserExist == null) {
             return [
-                'status' => 409,
-                'data' => ['message' => 'User already exist'],
+                'status' => 404,
+                'data' => ['message' => 'User is not found'],
             ];
         }
 

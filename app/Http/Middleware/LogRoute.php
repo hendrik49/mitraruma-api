@@ -22,7 +22,7 @@ class LogRoute
             'URI' => $request->getUri(),
             'METHOD' => $request->getMethod(),
             'REQUEST_BODY' => $request->all(),
-            'RESPONSE' => json_encode($response->getContent())
+            'RESPONSE' => json_decode($response->getContent())
         ];
         if ($response->getStatusCode() == 200 || $response->getStatusCode() == 201 || $response->getStatusCode() == 202)
             Log::info('success-' . $response->getStatusCode() . ':' . $request->path(), ["data" => $log]);

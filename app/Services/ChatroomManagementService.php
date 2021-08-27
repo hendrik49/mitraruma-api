@@ -182,6 +182,7 @@ class ChatroomManagementService
         $params['user_id'] = $consultation['user_id'];
         $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
+        $params['is_approve'] = true;
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'].'-AVC-'.Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Halo saya siap berdiskusi dengan projek ini';

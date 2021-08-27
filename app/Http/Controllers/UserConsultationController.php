@@ -151,10 +151,18 @@ class UserConsultationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function approve($id, $roomId)
+    public function approve($id)
     {
 
-        $result = $this->chatroomManagementService->createRoomVendorCustomer($id, $roomId);
+        $result = $this->chatroomManagementService->createRoomVendorCustomer($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    public function approveNew($id, $roomId)
+    {
+
+        $result = $this->chatroomManagementService->createRoomVendorCustomerNew($id, $roomId);
 
         return response()->json($result['data'], $result['status']);
     }

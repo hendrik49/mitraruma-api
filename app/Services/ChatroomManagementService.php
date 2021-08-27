@@ -156,14 +156,14 @@ class ChatroomManagementService
     }
 
 
-    public function createRoomVendorCustomer($consultationId)
+    public function createRoomVendorCustomer($consultationId, $roomId)
     {
 
         $consultation = $this->consultationService->show($consultationId);
         if ($consultation['status'] != 200) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'User not found'],
+                'data' => ['message' => 'Data not found'],
             ];
         }
         $consultation = $consultation['data'];
@@ -177,12 +177,15 @@ class ChatroomManagementService
         }
         $user = $user['data'];
 
+        $params['is_approve'] = true;
+        //update old room vendor
+        $chatroom = $this->chatroomService->update($params,$roomId);
+
         $params['admin_user_id'] = $consultation['admin_user_id'];
         $params['vendor_user_id'] = $consultation['vendor_user_id'];
         $params['user_id'] = $consultation['user_id'];
         $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
-        $params['is_approve'] = true;
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'].'-AVC-'.Carbon::now('GMT+7')->format('dmHi');
         $params['text'] = 'Halo saya siap berdiskusi dengan projek ini';

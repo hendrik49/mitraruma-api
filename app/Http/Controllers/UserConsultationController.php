@@ -27,8 +27,7 @@ class UserConsultationController extends Controller
     public function __construct(
         \App\Services\ConsultationService $consultation,
         \App\Services\ChatroomManagementService $chatroomManagementService
-    )
-    {
+    ) {
         $this->consultation = $consultation;
         $this->chatroomManagementService = $chatroomManagementService;
     }
@@ -118,7 +117,6 @@ class UserConsultationController extends Controller
         $params = $request->all();
 
         return $this->consultation->export($params);
-
     }
 
     /**
@@ -153,13 +151,11 @@ class UserConsultationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function approve($id)
+    public function approve($id, $roomId)
     {
 
-        $result = $this->chatroomManagementService->createRoomVendorCustomer($id);
+        $result = $this->chatroomManagementService->createRoomVendorCustomer($id, $roomId);
 
         return response()->json($result['data'], $result['status']);
     }
-
-
 }

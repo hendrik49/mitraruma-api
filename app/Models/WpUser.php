@@ -56,7 +56,7 @@ class WpUser extends Model
 
     public function getUserPictureUrlAttribute()
     {
-        if (strpos($this->attributes['user_picture_url'], "http://") !== false)
+        if (strpos($this->attributes['user_picture_url'], "http") !== false)
             return $this->attributes['user_picture_url'];
         else
             return url('/') . '/' . $this->attributes['user_picture_url'];

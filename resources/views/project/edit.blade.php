@@ -30,7 +30,6 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h2 align="center" class="box-title">Edit Konsultasi</h2>
-                        <span>{{ $project->consultation_id }}</span>
                     </div>
                     <div class="box-body">
                         <div class="row">

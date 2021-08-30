@@ -24,7 +24,7 @@ class LogRoute
             'REQUEST_BODY' => $request->all(),
             'RESPONSE' => json_decode($response->getContent())
         ];
-        if ($response->getStatusCode() == 200 || $response->getStatusCode() == 201 || $response->getStatusCode() == 202)
+        if ($response->getStatusCode() == 200 || $response->getStatusCode() == 201 || $response->getStatusCode() == 202 || $response->getStatusCode() == 404)
             Log::info('success-' . $request->getMethod() . ':' . $request->path(), ["data" => $log]);
         else
             Log::error('error-' . $request->getMethod() . ':'  . $request->path(), ["data" => $log]);

@@ -47,7 +47,7 @@
                                         <div class="col-sm-6">
                                             <label for="title">No. Room</label>
                                             <input type="text" class="form-control" name="room_id"
-                                                placeholder="Masukkan no room" value="{{ $project->room_id }}" readonly>
+                                                placeholder="Masukkan no room" value="{{ $project->room_number }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">

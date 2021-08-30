@@ -270,6 +270,12 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
+                                            <label for="title">Total Payment To Applikator</label>
+                                            <input type="number" class="form-control" name="amount_spk_vendor_net"
+                                                placeholder="Masukkan amount spk applicator net"
+                                                value="{{ $project->amount_spk_vendor_net }}" required>
+                                        </div>
+                                        <div class="col-sm-6">
                                             <label for="title">Term Payment Applikator</label>
                                             <textarea rows="4" class="form-control" name="term_payment_vendor"
                                                 placeholder="Masukkan term payment applikator" readonly>{{ $project->term_payment_vendor }}</textarea>

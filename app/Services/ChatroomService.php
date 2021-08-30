@@ -49,7 +49,8 @@ class ChatroomService
         $this->chatroom = $chatroom;
     }
 
-    public function index($params){
+    public function index($params)
+    {
 
         $chatroom = $this->chatroom->find($params);
         if (!$chatroom) {
@@ -71,7 +72,8 @@ class ChatroomService
         ];
     }
 
-    public function show($id){
+    public function show($id)
+    {
 
         $chatroom = $this->chatroom->findById($id);
         if (!$chatroom) {
@@ -89,12 +91,13 @@ class ChatroomService
         ];
     }
 
-    public function create($params){
+    public function create($params)
+    {
 
         $validator = Validator::make($params, [
-            'admin_user_id' => 'integer',
-            'vendor_user_id' => 'integer',
-            'user_id' => 'integer',
+            'admin_user_id' => 'nullable|integer',
+            'vendor_user_id' => 'nullable|integer',
+            'user_id' => 'nullable|integer',
             'consultation_id' => 'required|string',
             'date' => 'date',
             'image_url' => 'string',
@@ -112,7 +115,7 @@ class ChatroomService
             ];
         }
 
-        $dateNow=  Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $dateNow =  Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         $params['room_id'] = mt_rand(1000000, 9999999);
         $params['date'] = $dateNow;
         $params['created_at'] = $dateNow;
@@ -126,7 +129,8 @@ class ChatroomService
         ];
     }
 
-    public function update($params, $id){
+    public function update($params, $id)
+    {
 
         $validator = Validator::make($params, [
             'name' => 'string',
@@ -156,10 +160,11 @@ class ChatroomService
         ];
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
         $user = $this->user->show(1);
-        if($user['status'] != 200) {
+        if ($user['status'] != 200) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'User not found'],
@@ -178,10 +183,10 @@ class ChatroomService
             'status' => 202,
             'data' => ['message' => 'Success deleted data'],
         ];
-
     }
 
-    public function showByFilter($params){
+    public function showByFilter($params)
+    {
 
         $chatroom = $this->chatroom->find($params);
         if (!$chatroom) {
@@ -198,7 +203,8 @@ class ChatroomService
         ];
     }
 
-    public function showUsers($id){
+    public function showUsers($id)
+    {
 
         $chatroom = $this->chatroom->findById($id);
         if (!$chatroom) {
@@ -211,15 +217,15 @@ class ChatroomService
         $chatroom = ChatroomResource::fromFirebase($chatroom);
 
         $user = [];
-        if(isset($chatroom['user_id'])) {
+        if (isset($chatroom['user_id'])) {
             $userData = $this->user->show($chatroom['user_id']);
             $userData['status'] == 200 ? array_push($user, $this->user->show($chatroom['user_id'])['data']) : null;
         }
-        if(isset($chatroom['vendor_user_id'])) {
+        if (isset($chatroom['vendor_user_id'])) {
             $vendorData = $this->user->show($chatroom['vendor_user_id']);
             $vendorData['status'] == 200 ? array_push($user, $this->user->show($chatroom['vendor_user_id'])['data']) : null;
         }
-        if(isset($chatroom['admin_user_id'])) {
+        if (isset($chatroom['admin_user_id'])) {
             $adminData = $this->user->show($chatroom['admin_user_id']);
             $adminData['status'] == 200 ? array_push($user, $this->user->show($chatroom['admin_user_id'])['data']) : null;
         }
@@ -230,7 +236,8 @@ class ChatroomService
         ];
     }
 
-    public function showChatFiles($id){
+    public function showChatFiles($id)
+    {
         $chatroom = $this->chatroom->findById($id);
 
         $chat = $this->chatManagement->showFilesById($chatroom['id']);
@@ -245,6 +252,4 @@ class ChatroomService
             'data' => $chatFiles,
         ];
     }
-
-
 }

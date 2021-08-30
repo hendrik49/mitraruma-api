@@ -227,15 +227,11 @@ class ChatroomManagementService
         }
         $user = $user['data'];
 
-        $params['is_approve'] = true;
-        $params['consultation_id'] = $consultation['id'];
-        $params['room_id'] = $roomId;
-        $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['room_type'] = 'admin-vendor';
-        $params['status'] = 'Pre-Purchase';
+        $chatroom = $this->chatroomService->show($roomId);
 
+        $chatroom['is_approve'] = true;
         //update old room vendor
-        $chatroom = $this->chatroomService->update($params,$roomId);
+        $chatroom = $this->chatroomService->update($chatroom, $chatroom['id']);
 
         $params['admin_user_id'] = $consultation['admin_user_id'];
         $params['vendor_user_id'] = $consultation['vendor_user_id'];

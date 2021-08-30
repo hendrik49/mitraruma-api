@@ -448,15 +448,19 @@ class ConsultationService
 
     private function buildDataConsultationTermin($consultationClear, $consultation)
     {
-        for ($i = 1; $i <= $consultation['termin_customer_count']; $i++) {
-            $consultationClear['termin_customer_percentage_' . $i] = $consultation['termin_customer_percentage_' . $i];
-            $consultationClear['termin_customer_' . $i] = $consultation['termin_customer_' . $i];
-            $consultationClear['termin_customer_date_' . $i] = $consultation['termin_customer_date_' . $i];
+        if (isset($consultation['termin_customer_count'])) {
+            for ($i = 1; $i <= $consultation['termin_customer_count']; $i++) {
+                $consultationClear['termin_customer_percentage_' . $i] = $consultation['termin_customer_percentage_' . $i];
+                $consultationClear['termin_customer_' . $i] = $consultation['termin_customer_' . $i];
+                $consultationClear['termin_customer_date_' . $i] = $consultation['termin_customer_date_' . $i];
+            }
         }
-        for ($i = 1; $i <= $consultation['termin_vendor_count']; $i++) {
-            $consultationClear['termin_vendor_percentage_' . $i] = $consultation['termin_vendor_percentage_' . $i];
-            $consultationClear['termin_vendor_' . $i] = $consultation['termin_vendor_' . $i];
-            $consultationClear['termin_vendor_date_' . $i] = $consultation['termin_vendor_date_' . $i];
+        if (isset($consultation['termin_vendor_count'])) {
+            for ($i = 1; $i <= $consultation['termin_vendor_count']; $i++) {
+                $consultationClear['termin_vendor_percentage_' . $i] = $consultation['termin_vendor_percentage_' . $i];
+                $consultationClear['termin_vendor_' . $i] = $consultation['termin_vendor_' . $i];
+                $consultationClear['termin_vendor_date_' . $i] = $consultation['termin_vendor_date_' . $i];
+            }
         }
         return $consultationClear;
     }

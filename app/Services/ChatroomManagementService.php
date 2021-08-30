@@ -229,6 +229,7 @@ class ChatroomManagementService
 
         $chatroom = $this->chatroomService->show($roomId);
 
+        $chatroom = $chatroom['data'];
         $chatroom['is_approve'] = true;
         //update old room vendor
         $chatroom = $this->chatroomService->update($chatroom, $chatroom['id']);

@@ -201,7 +201,7 @@ class ConsultationService
         $params['room_type'] = 'admin-customer';
         $params['status'] = 'pre-purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $params['user_jwt_name'] . '-AC-' . Carbon::now('GMT+7')->format('dmHi');
+        $params['name'] = $params['user_jwt_name'] . '-AC-' . $params['order_number'];
         $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';
         $params['consultation_description'] = $consultation['description'];
         $chatroom = $this->chatroom->create($params);

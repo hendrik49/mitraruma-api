@@ -125,7 +125,7 @@ class ChatroomManagementService
         $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $user['display_name'].'-AV-'.Carbon::now('GMT+7')->format('dmHi');
+        $params['name'] = $user['display_name'].'-AV-'.$consultation['order_number'];
         $params['text'] = 'Halo bisa mengerjakan projek ini?';
         $params['consultation_description'] = $consultation['description'];
         $params['room_type'] = 'admin-vendor';
@@ -184,7 +184,7 @@ class ChatroomManagementService
         $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $user['display_name'].'-AVC-'.Carbon::now('GMT+7')->format('dmHi');
+        $params['name'] = $user['display_name'].'-AVC-'.$consultation['order_number'];
         $params['text'] = 'Halo saya siap berdiskusi dengan projek ini';
         $params['consultation_description'] = $consultation['description'];
         $params['room_type'] = 'admin-vendor-customer';
@@ -239,7 +239,7 @@ class ChatroomManagementService
         $params['user_id'] = $consultation['user_id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $user['display_name'].'-AVC-'.Carbon::now('GMT+7')->format('dmHi');
+        $params['name'] = $user['display_name'].'-AVC-'.$consultation['order_number'];
         $params['text'] = 'Halo saya siap berdiskusi dengan projek ini';
         $params['consultation_description'] = $consultation['description'];
         $params['room_type'] = 'admin-vendor-customer';

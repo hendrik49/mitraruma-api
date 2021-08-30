@@ -142,7 +142,7 @@ class ConsultationResource
             'vendor_user_id' => $param['applicatorId'] ?? null,
             'vendor_name' => $param['applicatorName'] ?? null,
             'contact' => $param['contact'] ?? '',
-            'service_type' => $param['service_type'] ?? '',
+            'service_type' => $param['serviceType'] ?? '',
             'street' => $param['address'] ?? '',
             'description' => $param['detail'] ?? '',
             'estimated_budget' => $param['budget'] ?? 0,

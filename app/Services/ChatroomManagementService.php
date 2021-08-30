@@ -228,13 +228,18 @@ class ChatroomManagementService
         $user = $user['data'];
 
         $params['is_approve'] = true;
+        $params['consultation_id'] = $consultation['id'];
+        $params['room_id'] = $roomId;
+        $params['image_url'] = $user['user_picture_url'] ?? "";
+        $params['room_type'] = 'admin-vendor';
+        $params['status'] = 'Pre-Purchase';
+
         //update old room vendor
         $chatroom = $this->chatroomService->update($params,$roomId);
 
         $params['admin_user_id'] = $consultation['admin_user_id'];
         $params['vendor_user_id'] = $consultation['vendor_user_id'];
         $params['user_id'] = $consultation['user_id'];
-        $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'].'-AVC-'.Carbon::now('GMT+7')->format('dmHi');

@@ -148,8 +148,8 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Applikator Diskon </label>
-                                            <input type="number" class="form-control" name="applikator_discount"
-                                                placeholder="Masukkan diskon" value="{{ $project->applikator_discount }}"
+                                            <input type="number" class="form-control" name="applicator_discount"
+                                                placeholder="Masukkan diskon" value="{{ $project->applicator_discount }}"
                                                 readonly>
                                         </div>
                                         <div class="col-sm-6">

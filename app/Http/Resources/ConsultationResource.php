@@ -39,7 +39,7 @@ class ConsultationResource
             'contact' => $params['contact'] ?? '',
             'address' => $params['street'] ?? '',
             'detail' => $params['description'] ?? '',
-            'serviceType' => $param['service_type'] ?? '',
+            'serviceType' => $params['service_type'] ?? '',
             'budget' => $params['estimated_budget'] ?? 0,
             'photos' => $params['photos'] ?? [],
             'orderNumber' => $params['order_number'] ?? 0,

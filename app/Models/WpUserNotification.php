@@ -14,5 +14,6 @@ class WpUserNotification extends Model
         'type',
         'chat_room_id',
         'text',
+        'is_read'
     ];
 }

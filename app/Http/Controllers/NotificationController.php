@@ -36,6 +36,36 @@ class NotificationController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return JsonResponse
+     */
+    public function total(Request $request)
+    {
+        $params = $request->all();
+
+        $result = $this->notification->total($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return JsonResponse
+     */
+    public function read(Request $request, $id)
+    {
+        $params = $request->all();
+
+        $result = $this->notification->read($id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
      * Create a new controller instance.
      *
      * @return \App\Services\response|bool|\Illuminate\Http\JsonResponse|string

@@ -52,4 +52,25 @@ class UserNotificationRepository
 
     }
 
+    public function update($params, $id){
+
+        $notif = WpUserNotification::where('id', $id)->first();
+        if(!$notif) {
+            return  $notif;
+        }
+
+        if(isset($params['is_read'])) {
+            $notif->is_read = $params['is_read'];
+        }
+        
+        try {
+            $notif->save();
+        }
+        catch (\Throwable $e){
+            report($e->getMessage());
+        }
+
+        return  $notif;
+    }
+
 }

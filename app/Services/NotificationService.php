@@ -33,8 +33,7 @@ class NotificationService
         \App\Services\UserService $user,
         \App\Repositories\CmsRepository $cms,
         \App\Repositories\UserNotificationRepository $userNotificationRepository
-    )
-    {
+    ) {
         $this->user = $user;
         $this->cms = $cms;
         $this->userNotificationRepository = $userNotificationRepository;
@@ -57,6 +56,44 @@ class NotificationService
             'data' => UserNotificationResource::collection($notification),
         ];
     }
+
+    public function total($params)
+    {
+        $params['type'] = 'notification';
+        $notification = $this->userNotificationRepository->find($params);
+        if (!$notification) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => ['total' => $notification->count()]
+        ];
+    }
+
+    public function read($id)
+    {
+        $params['type'] = 'notification';
+        $notification = $this->userNotificationRepository->findById($id);
+        if (!$notification) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+        $notification->is_read = true;
+        $notification->save();
+
+        return [
+            'status' => 200,
+            'data' => ['data' => $notification]
+        ];
+    }
+
+
 
     /**
      * Write code on Method
@@ -98,6 +135,4 @@ class NotificationService
 
         return $response;
     }
-
-
 }

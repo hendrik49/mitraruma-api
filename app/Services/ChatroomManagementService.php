@@ -300,6 +300,40 @@ class ChatroomManagementService
             ];
         }
 
+
+        $userIds = [];
+        if (isset($params['user_id'])) {
+            array_push($userIds, $params['user_id']);
+        }
+        if (isset($params['admin_user_id'])) {
+            array_push($userIds, $params['admin_user_id']);
+        }
+
+        $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
+        if ($tokens['status'] == 200) {
+            $tokens = $tokens['data'];
+        }
+
+        $deviceTokens = [];
+        $notificationUserIds = [];
+        foreach ($tokens as $token) {
+            array_push($notificationUserIds, $token['user_id']);
+            array_push($deviceTokens, $token['device_token']);
+        }
+
+        $this->notificationService->send($deviceTokens, array(
+            "title" => "Notifiksi Aplikator menyetujui mengerjakan konsultasi" . $params['name'],
+            "body" => "Aplikator " . $user['display_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
+            "type" => "notification",
+            "value" => [
+                "chat_room" => $chatroom
+            ]
+        ));
+
+        foreach ($notificationUserIds as $notificationUserId) {
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
+        }
+
         return [
             'status' => 201,
             'data' => $chatroom,

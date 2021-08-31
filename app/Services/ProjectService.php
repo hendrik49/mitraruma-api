@@ -34,7 +34,7 @@ class ProjectService
         if (!$address) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Serviceess not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
 
@@ -50,7 +50,7 @@ class ProjectService
         if (!$address) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Serviceess not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
 
@@ -66,7 +66,7 @@ class ProjectService
         if (!$address) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Serviceess not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
 
@@ -99,7 +99,7 @@ class ProjectService
         }
 
         $project = $this->projectService->find($params['project_id']);
-        if($project['status'] != 200) {
+        if($project == null) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Project not found'],
@@ -118,7 +118,7 @@ class ProjectService
 
         $validator = Validator::make($params, [
             'city' => 'required|string',
-            'zipcode' => 'required|string',
+            'zipcode' => 'nullable|string',
             'street' => 'required|string',
         ]);
 
@@ -129,8 +129,8 @@ class ProjectService
             ];
         }
 
-        $project = $this->projectService->find($params['project_id']);
-        if($project['status'] != 200) {
+        $project = $this->projectService->find($id);
+        if($project == null) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Project not found'],
@@ -142,7 +142,7 @@ class ProjectService
         if (!$address) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Serviceess not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
         return [
@@ -165,7 +165,7 @@ class ProjectService
         if (!$address) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Serviceess not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
 

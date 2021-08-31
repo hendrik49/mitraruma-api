@@ -163,7 +163,7 @@ class ChatroomManagementService
         if ($project['status'] == 404) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Chat room not found'],
+                'data' => ['message' => 'Project not found'],
             ];
         }
         $project = $project['data'];
@@ -174,8 +174,8 @@ class ChatroomManagementService
 
         if ($resp['status'] == 422) {
             return [
-                'status' => 404,
-                'data' => ['message' => $project],
+                'status' => 422,
+                'data' => ['message' => $resp],
             ];
         }
 
@@ -246,8 +246,8 @@ class ChatroomManagementService
 
         if ($resp['status'] == 422) {
             return [
-                'status' => 404,
-                'data' => ['message' => $project],
+                'status' => 422,
+                'data' => ['message' => $resp],
             ];
         }
 
@@ -328,8 +328,8 @@ class ChatroomManagementService
 
         if ($resp['status'] == 422) {
             return [
-                'status' => 404,
-                'data' => ['message' => $project],
+                'status' => 422,
+                'data' => ['message' => $resp],
             ];
         }
         //todo create notification

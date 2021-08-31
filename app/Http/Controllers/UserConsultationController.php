@@ -47,6 +47,36 @@ class UserConsultationController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+        /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function top(Request $request)
+    {
+        $params = $request->all();
+
+        $result = $this->consultation->index($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function recent(Request $request)
+    {
+        $params = $request->all();
+
+        $result = $this->consultation->index($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
     /**
      * Display the specified resource.
      *

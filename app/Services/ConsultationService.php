@@ -130,6 +130,25 @@ class ConsultationService
         ];
     }
 
+    public function top($params)
+    {
+
+        $consultation = $this->consultation->find($params);
+        if (!$consultation) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $consultation = $this->consultationResource->fromFirebaseArray($consultation);
+
+        return [
+            'status' => 200,
+            'data' => $consultation,
+        ];
+    }
+
     public function show($id)
     {
 

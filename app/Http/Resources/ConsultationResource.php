@@ -103,6 +103,9 @@ class ConsultationResource
             'retentionPayment' => $params['retention_payment'] ?? 0,
             'createdAt' => $params['created_at'] ?? '',
             'updatedAt' => $params['updated_at'] ?? '',
+            'ratingVendor' => $params['rating_vendor'] ?? 0,
+            'ratingAdmin' => $params['rating_admin'] ?? 0,
+            'ratingCustomer' => $params['rating_customer'] ?? 0
         ];
     }
 
@@ -210,6 +213,9 @@ class ConsultationResource
             'retention_payment' => $param['retentionPayment'] ?? 0,
             'created_at' => $param['createdAt'] ?? '',
             'updated_at' => $param['updatedAt'] ?? '',
+            'rating_vendor' => $param['ratingVendor'] ?? 0,
+            'rating_admin' => $param['ratingAdmin'] ?? 0,
+            'rating_customer' => $param['ratingCustomer'] ?? 0
         ];
     }
 }

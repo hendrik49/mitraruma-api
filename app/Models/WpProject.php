@@ -73,7 +73,10 @@ class WpProject extends Model
         'vendor_contact',        
         'estimated_budget',
         'room_number',
-        'project_value'        
+        'project_value',
+        'rating_vendor',
+        'rating_customer',
+        'rating_admin'        
     ];
 
     /**

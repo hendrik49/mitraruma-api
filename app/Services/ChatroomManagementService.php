@@ -54,6 +54,17 @@ class ChatroomManagementService
     private $projectService;
 
     /**
+     * @var NotificationService
+     */
+    private $notificationService;
+
+    /**
+     * @var UserTokenService
+     */
+    private $userTokenService;
+
+
+    /**
      * Create a new controller instance.
      *
      * @param UserService $user
@@ -74,7 +85,9 @@ class ChatroomManagementService
         ChatroomService $chatroomService,
         OrderStatusService $orderStatusService,
         OrderStatus $orderStatusHelper,
-        ProjectService $projectService
+        ProjectService $projectService,
+        NotificationService $notificationService,
+        UserTokenService $userTokenService
     ) {
         $this->user = $user;
         $this->userNotification = $userNotification;
@@ -85,6 +98,8 @@ class ChatroomManagementService
         $this->orderStatusService = $orderStatusService;
         $this->orderStatusHelper = $orderStatusHelper;
         $this->projectService = $projectService;
+        $this->notificationService = $notificationService;
+        $this->userTokenService = $userTokenService;
     }
 
 
@@ -129,6 +144,7 @@ class ChatroomManagementService
         $consultation = $this->consultationService->update($consultation, $consultation['id']);
         $consultation = $consultation['data'];
 
+        $params['user_id'] = $consultation['user_id'];
         $params['admin_user_id'] = $consultation['admin_user_id'];
         $params['vendor_user_id'] = $params['vendor_user_id'] ?? null;
         $params['consultation_id'] = $consultation['id'];
@@ -178,6 +194,43 @@ class ChatroomManagementService
                 'data' => ['message' => $resp],
             ];
         }
+
+        $userIds = [];
+        if (isset($chatroom['user_id']) && $params['user_id'] != $chatroom['user_id']) {
+            array_push($userIds, $chatroom['user_id']);
+        }
+        if (isset($chatroom['vendor_user_id']) && $params['user_id'] != $chatroom['vendor_user_id']) {
+            array_push($userIds, $chatroom['vendor_user_id']);
+        }
+        if (isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
+            array_push($userIds, $chatroom['admin_user_id']);
+        }
+
+        $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
+        if ($tokens['status'] == 200) {
+            $tokens = $tokens['data'];
+        }
+
+        $deviceTokens = [];
+        $notificationUserIds = [];
+        foreach ($tokens as $token) {
+            array_push($notificationUserIds, $token['user_id']);
+            array_push($deviceTokens, $token['device_token']);
+        }
+
+        $this->notificationService->send($deviceTokens, array(
+            "title" => "Notifiksi Aplikator terpilih konsultasi" . $params['name'],
+            "body" => "Aplikator" . $user['display_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
+            "type" => "notification",
+            "value" => [
+                "chat_room" => $chatroom
+            ]
+        ));
+
+        foreach ($notificationUserIds as $notificationUserId) {
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
+        }
+
 
         return [
             'status' => 201,

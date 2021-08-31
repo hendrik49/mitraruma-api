@@ -43,6 +43,9 @@ class ProjectRepository
         if(isset($params['device_token'])) {
             $Project->device_token = $params['device_token'];
         }
+        if(isset($params['room_number'])) {
+            $Project->room_number = $params['room_number'];
+        }
         try {
             $Project->save();
         }

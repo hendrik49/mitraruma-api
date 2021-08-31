@@ -158,6 +158,27 @@ class ChatroomManagementService
         $chatParams['room_id'] = $chatroom['id'];
         $this->chatService->create($chatParams, $chatroom['id']);
 
+        $project  = $this->projectService->showByConsultation($consultation['id']);
+
+        if ($project['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Chat room not found'],
+            ];
+        }
+        $project = $project['data'];
+        $project = json_decode(json_encode($project), true);
+        $project['room_number'] = $project['room_number'] . "," . $chatroom['room_id'];
+        $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
+        $resp = $this->projectService->update($project, $project['id']);
+
+        if ($resp['status'] == 422) {
+            return [
+                'status' => 404,
+                'data' => ['message' => $project],
+            ];
+        }
+
         return [
             'status' => 201,
             'data' => $chatroom,
@@ -208,6 +229,27 @@ class ChatroomManagementService
         $this->chatService->create($chatParams, $chatroom['id']);
 
         //todo create notification
+
+        $project  = $this->projectService->showByConsultation($consultation['id']);
+
+        if ($project['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Chat room not found'],
+            ];
+        }
+        $project = $project['data'];
+        $project = json_decode(json_encode($project), true);
+        $project['room_number'] = $project['room_number'] . "," . $chatroom['room_id'];
+        $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
+        $resp = $this->projectService->update($project, $project['id']);
+
+        if ($resp['status'] == 422) {
+            return [
+                'status' => 404,
+                'data' => ['message' => $project],
+            ];
+        }
 
         return [
             'status' => 201,

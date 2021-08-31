@@ -57,7 +57,7 @@ class UserConsultationController extends Controller
     {
         $params = $request->all();
 
-        $result = $this->consultation->index($params);
+        $result = $this->consultation->top($params);
 
         return response()->json($result['data'], $result['status']);
     }

@@ -196,11 +196,11 @@ class ChatroomManagementService
         }
 
         $userIds = [];
-        if ($params['user_id']) {
+        if (isset($params['user_id'])) {
             array_push($userIds, $params['user_id']);
         }
-        if (isset($chatroom['vendor_user_id']) && $params['user_id'] != $chatroom['vendor_user_id']) {
-            array_push($userIds, $chatroom['vendor_user_id']);
+        if (isset($params['vendor_user_id'])) {
+            array_push($userIds, $params['vendor_user_id']);
         }
         
         $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
@@ -385,11 +385,11 @@ class ChatroomManagementService
         //todo create notification
 
         $userIds = [];
-        if ($params['user_id']) {
+        if (isset($params['user_id'])) {
             array_push($userIds, $params['user_id']);
         }
-        if (isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
-            array_push($userIds, $chatroom['admin_user_id']);
+        if (isset($params['admin_user_id'])) {
+            array_push($userIds, $params['admin_user_id']);
         }
 
         $tokens = $this->userTokenService->get(['user_ids' => $userIds]);

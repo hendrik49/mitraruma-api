@@ -43,7 +43,7 @@ class JwtAdmin
                 return response()->json(['message' =>'User not authorize'], 400);
             }
 
-            $request->request->add(['user_id' => $decoded->id ?? $decoded->ID]);
+            $request->request->add(['user_admin_id' => $decoded->id ?? $decoded->ID]);
             $request->request->add(['user_jwt_email' => $decoded->email ?? $decoded->user_email]);
             $request->request->add(['user_jwt_name' => $decoded->displayName ?? $decoded->display_name]);
 

@@ -11,6 +11,10 @@ class ProjectRepository
         return WpProject::find($id);
     }
 
+    public function findByConsultationId($id){
+        return WpProject::where('consultation_id',$id)->first();
+    }
+
     public function find($params){
         $Project = WpProject::query();
         $Project = $this->filterBuilder($Project, $params);

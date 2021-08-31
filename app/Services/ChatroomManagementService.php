@@ -49,6 +49,11 @@ class ChatroomManagementService
     private $orderStatusHelper;
 
     /**
+     * @var ProjectService
+     */
+    private $projectService;
+
+    /**
      * Create a new controller instance.
      *
      * @param UserService $user
@@ -68,7 +73,8 @@ class ChatroomManagementService
         ConsultationService $consultationService,
         ChatroomService $chatroomService,
         OrderStatusService $orderStatusService,
-        OrderStatus $orderStatusHelper
+        OrderStatus $orderStatusHelper,
+        ProjectService $projectService
     ) {
         $this->user = $user;
         $this->userNotification = $userNotification;
@@ -78,6 +84,7 @@ class ChatroomManagementService
         $this->chatroomService = $chatroomService;
         $this->orderStatusService = $orderStatusService;
         $this->orderStatusHelper = $orderStatusHelper;
+        $this->projectService = $projectService;
     }
 
 
@@ -263,6 +270,26 @@ class ChatroomManagementService
         $chatParams['room_id'] = $chatroom['id'];
         $this->chatService->create($chatParams, $chatroom['id']);
 
+        $project  = $this->projectService->showByConsultation($consultation['id']);
+
+        if ($project['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Chat room not found'],
+            ];
+        }
+        $project = $project['data'];
+        $project = json_decode(json_encode($project), true);
+        $project['room_number'] = $project['room_number'] . "," . $chatroom['room_id'];
+        $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
+        $resp = $this->projectService->update($project, $project['id']);
+
+        if ($resp['status'] == 422) {
+            return [
+                'status' => 404,
+                'data' => ['message' => $project],
+            ];
+        }
         //todo create notification
 
         return [

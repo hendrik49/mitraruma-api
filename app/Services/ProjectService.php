@@ -60,6 +60,22 @@ class ProjectService
         ];
     }
 
+    public function showByConsultation($id){
+
+        $address = $this->projectService->findByConsultationId($id);
+        if (!$address) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Serviceess not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $address,
+        ];
+    }
+
     public function create($params){
 
         $validator = Validator::make($params, [
@@ -82,7 +98,7 @@ class ProjectService
             ];
         }
 
-        $project = $this->project->show($params['project_id']);
+        $project = $this->projectService->find($params['project_id']);
         if($project['status'] != 200) {
             return [
                 'status' => 404,
@@ -113,7 +129,7 @@ class ProjectService
             ];
         }
 
-        $project = $this->project->show($params['project_id']);
+        $project = $this->projectService->find($params['project_id']);
         if($project['status'] != 200) {
             return [
                 'status' => 404,

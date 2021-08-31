@@ -254,10 +254,24 @@ class UserService
     public function update($params, $id)
     {
 
+        $isUserExist = $this->user->findById($id);
+
+        if ($isUserExist == null) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'User is not found'],
+            ];
+        }
+        if (isset($params['user_email']) && $isUserExist->user_email == $params['user_email']) {
+            unset($params['user_email']);
+        }
+        if (isset($params['user_phone_number']) && $isUserExist->user_phone_number == $params['user_phone_number']) {
+            unset($params['user_phone_number']);
+        }
         $validator = Validator::make($params, [
-            'user_phone_number' => 'regex:/[+](62)[0-9]/|unique:wp_users,user_phone_number',
-            'user_email' => 'email|unique:wp_users,user_email',
-            'display_name' => 'string',
+            'user_phone_number' => 'nullable|regex:/[+](62)[0-9]/|unique:wp_users,user_phone_number',
+            'user_email' => 'nullable|email|unique:wp_users,user_email',
+            'display_name' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -267,14 +281,7 @@ class UserService
             ];
         }
 
-        $isUserExist = $this->user->findById($id);
 
-        if ($isUserExist == null) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User is not found'],
-            ];
-        }
 
         $user = $this->user->update($params, $id);
         if (!$user) {
@@ -652,7 +659,7 @@ class UserService
                 'Authorization' => 'Bearer ' . $resp['accessToken'] . '',
                 'Accept'        => 'application/json',
             ];
-            $response = $client->request('GET','/buyer-service/profile/' . $resp['userId'] . '', [
+            $response = $client->request('GET', '/buyer-service/profile/' . $resp['userId'] . '', [
                 'headers' => $headers
             ]);
 

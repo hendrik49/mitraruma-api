@@ -134,7 +134,7 @@ class ChatroomManagementService
         $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] = $user['display_name'] . '-AV-' . $consultation['order_number'];
+        $params['name'] = $consultation['name'] . '-AV-' . $consultation['order_number'];
         $params['text'] = 'Halo bisa mengerjakan projek ini?';
         $params['consultation_description'] = $consultation['description'];
         $params['room_type'] = 'admin-vendor';

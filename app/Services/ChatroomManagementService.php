@@ -202,10 +202,7 @@ class ChatroomManagementService
         if (isset($chatroom['vendor_user_id']) && $params['user_id'] != $chatroom['vendor_user_id']) {
             array_push($userIds, $chatroom['vendor_user_id']);
         }
-        if (isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
-            array_push($userIds, $chatroom['admin_user_id']);
-        }
-
+        
         $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
         if ($tokens['status'] == 200) {
             $tokens = $tokens['data'];
@@ -390,9 +387,6 @@ class ChatroomManagementService
         $userIds = [];
         if ($params['user_id']) {
             array_push($userIds, $params['user_id']);
-        }
-        if (isset($chatroom['vendor_user_id']) && $params['user_id'] != $chatroom['vendor_user_id']) {
-            array_push($userIds, $chatroom['vendor_user_id']);
         }
         if (isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
             array_push($userIds, $chatroom['admin_user_id']);

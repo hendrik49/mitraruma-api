@@ -60,6 +60,7 @@ class NotificationService
     public function total($params)
     {
         $params['type'] = 'notification';
+        $params['is_read'] = false;
         $notification = $this->userNotificationRepository->find($params);
         if (!$notification) {
             return [

@@ -15,7 +15,7 @@ class UserNotificationRepository
         $userNotification = WpUserNotification::query();
         $userNotification = $this->filterBuilder($userNotification, $params);
 
-        return $userNotification->get();
+        return $userNotification->orderByDesc('created_at')->get();
     }
 
     public function count($params){

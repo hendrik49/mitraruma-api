@@ -225,7 +225,7 @@ class ChatroomManagementService
         ));
 
         foreach ($notificationUserIds as $notificationUserId) {
-            $this->userNotificationService->store(['user_id' => $notificationUserId, 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $user['display_name'] . " dipilih untuk mengerjakan konsultasi " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
         }
 
         return [

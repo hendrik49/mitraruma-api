@@ -100,6 +100,7 @@ Route::middleware([LogRoute::class])->group(function () {
 
     Route::get('/user/notification', [NotificationController::class, 'index'])->middleware('jwt.user');
     Route::PUT('/user/notification/{id}/read', [NotificationController::class, 'read'])->middleware('jwt.user');
+    Route::PUT('/user/notification/read', [NotificationController::class, 'readAll'])->middleware('jwt.user');
     Route::get('/user/notification/total', [NotificationController::class, 'total'])->middleware('jwt.user');
 
     //VENDOR

@@ -66,6 +66,21 @@ class NotificationController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return JsonResponse
+     */
+    public function readAll(Request $request)
+    {
+        $params = $request->all();
+
+        $result = $this->notification->readAll($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
      * Create a new controller instance.
      *
      * @return \App\Services\response|bool|\Illuminate\Http\JsonResponse|string

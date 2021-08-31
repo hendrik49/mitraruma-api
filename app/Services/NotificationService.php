@@ -94,7 +94,27 @@ class NotificationService
         ];
     }
 
+    public function readAll($params)
+    {
+        $params['type'] = 'notification';
+        $params['is_read'] = false;
+        $notifications = $this->userNotificationRepository->find($params);
+        if (!$notifications) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
 
+        foreach ($notifications as $notification) {
+            $notification->is_read = true;
+            $notification->save();
+        }
+        return [
+            'status' => 200,
+            'data' => ['data' => $notifications]
+        ];
+    }
 
     /**
      * Write code on Method

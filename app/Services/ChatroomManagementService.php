@@ -90,7 +90,7 @@ class ChatroomManagementService
         UserTokenService $userTokenService
     ) {
         $this->user = $user;
-        $this->userNotification = $userNotification;
+        $this->userNotificationService = $userNotification;
         $this->chatService = $chatService;
         $this->consultationService = $consultationService;
         $this->chatManagementService = $chatManagementService;

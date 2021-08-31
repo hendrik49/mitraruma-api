@@ -122,7 +122,7 @@ class ChatroomManagementService
 
         $consultation = $consultation['data'];
         $consultation['vendor_user_id'] = $user['ID'];
-        $consultation['admin_user_id'] =  $consultation['admin_user_id'] ? $consultation['admin_user_id'] : $params['user_id'];
+        $consultation['admin_user_id'] =  $consultation['admin_user_id'] ? $consultation['admin_user_id'] : $params['admin_user_id'];
         $consultation['admin_name'] =  $consultation['admin_name'] ? $consultation['admin_name'] : $params['user_jwt_name'];
         $consultation['vendor_name'] = $user['display_name'];
         $consultation['order_status'] = 130;

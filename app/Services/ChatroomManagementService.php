@@ -239,6 +239,7 @@ class ChatroomManagementService
         $params['admin_user_id'] = $consultation['admin_user_id'];
         $params['vendor_user_id'] = $consultation['vendor_user_id'];
         $params['user_id'] = $consultation['user_id'];
+        $params['consultation_id'] = $consultation['id'];
         $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $user['user_picture_url'] ?? "";
         $params['name'] = $user['display_name'] . '-AVC-' . $consultation['order_number'];

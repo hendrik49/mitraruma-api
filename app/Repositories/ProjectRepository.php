@@ -46,6 +46,16 @@ class ProjectRepository
         if(isset($params['room_number'])) {
             $Project->room_number = $params['room_number'];
         }
+        if(isset($params['vendor_name'])) {
+            $Project->vendor_name = $params['vendor_name'];
+        }
+        if(isset($params['vendor_user_id'])) {
+            $Project->vendor_user_id = $params['vendor_user_id'];
+        }
+        if(isset($params['vendor_contact'])) {
+            $Project->vendor_contact = $params['vendor_contact'];
+        }
+        
         try {
             $Project->save();
         }

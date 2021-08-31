@@ -186,6 +186,11 @@ class ChatroomManagementService
         $project = json_decode(json_encode($project), true);
         $project['room_number'] = $project['room_number'] . "," . $chatroom['room_id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
+
+        $project['vendor_name'] = $user['display_name'];
+        $project['vendor_user_id'] =  $user['ID'];
+        $project['vendor_contact'] = $user['user_phone_number'];
+
         $resp = $this->projectService->update($project, $project['id']);
 
         if ($resp['status'] == 422) {
@@ -291,6 +296,7 @@ class ChatroomManagementService
         $project = json_decode(json_encode($project), true);
         $project['room_number'] = $project['room_number'] . "," . $chatroom['room_id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
+
         $resp = $this->projectService->update($project, $project['id']);
 
         if ($resp['status'] == 422) {
@@ -407,7 +413,7 @@ class ChatroomManagementService
         $project = $project['data'];
         $project = json_decode(json_encode($project), true);
         $project['room_number'] = $project['room_number'] . "," . $chatroom['room_id'];
-        $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
+        $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";        
         $resp = $this->projectService->update($project, $project['id']);
 
         if ($resp['status'] == 422) {

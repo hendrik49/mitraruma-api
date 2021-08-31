@@ -255,8 +255,8 @@ class UserService
     {
 
         $validator = Validator::make($params, [
-            'user_phone_number' => 'regex:/[+](62)[0-9]/',
-            'user_email' => 'email',
+            'user_phone_number' => 'regex:/[+](62)[0-9]/|unique:wp_users,user_phone_number',
+            'user_email' => 'email|unique:wp_users,user_email',
             'display_name' => 'string',
         ]);
 

@@ -153,8 +153,8 @@ class ProjectService
 
     public function destroy($id){
 
-        $project = $this->project->show(1);
-        if($project['status'] != 200) {
+        $project = $this->projectService->find($id);
+        if($project == null) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Project not found'],

@@ -215,7 +215,7 @@ class ChatroomManagementService
         if ($consultation['status'] != 200) {
             return [
                 'status' => 404,
-                'data' => ['message' => 'Data not found'],
+                'data' => ['message' => 'Consultation not found'],
             ];
         }
         $consultation = $consultation['data'];
@@ -230,6 +230,13 @@ class ChatroomManagementService
         $user = $user['data'];
 
         $chatroom = $this->chatroomService->show($roomId);
+
+        if ($chatroom['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Chat room not found'],
+            ];
+        }
 
         $chatroom = $chatroom['data'];
         $chatroom['is_approve'] = true;

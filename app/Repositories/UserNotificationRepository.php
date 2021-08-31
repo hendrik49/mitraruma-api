@@ -44,6 +44,9 @@ class UserNotificationRepository
         if(isset($params['type'])) {
             $model = $model->where('type', '=', $params['type']);
         }
+        if(isset($params['is_read'])) {
+            $model = $model->where('is_read', '=', $params['is_read']);
+        }
         if(isset($params['chat_room_id'])) {
             $model = $model->where('chat_room_id', '=', $params['chat_room_id']);
         }

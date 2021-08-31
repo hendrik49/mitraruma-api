@@ -411,8 +411,8 @@ class ChatroomManagementService
         }
 
         $this->notificationService->send($deviceTokens, array(
-            "title" => "Notifiksi Aplikator terpilih konsultasi" . $params['name'],
-            "body" => "Aplikator " . $user['display_name'] . " dipilih untuk mengerjakan konsultasi " . $consultation['order_number'],
+            "title" => "Notifiksi Aplikator menyetujui mengerjakan konsultasi" . $params['name'],
+            "body" => "Aplikator " . $user['display_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
             "type" => "notification",
             "value" => [
                 "chat_room" => $chatroom

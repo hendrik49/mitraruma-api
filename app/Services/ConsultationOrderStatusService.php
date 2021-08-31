@@ -76,7 +76,7 @@ class ConsultationOrderStatusService
         }
 
         $consultation = $this->consultationResource->fromFirebase($consultation);
-        $orderStatus = $this->orderStatus->getConsultationStatus($consultation['order_status'], $userType);
+        $orderStatus = $this->orderStatusHelper->getConsultationStatus($consultation['order_status'], $userType);
 
         return [
             'status' => 200,

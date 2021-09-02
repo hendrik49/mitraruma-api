@@ -667,12 +667,21 @@ class UserService
 
             $data =  json_decode($response->getBody(), true);
             $result['status'] = $response->getStatusCode();
+
+            $params['user_type'] = 'vendor';
+            $vendor = $this->user->find($params);
+
             $new = array();
             foreach ($data["name"] as $key => $var) {
-                $var["name"] = $var["display_name"];
-                $var["finished_project"] = 0;
-                $var["unfinished_project"] = 0;
-                $new[] = $var;
+                $exist = $vendor->where('user_phone_number', $var['user_phone'])->first();
+                if ($exist) {
+                    $var["externalId"] = $var["id"];
+                    $var["id"] = $exist->ID;
+                    $var["name"] = $var["display_name"];
+                    $var["finished_project"] = 0;
+                    $var["unfinished_project"] = 0;
+                    $new[] = $var;
+                }
             }
             $result['data'] = $new;
             return $result;

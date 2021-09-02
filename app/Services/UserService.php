@@ -658,4 +658,28 @@ class UserService
             return $message;
         }
     }
+
+    public function getVendor()
+    {
+        try {
+
+            $response = Http::get(env('CHAT_MITRARUMA', 'http://chat.mitraruma.com:3000') . '/api/applicator');
+
+            $data =  json_decode($response->getBody(), true);
+            $result['status'] = $response->getStatusCode();
+            $new = array();
+            foreach ($data["name"] as $key => $var) {
+                $var["name"] = $var["display_name"];
+                $var["finished_project"] = 0;
+                $var["unfinished_project"] = 0;
+                $new[] = $var;
+            }
+            $result['data'] = $new;
+            return $result;
+        } catch (\Exception $e) {
+            $result['status'] = $e->getCode();
+            $result['data'] = $e->getMessage();
+            return $result;
+        }
+    }
 }

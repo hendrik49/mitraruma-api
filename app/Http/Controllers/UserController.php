@@ -42,6 +42,22 @@ class UserController extends Controller
 
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getVendor(Request $request)
+    {
+        $params = $request->all();
+
+        $result = $this->user->getVendor();
+
+        return response()->json($result['data'], $result['status']);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *

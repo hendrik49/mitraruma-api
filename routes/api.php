@@ -119,7 +119,8 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::GET('/vendor/chatroom/{id}/users', [VendorChatroomController::class, 'showUsers'])->middleware('jwt.user');
 
     //ADMIN SITE
-    Route::GET('/user/vendor', [UserController::class, 'showVendor'])->middleware('jwt.admin');
+    Route::GET('/user/vendor/internal', [UserController::class, 'showVendor'])->middleware('jwt.admin');
+    Route::GET('/user/vendor', [UserController::class, 'getVendor'])->middleware('jwt.admin');
 
     Route::GET('/user/address', [UserAddressController::class, 'index'])->middleware('jwt.admin');
     Route::POST('/user/address', [UserAddressController::class, 'store'])->middleware('jwt.admin');

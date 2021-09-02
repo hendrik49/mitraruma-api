@@ -681,10 +681,10 @@ class UserService
                     $var["finished_project"] = 0;
                     $var["unfinished_project"] = 0;
                     $new[] = $var;
-                }else{
+                } else {
                     $var["externalId"] = $var["id"];
                     $var["id"] = null;
-                    $var["name"] = $var["display_name"];
+                    $var["name"] = $var["display_name"] . "-" . "NOT-INTEGRATED";
                     $var["finished_project"] = 0;
                     $var["unfinished_project"] = 0;
                     $new[] = $var;

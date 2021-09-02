@@ -329,7 +329,7 @@ class ChatroomManagementService
 
         $this->notificationService->send($deviceTokens, array(
             "title" => "Notifiksi Aplikator menyetujui mengerjakan konsultasi" . $params['name'],
-            "body" => "Aplikator " . $user['display_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
+            "body" => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
             "type" => "notification",
             "value" => [
                 "chat_room" => $chatroom
@@ -337,7 +337,7 @@ class ChatroomManagementService
         ));
 
         foreach ($notificationUserIds as $notificationUserId) {
-            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $user['display_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
         }
 
         return [
@@ -446,7 +446,7 @@ class ChatroomManagementService
 
         $this->notificationService->send($deviceTokens, array(
             "title" => "Notifiksi Aplikator menyetujui mengerjakan konsultasi" . $params['name'],
-            "body" => "Aplikator " . $user['display_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
+            "body" => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
             "type" => "notification",
             "value" => [
                 "chat_room" => $chatroom
@@ -454,7 +454,7 @@ class ChatroomManagementService
         ));
 
         foreach ($notificationUserIds as $notificationUserId) {
-            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $user['display_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
         }
 
         return [

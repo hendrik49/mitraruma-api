@@ -56,9 +56,15 @@ class WpUser extends Model
 
     public function getUserPictureUrlAttribute()
     {
-        if (strpos($this->attributes['user_picture_url'], "http") !== false)
+        if ($this->attributes['user_type'] == "customer" && strpos($this->attributes['user_picture_url'], "http") !== false)
             return $this->attributes['user_picture_url'];
-        else
+        else if ($this->attributes['user_type'] == "admin")
+            return url('/') . '/images/img-logo-mitra-ruma.png';
+        else if ($this->attributes['user_type'] == "vendor")
+            return url('/') . '/images/img-applicator.jpeg';
+        else if ($this->attributes['user_picture_url'] != null && $this->attributes['user_type'] == "customer")
             return url('/') . '/' . $this->attributes['user_picture_url'];
+        else
+            return url('/') . '/images/img-customer.jpeg';
     }
 }

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use GuzzleHttp;
 use GuzzleHttp\Exception\RequestException;
 use Guzzle\Http\Exception\ClientErrorResponseException;
+use Illuminate\Support\Facades\Http;
+
 
 class UserService
 {
@@ -529,14 +531,10 @@ class UserService
                 ];
             } else {
                 $user = $this->user->findOne($params);
-                //$userProfile = $this->getProfileAPI($resp);
 
                 if ($user == null) {
                     $paramNew['user_phone_number'] = $resp['phoneNo'];
-                    $paramNew['user_type'] = 'customer';
-                    // if (isset($userProfile['buyerType'])) {
-                    //     $paramNew['user_type'] = $userProfile['buyerType'] == "CUSTOMER" ? 'customer' : 'vendor';
-                    // }
+                    $paramNew['user_type'] = $resp['buyerType'] == 'CUSTOMER' ? 'customer' : 'vendor';
                     $paramNew['user_nicename'] = $resp['userId'];
                     $paramNew['user_email'] = $params['user_login'];
                     $paramNew['user_login'] = $params['user_login'];
@@ -621,7 +619,6 @@ class UserService
     public function postSignInAPI($params, $isEmail)
     {
         try {
-            $client = new GuzzleHttp\Client(['base_uri' => env('API_MITRARUMA', 'https://qa.mitraruma.com/')]);
 
             $headers = [
                 'Content-Type'          => 'application/json'
@@ -636,12 +633,11 @@ class UserService
                 "phoneNo" => $isEmail ? null : $params['user_login']
             ];
 
-            $response = $client->post('buyer-service/auth/login', [
-                'headers' => $headers,
-                'json' => $json
-            ]);
+            $response = Http::withHeaders($headers)->post('https://qa.mitraruma.com/buyer-service/auth/login', $json);
 
             $data =  json_decode($response->getBody(), true);
+            $userProfile = $this->getProfileAPI($data);
+            $data['buyerType'] = isset($userProfile['data']['buyerType']) ? $userProfile['data']['buyerType'] : 'CUSTOMER';
             return $data;
         } catch (\Exception $e) {
             $message = $e->getMessage() . ". Line " . $e->getLine();
@@ -653,15 +649,7 @@ class UserService
     {
         try {
 
-            $client = new GuzzleHttp\Client(['base_uri' => env('API_MITRARUMA', 'https://qa.mitraruma.com/')]);
-
-            $headers = [
-                'Authorization' => 'Bearer ' . $resp['accessToken'] . '',
-                'Accept'        => 'application/json',
-            ];
-            $response = $client->request('GET', '/buyer-service/profile/' . $resp['userId'] . '', [
-                'headers' => $headers
-            ]);
+            $response = Http::get(env('CHAT_MITRARUMA', 'http://chat.mitraruma.com:3000') . '/api/profile?id=' . $resp['userId']);
 
             $data =  json_decode($response->getBody(), true);
             return $data;

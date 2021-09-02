@@ -59,12 +59,12 @@ class WpUser extends Model
         if ($this->attributes['user_type'] == "customer" && strpos($this->attributes['user_picture_url'], "http") !== false)
             return $this->attributes['user_picture_url'];
         else if ($this->attributes['user_type'] == "admin")
-            return url('/') . '/images/img-logo-mitra-ruma.png';
+            return url('/') . '/images/img-admin.png';
         else if ($this->attributes['user_type'] == "vendor")
-            return url('/') . '/images/img-applicator.jpeg';
+            return url('/') . '/images/img-applicator.png';
         else if ($this->attributes['user_picture_url'] != null && $this->attributes['user_type'] == "customer")
             return url('/') . '/' . $this->attributes['user_picture_url'];
         else
-            return url('/') . '/images/img-customer.jpeg';
+            return url('/') . '/images/img-customer.png';
     }
 }

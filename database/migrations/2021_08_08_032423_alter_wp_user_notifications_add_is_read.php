@@ -14,7 +14,8 @@ class AlterWpUserNotificationsAddIsRead extends Migration
     public function up()
     {
         Schema::table('wp_user_notifications', function (Blueprint $table) {
-            $table->boolean('is_read')->nullable(true)->default(false);
+            if(!Schema::hasColumn('wp_user_notifications','is_read'))
+                $table->boolean('is_read')->nullable(true)->default(false);
         });
     }
 
@@ -26,7 +27,8 @@ class AlterWpUserNotificationsAddIsRead extends Migration
     public function down()
     {
         Schema::table('wp_user_notifications', function (Blueprint $table) {
-            $table->dropColumn('is_read');
+            if(!Schema::hasColumn('wp_user_notifications','is_read'))
+                $table->dropColumn('is_read');
         });
     }
 }

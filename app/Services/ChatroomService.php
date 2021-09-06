@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\ChatroomResource;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\OrderStatus;
 
 class ChatroomService
 {
@@ -29,6 +30,17 @@ class ChatroomService
     private $chatroom;
 
     /**
+     * @var OrderStatusService
+     */
+    private $orderStatusService;
+
+    /**
+     * @var OrderStatus
+     */
+    private $orderStatusHelper;
+
+
+    /**
      * Create a new controller instance.
      *
      * @param  \App\Services\UserService $user
@@ -41,12 +53,16 @@ class ChatroomService
         \App\Services\UserService $user,
         \App\Services\UserNotificationService $userNotification,
         \App\Services\ChatManagementService $chatManagement,
-        \App\Repositories\ChatroomRepository $chatroom
+        \App\Repositories\ChatroomRepository $chatroom,
+        OrderStatusService $orderStatusService,
+        OrderStatus $orderStatusHelper
     ) {
         $this->user = $user;
         $this->userNotification = $userNotification;
         $this->chatManagement = $chatManagement;
         $this->chatroom = $chatroom;
+        $this->orderStatusService = $orderStatusService;
+        $this->orderStatusHelper = $orderStatusHelper;
     }
 
     public function index($params)
@@ -250,6 +266,26 @@ class ChatroomService
         return [
             'status' => 200,
             'data' => $chatFiles,
+        ];
+    }
+
+    public function showOrderStatus($id)
+    {
+
+        $orderStatus = $this->orderStatusService->show($id);
+
+        if ($orderStatus['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $orderStatus = $orderStatus['data'];
+
+        return [
+            'status' => 200,
+            'data' => $orderStatus
         ];
     }
 }

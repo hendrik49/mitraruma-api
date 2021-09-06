@@ -677,14 +677,14 @@ class UserService
                 if ($exist) {
                     $var["externalId"] = $var["id"];
                     $var["id"] = $exist->ID;
-                    $var["name"] = $var["company_name"].' - '.$var["user_phone"];
+                    $var["name"] = $var["display_name"].' - '.$var["user_phone"];
                     $var["finished_project"] = 0;
                     $var["unfinished_project"] = 0;
                     $new[] = $var;
                 } else {
                     $var["externalId"] = $var["id"];
                     $var["id"] = null;
-                    $var["name"] = $var["company_name"] . " (NOT-SYNCH)";
+                    $var["name"] = $var["display_name"] . " (NOT-SYNCH)";
                     $var["finished_project"] = 0;
                     $var["unfinished_project"] = 0;
                     $new[] = $var;

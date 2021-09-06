@@ -275,6 +275,13 @@ class ConsultationService
         }
 
         $consultation = $this->consultation->findById($id);
+        if ($consultation == null) {
+            return [
+                'status' => 404,
+                'data' => ['message' => "Consultation data not found"]
+            ];
+        }
+        $consultation = $this->consultationResource->fromFirebase($consultation);
 
         $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
         if (sizeof($params['photos']) == 0) {
@@ -283,11 +290,13 @@ class ConsultationService
 
         $params['admin_user_id'] = $consultation['admin_user_id'];
         $params['admin_name'] = $consultation['admin_name'];
+        $params['user_id'] = $consultation['user_id'];
         $params['vendor_user_id'] = $consultation['vendor_user_id'];
         $params['vendor_name'] = $consultation['vendor_name'];
         $params['order_number'] =  $consultation['order_number'];
         $params['order_status'] =  $consultation['order_status'];
-        $params['email'] =  $consultation['email'];
+        $params['order_status_name'] =  $consultation['order_status_name'];
+        $params['user_email'] =  $consultation['user_email'];
 
         $clearTerminParams = $this->clearDataConsultationTermin($params);
         $params = $this->buildDataConsultationTermin($clearTerminParams, $params);

@@ -245,6 +245,7 @@ class OrderStatus
         $data['createdAt'] = date('Y-m-d H:i:s');
         $data['file'] = $params['file'];
         $data['type'] = $params['type'];
+        $data['by'] = $params['user_jwt_type'];
 
         $phase[$keyPhase]['list'][] = $data;
       }

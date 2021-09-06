@@ -677,7 +677,7 @@ class UserService
                 if ($exist) {
                     $var["externalId"] = $var["id"];
                     $var["id"] = $exist->ID;
-                    $var["name"] = $var["display_name"].' - '.$var["user_email"];
+                    $var["name"] = $var["display_name"].' - '.$var["user_phone"];
                     $var["finished_project"] = 0;
                     $var["unfinished_project"] = 0;
                     $new[] = $var;

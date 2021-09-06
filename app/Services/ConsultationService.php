@@ -245,7 +245,7 @@ class ConsultationService
         $project['admin_user_id'] = $params['admin_user_id'];
         $project['admin_name'] =  $params['admin_name'];
         $project['room_id'] = $chatroom['id'];
-        $project['room_number'] = 'AC-'.$chatroom['room_id'];
+        $project['room_number'] = 'AC-' . $chatroom['room_id'];
         $project['street'] =  $params['street'];
         $project['customer_name'] =  $params['user_jwt_name'];
         $project['customer_contact'] =  $params['contact'];
@@ -274,7 +274,13 @@ class ConsultationService
             ];
         }
 
+        $consultation = $this->consultation->findById($id);
+
         $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        if (sizeof($params['photos']) == 0) {
+            $params['photos'] = $consultation['photos'];
+        }
+
         $clearTerminParams = $this->clearDataConsultationTermin($params);
         $params = $this->buildDataConsultationTermin($clearTerminParams, $params);
         $newParams = $this->consultationResource->toFirebase($params);

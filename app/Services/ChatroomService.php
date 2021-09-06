@@ -316,7 +316,8 @@ class ChatroomService
         $orderStatus = $orderStatus['data'];
         $newStatus = $this->orderStatusHelper->updateOrderStatusByCode($orderStatus, $params);
         $orderStatus = $this->orderStatusService->update($newStatus, $id);
-
+        $orderStatus = $this->orderStatusService->show($id);
+        $orderStatus = $orderStatus['data'];
         return [
             'status' => 200,
             'data' => $orderStatus

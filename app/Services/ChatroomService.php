@@ -311,8 +311,10 @@ class ChatroomService
                 'data' => ['message' => 'Data not found'],
             ];
         }
-
-        $orderStatus = $this->orderStatusService->update($params, $id);
+        $reqUpdate = $this->orderStatusHelper->getOrderStatusByCode($params['order_status']);
+        $orderStatus = $orderStatus['data'];
+        $orderStatus = $reqUpdate;
+        $orderStatus = $this->orderStatusService->update($orderStatus, $id);
 
         return [
             'status' => 200,

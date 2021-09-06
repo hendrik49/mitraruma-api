@@ -294,6 +294,8 @@ class ChatroomService
 
         $validator = Validator::make($params, [
             'order_status' => 'required',
+            'file' => 'nullable',
+            'type' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -311,10 +313,9 @@ class ChatroomService
                 'data' => ['message' => 'Data not found'],
             ];
         }
-        $reqUpdate = $this->orderStatusHelper->getOrderStatusByCode($params['order_status']);
         $orderStatus = $orderStatus['data'];
-        $orderStatus = $reqUpdate;
-        $orderStatus = $this->orderStatusService->update($orderStatus, $id);
+        $newStatus = $this->orderStatusHelper->updateOrderStatusByCode($orderStatus, $params);
+        $orderStatus = $this->orderStatusService->update($newStatus, $id);
 
         return [
             'status' => 200,

@@ -4,19 +4,20 @@
 namespace App\Helpers;
 
 use Carbon\Carbon;
+use App\Helpers\Date;
 
 class OrderStatus
 {
 
-    private $phase = [
-        "Pre-Purchase" => [],
-        "Design Phase" => [],
-        "Construction Phase" => [],
-        "Project Started" => [],
-        "Project Ended" => []
-    ];
+  private $phase = [
+    "Pre-Purchase" => [],
+    "Design Phase" => [],
+    "Construction Phase" => [],
+    "Project Started" => [],
+    "Project Ended" => []
+  ];
 
-    private $data = '
+  private $data = '
             {
               "110": {
                 "activity": "Start of Conversation",
@@ -180,58 +181,74 @@ class OrderStatus
               }
             }';
 
-    public function getPhase()
-    {
-        return $this->phase;
-    }
+  public function getPhase()
+  {
+    return $this->phase;
+  }
 
-    public function getPhaseByCode($code)
-    {
+  public function getPhaseByCode($code)
+  {
 
-        $orderStatuses = json_decode($this->data, true);
-        return isset($orderStatuses[$code]) ? $orderStatuses[$code]['phase'] : '';
+    $orderStatuses = json_decode($this->data, true);
+    return isset($orderStatuses[$code]) ? $orderStatuses[$code]['phase'] : '';
+  }
 
-    }
-
-    public function getConsultationStatus($code, $userType = 'customer')
-    {
-        $phase = $this->phase;
-        $orderStatuses = json_decode($this->data, true);
-        foreach($orderStatuses as $key => $data) {
-            if((int) $key >= $code && $key != 120) {
-                if($data['by'] == '' || $data['by'] == $userType) {
-                    $objectData = $data;
-                    $objectData['code'] = $key;
-                    array_push($phase[$data['phase']], $objectData);
-                }
-            }
+  public function getConsultationStatus($code, $userType = 'customer')
+  {
+    $phase = $this->phase;
+    $orderStatuses = json_decode($this->data, true);
+    foreach ($orderStatuses as $key => $data) {
+      if ((int) $key >= $code && $key != 120) {
+        if ($data['by'] == '' || $data['by'] == $userType) {
+          $objectData = $data;
+          $objectData['code'] = $key;
+          array_push($phase[$data['phase']], $objectData);
         }
-        return $phase;
-
+      }
     }
+    return $phase;
+  }
 
-    public function getOrderStatusByCode($code)
-    {
-        $orderStatuses = json_decode($this->data, true);
-        return $orderStatuses[$code];
+  public function getOrderStatusByCode($code)
+  {
+    $orderStatuses = json_decode($this->data, true);
+    return $orderStatuses[$code];
+  }
+
+  public function initOrderStatus()
+  {
+    $phase  = $this->getPhase();
+    $newOrderStatus = $this->getOrderStatusByCode(110);
+    array_push($phase[$newOrderStatus['phase']], ["activity" => $newOrderStatus['activity'], 'type' => 'general', 'file' => null, 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
+    $newStatus = [];
+    foreach ($phase as $keyPhase => $valuePhase) {
+      $data = [];
+      $data['phase'] = $keyPhase;
+      $data['list'] = $valuePhase;
+      $data['active'] = false;
+      if (sizeof($valuePhase) > 0) {
+        $data['active'] = true;
+      }
+      array_push($newStatus, $data);
     }
+    return $newStatus;
+  }
 
-    public function initOrderStatus(){
-        $phase  = $this->getPhase();
-        $newOrderStatus = $this->getOrderStatusByCode(110);
-        array_push($phase[$newOrderStatus['phase']], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
-        $newStatus = [];
-        foreach ($phase as $keyPhase => $valuePhase) {
-            $data = [];
-            $data['phase'] = $keyPhase;
-            $data['list'] = $valuePhase;
-            $data['active'] = false;
-            if(sizeof($valuePhase) > 0) {
-                $data['active'] = true;
-            }
-            array_push($newStatus, $data);
-        }
-        return $newStatus;
+  public function updateOrderStatusByCode($curPhase, $params)
+  {
+    $phase  = $curPhase;
+    $newOrderStatus = $this->getOrderStatusByCode($params['order_status']);
+    foreach ($phase as $keyPhase => $valuePhase) {
+      if ($valuePhase['phase'] == $newOrderStatus['phase']) {
+        $data = [];
+        $data['activity'] = $newOrderStatus['activity'];
+        $data['createdAt'] = date('Y-m-d H:i:s');
+        $data['file'] = $params['file'];
+        $data['type'] = $params['type'];
+
+        $phase[$keyPhase]['list'][] = $data;
+      }
     }
-
+    return $phase;
+  }
 }

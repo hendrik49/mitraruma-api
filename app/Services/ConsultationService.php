@@ -281,6 +281,14 @@ class ConsultationService
             $params['photos'] = $consultation['photos'];
         }
 
+        $params['admin_user_id'] = $consultation['admin_user_id'];
+        $params['admin_name'] = $consultation['admin_name'];
+        $params['vendor_user_id'] = $consultation['vendor_user_id'];
+        $params['vendor_name'] = $consultation['vendor_name'];
+        $params['order_number'] =  $consultation['order_number'];
+        $params['order_status'] =  $consultation['order_status'];
+        $params['email'] =  $consultation['email'];
+
         $clearTerminParams = $this->clearDataConsultationTermin($params);
         $params = $this->buildDataConsultationTermin($clearTerminParams, $params);
         $newParams = $this->consultationResource->toFirebase($params);

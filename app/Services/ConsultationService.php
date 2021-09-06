@@ -291,8 +291,8 @@ class ConsultationService
         $params['admin_user_id'] = $consultation['admin_user_id'];
         $params['admin_name'] = $consultation['admin_name'];
         $params['user_id'] = $consultation['user_id'];
-        $params['vendor_user_id'] = $consultation['vendor_user_id'];
-        $params['vendor_name'] = $consultation['vendor_name'];
+        $params['vendor_user_id'] =  $params['vendor_user_id'] ?  $params['vendor_user_id'] : $consultation['vendor_user_id'];
+        $params['vendor_name'] =  $params['vendor_name'] ? $params['vendor_name'] : $consultation['vendor_name'];
         $params['order_number'] =  $consultation['order_number'];
         $params['order_status'] =  $consultation['order_status'];
         $params['order_status_name'] =  $consultation['order_status_name'];

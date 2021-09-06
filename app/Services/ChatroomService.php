@@ -288,4 +288,24 @@ class ChatroomService
             'data' => $orderStatus
         ];
     }
+
+    public function updateOrderStatus($params, $id)
+    {
+
+        $orderStatus = $this->orderStatusService->show($id);
+
+        if ($orderStatus['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $orderStatus = $this->orderStatusService->update($params, $id);
+
+        return [
+            'status' => 200,
+            'data' => $orderStatus
+        ];
+    }
 }

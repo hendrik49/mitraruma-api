@@ -137,5 +137,20 @@ class UserChatroomController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateOrderStatus(Request $request, $id)
+    {
+        $params = $request->all();
+
+        $result = $this->chatroom->updateOrderStatus($params, $id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
 
 }

@@ -681,14 +681,15 @@ class UserService
                     $var["finished_project"] = 0;
                     $var["unfinished_project"] = 0;
                     $new[] = $var;
-                } else {
-                    $var["externalId"] = $var["id"];
-                    $var["id"] = null;
-                    $var["name"] = $var["display_name"] . " (NOT-SYNCH)";
-                    $var["finished_project"] = 0;
-                    $var["unfinished_project"] = 0;
-                    $new[] = $var;
                 }
+                // } else {
+                //     $var["externalId"] = $var["id"];
+                //     $var["id"] = null;
+                //     $var["name"] = $var["display_name"] . " (NOT-SYNCH)";
+                //     $var["finished_project"] = 0;
+                //     $var["unfinished_project"] = 0;
+                //     $new[] = $var;
+                // }
             }
             $result['data'] = $new;
             return $result;

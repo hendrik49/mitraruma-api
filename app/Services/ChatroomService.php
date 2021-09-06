@@ -292,6 +292,17 @@ class ChatroomService
     public function updateOrderStatus($params, $id)
     {
 
+        $validator = Validator::make($params, [
+            'order_status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
         $orderStatus = $this->orderStatusService->show($id);
 
         if ($orderStatus['status'] == 404) {

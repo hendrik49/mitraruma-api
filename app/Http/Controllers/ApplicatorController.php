@@ -51,6 +51,7 @@ class ApplicatorController extends Controller
         $params = $request->all();
         $params['user_type'] = 'vendor';
         $params['user_picture_url'] = '/images/img-applicator.jpeg';
+        $params['display_name'] = $params['display_name'] ? $params['display_name'] : $params["company_name"];
 
         DB::beginTransaction();
         $result = $this->applicator->create($params);

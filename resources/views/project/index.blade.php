@@ -27,8 +27,8 @@
                                     <th>tipe proyek</th>
                                     <th>status</th>
                                     <th>date</th>
-                                    {{-- <th>room ID</th>
-                                    <th>consultation ID</th> --}}
+                                    <th>room ID</th>
+                                    <th>consultation ID</th>
                                     <th>description</th>
                                     {{-- @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
 
@@ -84,8 +84,8 @@
                                         <td width="10%">{{ $project->service_type }}</td>
                                         <td>{{ $project->status }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
-                                        {{-- <td>{{ $project->room_id }}</td>
-                                        <td>{{ $project->consultation_id }}</td> --}}
+                                        <td>{{ $project->room_id }}</td>
+                                        <td>{{ $project->consultation_id }}</td>
                                         <td>{{ $project->description }}</td>
 
                                         <td>{{ $project->amount_spk_customer }}</td>

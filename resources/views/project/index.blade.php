@@ -87,7 +87,7 @@
                                         <td>{{ $project->room_id }}</td>
                                         <td>{{ $project->consultation_id }}</td>
                                         <td>{{ $project->description }}</td>
-
+                                        {{-- 
                                         <td>{{ $project->amount_spk_customer }}</td>
                                         <td>{{ $project->amount_spk_vendor }}</td>
                                         <td>{{ $project->amount_spk_vendor_net }}</td>
@@ -102,7 +102,7 @@
                                         <td>{{ $project->booking_fee }}</td>
                                         <td>{{ $project->term_payment_vendor }}</td>
                                         <td>{{ $project->term_payment_customer }}</td>
-                                        {{-- @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
+                                        @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
                                             <td>{{ $project->termin_customer_1 }}</td>
                                             <td>{{ $project->termin_customer_2 }}</td>
                                             <td>{{ $project->termin_customer_3 }}</td>

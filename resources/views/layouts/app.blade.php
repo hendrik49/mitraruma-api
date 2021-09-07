@@ -45,7 +45,7 @@
                              alt="User Image">
                         <p>
                             {{ Auth::user()->display_name }}
-                            <small>User Type {{ Auth::user()->user_type }}</small>
+                            <small>{{ Auth::user()->user_type }}</small>
                         </p>
                     </li>
                     <!-- Menu Footer-->

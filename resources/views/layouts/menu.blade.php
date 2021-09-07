@@ -20,7 +20,7 @@
           <p>Konsultasi</p>
         </a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a href="/admin/pembayaran" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
           <p>Pembayaran</p>
@@ -31,10 +31,10 @@
           <i class="far fa-circle nav-icon"></i>
           <p>Jadwal</p>
         </a>
-      </li>
+      </li> --}}
     </ul>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a href="#" class="nav-link">
       <i class="nav-icon fas fa-table"></i>
       <p>
@@ -126,4 +126,4 @@
         </a>
       </li>
     </ul>
-  </li>
+  </li> --}}

@@ -131,7 +131,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Amount SPK Customer Gross</label>
                                             <input type="number" class="form-control" name="amount_spk_customer_gross"
@@ -366,7 +366,7 @@
                                             <input type="date" class="form-control tgl" name="payment_retention_date"
                                                 placeholder="termin 5" value="{{ $project->payment_retention_date }}" readonly>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <a href="/admin/proyek" class="btn btn-primary btn-flat mb-2"
                                         name="save_action">Kembali</a>

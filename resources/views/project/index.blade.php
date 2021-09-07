@@ -102,7 +102,7 @@
                                         <td>{{ $project->booking_fee }}</td>
                                         <td>{{ $project->term_payment_vendor }}</td>
                                         <td>{{ $project->term_payment_customer }}</td>
-                                        @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
+                                        {{-- @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
                                             <td>{{ $project->termin_customer_1 }}</td>
                                             <td>{{ $project->termin_customer_2 }}</td>
                                             <td>{{ $project->termin_customer_3 }}</td>
@@ -125,7 +125,7 @@
                                             <td>{{ $project->termin_vendor_4_date }}</td>
                                             <td>{{ $project->termin_vendor_5_date }}</td>
                                             <td>{{ $project->payment_retention_date }}</td>
-                                        @endif
+                                        @endif --}}
                                         <td width="15%">
                                             <a href="{{ route('proyek.edit', ['proyek' => $project->id]) }}"
                                                 class="btn btn-sm btn-primary"> <i class="glyphicon glyphicon-edit"></i>

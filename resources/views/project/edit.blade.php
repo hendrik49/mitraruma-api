@@ -104,7 +104,7 @@
                                                 placeholder="Masukkan booking fee" value="{{ $project->booking_fee }}">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Nilai Proyek</label>
                                             <input type="number" class="form-control" name="project_value"
@@ -152,7 +152,7 @@
                                                 placeholder="Masukkan nilai spk customer"
                                                 value="{{ $project->amount_spk_customer }}" required>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="cover">Foto</label>
@@ -179,7 +179,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Term Payment Customer</label>
                                             <textarea rows="4" class="form-control" name="term_payment_customer"
@@ -391,7 +391,7 @@
                                             <input type="date" class="form-control tgl" name="payment_retention_date"
                                                 placeholder="termin 5" value="{{ $project->payment_retention_date }}">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <input type="hidden" value="PUT" name="_method">
                                     <button class="btn btn-primary btn-flat" name="save_action"
                                         value="PUBLISH">Simpan</button>

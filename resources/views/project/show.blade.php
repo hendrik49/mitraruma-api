@@ -102,7 +102,7 @@
                                             <label for="title">Tgl Konsultasi</label>
                                             <input type="date" class="form-control tgl" name="created_at"
                                                 placeholder="Masukkan tanggal Konsultasi"
-                                                value="{{ $project->created_at->format('yyyy-MM-dd') }}" readonly>
+                                                value="{{ $project->created_at }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">

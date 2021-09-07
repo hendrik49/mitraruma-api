@@ -78,7 +78,7 @@ class ConsultationRepository
 
         $model = $model->orderBy('createdAt', 'desc');
         if ($params['user_jwt_type'] == "admin")
-            $model = $model->where('adminId', '=', $params['user_id']);
+            $model = $model->where('orderNumber', '>', 0);
         else {
             if (isset($params['user_id'])) {
                 $model = $model->where('userId', '=', $params['user_id']);

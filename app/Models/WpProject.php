@@ -60,7 +60,7 @@ class WpProject extends Model
         'vendor_user_id',
         'user_id',
         'order_number',
-        'photos',
+        'images',
         'room_id',
         'consultation_id',
         'street',

@@ -11,6 +11,11 @@ class ConsultationController extends Controller
      */
     private $consultation;
 
+        /**
+     * @var ProjectService
+     */
+    private $projectService;
+
     /**
      * Create a new controller instance.
      *
@@ -18,10 +23,12 @@ class ConsultationController extends Controller
      * @return void
      */
     public function __construct(
-        \App\Services\ConsultationService $consultation
+        \App\Services\ConsultationService $consultation,
+        \App\Services\ProjectService $projectService
     )
     {
         $this->consultation = $consultation;
+        $this->projectService = $projectService;
     }
 
     /**
@@ -67,6 +74,24 @@ class ConsultationController extends Controller
 
         return response()->json($result['data'], $result['status']);
     }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeChat(Request $request)
+    {
+
+        $params = $request->all();
+
+        $result =  $this->projectService->createChat($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
 
     /**
      * Display the specified resource.

@@ -86,7 +86,7 @@ class ProjectService
             'customer_contact' => 'required|string',
             'description' => 'required|string',
             'status' => 'required',
-            'substatus' => 'required',
+            'sub_status' => 'required',
             'estimated_budget'=> 'required',
             'service_type' => 'required|string'
         ]);
@@ -103,6 +103,36 @@ class ProjectService
             return [
                 'status' => 404,
                 'data' => ['message' => 'Project not found'],
+            ];
+        }
+
+        $address = $this->projectService->create($params);
+
+        return [
+            'status' => 201,
+            'data' => $address,
+        ];
+    }
+
+    public function createChat($params){
+
+        $validator = Validator::make($params, [
+            'order_number' => 'required|numeric',
+            'room_id' => 'required|string',
+            'street' => 'required|string',
+            'customer_name' => 'required|string',
+            'customer_contact' => 'required|string',
+            'description' => 'required|string',
+            'status' => 'required',
+            'sub_status' => 'required',
+            'estimated_budget'=> 'required',
+            'service_type' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
             ];
         }
 

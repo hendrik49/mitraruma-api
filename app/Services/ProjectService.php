@@ -119,6 +119,7 @@ class ProjectService
         $validator = Validator::make($params, [
             'order_number' => 'required|numeric',
             'room_id' => 'required|string',
+            'user_id' => 'required',
             'street' => 'required|string',
             'customer_name' => 'required|string',
             'customer_contact' => 'required|string',

@@ -49,6 +49,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::GET('/login/google', [AuthController::class, 'loginGoogleRedirect'])->middleware(['web']);
     Route::GET('/login/google/callback', [AuthController::class, 'handleGoogleCallback'])->middleware(['web']);
     Route::POST('/login/google/token', [AuthController::class, 'loginGoogleToken']);
+    Route::POST('/login/reset-password', [AuthController::class, 'resetPassword']);
 
 
     Route::POST('/user/register', [UserController::class, 'store']);

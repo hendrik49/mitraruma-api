@@ -616,6 +616,53 @@ class UserService
         }
     }
 
+    public function resetPasswordLink($params)
+    {
+        try {
+
+            $validator = Validator::make($params, [
+                'user_email' => 'nullable|email',
+                'user_phone_number' => 'nullable|regex:/[+](62)[0-9]/'
+            ]);
+    
+            if ($validator->fails()) {
+                return [
+                    'status' => 422,
+                    'data' => ['message' => $validator->errors()->first()]
+                ];
+            }
+    
+            $client = new GuzzleHttp\Client(['base_uri' => env('API_MITRARUMA', 'https://qa.mitraruma.com/')]);
+
+            $headers = [
+                'Content-Type'          => 'application/json'
+            ];
+
+            $json =  [
+                "lang" => "id",
+                "userType" => "BUYER",
+                "orgIdfier" => "scg",
+                "useremail" => isset($params['user_email']) ? $params['user_email'] : null,
+                "phoneNo" => isset($params['user_phone_number']) ? $params['user_phone_number'] : null,
+            ];
+
+            $response = $client->post('buyer-service/auth/send-reset-link', [
+                'headers' => $headers,
+                'json' => $json
+            ]);
+
+            $data =  json_decode($response->getBody(), true);
+            $result['status'] = $response->getStatusCode();
+            $result['data'] = $data;
+            return  $result;
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            $result['status'] = $response->getStatusCode();
+            $result['data'] = $data;
+            return  $message;
+        }
+    }
+
     public function postSignInAPI($params, $isEmail)
     {
         try {
@@ -677,7 +724,7 @@ class UserService
                 if ($exist) {
                     $var["externalId"] = $var["id"];
                     $var["id"] = $exist->ID;
-                    $var["name"] = $var["display_name"].' - '.$var["user_phone"];
+                    $var["name"] = $var["display_name"] . ' - ' . $var["user_phone"];
                     $var["finished_project"] = 0;
                     $var["unfinished_project"] = 0;
                     $new[] = $var;

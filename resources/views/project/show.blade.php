@@ -100,7 +100,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Tgl Konsultasi</label>
-                                            <input type="date" class="form-control tgl" name="created_at"
+                                            <input type="text" class="form-control tgl" name="created_at"
                                                 placeholder="Masukkan tanggal Konsultasi"
                                                 value="{{ $project->created_at }}" readonly>
                                         </div>

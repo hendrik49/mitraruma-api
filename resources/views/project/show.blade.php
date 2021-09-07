@@ -108,6 +108,7 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="cover">Foto</label>
+                                            <label for="title">{{ $project->images}}</label>
                                             @if ($project->images != '[]')
                                                 <img src="{{ asset('storage/' . $project->images) }}" width="320px" />
                                             @endif

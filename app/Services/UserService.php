@@ -189,7 +189,7 @@ class UserService
 
         $isUserExist = $this->user->findOne($params);
 
-        if ($resp['errorCode'] && $isUserExist) {
+        if ($resp['errorCode']) {
             return [
                 'status' => 400,
                 'data' => ['message' => $resp['error']],

@@ -45,29 +45,30 @@
                                     <th> booking fee </th>
                                     <th> term payment vendor </th>
                                     <th> term payment customer </th>
-                                
-                                    <th> termin customer 1 </th>
-                                    <th> termin customer 2 </th>
-                                    <th> termin customer 3 </th>
-                                    <th> termin customer 4 </th>
-                                    <th> termin customer 5 </th>
-                                    <th> termin customer 1 date </th>
-                                    <th> termin customer 2 date </th>
-                                    <th> termin customer 3 date </th>
-                                    <th> termin customer 4 date </th>
-                                    <th> termin customer 5 date </th>
-                            
-                                    <th> termin vendor 1 </th>
-                                    <th> termin vendor 2 </th>
-                                    <th> termin vendor 3 </th>
-                                    <th> termin vendor 4 </th>
-                                    <th> termin vendor 5 </th>
-                                    <th> termin vendor 1 date </th>
-                                    <th> termin vendor 2 date </th>
-                                    <th> termin vendor 3 date </th>
-                                    <th> termin vendor 4 date </th>
-                                    <th> termin vendor 5 date </th>
-                                    <th> payment retention date </th>                                    
+                                    @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
+                                        <th> termin customer 1 </th>
+                                        <th> termin customer 2 </th>
+                                        <th> termin customer 3 </th>
+                                        <th> termin customer 4 </th>
+                                        <th> termin customer 5 </th>
+                                        <th> termin customer 1 date </th>
+                                        <th> termin customer 2 date </th>
+                                        <th> termin customer 3 date </th>
+                                        <th> termin customer 4 date </th>
+                                        <th> termin customer 5 date </th>
+                                    @elseif(Auth::user()->user_type=="vendor"||Auth::user()->user_type=="admin")
+                                        <th> termin vendor 1 </th>
+                                        <th> termin vendor 2 </th>
+                                        <th> termin vendor 3 </th>
+                                        <th> termin vendor 4 </th>
+                                        <th> termin vendor 5 </th>
+                                        <th> termin vendor 1 date </th>
+                                        <th> termin vendor 2 date </th>
+                                        <th> termin vendor 3 date </th>
+                                        <th> termin vendor 4 date </th>
+                                        <th> termin vendor 5 date </th>
+                                        <th> payment retention date </th>
+                                    @endif
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -87,43 +88,44 @@
                                         <td>{{ $project->consultation_id }}</td> --}}
                                         <td>{{ $project->description }}</td>
 
-                                        <td>{{ $project->amount_spk_customer}}</td>
-                                        <td>{{ $project->amount_spk_vendor}}</td>
-                                        <td>{{ $project->amount_spk_vendor_net}}</td>
-                                        <td>{{ $project->mitraruma_discount}}</td>
-                                        <td>{{ $project->applicator_discount}}</td>
-                                        <td>{{ $project->commision}}</td>
-                                        <td>{{ $project->other_expanse}}</td>
-                                        <td>{{ $project->total_expanse}}</td>
-                                        <td>{{ $project->expanse_note}}</td>
-                                        <td>{{ $project->project_note}}</td>
-                                        <td>{{ $project->material_buy}}</td>
-                                        <td>{{ $project->booking_fee}}</td>
-                                        <td>{{ $project->term_payment_vendor}}</td>
-                                        <td>{{ $project->term_payment_customer}}</td>
-                                    
-                                        <td>{{ $project->termin_customer_1}}</td>
-                                        <td>{{ $project->termin_customer_2}}</td>
-                                        <td>{{ $project->termin_customer_3}}</td>
-                                        <td>{{ $project->termin_customer_4}}</td>
-                                        <td>{{ $project->termin_customer_5}}</td>
-                                        <td>{{ $project->termin_customer_1_date}}</td>
-                                        <td>{{ $project->termin_customer_2_date}}</td>
-                                        <td>{{ $project->termin_customer_3_date}}</td>
-                                        <td>{{ $project->termin_customer_4_date}}</td>
-                                        <td>{{ $project->termin_customer_5_date}}</td>
-                                
-                                        <td>{{ $project->termin_vendor_1}}</td>
-                                        <td>{{ $project->termin_vendor_2}}</td>
-                                        <td>{{ $project->termin_vendor_3}}</td>
-                                        <td>{{ $project->termin_vendor_4}}</td>
-                                        <td>{{ $project->termin_vendor_5}}</td>
-                                        <td>{{ $project->termin_vendor_1_date}}</td>
-                                        <td>{{ $project->termin_vendor_2_date}}</td>
-                                        <td>{{ $project->termin_vendor_3_date}}</td>
-                                        <td>{{ $project->termin_vendor_4_date}}</td>
-                                        <td>{{ $project->termin_vendor_5_date}}</td>
-                                        <td>{{ $project->payment_retention_date}}</td>
+                                        <td>{{ $project->amount_spk_customer }}</td>
+                                        <td>{{ $project->amount_spk_vendor }}</td>
+                                        <td>{{ $project->amount_spk_vendor_net }}</td>
+                                        <td>{{ $project->mitraruma_discount }}</td>
+                                        <td>{{ $project->applicator_discount }}</td>
+                                        <td>{{ $project->commision }}</td>
+                                        <td>{{ $project->other_expanse }}</td>
+                                        <td>{{ $project->total_expanse }}</td>
+                                        <td>{{ $project->expanse_note }}</td>
+                                        <td>{{ $project->project_note }}</td>
+                                        <td>{{ $project->material_buy }}</td>
+                                        <td>{{ $project->booking_fee }}</td>
+                                        <td>{{ $project->term_payment_vendor }}</td>
+                                        <td>{{ $project->term_payment_customer }}</td>
+                                        @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
+                                            <td>{{ $project->termin_customer_1 }}</td>
+                                            <td>{{ $project->termin_customer_2 }}</td>
+                                            <td>{{ $project->termin_customer_3 }}</td>
+                                            <td>{{ $project->termin_customer_4 }}</td>
+                                            <td>{{ $project->termin_customer_5 }}</td>
+                                            <td>{{ $project->termin_customer_1_date }}</td>
+                                            <td>{{ $project->termin_customer_2_date }}</td>
+                                            <td>{{ $project->termin_customer_3_date }}</td>
+                                            <td>{{ $project->termin_customer_4_date }}</td>
+                                            <td>{{ $project->termin_customer_5_date }}</td>
+                                        @elseif(Auth::user()->user_type=="vendor"||Auth::user()->user_type=="admin")
+                                            <td>{{ $project->termin_vendor_1 }}</td>
+                                            <td>{{ $project->termin_vendor_2 }}</td>
+                                            <td>{{ $project->termin_vendor_3 }}</td>
+                                            <td>{{ $project->termin_vendor_4 }}</td>
+                                            <td>{{ $project->termin_vendor_5 }}</td>
+                                            <td>{{ $project->termin_vendor_1_date }}</td>
+                                            <td>{{ $project->termin_vendor_2_date }}</td>
+                                            <td>{{ $project->termin_vendor_3_date }}</td>
+                                            <td>{{ $project->termin_vendor_4_date }}</td>
+                                            <td>{{ $project->termin_vendor_5_date }}</td>
+                                            <td>{{ $project->payment_retention_date }}</td>
+                                        @endif
                                         <td width="15%">
                                             <a href="{{ route('proyek.edit', ['proyek' => $project->id]) }}"
                                                 class="btn btn-sm btn-primary"> <i class="glyphicon glyphicon-edit"></i>

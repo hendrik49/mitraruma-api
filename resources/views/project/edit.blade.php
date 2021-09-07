@@ -98,11 +98,11 @@
                                                 placeholder="Masukkan budget" onkeypress="return isNumberKey(event)"
                                                 value="{{ $project->estimated_budget }}" readonly>
                                         </div>
-                                        <div class="col-sm-6">
+                                        {{-- <div class="col-sm-6">
                                             <label for="title">Booking Fee</label>
                                             <input type="number" class="form-control" name="booking_fee"
                                                 placeholder="Masukkan booking fee" value="{{ $project->booking_fee }}">
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     {{-- <div class="form-group row">
                                         <div class="col-sm-6">

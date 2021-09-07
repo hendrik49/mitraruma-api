@@ -127,9 +127,11 @@
                                             <td>{{ $project->payment_retention_date }}</td>
                                         @endif --}}
                                         <td width="15%">
+                                            @if (Auth::user()->user_type == 'admin')
                                             <a href="{{ route('proyek.edit', ['proyek' => $project->id]) }}"
                                                 class="btn btn-sm btn-primary"> <i class="glyphicon glyphicon-edit"></i>
                                                 Edit </a>
+                                            @endif
                                             <a href="{{ route('proyek.show', ['proyek' => $project->id]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>
                                                 View </a>

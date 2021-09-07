@@ -34,7 +34,6 @@
                     <div class="icon">
                         <i class="ion ion-ios-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-4 col-xs-6">
@@ -48,7 +47,6 @@
                     <div class="icon">
                         <i class="ion ion-ios-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -63,7 +61,6 @@
                     <div class="icon">
                         <i class="ion ion-ios-card"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-4 col-xs-6">
@@ -77,10 +74,9 @@
                     <div class="icon">
                         <i class="ion ion-ios-card"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-4 col-xs-6">
+            {{-- <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-primary">
                     <div class="inner">
@@ -173,10 +169,10 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-6 col-xs-8">
 
-                <div class="card ">
+                {{-- <div class="card ">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
@@ -250,13 +246,13 @@
 
                     </div>
                     <!-- /.box-body -->
-                </div>
+                </div> --}}
             </div>
         </div>
 
         <div class="row">
             <!-- ./col -->
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
@@ -269,12 +265,12 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <div class="row">
             <!-- ./col -->
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
@@ -287,7 +283,7 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-            </div>
+            </div> --}}
 
         </div>
     @endsection

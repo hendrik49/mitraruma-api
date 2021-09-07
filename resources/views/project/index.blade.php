@@ -30,22 +30,22 @@
                                     {{-- <th>room ID</th>
                                     <th>consultation ID</th> --}}
                                     <th>description</th>
+                                    {{-- @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
 
-                                    <th> amount spk customer </th>
-                                    <th> amount spk vendor </th>
-                                    <th> amount spk vendor net </th>
-                                    <th> mitraruma discount </th>
-                                    <th> applicator discount </th>
-                                    <th> commision </th>
-                                    <th> other expanse </th>
-                                    <th> total expanse </th>
-                                    <th> expanse note </th>
-                                    <th> project note </th>
-                                    <th> material buy </th>
-                                    <th> booking fee </th>
-                                    <th> term payment vendor </th>
-                                    <th> term payment customer </th>
-                                    @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
+                                        <th> amount spk customer </th>
+                                        <th> amount spk vendor </th>
+                                        <th> amount spk vendor net </th>
+                                        <th> mitraruma discount </th>
+                                        <th> applicator discount </th>
+                                        <th> commision </th>
+                                        <th> other expanse </th>
+                                        <th> total expanse </th>
+                                        <th> expanse note </th>
+                                        <th> project note </th>
+                                        <th> material buy </th>
+                                        <th> booking fee </th>
+                                        <th> term payment vendor </th>
+                                        <th> term payment customer </th>
                                         <th> termin customer 1 </th>
                                         <th> termin customer 2 </th>
                                         <th> termin customer 3 </th>
@@ -68,7 +68,7 @@
                                         <th> termin vendor 4 date </th>
                                         <th> termin vendor 5 date </th>
                                         <th> payment retention date </th>
-                                    @endif
+                                    @endif --}}
                                     <th>Actions</th>
                                 </tr>
                             </thead>

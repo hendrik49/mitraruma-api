@@ -79,13 +79,13 @@ class ConsultationRepository
         $model = $model->orderBy('createdAt', 'desc');
         if ($params['user_jwt_type'] == "admin")
             $model = $model->where('adminId', '=', $params['user_id']);
+        else if ($params['user_jwt_type'] == "vendor")
+            $model = $model->where('applicatorId', '=', $params['user_id']);
         else {
-            if (isset($params['user_id'])) {
-                $model = $model->where('userId', '=', $params['user_id']);
-            }
-            if (isset($params['vendor_user_id'])) {
-                $model = $model->where('applicatorId', '=', $params['vendor_user_id']);
-            }
+            $model = $model->where('userId', '=', $params['user_id']);
+        }
+        if (isset($params['vendor_user_id'])) {
+            $model = $model->where('applicatorId', '=', $params['vendor_user_id']);
         }
         if (isset($params['consultation_id'])) {
             $model = $model->where('consultationId', '=', $params['consultation_id']);

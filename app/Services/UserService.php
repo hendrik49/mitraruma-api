@@ -11,7 +11,7 @@ use GuzzleHttp;
 use GuzzleHttp\Exception\RequestException;
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\DB;
 
 class UserService
 {
@@ -169,62 +169,76 @@ class UserService
     public function createIntegration($params)
     {
 
-        $validator = Validator::make($params, [
-            'user_phone_number' => 'required|regex:/[+](62)[0-9]/|unique:wp_users,user_phone_number',
-            'user_type' => 'required',
-            'user_email' => 'nullable|email',
-            'display_name' => 'required:min:3',
-            'password' => 'required|min:6',
-            'company_name' => 'nullable|min:3'
-        ]);
+        try {
 
-        if ($validator->fails()) {
+            DB::beginTransaction();
+
+            $validator = Validator::make($params, [
+                'user_phone_number' => 'required|regex:/[+](62)[0-9]/|unique:wp_users,user_phone_number',
+                'user_type' => 'required',
+                'user_email' => 'nullable|email',
+                'display_name' => 'required:min:3',
+                'password' => 'required|min:6',
+                'company_name' => 'nullable|min:3'
+            ]);
+
+            if ($validator->fails()) {
+                return [
+                    'status' => 422,
+                    'data' => ['message' => $validator->errors()->first()]
+                ];
+            }
+
+            $resp = $this->postSignUpAPI($params);
+
+            $isUserExist = $this->user->findOne($params);
+
+            if ($resp['errorCode']) {
+                return [
+                    'status' => 400,
+                    'data' => ['message' => $resp['error']],
+                ];
+            }
+
+            $params['password'] = bcrypt($params['password']);
+            $params['user_registered'] = date("Y-m-d H:i:s");
+            $params['user_email'] =  $params['user_email'] ? $params['user_email'] : $params['user_phone_number'] . '@gmail.com';
+            $params['user_login'] = $params['user_email'];
+            $params['user_nicename'] = $resp['userId'];
+
+            if ($isUserExist) {
+                return [
+                    'status' => 409,
+                    'data' => ['message' => 'User already exist'],
+                ];
+            }
+
+            $user = $this->user->create($params);
+
+            $otp = $this->otp->generateToken($user['ID']);
+
+            self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
+
+            DB::commit();
+
             return [
-                'status' => 422,
-                'data' => ['message' => $validator->errors()->first()]
+                'status' => 201,
+                'data' => [
+                    'message' => 'Please check your message',
+                    'value' => [
+                        'ID' => $user['ID'],
+                        'valid_date' => $otp['valid_date']
+                    ]
+                ],
+            ];
+            
+        } catch (\Exception $e) {
+            DB::commit();
+            return [
+                'status' => 500,
+                'data' => ['message' => $e->getMessage()]
             ];
         }
-
-        $resp = $this->postSignUpAPI($params);
-
-        $isUserExist = $this->user->findOne($params);
-
-        if ($resp['errorCode']) {
-            return [
-                'status' => 400,
-                'data' => ['message' => $resp['error']],
-            ];
-        }
-
-        $params['password'] = bcrypt($params['password']);
-        $params['user_registered'] = date("Y-m-d H:i:s");
-        $params['user_email'] =  $params['user_email'] ? $params['user_email'] : $params['user_phone_number'] . '@gmail.com';
-        $params['user_login'] = $params['user_email'];
-        $params['user_nicename'] = $resp['userId'];
-
-        if ($isUserExist) {
-            return [
-                'status' => 409,
-                'data' => ['message' => 'User already exist'],
-            ];
-        }
-
-        $user = $this->user->create($params);
-
-        $otp = $this->otp->generateToken($user['ID']);
-
-        self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
-
-        return [
-            'status' => 201,
-            'data' => [
-                'message' => 'Please check your message',
-                'value' => [
-                    'ID' => $user['ID'],
-                    'valid_date' => $otp['valid_date']
-                ]
-            ],
-        ];
     }
 
     public function createByEmail($params)
@@ -624,14 +638,14 @@ class UserService
                 'user_email' => 'nullable|email',
                 'user_phone_number' => 'nullable|regex:/[+](62)[0-9]/'
             ]);
-    
+
             if ($validator->fails()) {
                 return [
                     'status' => 422,
                     'data' => ['message' => $validator->errors()->first()]
                 ];
             }
-    
+
             $client = new GuzzleHttp\Client(['base_uri' => env('API_MITRARUMA', 'https://qa.mitraruma.com/')]);
 
             $headers = [

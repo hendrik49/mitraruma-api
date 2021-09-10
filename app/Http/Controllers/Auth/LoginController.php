@@ -99,6 +99,7 @@ class LoginController extends Controller
                     $user->user_phone_number = $decoded->phone;
                     $user->user_picture_url =  $decoded->picture;
                     $user->user_status = 1;
+                    $user->user_registered =  date('y-m-d');
                     $user->save();
                     return Redirect::to('/home');
                     //return redirect()->route('login')->with('error', 'Failed to login. This account ' . $decoded->email . ' not exist');

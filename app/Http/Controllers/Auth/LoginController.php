@@ -92,7 +92,7 @@ class LoginController extends Controller
                     $user = new User;
                     $user->ID =  $decoded->id;
                     $user->display_name =  $decoded->displayName;
-                    $user->nice_name =  $decoded->userId;
+                    $user->user_nice_name =  $decoded->userId;
                     $user->user_email =  $decoded->email;
                     $user->user_email =  $decoded->email;
                     $user->user_type =  $decoded->userType;                    

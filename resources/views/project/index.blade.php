@@ -26,8 +26,8 @@
                                     <th>applicator name</th>
                                     <th>tipe proyek</th>
                                     <th>status</th>
+                                    <th>sub status</th>
                                     <th>date</th>
-                                    <th>room ID</th>
                                     <th>consultation ID</th>
                                     <th>description</th>
                                     {{-- @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
@@ -83,8 +83,8 @@
                                         <td>{{ $project->vendor_name }}</td>
                                         <td width="10%">{{ $project->service_type }}</td>
                                         <td>{{ $project->status }}</td>
+                                        <td>{{ $project->sub_status }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
-                                        <td>{{ $project->room_id }}</td>
                                         <td>{{ $project->consultation_id }}</td>
                                         <td>{{ $project->description }}</td>
                                         {{-- 

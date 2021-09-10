@@ -366,32 +366,22 @@
                                                         <td>No</td>
                                                         <th>Status</th>
                                                         <th>Sub Status</th>
-                                                        <th>File</th>
                                                         <th>Type</th>
                                                         <th>Date</th>
+                                                        <th>Active</th>
+                                                        <th>File</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($status['data'] as $key => $val)
                                                         <tr>
-                                                            <td>{{ $key }}</td>
-                                                            <td>{{ json_encode($val) }}</td>
+                                                            <td>{{ ++$key }}</td>
+                                                            <td>{{ $val['phase'] }}</td>
                                                             <td>
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
                                                                             <li>{{ $item['activity'] }}</li>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </ul>
-                                                            </td>
-                                                            <td>
-                                                                <ul>
-                                                                    @if (isset($val['list']))
-                                                                        @foreach ($val['list'] as $key => $item)
-                                                                            @if (isset($item['file']))
-                                                                                <li>{{ $item['file'] }}</li>
-                                                                            @endif
                                                                         @endforeach
                                                                     @endif
                                                                 </ul>
@@ -414,6 +404,18 @@
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
                                                                             <li>{{ $item['createdAt'] }}</li>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </ul>
+                                                            </td>
+                                                            <td>{{ $val['active'] }}</td>
+                                                            <td>
+                                                                <ul>
+                                                                    @if (isset($val['list']))
+                                                                        @foreach ($val['list'] as $key => $item)
+                                                                            @if (isset($item['file']))
+                                                                                <li>{{ $item['file'] }}</li>
+                                                                            @endif
                                                                         @endforeach
                                                                     @endif
                                                                 </ul>

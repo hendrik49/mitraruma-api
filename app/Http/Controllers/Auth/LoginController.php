@@ -88,7 +88,20 @@ class LoginController extends Controller
                     Auth::login($user);
                     return Redirect::to('/home');
                 } else {
-                    return redirect()->route('login')->with('error', 'Failed to login. This account ' . $decoded->email . ' not exist');
+
+                    $user = new User;
+                    $user->ID =  $decoded->id;
+                    $user->display_name =  $decoded->displayName;
+                    $user->nice_name =  $decoded->userId;
+                    $user->user_email =  $decoded->email;
+                    $user->user_email =  $decoded->email;
+                    $user->user_type =  $decoded->userType;                    
+                    $user->user_phone_number = $decoded->phone;
+                    $user->user_picture_url =  $decoded->picture;
+                    $user->user_status = 1;
+                    $user->save();
+                    return Redirect::to('/home');
+                    //return redirect()->route('login')->with('error', 'Failed to login. This account ' . $decoded->email . ' not exist');
                 }
             } else {
                 return view('auth.login');

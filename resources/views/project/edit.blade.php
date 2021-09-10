@@ -174,11 +174,13 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="cover">Foto</label>
-                                        @foreach (json_decode($project->images) as $image)
-                                            <div class="col-sm-6">
-                                                <img src="{{ $image->pathUrl }}" width="320px" />
-                                            </div>
-                                        @endforeach
+                                        @if($project->images!=null)
+                                            @foreach (json_decode($project->images) as $image)
+                                                <div class="col-sm-6">
+                                                    <img src="{{ $image->pathUrl }}" width="320px" />
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                     {{-- <div class="form-group row">
                                         <div class="col-sm-6">

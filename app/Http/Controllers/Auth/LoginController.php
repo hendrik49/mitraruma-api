@@ -83,7 +83,7 @@ class LoginController extends Controller
             if ($request->has('token')) {
                 $token = $request->query('token');
                 $decoded = $this->jwt->decode($token);
-                $user = User::where('user_phone_number', $decoded->phone)->orWhere('user_email', $decoded->email)->first();
+                $user = User::where('ID', $decoded->id)->orWhere('user_phone_number', $decoded->phone)->orWhere('user_email', $decoded->email)->first();
                 if ($user) {
                     Auth::login($user);
                     return Redirect::to('/home');

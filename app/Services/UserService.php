@@ -217,7 +217,16 @@ class UserService
 
             $otp = $this->otp->generateToken($user['ID']);
 
-            self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
+            $resp = self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
+
+            if ($resp->getStatusCode() == 400) {
+
+                DB::rollBack();
+                return [
+                    'status' => 400,
+                    'data' => ['message' => $resp->getMessage()],
+                ];
+            }
 
             DB::commit();
 
@@ -233,7 +242,7 @@ class UserService
             ];
             
         } catch (\Exception $e) {
-            DB::commit();
+            DB::rollBack();
             return [
                 'status' => 500,
                 'data' => ['message' => $e->getMessage()]
@@ -592,9 +601,10 @@ class UserService
         $twilio_number = getenv("TWILIO_NUMBER");
         $client = new Client($account_sid, $auth_token);
         try {
-            $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
+            return $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
         } catch (\Throwable $e) {
             report($e);
+            return $e;
         }
     }
 

@@ -375,7 +375,7 @@
                                                     @foreach ($status as $key => $val)
                                                         <tr>
                                                             <td>{{ ++$key }}</td>
-                                                            <td>{{ json_encode($val['phase']) }}</td>
+                                                            <td>{{ json_encode($val) }}</td>
                                                             <td>
                                                                 <ul>
                                                                     @if (isset($val['list']))

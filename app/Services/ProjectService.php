@@ -136,7 +136,7 @@ class ProjectService
                 'data' => ['message' => $validator->errors()->first()]
             ];
         }
-
+        $params['images'] = json_encode($params['images']);
         $address = $this->projectService->create($params);
 
         return [

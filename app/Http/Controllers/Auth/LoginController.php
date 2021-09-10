@@ -107,7 +107,7 @@ class LoginController extends Controller
                 return view('auth.login');
             }
         } catch (\Exception $e) {
-            return redirect()->route('login')->with('error', 'Failed to login. Token chat platform not valid');
+            return redirect()->route('login')->with('error', 'Failed to login. '.$e->getMessage());
         }
     }
 

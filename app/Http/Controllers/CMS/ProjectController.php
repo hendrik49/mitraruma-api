@@ -10,16 +10,30 @@ use Illuminate\Validation\ValidationException;
 use App\Models\WpProject;
 use App\Models\WpUser;
 use App\Http\Controllers\Controller;
+use App\Helpers\OrderStatus;
 
 class ProjectController extends Controller
 {
+    /**
+     * @var OrderStatusService
+     */
+    private $orderStatusService;
+
+    /**
+     * @var OrderStatus
+     */
+    private $orderStatusHelper;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        \App\Services\OrderStatusService $orderStatusService,
+        OrderStatus $orderStatusHelper
+    ) {
+        $this->orderStatusService = $orderStatusService;
+        $this->orderStatusHelper = $orderStatusHelper;
         $this->middleware('auth');
     }
 
@@ -27,14 +41,14 @@ class ProjectController extends Controller
     {
         $user = Auth::user();
         $start_date = $end_date = date('Y-m-d H:i:s');
-        
+
         if ($user->user_type == WpUser::TYPE_CUSTOMER)
             $projects = WpProject::where('user_id', $user->ID)->orderByDesc('created_at');
         else if ($user->user_type == WpUser::TYPE_VENDOR)
             $projects = WpProject::where('vendor_user_id', $user->ID)->orderByDesc('created_at');
         else
             $projects = WpProject::orderByDesc('created_at')->orderByDesc('created_at');
-        
+
         $projects = $projects->get();
 
         return view('project.index', compact('projects', 'start_date', 'end_date'));
@@ -44,14 +58,14 @@ class ProjectController extends Controller
     {
         $user = Auth::user();
         $start_date = $end_date = date('Y-m-d H:i:s');
-        
+
         if ($user->user_type == WpUser::TYPE_CUSTOMER)
             $projects = WpProject::where('user_id', $user->ID)->orderByDesc('created_at');
         else if ($user->user_type == WpUser::TYPE_VENDOR)
             $projects = WpProject::where('user_vendor_id', $user->ID)->orderByDesc('created_at');
         else
             $projects = WpProject::orderByDesc('created_at')->orderByDesc('created_at');
-        
+
         $projects = $projects->get();
 
         return view('project.pembayaran', compact('projects', 'start_date', 'end_date'));
@@ -127,7 +141,15 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = WpProject::findOrfail($id);
-        return view('project.show', ['project' => $project]);
+
+        $orderStatus = $this->orderStatusService->show($project->room_id);
+
+        if ($orderStatus['status'] == 404) {
+            $status = [];
+        } else {
+            $status = $orderStatus['data'];
+        }
+        return view('project.show', ['status' => $status, 'project' => $project]);
     }
 
     public function edit($id)
@@ -156,7 +178,7 @@ class ProjectController extends Controller
 
             DB::commit();
 
-            return redirect()->route('proyek.index')->with('status', 'Data proyek '.$project->order_number.' berhasil diubah');
+            return redirect()->route('proyek.index')->with('status', 'Data proyek ' . $project->order_number . ' berhasil diubah');
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->with('errors', $e->validator->getMessageBag());

@@ -7,7 +7,7 @@
 
     <div class="row">
         <div class="container col-sm-12">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
@@ -355,17 +355,96 @@
                                                 placeholder="termin 5" value="{{ $project->payment_retention_date }}" readonly>
                                         </div>
                                     </div> --}}
+                                    <h3>List Order Status </h3>
 
-                                    <a href="/admin/proyek" class="btn btn-primary btn-flat mb-2"
-                                        name="save_action">Kembali</a>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table id="tab-status" class="table display table-bordered table-stripped"
+                                                style="width: 100%">
+                                                <thead>
+                                                    <tr>
+                                                        <td>No</td>
+                                                        <th>Status</th>
+                                                        <th>Sub Status</th>
+                                                        <th>File</th>
+                                                        <th>Type</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($status as $key => $val)
+                                                        <tr>
+                                                            <td>{{ ++$key }}</td>
+                                                            <td>{{ $val['phase'] }}</td>
+                                                            <td>
+                                                                <ul>
+                                                                    @foreach ($val['list'] as $key => $item)
+                                                                        <li>{{ $item['activity'] }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul>
+                                                                    @foreach ($val['list'] as $key => $item)
+                                                                        @if ($item['file']!="" && $item['file']!=null)
+                                                                            <li>{{ $item['file'] }}</li>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul>
+                                                                    @foreach ($val['list'] as $key => $item)
+                                                                        <li>{{ $item['type'] }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul>
+                                                                    @foreach ($val['list'] as $key => $item)
+                                                                        <li>{{ $item['createdAt'] }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
+
+                        <a href="/admin/proyek" class="btn btn-primary btn-flat mb-2" name="save_action">Kembali</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById("tgl_Konsultasi").valueAsDate = new Date();
+    </div>
+    </div>
+@section('scripts')
+    @parent
+    <script type="text/javascript">
+        $(function() {
+            var dTable = $('#tab-status').dataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'responsive': true,
+                'info': true,
+                'scrollX': true,
+                'dom': 'Bfrtip',
+                'buttons': [{
+                    extend: 'excel',
+                    // exportOptions: {
+                    //     columns: [0, 1, 2, 3, 4, 5]
+                    // }
+                }, ]
+            });
+        });
     </script>
+@endsection
 @stop

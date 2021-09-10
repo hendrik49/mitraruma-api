@@ -17,6 +17,13 @@ class JwtService
 
     public function decode($params) {
 
+        $jwt = JWT::decode($params, getenv('JWT_SECRET'), array('HS256'));
+
+        return $jwt;
+    }
+
+    public function decodechat($params) {
+
         $jwt = JWT::decode($params, getenv('JWT_SECRET_CHAT'), array('HS256'));
 
         return $jwt;

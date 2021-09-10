@@ -389,7 +389,7 @@
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                     @foreach ($val['list'] as $key => $item)
-                                                                        @if ($item['file'] != '' && $item['file'] != null)
+                                                                        @if (isset($item['file']))
                                                                             <li>{{ $item['file'] }}</li>
                                                                         @endif
                                                                     @endforeach

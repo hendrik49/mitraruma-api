@@ -224,7 +224,7 @@ class UserService
                 DB::rollBack();
                 return [
                     'status' => 400,
-                    'data' => ['message' => $resp->getMessage()],
+                    'data' => ['message' => "not a valid phone number."],
                 ];
             }
 

@@ -375,35 +375,43 @@
                                                     @foreach ($status as $key => $val)
                                                         <tr>
                                                             <td>{{ ++$key }}</td>
-                                                            <td>{{ $val['phase'] }}</td>
+                                                            <td>{{ json_encode($val['phase']) }}</td>
                                                             <td>
                                                                 <ul>
-                                                                    @foreach ($val['list'] as $key => $item)
-                                                                        <li>{{ $item['activity'] }}</li>
-                                                                    @endforeach
+                                                                    @if (isset($val['list']))
+                                                                        @foreach ($val['list'] as $key => $item)
+                                                                            <li>{{ $item['activity'] }}</li>
+                                                                        @endforeach
+                                                                    @endif
                                                                 </ul>
                                                             </td>
                                                             <td>
                                                                 <ul>
+                                                                    @if (isset($val['list']))
                                                                     @foreach ($val['list'] as $key => $item)
-                                                                        @if ($item['file']!="" && $item['file']!=null)
+                                                                        @if ($item['file'] != '' && $item['file'] != null)
                                                                             <li>{{ $item['file'] }}</li>
                                                                         @endif
                                                                     @endforeach
+                                                                    @endif
                                                                 </ul>
                                                             </td>
                                                             <td>
                                                                 <ul>
+                                                                    @if (isset($val['list']))
                                                                     @foreach ($val['list'] as $key => $item)
                                                                         <li>{{ $item['type'] }}</li>
                                                                     @endforeach
+                                                                    @endif
                                                                 </ul>
                                                             </td>
                                                             <td>
                                                                 <ul>
+                                                                    @if (isset($val['list']))
                                                                     @foreach ($val['list'] as $key => $item)
                                                                         <li>{{ $item['createdAt'] }}</li>
                                                                     @endforeach
+                                                                    @endif
                                                                 </ul>
                                                             </td>
                                                         </tr>

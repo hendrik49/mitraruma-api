@@ -388,29 +388,33 @@
                                                             <td>
                                                                 <ul>
                                                                     @if (isset($val['list']))
-                                                                    @foreach ($val['list'] as $key => $item)
-                                                                        @if (isset($item['file']))
-                                                                            <li>{{ $item['file'] }}</li>
-                                                                        @endif
-                                                                    @endforeach
+                                                                        @foreach ($val['list'] as $key => $item)
+                                                                            @if (isset($item['file']))
+                                                                                <li>{{ $item['file'] }}</li>
+                                                                            @endif
+                                                                        @endforeach
                                                                     @endif
                                                                 </ul>
                                                             </td>
                                                             <td>
                                                                 <ul>
                                                                     @if (isset($val['list']))
-                                                                    @foreach ($val['list'] as $key => $item)
-                                                                        <li>{{ $item['type'] }}</li>
-                                                                    @endforeach
+                                                                        @foreach ($val['list'] as $key => $item)
+                                                                            @if (isset($item['type']))
+                                                                                <li>{{ $item['type'] }}</li>
+                                                                            @else
+                                                                                <li>general</li>
+                                                                            @endif
+                                                                        @endforeach
                                                                     @endif
                                                                 </ul>
                                                             </td>
                                                             <td>
                                                                 <ul>
                                                                     @if (isset($val['list']))
-                                                                    @foreach ($val['list'] as $key => $item)
-                                                                        <li>{{ $item['createdAt'] }}</li>
-                                                                    @endforeach
+                                                                        @foreach ($val['list'] as $key => $item)
+                                                                            <li>{{ $item['createdAt'] }}</li>
+                                                                        @endforeach
                                                                     @endif
                                                                 </ul>
                                                             </td>

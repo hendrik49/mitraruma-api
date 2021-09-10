@@ -372,7 +372,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($status as $key => $val)
+                                                    @foreach ($status['data'] as $key => $val)
                                                         <tr>
                                                             <td>{{ $key }}</td>
                                                             <td>{{ json_encode($val) }}</td>

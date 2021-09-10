@@ -79,18 +79,22 @@ class LoginController extends Controller
 
     public function showLoginForm(Request $request)
     {
-        if ($request->has('token')) {
-            $token = $request->query('token');
-            $decoded = $this->jwt->decode($token);
-            $user = User::where('user_phone_number', $decoded->phone)->orWhere('user_email', $decoded->email)->first();
-            if ($user){
-                Auth::login($user);
-                return Redirect::to('/home');
-            }
-            else
+        try {
+            if ($request->has('token')) {
+                $token = $request->query('token');
+                $decoded = $this->jwt->decode($token);
+                $user = User::where('user_phone_number', $decoded->phone)->orWhere('user_email', $decoded->email)->first();
+                if ($user) {
+                    Auth::login($user);
+                    return Redirect::to('/home');
+                } else {
+                    return redirect()->route('login')->with('error', 'Failed to login. This account ' . $decoded->email . ' not exist');
+                }
+            } else {
                 return view('auth.login');
-        } else {
-            return view('auth.login');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('login')->with('error', 'Failed to login. Token chat platform not valid');
         }
     }
 

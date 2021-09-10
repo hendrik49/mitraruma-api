@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -34,8 +37,11 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+
+    public function __construct(
+        \App\Services\JwtService $jwt
+    ) {
+        $this->jwt = $jwt;
         $this->middleware('guest')->except('logout');
     }
 
@@ -47,8 +53,49 @@ class LoginController extends Controller
         ]);
     }
 
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request),
+            $request->filled('remember')
+        );
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return $request->only($this->username(), 'password');
+    }
+
     public function username()
     {
         return request()->has('user_phone_number') ? 'user_phone_number' : 'user_login';
+    }
+
+    public function showLoginForm(Request $request)
+    {
+        if ($request->has('token')) {
+            $token = $request->query('token');
+            $decoded = $this->jwt->decode($token);
+            $user = User::where('user_phone_number', $decoded->phone)->orWhere('user_email', $decoded->email)->first();
+            if ($user){
+                Auth::login($user);
+                return Redirect::to('/home');
+            }
+            else
+                return view('auth.login');
+        } else {
+            return view('auth.login');
+        }
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        //
     }
 }

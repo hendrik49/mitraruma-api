@@ -375,7 +375,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($status['data'] as $key => $val)
+                                                    @foreach (isset($status['data'])?$status['data']:$status as $key => $val)
                                                         <tr>
                                                             <td>{{ ++$key }}</td>
                                                             <td>{{ $val['phase'] }}</td>

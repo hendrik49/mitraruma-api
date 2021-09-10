@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title')Konsultasi {{$project->order_number }}
+@section('title')Konsultasi {{ $project->order_number }}
 @endsection
 
 @section('content')
@@ -29,7 +29,7 @@
                 @endif
                 <div class="box">
                     <div class="box-header with-border">
-                        <h2 align="center" class="box-title">Konsultasi {{$project->order_number }}</h2>
+                        <h2 align="center" class="box-title">Konsultasi {{ $project->order_number }}</h2>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -47,7 +47,8 @@
                                         <div class="col-sm-6">
                                             <label for="title">No. Room</label>
                                             <input type="text" class="form-control" name="room_id"
-                                                placeholder="Masukkan no room" value="{{ $project->room_number }}" readonly>
+                                                placeholder="Masukkan no room" value="{{ $project->room_number }}"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -68,8 +69,8 @@
                                         <div class="col-sm-6">
                                             <label for="title">Nama Applikator </label>
                                             <input type="email" class="form-control" name="vendor_name"
-                                                placeholder="Masukkan nama applikator" value="{{ $project->vendor_name }}"
-                                                readonly>
+                                                placeholder="Masukkan nama applikator"
+                                                value="{{ $project->vendor_name }}" readonly>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Kontak Applikator</label>
@@ -107,14 +108,6 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="cover">Foto</label>
-                                            <label for="title">{{ $project->images}}</label>
-                                            @if ($project->images != '[]')
-                                                <img src="{{ asset('storage/' . $project->images) }}" width="320px" />
-                                            @endif
-                                            <small class="text-muted">Format Image:png,jpg</small>
-                                        </div>
-                                        <div class="col-sm-6">
                                             <label for="title">Status</label>
                                             <select class="form-control" id="status" name="status" readonly>
                                                 <option value="verified" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
@@ -132,21 +125,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Amount SPK Customer Gross</label>
-                                            <input type="number" class="form-control" name="amount_spk_customer_gross"
-                                                placeholder="Masukkan amount SPK Customer Gross"
-                                                value="{{ $project->amount_spk_customer_gross }}" readonly>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Mitraruma Diskon </label>
-                                            <input type="number" class="form-control" name="mitraruma_discount"
-                                                placeholder="Masukkan diskon" value="{{ $project->mitraruma_discount }}"
-                                                readonly>
-                                        </div>
-                                    </div>
                                     <div class="form-group row">
+                                        <label for="cover">Foto</label>
+                                        @foreach (json_decode($project->images) as $image)
+                                            <div class="col-sm-6">
+                                                <img src="{{ $image->pathUrl }}" width="320px" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    {{-- <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Applikator Diskon </label>
                                             <input type="number" class="form-control" name="applicator_discount"

@@ -155,13 +155,6 @@
                                     </div> --}}
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="cover">Foto</label>
-                                            @if ($project->images != '[]')
-                                                <img src="{{ asset('storage/' . $project->images) }}" width="320px" />
-                                            @endif
-                                            <small class="text-muted">Format Image:png,jpg</small>
-                                        </div>
-                                        <div class="col-sm-6">
                                             <label for="title">Status</label>
                                             <select class="form-control" id="status" name="status" readonly>
                                                 <option value="verified" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
@@ -178,6 +171,14 @@
                                                 </option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cover">Foto</label>
+                                        @foreach (json_decode($project->images) as $image)
+                                            <div class="col-sm-6">
+                                                <img src="{{ $image->pathUrl }}" width="320px" />
+                                            </div>
+                                        @endforeach
                                     </div>
                                     {{-- <div class="form-group row">
                                         <div class="col-sm-6">

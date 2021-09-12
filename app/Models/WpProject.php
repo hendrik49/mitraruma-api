@@ -86,6 +86,43 @@ class WpProject extends Model
      * @var array
      */
     protected $hidden = [
-        'deleted_at',
+        'deleted_at',      
+        'amount_spk_customer',
+        'amount_spk_vendor',
+        'amount_spk_vendor_net',
+        'mitraruma_discount',
+        'applicator_discount',
+        'commision',
+        'other_expanse',
+        'total_expanse',
+        'expanse_note',
+        'project_note',
+        'material_buy',
+        'booking_fee',
+        'term_payment_vendor',
+        'term_payment_customer',
+    
+        'termin_customer_1',
+        'termin_customer_2',
+        'termin_customer_3',
+        'termin_customer_4',
+        'termin_customer_5',
+        'termin_customer_1_date',
+        'termin_customer_2_date',
+        'termin_customer_3_date',
+        'termin_customer_4_date',
+        'termin_customer_5_date',
+
+        'termin_vendor_1',
+        'termin_vendor_2',
+        'termin_vendor_3',
+        'termin_vendor_4',
+        'termin_vendor_5',
+        'termin_vendor_1_date',
+        'termin_vendor_2_date',
+        'termin_vendor_3_date',
+        'termin_vendor_4_date',
+        'termin_vendor_5_date',
+        'payment_retention_date'
     ];
 }

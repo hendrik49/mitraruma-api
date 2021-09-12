@@ -179,7 +179,7 @@ class ChatService
         ));
 
         foreach ($notificationUserIds as $notificationUserId) {
-            $this->userNotificationService->store(['user_id' => $notificationUserId, 'type' => 'chat', 'chat_room_id' => $roomId]);
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text'=> $params['chat'], 'type' => 'chat', 'chat_room_id' => $roomId]);
         }
 
         return [

@@ -127,7 +127,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="cover">Foto</label>
-                                        @if($project->images!=null)
+                                        @if ($project->images != null)
                                             @foreach (json_decode($project->images) as $image)
                                                 <div class="col-sm-6">
                                                     <img src="{{ $image->pathUrl }}" width="320px" />
@@ -375,7 +375,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (isset($status['data'])?$status['data']:$status as $key => $val)
+                                                    @foreach (isset($status['data']) ? $status['data'] : $status as $key => $val)
                                                         <tr>
                                                             <td>{{ ++$key }}</td>
                                                             <td>{{ $val['phase'] }}</td>
@@ -416,7 +416,13 @@
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
                                                                             @if (isset($item['file']))
-                                                                                <li>{{ $item['file'] }}</li>
+                                                                                <li><a target="_blank"
+                                                                                        href={{ $item['file'] }}>click to view</a>
+                                                                                </li>
+                                                                            @elseif (isset($item['attachment']))
+                                                                                <li><a target="_blank"
+                                                                                        href={{ $item['attachment'] }}>click to view</a>
+                                                                                </li>
                                                                             @endif
                                                                         @endforeach
                                                                     @endif

@@ -421,7 +421,7 @@
                                                                                 </li>
                                                                             @elseif (isset($item['attachment']))
                                                                                 <li><a target="_blank"
-                                                                                        href={{ $item['attachment'][0] }}>click to view {{ $val['phase'] }}</a>
+                                                                                        href={{ $item['attachment'][0] }}>click to view {{ $item['activity'] }}</a>
                                                                                 </li>
                                                                             @endif
                                                                         @endforeach

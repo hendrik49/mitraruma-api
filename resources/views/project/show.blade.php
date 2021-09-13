@@ -404,7 +404,7 @@
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
-                                                                            <li>{{ date('Y-m-d HH:mm:ss',strtotime($item['createdAt'])) }}</li>
+                                                                            <li>{{ date('Y-m-d',strtotime($item['createdAt'])) }}</li>
                                                                         @endforeach
                                                                     @endif
                                                                 </ul>
@@ -413,9 +413,9 @@
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
-                                                                            @if (isset($item['file']))
+                                                                            @if (isset($item['file']) && isset($item['file'][0]))
                                                                                 <li><a target="_blank"
-                                                                                        href={{ $item['file'][0] }}>click to view</a>
+                                                                                        href={{ $item['file'] }}>click to view</a>
                                                                                 </li>
                                                                             @elseif (isset($item['attachment']))
                                                                                 <li><a target="_blank"

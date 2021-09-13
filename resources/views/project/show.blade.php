@@ -404,7 +404,7 @@
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
-                                                                            <li>{{ $item['createdAt'] }}</li>
+                                                                            <li>{{ date('Y-m-d HH:mm:ss',strtotime($item['createdAt'])) }}</li>
                                                                         @endforeach
                                                                     @endif
                                                                 </ul>

@@ -370,7 +370,6 @@
                                                         <th>Sub Status</th>
                                                         <th>Type</th>
                                                         <th>Date</th>
-                                                        <th>Active</th>
                                                         <th>File</th>
                                                     </tr>
                                                 </thead>
@@ -410,7 +409,6 @@
                                                                     @endif
                                                                 </ul>
                                                             </td>
-                                                            <td>{{ $val['active'] ? "true" : "false" }}</td>
                                                             <td>
                                                                 <ul>
                                                                     @if (isset($val['list']))

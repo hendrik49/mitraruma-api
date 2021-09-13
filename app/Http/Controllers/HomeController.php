@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\WpProject;
 use Illuminate\Http\Request;
 use App\Models\WpUser;
-
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -26,9 +26,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $customer = WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->count();
-        $vendor = WpUser::where('user_type', WpUser::TYPE_VENDOR)->count();
-        $admin = WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
+        $user = Auth::user();
+        if ($user->user_type == "customer") {
+            $customer = WpUser::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_CUSTOMER)->count();
+            $vendor = WpUser::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_VENDOR)->count();
+            $admin = WpUser::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_ADMIN)->count();
+            
+        } else if ($user->user_type == "vendor") {
+            $customer = WpUser::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_CUSTOMER)->count();
+            $vendor = WpUser::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_VENDOR)->count();
+            $admin = WpUser::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_ADMIN)->count();
+        } else {
+            $customer = WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->count();
+            $vendor = WpUser::where('user_type', WpUser::TYPE_VENDOR)->count();
+            $admin = WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
+        }
 
 
         $projects = WpProject::count();

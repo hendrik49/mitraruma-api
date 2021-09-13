@@ -410,7 +410,7 @@
                                                                     @endif
                                                                 </ul>
                                                             </td>
-                                                            <td>{{ $val['active'] == 1 ? "true" : "false" }}</td>
+                                                            <td>{{ isset($val['active']) ? "true" : "false" }}</td>
                                                             <td>
                                                                 <ul>
                                                                     @if (isset($val['list']))

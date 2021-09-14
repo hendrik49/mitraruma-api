@@ -558,7 +558,7 @@ class UserService
                 if ($user == null) {
                     $paramNew['user_phone_number'] = $resp['phoneNo'];
                     $paramNew['user_type'] = $resp['buyerType'] == 'CUSTOMER' ? 'customer' : 'vendor';
-                    $paramNew['user_nicename'] = $resp['userId'];
+                    $paramNew['ID'] = $resp['userId'];
                     $paramNew['user_email'] = $params['user_login'];
                     $paramNew['user_login'] = $params['user_login'];
                     $paramNew['display_name'] = $resp['fullName'];

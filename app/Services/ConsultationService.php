@@ -251,7 +251,7 @@ class ConsultationService
         $project['customer_contact'] =  $params['contact'];
         $project['description'] = $params['description'];
         $project['status'] =  $params['status'];
-        $project['images'] =  $params['photos'];
+        $project['images'] =  json_encode($params['photos']);
         $project['sub_status'] = $params['status'];
         $project['estimated_budget'] = $params['estimated_budget'];
         $project['service_type'] = isset($params['service_type']) ? $params['service_type'] : 'SERVICE';

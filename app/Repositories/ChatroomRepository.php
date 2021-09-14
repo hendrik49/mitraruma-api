@@ -96,6 +96,11 @@ class ChatroomRepository
         return $this->findById($model->id());
     }
 
+    public function update($params, $id){
+        $this->model->document($id)->set($params);
+        return $this->findById($id);
+    }
+
     private function filterBuilder($model, $params)
     {
 

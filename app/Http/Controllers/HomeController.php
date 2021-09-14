@@ -40,10 +40,10 @@ class HomeController extends Controller
             $projects = WpProject::where('vendor_user_id',$user->ID)->count();
 
         } else {
-            $customer =  WpProject::where('user_type', WpUser::TYPE_CUSTOMER)->count();
-            $vendor =  WpProject::where('user_type', WpUser::TYPE_VENDOR)->count();
-            $admin =  WpProject::where('user_type', WpUser::TYPE_ADMIN)->count();
-            $projects = WpProject::where('vendor_user_id',$user->ID)->count();
+            $customer =  WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->count();
+            $vendor =  WpUser::where('user_type', WpUser::TYPE_VENDOR)->count();
+            $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
+            $projects = WpProject::where('admin_user_id',$user->ID)->count();
 
         }
 

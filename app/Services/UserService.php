@@ -204,7 +204,7 @@ class UserService
             $params['user_registered'] = date("Y-m-d H:i:s");
             $params['user_email'] =  $params['user_email'] ? $params['user_email'] : $params['user_phone_number'] . '@gmail.com';
             $params['user_login'] = $params['user_email'];
-            $params['user_nicename'] = $resp['userId'];
+            $params['ID'] = $resp['userId'];
 
             if ($isUserExist) {
                 return [

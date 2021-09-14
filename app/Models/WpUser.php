@@ -33,7 +33,8 @@ class WpUser extends Model
         'user_registered',
         'company_name',
         'user_status',
-        'deleted_at'
+        'deleted_at',
+        'ID'
     ];
 
     /**

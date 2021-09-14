@@ -28,22 +28,26 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         if ($user->user_type == "customer") {
-            $customer = WpUser::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_CUSTOMER)->count();
-            $vendor = WpUser::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_VENDOR)->count();
-            $admin = WpUser::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_ADMIN)->count();
-            
+            $customer =  WpProject::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_CUSTOMER)->count();
+            $vendor = WpProject::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_VENDOR)->count();
+            $admin = WpProject::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_ADMIN)->count();
+            $projects = WpProject::where('user_id',$user->ID)->count();
+
         } else if ($user->user_type == "vendor") {
-            $customer = WpUser::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_CUSTOMER)->count();
-            $vendor = WpUser::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_VENDOR)->count();
-            $admin = WpUser::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_ADMIN)->count();
+            $customer =  WpProject::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_CUSTOMER)->count();
+            $vendor =  WpProject::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_VENDOR)->count();
+            $admin =  WpProject::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_ADMIN)->count();
+            $projects = WpProject::where('vendor_user_id',$user->ID)->count();
+
         } else {
-            $customer = WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->count();
-            $vendor = WpUser::where('user_type', WpUser::TYPE_VENDOR)->count();
-            $admin = WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
+            $customer =  WpProject::where('user_type', WpUser::TYPE_CUSTOMER)->count();
+            $vendor =  WpProject::where('user_type', WpUser::TYPE_VENDOR)->count();
+            $admin =  WpProject::where('user_type', WpUser::TYPE_ADMIN)->count();
+            $projects = WpProject::where('vendor_user_id',$user->ID)->count();
+
         }
 
 
-        $projects = WpProject::count();
         $spk_customer = WpProject::sum('amount_spk_customer');
         $spk_vendor = WpProject::sum('amount_spk_vendor');
         $project_value = WpProject::sum('project_value');

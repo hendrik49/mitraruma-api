@@ -28,15 +28,15 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         if ($user->user_type == "customer") {
-            $customer =  WpProject::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_CUSTOMER)->count();
-            $vendor = WpProject::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_VENDOR)->count();
-            $admin = WpProject::where('user_id',$user->ID)->where('user_type', WpUser::TYPE_ADMIN)->count();
+            $customer =  WpProject::where('user_id',$user->ID)->count();
+            $vendor = WpProject::where('user_id',$user->ID)->count();
+            $admin = WpProject::where('user_id',$user->ID)->count();
             $projects = WpProject::where('user_id',$user->ID)->count();
 
         } else if ($user->user_type == "vendor") {
-            $customer =  WpProject::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_CUSTOMER)->count();
-            $vendor =  WpProject::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_VENDOR)->count();
-            $admin =  WpProject::where('vendor_user_id',$user->ID)->where('user_type', WpUser::TYPE_ADMIN)->count();
+            $customer =  WpProject::where('vendor_user_id',$user->ID)->count();
+            $vendor =  WpProject::where('vendor_user_id',$user->ID)->count();
+            $admin =  WpProject::where('vendor_user_id',$user->ID)->count();
             $projects = WpProject::where('vendor_user_id',$user->ID)->count();
 
         } else {

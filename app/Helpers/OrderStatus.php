@@ -232,14 +232,14 @@ class OrderStatus
       array_push($newStatus, $data);
     }
     $res['data'] = $newStatus;
-    return $newStatus;
+    return $res;
   }
 
   public function updateOrderStatusByCode($curPhase, $params)
   {
     $phase  = $curPhase;
     $newOrderStatus = $this->getOrderStatusByCode($params['order_status']);
-    foreach ($phase as $keyPhase => $valuePhase) {
+    foreach ($phase['data'] as $keyPhase => $valuePhase) {
       if ($valuePhase['phase'] == $newOrderStatus['phase']) {
         $data = [];
         $data['activity'] = $newOrderStatus['activity'];

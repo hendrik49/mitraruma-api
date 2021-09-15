@@ -402,12 +402,6 @@ class ChatroomManagementService
 
         $orderStatus = $this->orderStatusService->show($roomId);
         $orderStatus = isset($orderStatus['data']['data']) ? $orderStatus['data']['data'] : $orderStatus['data'];
-        $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode(130);
-        foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
-            if ($keyOrderValue['phase'] == $newOrderStatus['phase']) {
-                array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now()->format('Y-m-d\TH:i:s\Z')]);
-            }
-        }
         $os['data'] = $orderStatus;
         $this->orderStatusService->update($os, $chatroom['id']);
 

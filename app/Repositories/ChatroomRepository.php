@@ -52,44 +52,44 @@ class ChatroomRepository
             $modelUser = $this->modelAccounts->document($params['userId']);
             $room = $modelUser->collection('chatroom')->newDocument();
             $roomNew = array();
-            $roomNew['roomId'] = $params['roomId'];
+            $roomNew['roomId'] = $model->id();
             $room->set($roomNew);
 
             $modelAdmin = $this->modelAccounts->document($params['adminId']);
             $roomAdmin = $modelAdmin->collection('chatroom')->newDocument();
             $roomNew = array();
-            $roomNew['roomId'] = $params['roomId'];
+            $roomNew['roomId'] = $model->id();
             $roomAdmin->set($roomNew);
         }else if ($params['roomType'] == "admin-vendor") {
             $modelUser = $this->modelAccounts->document($params['applicatorId']);
             $room = $modelUser->collection('chatroom')->newDocument();
             $roomNew = array();
-            $roomNew['roomId'] = $params['roomId'];
+            $roomNew['roomId'] = $model->id();
             $room->set($roomNew);
 
             $modelAdmin = $this->modelAccounts->document($params['adminId']);
             $roomAdmin = $modelAdmin->collection('chatroom')->newDocument();
             $roomNew = array();
-            $roomNew['roomId'] = $params['roomId'];
+            $roomNew['roomId'] = $model->id();
             $roomAdmin->set($roomNew);
         }else{
 
             $modelUser = $this->modelAccounts->document($params['userId']);
             $room = $modelUser->collection('chatroom')->newDocument();
             $roomNew = array();
-            $roomNew['roomId'] = $params['roomId'];
+            $roomNew['roomId'] = $model->id();
             $room->set($roomNew);
 
             $modelV = $this->modelAccounts->document($params['applicatorId']);
             $roomV = $modelV->collection('chatroom')->newDocument();
             $roomNew = array();
-            $roomNew['roomId'] = $params['roomId'];
+            $roomNew['roomId'] = $model->id();
             $roomV->set($roomNew);
 
             $modelAdmin = $this->modelAccounts->document($params['adminId']);
             $roomAdmin = $modelAdmin->collection('chatroom')->newDocument();
             $roomNew = array();
-            $roomNew['roomId'] = $params['roomId'];
+            $roomNew['roomId'] = $model->id();
             $roomAdmin->set($roomNew);
         }
 

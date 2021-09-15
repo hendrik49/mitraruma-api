@@ -252,6 +252,7 @@ class ConsultationService
         $project['customer_contact'] =  $params['contact'];
         $project['description'] = $params['description'];
         $project['status'] =  $params['status'];
+        $project['room_type'] =  'AC';
         $project['images'] =  json_encode($params['photos']);
         $project['sub_status'] = $params['status'];
         $project['estimated_budget'] = $params['estimated_budget'];

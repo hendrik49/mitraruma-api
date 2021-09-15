@@ -77,7 +77,8 @@ class WpProject extends Model
         'project_value',
         'rating_vendor',
         'rating_customer',
-        'rating_admin'        
+        'rating_admin',
+        'room_type'        
     ];
 
     /**

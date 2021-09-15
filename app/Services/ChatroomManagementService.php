@@ -190,7 +190,7 @@ class ChatroomManagementService
         $project = json_decode(json_encode($project), true);
         $project['room_number'] = 'AV-' . $chatroom['room_id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
-
+        $project['room_type'] = 'AV';
         $project['vendor_name'] = $user['display_name'];
         $project['vendor_user_id'] =  $user['ID'];
         $project['vendor_contact'] = $user['user_phone_number'];
@@ -354,6 +354,7 @@ class ChatroomManagementService
     public function createRoomVendorCustomerNew($consultationId, $roomId)
     {
 
+
         $consultation = $this->consultationService->show($consultationId);
         if ($consultation['status'] != 200) {
             return [
@@ -362,6 +363,19 @@ class ChatroomManagementService
             ];
         }
         $consultation = $consultation['data'];
+
+
+        $paramproj['consultation_id'] = $consultationId;
+        $paramproj['vendor_user_id'] = $consultation['vendor_user_id'];
+        $paramproj['room_type'] = 'AVC';
+        $proj = $this->projectService->index($paramproj);
+
+        if ($proj['status'] == 200) {
+            return [
+                'status' => 400,
+                'data' => ['message' => 'Room AVC already exsist. The room is ' . $proj['data']['room_number']],
+            ];
+        }
 
         $user = $this->user->show($consultation['user_id']);
         if ($user['status'] != 200) {
@@ -424,6 +438,7 @@ class ChatroomManagementService
         $project = $project['data'];
         $project = json_decode(json_encode($project), true);
         $project['room_number'] = 'AVC-' . $chatroom['room_id'];
+        $project['room_type'] = 'AVC';
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
         $resp = $this->projectService->update($project, $project['id']);
 

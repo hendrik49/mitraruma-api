@@ -88,6 +88,15 @@ class ProjectRepository
         if(isset($params['user_ids'])) {
             $model = $model->whereIn('user_id', $params['user_ids']);
         }
+        if(isset($params['vendor_user_id'])) {
+            $model = $model->where('vendor_user_id', '=', $params['vendor_user_id']);
+        }
+        if(isset($params['consultation_id'])) {
+            $model = $model->where('consultation_id', '=', $params['consultation_id']);
+        }
+        if(isset($params['room_type'])) {
+            $model = $model->where('room_type', '=', $params['room_type']);
+        }
 
         return $model;
 

@@ -45,7 +45,7 @@ class ChatroomRepository
 
     public function create($params)
     {
-        $model = $this->model->newDocument();
+        $model = $this->model->document($params['roomId']);
         $model->set($params);
 
         if ($params['roomType'] == "admin-customer") {

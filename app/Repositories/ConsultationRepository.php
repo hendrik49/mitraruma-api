@@ -59,6 +59,10 @@ class ConsultationRepository
     {
         $model = $this->model->newDocument();
         $model->set($params);
+        
+        $params['consultationId'] = $model->id();
+        $this->model->document($model->id())->set($params);
+
         return $this->findById($model->id());
     }
 

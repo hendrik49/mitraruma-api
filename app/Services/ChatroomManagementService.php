@@ -159,7 +159,7 @@ class ChatroomManagementService
         $chatroom = $chatroom['data'];
 
         $orderStatus = $this->orderStatusService->show($params['chatroom_id']);
-        $orderStatus = $orderStatus['data']['data'];
+        $orderStatus = isset($orderStatus['data']['data']) ? $orderStatus['data']['data'] : $orderStatus['data'];
         $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode(130);
         foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
             if ($keyOrderValue['phase'] == $newOrderStatus['phase']) {
@@ -174,7 +174,7 @@ class ChatroomManagementService
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
         $chatParams['user_type'] = 'admin';
-        
+
         $this->chatService->create($chatParams, $chatroom['id']);
 
         $project  = $this->projectService->showByConsultation($consultation['id']);
@@ -187,7 +187,7 @@ class ChatroomManagementService
         }
         $project = $project['data'];
         $project = json_decode(json_encode($project), true);
-        $project['room_number'] = 'AV-'.$chatroom['room_id'];
+        $project['room_number'] = 'AV-' . $chatroom['room_id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
 
         $project['vendor_name'] = $user['display_name'];
@@ -298,7 +298,7 @@ class ChatroomManagementService
         }
         $project = $project['data'];
         $project = json_decode(json_encode($project), true);
-        $project['room_number'] = 'AVC-'.$chatroom['room_id'];
+        $project['room_number'] = 'AVC-' . $chatroom['room_id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
 
         $resp = $this->projectService->update($project, $project['id']);
@@ -400,7 +400,7 @@ class ChatroomManagementService
         $chatroom = $chatroom['data'];
 
         $orderStatus = $this->orderStatusService->show($roomId);
-        $orderStatus = $orderStatus['data']['data'];
+        $orderStatus = isset($orderStatus['data']['data']) ? $orderStatus['data']['data'] : $orderStatus['data'];
         $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode(130);
         foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
             if ($keyOrderValue['phase'] == $newOrderStatus['phase']) {
@@ -427,8 +427,8 @@ class ChatroomManagementService
         }
         $project = $project['data'];
         $project = json_decode(json_encode($project), true);
-        $project['room_number'] = 'AVC-'.$chatroom['room_id'];
-        $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";        
+        $project['room_number'] = 'AVC-' . $chatroom['room_id'];
+        $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
         $resp = $this->projectService->update($project, $project['id']);
 
         if ($resp['status'] == 422) {

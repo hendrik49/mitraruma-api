@@ -28,7 +28,8 @@ class ProjectService
         $this->projectService = $projectService;
     }
 
-    public function index($params){
+    public function index($params)
+    {
 
         $address = $this->projectService->find($params);
         if (!$address) {
@@ -44,7 +45,8 @@ class ProjectService
         ];
     }
 
-    public function show($id){
+    public function show($id)
+    {
 
         $address = $this->projectService->findById($id);
         if (!$address) {
@@ -60,7 +62,8 @@ class ProjectService
         ];
     }
 
-    public function showByConsultation($id){
+    public function showByConsultation($id)
+    {
 
         $address = $this->projectService->findByConsultationId($id);
         if (!$address) {
@@ -76,7 +79,8 @@ class ProjectService
         ];
     }
 
-    public function create($params){
+    public function create($params)
+    {
 
         $validator = Validator::make($params, [
             'order_number' => 'required|numeric',
@@ -87,7 +91,7 @@ class ProjectService
             'description' => 'required|string',
             'status' => 'required',
             'sub_status' => 'required',
-            'estimated_budget'=> 'required',
+            'estimated_budget' => 'required',
             'service_type' => 'required|string'
         ]);
 
@@ -99,7 +103,7 @@ class ProjectService
         }
 
         $project = $this->projectService->find($params['project_id']);
-        if($project == null) {
+        if ($project == null) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Project not found'],
@@ -114,7 +118,8 @@ class ProjectService
         ];
     }
 
-    public function createChat($params){
+    public function createChat($params)
+    {
 
         $validator = Validator::make($params, [
             'order_number' => 'required|numeric',
@@ -126,7 +131,7 @@ class ProjectService
             'description' => 'required|string',
             'status' => 'required',
             'sub_status' => 'required',
-            'estimated_budget'=> 'required',
+            'estimated_budget' => 'required',
             'service_type' => 'required|string'
         ]);
 
@@ -145,7 +150,8 @@ class ProjectService
         ];
     }
 
-    public function update($params, $id){
+    public function update($params, $id)
+    {
 
         $validator = Validator::make($params, [
             'city' => 'required|string',
@@ -161,15 +167,12 @@ class ProjectService
         }
 
         $project = $this->projectService->find($id);
-        if($project == null) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'Project not found'],
-            ];
+        if ($project == null) {
+            $address = $this->projectService->create($params);
+        } else {
+
+            $address = $this->projectService->update($params, $id);
         }
-
-        $address = $this->projectService->update($params, $id);
-
         if (!$address) {
             return [
                 'status' => 404,
@@ -182,10 +185,11 @@ class ProjectService
         ];
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
         $project = $this->projectService->find($id);
-        if($project == null) {
+        if ($project == null) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Project not found'],
@@ -201,10 +205,8 @@ class ProjectService
         }
 
         return [
-            'status' => 202 ,
+            'status' => 202,
             'data' => ['message' => 'Success deleted data'],
         ];
     }
-
-
 }

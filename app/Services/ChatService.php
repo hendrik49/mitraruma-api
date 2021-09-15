@@ -56,8 +56,7 @@ class ChatService
         UserTokenService $userTokenService,
         UserNotificationService $userNotificationService,
         ChatRepository $chat
-    )
-    {
+    ) {
         $this->user = $user;
         $this->chatroomService = $chatroomService;
         $this->notificationService = $notificationService;
@@ -125,18 +124,18 @@ class ChatService
         $chatroom = $chatroom['data'];
         $chatroom['date'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $chatroom['text'] = $params['chat'];
-        if(!isset($params['is_system'])){
+        if (!isset($params['is_system'])) {
             $this->chatroomService->update($chatroom, $chatroom['id']);
         }
 
         $userIds = [];
-        if(isset($chatroom['user_id']) && $params['user_id'] != $chatroom['user_id']) {
+        if (isset($chatroom['user_id']) && $params['user_id'] != $chatroom['user_id']) {
             array_push($userIds, $chatroom['user_id']);
         }
-        if(isset($chatroom['vendor_user_id']) && $params['user_id'] != $chatroom['vendor_user_id']) {
+        if (isset($chatroom['vendor_user_id']) && $params['user_id'] != $chatroom['vendor_user_id']) {
             array_push($userIds, $chatroom['vendor_user_id']);
         }
-        if(isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
+        if (isset($chatroom['admin_user_id']) && $params['user_id'] != $chatroom['admin_user_id']) {
             array_push($userIds, $chatroom['admin_user_id']);
         }
 
@@ -162,7 +161,7 @@ class ChatService
         $user = $user['data'];
 
         $params['room_id'] = $roomId;
-        $params['user_type'] = $params['user_type'];        
+        $params['user_type'] = isset($params['user_type']) ? $params['user_type'] : $params['user_jwt_type'];
         $params['user_email'] = $user['user_email'];
         $params['name'] = $user['display_name'];
         $params['created_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
@@ -180,7 +179,7 @@ class ChatService
         ));
 
         foreach ($notificationUserIds as $notificationUserId) {
-            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text'=> $params['chat'], 'type' => 'chat', 'chat_room_id' => $roomId]);
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => $params['chat'], 'type' => 'chat', 'chat_room_id' => $roomId]);
         }
 
         return [
@@ -212,6 +211,4 @@ class ChatService
             'data' => $notification,
         ];
     }
-
-
 }

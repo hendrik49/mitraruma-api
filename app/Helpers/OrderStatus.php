@@ -231,6 +231,7 @@ class OrderStatus
       }
       array_push($newStatus, $data);
     }
+    $res['data'] = $newStatus;
     return $newStatus;
   }
 

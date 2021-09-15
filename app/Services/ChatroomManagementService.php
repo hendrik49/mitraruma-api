@@ -373,7 +373,7 @@ class ChatroomManagementService
         if ($proj['status'] == 200) {
             return [
                 'status' => 400,
-                'data' => ['message' => 'Room AVC already exsist. The room is ' . $proj['data']],
+                'data' => ['message' => 'Room AVC already exsist. The room is ' . $proj['data']['room_id']],
             ];
         }
 

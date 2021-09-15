@@ -22,6 +22,7 @@ class ChatResource
             'roomId' => $params['room_id'],
             'file' => $params['file'] ?? null,
             'fileType' => $params['file_type'] ?? null,
+            'userType' => $params['user_type'] ?? null,
             'createdAt' => $params['created_at'] ?? null,
         ];
     }

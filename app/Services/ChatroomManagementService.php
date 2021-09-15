@@ -172,6 +172,8 @@ class ChatroomManagementService
         $chatParams['notification_chat'] = 'Halo bisa mengerjakan projek ini?';
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
+        $chatParams['user_type'] = 'admin';
+        
         $this->chatService->create($chatParams, $chatroom['id']);
 
         $project  = $this->projectService->showByConsultation($consultation['id']);
@@ -280,6 +282,7 @@ class ChatroomManagementService
         $chatParams['notification_chat'] = 'Halo saya siap berdiskusi dengan projek ini';
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
+        $chatParams['user_type'] = 'vendor';
         $this->chatService->create($chatParams, $chatroom['id']);
 
         //todo create notification
@@ -400,6 +403,7 @@ class ChatroomManagementService
         $chatParams['notification_chat'] = 'Halo saya siap berdiskusi dengan projek ini';
         $chatParams['is_system'] = true;
         $chatParams['room_id'] = $chatroom['id'];
+        $chatParams['user_type'] = 'vendor';
         $this->chatService->create($chatParams, $chatroom['id']);
 
         $project  = $this->projectService->showByConsultation($consultation['id']);

@@ -108,7 +108,7 @@ class ConsultationOrderStatusService
         }
 
         $consultation['orderStatus'] = $params['order_status'];
-        $consultation['updatedAt'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $consultation['updatedAt'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
 
         $consultation = $this->consultationRepository->update($consultation, $id);
 
@@ -119,7 +119,7 @@ class ConsultationOrderStatusService
         $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode($params['order_status']);
         foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
             if ($keyOrderValue['phase'] == $newOrderStatus['phase']) {
-                array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
+                array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now()->format('Y-m-d\TH:i:s\Z')]);
             }
         }
         $this->orderStatusService->update($orderStatus, $params['chatroom_id']);

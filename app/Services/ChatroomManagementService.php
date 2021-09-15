@@ -162,7 +162,7 @@ class ChatroomManagementService
         $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode(130);
         foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
             if ($keyOrderValue['phase'] == $newOrderStatus['phase']) {
-                array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
+                array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now()->format('Y-m-d\TH:i:s\Z')]);
             }
         }
         $this->orderStatusService->update($orderStatus, $chatroom['id']);

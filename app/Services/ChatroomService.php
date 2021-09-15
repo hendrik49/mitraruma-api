@@ -131,7 +131,7 @@ class ChatroomService
             ];
         }
 
-        $dateNow =  Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $dateNow =  Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $params['room_id'] = mt_rand(1000000, 9999999);
         $params['date'] = $dateNow;
         $params['created_at'] = $dateNow;

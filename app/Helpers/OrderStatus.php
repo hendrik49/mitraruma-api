@@ -219,7 +219,7 @@ class OrderStatus
   {
     $phase  = $this->getPhase();
     $newOrderStatus = $this->getOrderStatusByCode(110);
-    array_push($phase[$newOrderStatus['phase']], ["activity" => $newOrderStatus['activity'], 'type' => 'general', 'file' => '', 'createdAt' => Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z')]);
+    array_push($phase[$newOrderStatus['phase']], ["activity" => $newOrderStatus['activity'], 'type' => 'general', 'file' => '', 'createdAt' => Carbon::now()->format('Y-m-d\TH:i:s\Z')]);
     $newStatus = [];
     foreach ($phase as $keyPhase => $valuePhase) {
       $data = [];

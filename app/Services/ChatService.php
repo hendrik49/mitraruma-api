@@ -123,7 +123,7 @@ class ChatService
             ];
         }
         $chatroom = $chatroom['data'];
-        $chatroom['date'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $chatroom['date'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $chatroom['text'] = $params['chat'];
         if(!isset($params['is_system'])){
             $this->chatroomService->update($chatroom, $chatroom['id']);
@@ -164,7 +164,7 @@ class ChatService
         $params['room_id'] = $roomId;
         $params['user_email'] = $user['user_email'];
         $params['name'] = $user['display_name'];
-        $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $params['created_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $newParams = ChatResource::toFirebase($params);
         $chat = $this->chat->create($newParams, $roomId);
 

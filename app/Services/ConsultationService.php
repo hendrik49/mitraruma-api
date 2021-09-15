@@ -207,8 +207,8 @@ class ConsultationService
         $params['user_email'] = $params['user_jwt_email'];
         $params['display_name'] = $params['user_jwt_name'];
         $params['order_status'] = 120;
-        $params['created_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
-        $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $params['created_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
+        $params['updated_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $params['order_number'] = mt_rand(1000000, 9999999);
         $newParams = $this->consultationResource->toFirebase($params);
         $consultation = $this->consultation->create($newParams);
@@ -284,7 +284,7 @@ class ConsultationService
         }
         $consultation = $this->consultationResource->fromFirebase($consultation);
 
-        $params['updated_at'] = Carbon::now('GMT+7')->format('Y-m-d\TH:i:s\Z');
+        $params['updated_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         if (sizeof($params['photos']) == 0) {
             $params['photos'] = $consultation['photos'];
         }

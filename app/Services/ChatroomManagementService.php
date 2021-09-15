@@ -166,7 +166,8 @@ class ChatroomManagementService
                 array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now()->format('Y-m-d\TH:i:s\Z')]);
             }
         }
-        $this->orderStatusService->update($orderStatus, $chatroom['id']);
+        $os['data'] = $orderStatus;
+        $this->orderStatusService->update($os, $chatroom['id']);
 
         $chatParams['user_id'] = $consultation['admin_user_id'];
         $chatParams['chat'] = $consultation['id'];
@@ -407,7 +408,8 @@ class ChatroomManagementService
                 array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now()->format('Y-m-d\TH:i:s\Z')]);
             }
         }
-        $this->orderStatusService->update($orderStatus, $chatroom['id']);
+        $os['data'] = $orderStatus;
+        $this->orderStatusService->update($os, $chatroom['id']);
 
         $chatParams['user_id'] = $consultation['vendor_user_id'];
         $chatParams['chat'] = $consultation['id'];

@@ -162,7 +162,7 @@ class ChatService
         $user = $user['data'];
 
         $params['room_id'] = $roomId;
-        $params['user_jwt_type'] = $roomId;        
+        $params['user_type'] = $params['user_jwt_type'];        
         $params['user_email'] = $user['user_email'];
         $params['name'] = $user['display_name'];
         $params['created_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');

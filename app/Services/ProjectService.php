@@ -45,6 +45,23 @@ class ProjectService
         ];
     }
 
+    public function findOne($params)
+    {
+
+        $address = $this->projectService->findOne($params);
+        if (!$address) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Project not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $address,
+        ];
+    }
+
     public function show($id)
     {
 

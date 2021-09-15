@@ -399,6 +399,16 @@ class ChatroomManagementService
         $chatroom = $this->chatroomService->create($params);
         $chatroom = $chatroom['data'];
 
+        $orderStatus = $this->orderStatusService->show($roomId);
+        $orderStatus = $orderStatus['data']['data'];
+        $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode(130);
+        foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
+            if ($keyOrderValue['phase'] == $newOrderStatus['phase']) {
+                array_push($orderStatus[$keyOrderStatus]['list'], ["activity" => $newOrderStatus['activity'], 'createdAt' => Carbon::now()->format('Y-m-d\TH:i:s\Z')]);
+            }
+        }
+        $this->orderStatusService->update($orderStatus, $chatroom['id']);
+
         $chatParams['user_id'] = $consultation['vendor_user_id'];
         $chatParams['chat'] = $consultation['id'];
         $chatParams['notification_chat'] = 'Halo saya siap berdiskusi dengan projek ini';

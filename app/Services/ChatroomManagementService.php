@@ -187,7 +187,7 @@ class ChatroomManagementService
         }
         $project = $project['data'];
         $project = json_decode(json_encode($project), true);
-        $project['room_number'] = $project['room_number'] . ", " . 'AV-'.$chatroom['room_id'];
+        $project['room_number'] = 'AV-'.$chatroom['room_id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
 
         $project['vendor_name'] = $user['display_name'];
@@ -298,7 +298,7 @@ class ChatroomManagementService
         }
         $project = $project['data'];
         $project = json_decode(json_encode($project), true);
-        $project['room_number'] = $project['room_number'] . ", " . 'AVC-'.$chatroom['room_id'];
+        $project['room_number'] = 'AVC-'.$chatroom['room_id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
 
         $resp = $this->projectService->update($project, $project['id']);
@@ -417,7 +417,7 @@ class ChatroomManagementService
         }
         $project = $project['data'];
         $project = json_decode(json_encode($project), true);
-        $project['room_number'] = $project['room_number'] . ", " . 'AVC-'.$chatroom['room_id'];
+        $project['room_number'] = 'AVC-'.$chatroom['room_id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";        
         $resp = $this->projectService->update($project, $project['id']);
 

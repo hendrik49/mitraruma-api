@@ -159,7 +159,7 @@ class ChatroomManagementService
         $chatroom = $chatroom['data'];
 
         $orderStatus = $this->orderStatusService->show($params['chatroom_id']);
-        $orderStatus = $orderStatus['data'];
+        $orderStatus = $orderStatus['data']['data'];
         $newOrderStatus = $this->orderStatusHelper->getOrderStatusByCode(130);
         foreach ($orderStatus as $keyOrderStatus => $keyOrderValue) {
             if ($keyOrderValue['phase'] == $newOrderStatus['phase']) {

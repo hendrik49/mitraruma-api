@@ -100,12 +100,12 @@ class ConsultationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateChat(Request $request, $id)
+    public function updateChat(Request $request)
     {
 
         $params = $request->all();
 
-        $result =  $this->projectService->updateChat($params, $id);
+        $result =  $this->projectService->updateChat($params);
 
         return response()->json($result['data'], $result['status']);
     }

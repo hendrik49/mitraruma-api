@@ -33,6 +33,7 @@ class HomeController extends Controller
             $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
             $projects = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
             $progres = WpProject::where('user_id',$user->ID)->get();
+            $progresVendor = WpProject::where('user_id',$user->ID)->whereNotNull('vendor_user_id')->get();
 
         } else if ($user->user_type == "vendor") {
             $customer =  WpProject::where('vendor_user_id',$user->ID)->groupBy('user_id')->count();
@@ -40,6 +41,7 @@ class HomeController extends Controller
             $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
             $projects = WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
             $progres = WpProject::where('user_id',$user->ID)->get();
+            $progresVendor = WpProject::where('vendor_user_id',$user->ID)->whereNotNull('vendor_user_id')->get();
 
         } else {
             $customer =  WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->count();
@@ -47,7 +49,7 @@ class HomeController extends Controller
             $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
             $projects = WpProject::where('admin_user_id',$user->ID)->count();
             $progres = WpProject::where('admin_user_id',$user->ID)->get();
-
+            $progresVendor = WpProject::whereNotNull('vendor_user_id')->get();
         }
 
         $spk_customer = WpProject::sum('amount_spk_customer');
@@ -56,6 +58,6 @@ class HomeController extends Controller
         $total_expanse = WpProject::sum('total_expanse');
         $amount_spk_vendor_net = WpProject::sum('amount_spk_vendor_net');
 
-        return view('home', compact('progres','amount_spk_vendor_net', 'total_expanse', 'project_value', 'spk_vendor', 'spk_customer', 'customer', 'admin', 'vendor', 'projects'));
+        return view('home', compact('progresVendor','progres','amount_spk_vendor_net', 'total_expanse', 'project_value', 'spk_vendor', 'spk_customer', 'customer', 'admin', 'vendor', 'projects'));
     }
 }

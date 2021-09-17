@@ -254,6 +254,88 @@
                     <!-- /.box-body -->
                 </div>
             </div>
+            <div class="col-lg-6 col-xs-8">
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Progres Aplikator
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        @foreach ($progresVendor as $val)
+                            @if ($val->status == 'Project Ended')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>10</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                            @endif
+                            @if ($val->status == 'Project Started')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>8</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            @endif
+                            <!-- /.progress-group -->
+                            @if ($val->status == 'Construction Phase')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>6</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-success" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                            @endif
+                            <!-- /.progress-group -->
+                            @if ($val->status == 'Design Phase')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>4</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                            @endif
+                            <!-- /.progress-group -->
+                            @if ($val->status == 'pre-purchase')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>2</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                            @endif
+                        @endforeach
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+
         </div>
 
         <div class="row">

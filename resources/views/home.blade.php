@@ -191,7 +191,7 @@
                                     </p>
                                     <span class="float-right"><b>10</b>/10</span>
                                     <div class="progress progress-sm">
-                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                        <div class="progress-bar bg-primary" style="width: 100%"></div>
                                     </div>
                                 </div>
                                 <!-- /.progress-group -->
@@ -204,7 +204,7 @@
                                     </p>
                                     <span class="float-right"><b>8</b>/10</span>
                                     <div class="progress progress-sm">
-                                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                        <div class="progress-bar bg-danger" style="width: 80%"></div>
                                     </div>
                                 </div>
                             @endif
@@ -272,7 +272,7 @@
                                     </p>
                                     <span class="float-right"><b>10</b>/10</span>
                                     <div class="progress progress-sm">
-                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                        <div class="progress-bar bg-primary" style="width: 100%"></div>
                                     </div>
                                 </div>
                                 <!-- /.progress-group -->
@@ -285,7 +285,7 @@
                                     </p>
                                     <span class="float-right"><b>8</b>/10</span>
                                     <div class="progress progress-sm">
-                                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                        <div class="progress-bar bg-danger" style="width: 80%"></div>
                                     </div>
                                 </div>
                             @endif

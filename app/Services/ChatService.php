@@ -123,6 +123,7 @@ class ChatService
         }
         $chatroom = $chatroom['data'];
         $chatroom['date'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
+        $chatroom['created_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $chatroom['text'] = $params['chat'];
         if (!isset($params['is_system'])) {
             $this->chatroomService->update($chatroom, $chatroom['id']);

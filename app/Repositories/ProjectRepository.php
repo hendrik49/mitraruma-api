@@ -74,7 +74,7 @@ class ProjectRepository
 
     public function updateByConsulId($params, $id){
 
-        $Project = WpProject::where('consultation_id', $id)->where('vendor_user_id', $params['vendor_user_id'])->first();
+        $Project = WpProject::where('consultation_id', $id)->first();
         if(!$Project) {
             return  $Project;
         }

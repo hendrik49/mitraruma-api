@@ -29,34 +29,34 @@ class JwtAdmin
     public function handle($request, Closure $next)
     {
 
-        try {
-            $token = $request->header('Authorization');
-            if(!$token)
-                return response()->json(['message' =>'Token not found'], 400);
+        if ($request->path() != "api/consultation/updatechat" && $request->path() != "api/consultation/chat") {
+            try {
+                $token = $request->header('Authorization');
+                if (!$token)
+                    return response()->json(['message' => 'Token not found'], 400);
 
-            $token = str_replace('Bearer ', '', $token);
+                $token = str_replace('Bearer ', '', $token);
 
-            $decoded = $this->jwt->decode($token);
+                $decoded = $this->jwt->decode($token);
 
-            $userType = $decoded->userType ?? $decoded->user_type;
-            if($userType !== 'admin') {
-                return response()->json(['message' =>'User not authorize'], 400);
+                $userType = $decoded->userType ?? $decoded->user_type;
+                if ($userType !== 'admin') {
+                    return response()->json(['message' => 'User not authorize'], 400);
+                }
+
+                $request->request->add(['admin_user_id' => $decoded->id ?? $decoded->ID]);
+                $request->request->add(['user_jwt_email' => $decoded->email ?? $decoded->user_email]);
+                $request->request->add(['user_jwt_name' => $decoded->displayName ?? $decoded->display_name]);
+                $request->request->add(['user_jwt_type' => $decoded->userType ?? $decoded->user_type]);
+            } catch (\Throwable $e) {
+                return response()->json(['message' => $e->getMessage()], 403);
             }
+            if (!isset($token)) {
 
-            $request->request->add(['admin_user_id' => $decoded->id ?? $decoded->ID]);
-            $request->request->add(['user_jwt_email' => $decoded->email ?? $decoded->user_email]);
-            $request->request->add(['user_jwt_name' => $decoded->displayName ?? $decoded->display_name]);
-            $request->request->add(['user_jwt_type' => $decoded->userType ?? $decoded->user_type]);
-
-        } catch (\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], 403);
-        }
-        if(!isset($token)) {
-
-            return response()->json(['message' => 'asd'], );
+                return response()->json(['message' => 'asd'],);
+            }
         }
 
         return $next($request);
     }
-
 }

@@ -158,7 +158,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::POST('/consultation', [ConsultationController::class, 'store'])->middleware('jwt.admin');
     
     Route::POST('/consultation/chat', [ConsultationController::class, 'storeChat']);
-    Route::POST('/consultation/updatechat', [ConsultationController::class, 'updateChat']);
+    Route::POST('/consultation/chatupdate', [ConsultationController::class, 'updateChat']);
 
     Route::PUT('/consultation/{id}', [ConsultationController::class, 'update'])->middleware('jwt.admin');
     Route::DELETE('/consultation/{id}', [ConsultationController::class, 'destroy'])->middleware('jwt.admin');

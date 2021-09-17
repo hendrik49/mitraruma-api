@@ -218,7 +218,7 @@ class ConsultationService
         $params['admin_user_id'] = $userAdmin['ID'];
         $params['consultation_id'] = $consultation['id'];
         $params['room_type'] = 'admin-customer';
-        $params['status'] = 'pre-purchase';
+        $params['status'] = 'Pre-Purchase';
         $params['image_url'] = $params['user_jwt_picture'] ?? "";
         $params['name'] =  $consultation['name'] . '-AC-' . $params['order_number'];
         $params['text'] = 'Hai Admin saya berminat untuk berkonsultasi';

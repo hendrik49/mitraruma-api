@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Resources\UserVendorResource;
 use App\Models\WpUser;
+use App\Models\WpProject;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Auth;
@@ -748,9 +749,9 @@ class UserService
                 if ($exist) {
                     $var["externalId"] = $var["id"];
                     $var["id"] = $exist->ID;
-                    $var["name"] = $var["display_name"] . ' - ' . $var["user_phone"];
-                    $var["finished_project"] = 0;
-                    $var["unfinished_project"] = 0;
+                    $var["name"] = $var["display_name"] . ' - ' . $var["user_phone"].' - ' . $var["id"];
+                    $var["finished_project"] = WpProject::where('phase','Project Ended')->where('vendor_user_id',$exist->ID)->count();
+                    $var["unfinished_project"] =  WpProject::where('phase','Project Ended')->where('vendor_user_id','<>',$exist->ID)->count();
                     $new[] = $var;
                 }
                 // } else {

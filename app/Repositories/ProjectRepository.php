@@ -86,7 +86,7 @@ class ProjectRepository
             $Project->room_id = $params['room_id'];
         }
         if(isset($params['status'])) {
-            $Project->status= $params['phase'];
+            $Project->status= $params['status'];
         }
         if(isset($params['order_status'])) {
             $Project->sub_status = $params['order_status'];

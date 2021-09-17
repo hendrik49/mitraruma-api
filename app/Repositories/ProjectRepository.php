@@ -88,6 +88,9 @@ class ProjectRepository
         if(isset($params['status'])) {
             $Project->status= $params['status'];
         }
+        if(isset($params['phase'])) {
+            $Project->status= $params['phase'];
+        }
         if(isset($params['order_status'])) {
             $Project->sub_status = $params['order_status'];
             $Project->updated_at = date('Y-m-d H:i:s');

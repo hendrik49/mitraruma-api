@@ -167,12 +167,12 @@ class ProjectService
         ];
     }
 
-    public function updateChat($params, $id)
+    public function updateChat($params)
     {
 
         $validator = Validator::make($params, [
             'vendor_user_id' => 'required',
-            'room_id' => 'required',
+            'consultation_id' => 'required|exists:wp_projects,consultation_id',
             'status' => 'required',
             'sub_status' => 'required'
         ]);
@@ -183,7 +183,7 @@ class ProjectService
                 'data' => ['message' => $validator->errors()->first()]
             ];
         }
-        $address = $this->projectService->update($params, $id);
+        $address = $this->projectService->updateByConsulId($params, $params['consultation_id']);
 
         return [
             'status' => 201,

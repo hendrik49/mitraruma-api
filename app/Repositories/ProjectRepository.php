@@ -79,6 +79,9 @@ class ProjectRepository
             return  $Project;
         }
 
+        if(isset($params['vendor_user_id'])) {
+            $Project->vendor_user_id = $params['vendor_user_id'];
+        }
         if(isset($params['status'])) {
             $Project->status= $params['phase'];
         }

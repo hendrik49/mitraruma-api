@@ -317,7 +317,7 @@
                                 <!-- /.progress-group -->
                             @endif
                             <!-- /.progress-group -->
-                            @if ($val->status == 'pre-purchase')
+                            @if ($val->status == 'pre-purchase' || $val->status == 'Pre-Purchase')
                                 <div class="progress-group">
                                     <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </span>

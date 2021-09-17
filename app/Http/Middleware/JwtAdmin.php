@@ -29,7 +29,7 @@ class JwtAdmin
     public function handle($request, Closure $next)
     {
 
-        if ($request->path() != "api/consultation/updatechat" && $request->path() != "api/consultation/chat") {
+        if ($request->path() != "api/consultation/chatupdate") {
             try {
                 $token = $request->header('Authorization');
                 if (!$token)

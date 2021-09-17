@@ -23,35 +23,35 @@
         @endif
         <div class="row">
             <!-- ./col -->
-            @if(Auth::user()->user_type!="customer")
-            <div class="col-lg-4 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h2>{{ $customer }}</h2>
+            @if (Auth::user()->user_type != 'customer')
+                <div class="col-lg-4 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h2>{{ $customer }}</h2>
 
-                        <p>Pelanggan</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-ios-person"></i>
+                            <p>Pelanggan</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-person"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endif
-            @if(Auth::user()->user_type!="vendor")
-            <div class="col-lg-4 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h2>{{ $vendor }}</h2>
+            @if (Auth::user()->user_type != 'vendor')
+                <div class="col-lg-4 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h2>{{ $vendor }}</h2>
 
-                        <p>Aplikator</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-ios-person"></i>
+                            <p>Aplikator</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-person"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endif
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
@@ -174,82 +174,85 @@
                 </div>
             </div> --}}
             <div class="col-lg-6 col-xs-8">
-
-                {{-- <div class="card ">
+                <div class="card ">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
-                            Goal Completion
+                            Progres Konsulltasi
                         </h3>
                     </div>
                     <div class="card-body">
-                        <div class="progress-group">
-                            Add Products to Cart
-                            <span class="float-right"><b>160</b>/200</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-primary" style="width: 80%"></div>
-                            </div>
-                        </div>
-                        <!-- /.progress-group -->
-
-                        <div class="progress-group">
-                            Complete Purchase
-                            <span class="float-right"><b>310</b>/400</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-danger" style="width: 75%"></div>
-                            </div>
-                        </div>
-
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            <span class="progress-text">Visit Premium Page</span>
-                            <span class="float-right"><b>480</b>/800</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-success" style="width: 60%"></div>
-                            </div>
-                        </div>
-
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            Send Inquiries
-                            <span class="float-right"><b>250</b>/500</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-warning" style="width: 50%"></div>
-                            </div>
-                        </div>
-                        <!-- /.progress-group -->
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            Send Inquiries
-                            <span class="float-right"><b>250</b>/500</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-warning" style="width: 50%"></div>
-                            </div>
-                        </div>
-                        <!-- /.progress-group -->
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            Send Inquiries
-                            <span class="float-right"><b>250</b>/500</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-warning" style="width: 50%"></div>
-                            </div>
-                        </div>
-                        <!-- /.progress-group -->
-
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            Send Inquiries
-                            <span class="float-right"><b>250</b>/500</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-warning" style="width: 50%"></div>
-                            </div>
-                        </div>
-                        <!-- /.progress-group -->
-
+                        @foreach ($progres as $val)
+                            @if ($val->status == 'Project Ended')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }}
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>10</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                            @endif
+                            @if ($val->status == 'Project Started')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }}
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>8</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            @endif
+                            <!-- /.progress-group -->
+                            @if ($val->status == 'Construction Phase')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }}
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>6</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-success" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                            @endif
+                            <!-- /.progress-group -->
+                            @if ($val->status == 'Design Phase')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }} 
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>4</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                            @endif
+                            <!-- /.progress-group -->
+                            @if ($val->status == 'pre-purchase')
+                                <div class="progress-group">
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }} 
+                                    </span>
+                                    <p class="progress-text text-bold"> {{ $val->status }} 
+                                    </p>
+                                    <span class="float-right"><b>2</b>/10</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                            @endif
+                        @endforeach
                     </div>
                     <!-- /.box-body -->
-                </div> --}}
+                </div>
             </div>
         </div>
 

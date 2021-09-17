@@ -289,6 +289,17 @@ class ChatroomService
         ];
     }
 
+    public function showOrderStatusSelection($name, $userType = 'customer')
+    {
+
+        $orderStatus = $this->orderStatusHelper->getConsultationStatusByName($name, $userType);
+
+        return [
+            'status' => 200,
+            'data' => $orderStatus,
+        ];
+    }
+
     public function updateOrderStatus($params, $id)
     {
 

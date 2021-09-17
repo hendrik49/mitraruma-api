@@ -85,6 +85,25 @@ class ConsultationOrderStatusService
     }
 
 
+    public function showSelection($id, $userType = 'customer')
+    {
+
+        $consultation = $this->consultationRepository->findById($id);
+        if (!$consultation) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $orderStatus = $this->orderStatusHelper->getConsultationStatus($id, $userType);
+
+        return [
+            'status' => 200,
+            'data' => $orderStatus,
+        ];
+    }
+
     public function update($params, $id)
     {
 

@@ -209,6 +209,22 @@ class OrderStatus
     return $phase;
   }
 
+  public function getConsultationStatusByName($name, $userType = 'customer')
+  {
+    $phase = array();
+    $phase['phase'] = $name;
+    $orderStatuses = json_decode($this->data, true);
+    foreach ($orderStatuses as $key => $data) {
+      if ($data['phase'] == $name && ($data['by'] == '' || $userType == $data['by'])) {
+        $objectData = $data;
+        $objectData['code'] = $key;
+        $phase['list'][] = $objectData;
+        // array_push($phase[$data['phase']], $objectData);
+      }
+    }
+    return $phase;
+  }
+
   public function getOrderStatusByCode($code)
   {
     $orderStatuses = json_decode($this->data, true);

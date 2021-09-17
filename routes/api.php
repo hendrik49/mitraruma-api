@@ -88,6 +88,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::POST('/user/consultation/{id}/approve', [UserConsultationController::class, 'approve'])->middleware('jwt.user');
     Route::POST('/user/consultation/{id}/{roomId}/approve', [UserConsultationController::class, 'approveNew'])->middleware('jwt.user');
     Route::GET('/user/consultation/{id}/order-status', [UserConsultationOrderStatusController::class, 'show'])->middleware('jwt.user');
+    Route::GET('/user/consultation/{id}/order-status-selection', [UserConsultationOrderStatusController::class, 'showSelection'])->middleware('jwt.user');
     Route::PUT('/user/consultation/{id}/order-status', [UserConsultationOrderStatusController::class, 'update'])->middleware('jwt.user');
 
     Route::GET('/user/chatroom', [UserChatroomController::class, 'index'])->middleware('jwt.user');
@@ -99,6 +100,8 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::GET('/user/chatroom/{id}/chat-files', [UserChatroomController::class, 'showChatFiles'])->middleware('jwt.user');
     Route::GET('/user/chatroom/{id}/order-status', [UserChatroomController::class, 'showOrderStatus'])->middleware('jwt.user');
     Route::PUT('/user/chatroom/{id}/order-status', [UserChatroomController::class, 'updateOrderStatus'])->middleware('jwt.user');
+    Route::GET('/user/chatroom/{id}/order-status-selection', [UserChatroomController::class, 'showOrderStatusSelection'])->middleware('jwt.user');
+
 
     Route::GET('/user/chat/{roomId}', [UserChatController::class, 'show'])->middleware('jwt.user');
     Route::POST('/user/chat/{roomId}', [UserChatController::class, 'store'])->middleware('jwt.user');
@@ -122,6 +125,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::GET('/vendor/chatroom/{id}/users', [VendorChatroomController::class, 'showUsers'])->middleware('jwt.user');
     Route::GET('/vendor/chatroom/{id}/order-status', [VendorChatroomController::class, 'showOrderStatus'])->middleware('jwt.user');
     Route::PUT('/vendor/chatroom/{id}/order-status', [VendorChatroomController::class, 'updateOrderStatus'])->middleware('jwt.user');
+    Route::GET('/vendor/chatroom/{id}/order-status-selection', [VendorChatroomController::class, 'showOrderStatusSelection'])->middleware('jwt.user');
 
     //ADMIN SITE
     Route::GET('/user/vendor/internal', [UserController::class, 'showVendor'])->middleware('jwt.admin');

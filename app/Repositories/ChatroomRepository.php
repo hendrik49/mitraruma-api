@@ -26,6 +26,11 @@ class ChatroomRepository
         return null;
     }
 
+    public function deleteById($id)
+    {
+        return $this->model->document($id)->delete();
+    }
+
     public function find($params)
     {
 

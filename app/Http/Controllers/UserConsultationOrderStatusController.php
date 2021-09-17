@@ -37,6 +37,19 @@ class UserConsultationOrderStatusController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showSelection($id)
+    {
+        $result = $this->consultationOrderStatusService->showSelection($id, 'customer');
+
+        return response()->json($result['data'], $result['status']);
+    }
+
     /**
      * Display the specified resource.
      *

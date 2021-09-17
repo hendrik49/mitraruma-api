@@ -23,6 +23,7 @@
         @endif
         <div class="row">
             <!-- ./col -->
+            @if(Auth::user()->user_type!="customer")
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-yellow">
@@ -36,6 +37,8 @@
                     </div>
                 </div>
             </div>
+            @endif
+            @if(Auth::user()->user_type!="vendor")
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-yellow">
@@ -49,7 +52,7 @@
                     </div>
                 </div>
             </div>
-
+            @endif
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-yellow">

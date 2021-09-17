@@ -28,16 +28,16 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         if ($user->user_type == "customer") {
-            $customer =  WpProject::where('user_id',$user->ID)->gropBy('vendor_user_id')->count();
-            $vendor = WpProject::where('user_id',$user->ID)->gropBy('vendor_user_id')->count();
-            $admin = WpProject::where('user_id',$user->ID)->gropBy('vendor_user_id')->count();
-            $projects = WpProject::where('user_id',$user->ID)->gropBy('vendor_user_id')->count();
+            $customer =  WpProject::where('user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $vendor = WpProject::where('user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $admin = WpProject::where('user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $projects = WpProject::where('user_id',$user->ID)->groupBy('vendor_user_id')->count();
 
         } else if ($user->user_type == "vendor") {
-            $customer =  WpProject::where('vendor_user_id',$user->ID)->gropBy('vendor_user_id')->count();
-            $vendor =  WpProject::where('vendor_user_id',$user->ID)->gropBy('vendor_user_id')->count();
-            $admin =  WpProject::where('vendor_user_id',$user->ID)->gropBy('vendor_user_id')->count();
-            $projects = WpProject::where('vendor_user_id',$user->ID)->gropBy('vendor_user_id')->count();
+            $customer =  WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $vendor =  WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $admin =  WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $projects = WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
 
         } else {
             $customer =  WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->count();

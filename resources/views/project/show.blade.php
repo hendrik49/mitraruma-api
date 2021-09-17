@@ -377,8 +377,8 @@
                                                     @foreach (isset($status['data']) ? $status['data'] : $status as $key => $val)
                                                         <tr>
                                                             <td>{{ ++$key }}</td>
-                                                            <td>{{ $val['phase'] }}</td>
-                                                            <td>
+                                                            <td width="15%"">{{ $val['phase'] }}</td>
+                                                            <td width="30%">
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
@@ -387,7 +387,7 @@
                                                                     @endif
                                                                 </ul>
                                                             </td>
-                                                            <td>
+                                                            <td width="5%">
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
@@ -400,7 +400,7 @@
                                                                     @endif
                                                                 </ul>
                                                             </td>
-                                                            <td>
+                                                            <td width="15%">
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
@@ -418,8 +418,7 @@
                                                                                         href={{ $item['file'] }}>click to view</a>
                                                                                 </li>
                                                                             @elseif (isset($item['attachment']))
-                                                                                <li><a target="_blank"
-                                                                                        href={{ $item['attachment'][0] }}>click to view {{ $item['activity'] }}</a>
+                                                                                <li><i class="fas fa-file"></i> <a target="_blank" href={{ $item['attachment'][0] }}>click to view {{ $item['activity'] }}</a>
                                                                                 </li>
                                                                             @endif
                                                                         @endforeach

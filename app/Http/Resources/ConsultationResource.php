@@ -41,6 +41,7 @@ class ConsultationResource
             'city' => $params['city'] ?? '',
             'detail' => $params['description'] ?? '',
             'serviceType' => $params['service_type'] ?? '',
+            'consultationId' => $params['consultation_id'] ?? '',
             'budget' => $params['estimated_budget'] ?? 0,
             'photos' => $params['photos'] ?? [],
             'orderNumber' => $params['order_number'] ?? 0,
@@ -138,6 +139,7 @@ class ConsultationResource
     private function convertFromFirebase($param){
         return [
             'id' => $param['id'],
+            'consultation_id' => $params['consultationId'] ?? '',
             'user_id' => $param['userId'],
             'user_email' => $param['email'] ?? '',
             'name' => $param['name'] ?? '',

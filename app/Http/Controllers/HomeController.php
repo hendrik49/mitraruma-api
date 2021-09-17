@@ -28,10 +28,10 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         if ($user->user_type == "customer") {
-            $customer =  WpProject::where('user_id',$user->ID)->groupBy('vendor_user_id')->count();
-            $vendor = WpProject::where('user_id',$user->ID)->groupBy('vendor_user_id')->count();
-            $admin = WpProject::where('user_id',$user->ID)->groupBy('vendor_user_id')->count();
-            $projects = WpProject::where('user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $customer =  WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
+            $vendor = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
+            $admin = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
+            $projects = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
 
         } else if ($user->user_type == "vendor") {
             $customer =  WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();

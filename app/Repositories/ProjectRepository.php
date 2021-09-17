@@ -47,7 +47,7 @@ class ProjectRepository
             $Project->room_number = $params['room_number'];
         }
         if(isset($params['room_id'])) {
-            $Project->room_number = $params['room_id'];
+            $Project->room_id = $params['room_id'];
         }
         if(isset($params['vendor_name'])) {
             $Project->vendor_name = $params['vendor_name'];

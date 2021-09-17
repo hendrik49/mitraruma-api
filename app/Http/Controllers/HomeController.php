@@ -29,14 +29,14 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user->user_type == "customer") {
             $customer =  WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
-            $vendor = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
-            $admin = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
+            $vendor = WpProject::where('user_id',$user->ID)->whereNotNull('vendor_user_id')->groupBy('vendor_user_id')->count();
+            $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
             $projects = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
 
         } else if ($user->user_type == "vendor") {
-            $customer =  WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
-            $vendor =  WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
-            $admin =  WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $customer =  WpProject::where('vendor_user_id',$user->ID)->groupBy('user_id')->count();
+            $vendor =  WpProject::where('vendor_user_id',$user->ID)->whereNotNull('vendor_user_id')->groupBy('vendor_user_id')->count();
+            $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
             $projects = WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
 
         } else {
@@ -46,7 +46,6 @@ class HomeController extends Controller
             $projects = WpProject::where('admin_user_id',$user->ID)->count();
 
         }
-
 
         $spk_customer = WpProject::sum('amount_spk_customer');
         $spk_vendor = WpProject::sum('amount_spk_vendor');

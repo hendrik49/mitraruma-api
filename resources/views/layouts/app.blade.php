@@ -44,7 +44,7 @@
                              class="img-circle elevation-2"
                              alt="User Image">
                         <p>
-                            {{ Auth::user()->display_name }}
+                            {{ Auth::user()->display_name }} - {{ Auth::user()->ID }}
                             <small>{{ Auth::user()->user_type }}</small>
                         </p>
                     </li>

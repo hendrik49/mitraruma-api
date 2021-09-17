@@ -185,7 +185,7 @@
                         @foreach ($progres as $val)
                             @if ($val->status == 'Project Ended')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }}
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }}
                                     </span>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
@@ -198,7 +198,7 @@
                             @endif
                             @if ($val->status == 'Project Started')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }}
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }}
                                     </span>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
@@ -211,7 +211,7 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Construction Phase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }}
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }}
                                     </span>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
@@ -224,7 +224,7 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Design Phase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }} 
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }} 
                                     </span>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
@@ -238,7 +238,7 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'pre-purchase' || $val->status == 'Pre-Purchase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->room_number }} 
+                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }} 
                                     </span>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>

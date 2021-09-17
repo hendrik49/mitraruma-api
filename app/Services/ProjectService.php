@@ -167,6 +167,30 @@ class ProjectService
         ];
     }
 
+    public function updateChat($params, $id)
+    {
+
+        $validator = Validator::make($params, [
+            'vendor_user_id' => 'required',
+            'room_id' => 'required',
+            'status' => 'required',
+            'sub_status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+        $address = $this->projectService->update($params, $id);
+
+        return [
+            'status' => 201,
+            'data' => $address,
+        ];
+    }
+
     public function update($params, $id)
     {
 

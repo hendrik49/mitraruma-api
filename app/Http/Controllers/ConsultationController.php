@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\ProjectService;
+use  App\Services\ConsultationService;
 
 class ConsultationController extends Controller
 {
@@ -23,8 +25,8 @@ class ConsultationController extends Controller
      * @return void
      */
     public function __construct(
-        \App\Services\ConsultationService $consultation,
-        \App\Services\ProjectService $projectService
+        ConsultationService $consultation,
+        ProjectService $projectService
     )
     {
         $this->consultation = $consultation;
@@ -88,6 +90,22 @@ class ConsultationController extends Controller
         $params = $request->all();
 
         $result =  $this->projectService->createChat($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+        /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateChat(Request $request, $id)
+    {
+
+        $params = $request->all();
+
+        $result =  $this->projectService->updateChat($params, $id);
 
         return response()->json($result['data'], $result['status']);
     }

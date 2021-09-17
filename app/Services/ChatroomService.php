@@ -6,6 +6,7 @@ use App\Http\Resources\ChatroomResource;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\OrderStatus;
+use App\Repositories\ProjectRepository;
 
 class ChatroomService
 {
@@ -39,6 +40,11 @@ class ChatroomService
      */
     private $orderStatusHelper;
 
+    /**
+     * @var ProjectRepository
+     */
+    private $projectRepo;
+
 
     /**
      * Create a new controller instance.
@@ -55,7 +61,8 @@ class ChatroomService
         \App\Services\ChatManagementService $chatManagement,
         \App\Repositories\ChatroomRepository $chatroom,
         OrderStatusService $orderStatusService,
-        OrderStatus $orderStatusHelper
+        OrderStatus $orderStatusHelper,
+        ProjectRepository $project
     ) {
         $this->user = $user;
         $this->userNotification = $userNotification;
@@ -63,6 +70,7 @@ class ChatroomService
         $this->chatroom = $chatroom;
         $this->orderStatusService = $orderStatusService;
         $this->orderStatusHelper = $orderStatusHelper;
+        $this->projectRepo = $project;
     }
 
     public function index($params)
@@ -304,6 +312,8 @@ class ChatroomService
     {
 
         $validator = Validator::make($params, [
+            'consultation_id' => 'required|string',
+            'phase' => 'required|string',
             'order_status' => 'required',
             'file' => 'nullable',
             'type' => 'required|string',
@@ -327,6 +337,16 @@ class ChatroomService
         $orderStatus = $orderStatus['data'];
         $newStatus = $this->orderStatusHelper->updateOrderStatusByCode($orderStatus, $params);
         $orderStatus = $this->orderStatusService->update($newStatus, $id);
+
+        $project = $this->projectRepo->findOne($params);
+
+        if ($project) {
+            $project['sub_status'] = $params['order_status'];
+            $project['status'] = $params['phase'];
+            $project['updated_at'] = date('Y-m-d H:i:s');
+            $this->projectRepo->update($project, $project->id);
+        }
+
         $orderStatus = $this->orderStatusService->show($id);
         $orderStatus = $orderStatus['data'];
         return [

@@ -439,6 +439,7 @@ class ChatroomManagementService
         $project = json_decode(json_encode($project), true);
         $project['room_number'] = 'AVC-' . $chatroom['room_id'];
         $project['room_type'] = 'AVC';
+        $project['room_id'] = $chatroom['id'];
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
         $resp = $this->projectService->update($project, $project['id']);
 

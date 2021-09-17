@@ -46,6 +46,9 @@ class ProjectRepository
         if(isset($params['room_number'])) {
             $Project->room_number = $params['room_number'];
         }
+        if(isset($params['room_id'])) {
+            $Project->room_number = $params['room_id'];
+        }
         if(isset($params['vendor_name'])) {
             $Project->vendor_name = $params['vendor_name'];
         }
@@ -55,6 +58,35 @@ class ProjectRepository
         if(isset($params['vendor_contact'])) {
             $Project->vendor_contact = $params['vendor_contact'];
         }
+        if(isset($params['room_type'])) {
+            $Project->room_type = $params['room_type'];
+        }
+        
+        try {
+            $Project->save();
+        }
+        catch (\Throwable $e){
+            report($e->getMessage());
+        }
+
+        return  $Project;
+    }
+
+    public function updateByConsulId($params, $id){
+
+        $Project = WpProject::where('consultation_id', $id)->where('vendor_user_id', $params['vendor_user_id'])->first();
+        if(!$Project) {
+            return  $Project;
+        }
+
+        if(isset($params['status'])) {
+            $Project->status= $params['phase'];
+        }
+        if(isset($params['order_status'])) {
+            $Project->sub_status = $params['order_status'];
+            $Project->updated_at = date('Y-m-d H:i:s');
+        }
+        
         
         try {
             $Project->save();

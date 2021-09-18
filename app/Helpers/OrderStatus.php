@@ -195,7 +195,7 @@ class OrderStatus
 
   public function getActivityByCode($code)
   {
-
+    $code = $code == 'pre-purchase' ? '120' : $code;
     $orderStatuses = json_decode($this->data, true);
     return isset($orderStatuses[$code]) ? $orderStatuses[$code]['activity'] : '';
   }

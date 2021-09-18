@@ -131,7 +131,8 @@ class WpProject extends Model
 
     public function getProjectNoteAttribute()
     {
-        $os = OrderStatus::getActivityByCode($this->attributes['sub_status']);
-        return $os;
+        $os = new OrderStatus;
+        $result = $os->getActivityByCode($this->attributes['sub_status']);
+        return $result;
     }
 }

@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::prefix('admin')->group(function () {
     Route::resource('proyek', ProjectController::class);
+
     Route::resource('users', UserController::class);
     Route::get('pembayaran',[ProjectController::class, 'pembayaran']);
 });

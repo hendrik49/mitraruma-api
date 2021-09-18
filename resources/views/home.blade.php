@@ -185,8 +185,8 @@
                         @foreach ($progres as $val)
                             @if ($val->status == 'Project Ended')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }}
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>10</b>/10</span>
@@ -198,8 +198,8 @@
                             @endif
                             @if ($val->status == 'Project Started')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }}
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>8</b>/10</span>
@@ -211,8 +211,8 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Construction Phase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }}
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>6</b>/10</span>
@@ -224,8 +224,8 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Design Phase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }} 
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>4</b>/10</span>
@@ -238,8 +238,8 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'pre-purchase' || $val->status == 'Pre-Purchase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->order_number }} - {{ $val->description }} 
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>2</b>/10</span>
@@ -266,8 +266,8 @@
                         @foreach ($progresVendor as $val)
                             @if ($val->status == 'Project Ended')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>10</b>/10</span>
@@ -279,8 +279,8 @@
                             @endif
                             @if ($val->status == 'Project Started')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>8</b>/10</span>
@@ -292,8 +292,8 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Construction Phase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>6</b>/10</span>
@@ -305,8 +305,8 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Design Phase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>4</b>/10</span>
@@ -319,8 +319,8 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'pre-purchase' || $val->status == 'Pre-Purchase')
                                 <div class="progress-group">
-                                    <span class="progress-text"> {{ $val->vendor_name }} - {{ $val->order_number }}
-                                    </span>
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    </a>
                                     <p class="progress-text text-bold"> {{ $val->status }} 
                                     </p>
                                     <span class="float-right"><b>2</b>/10</span>

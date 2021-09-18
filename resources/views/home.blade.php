@@ -187,7 +187,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>10</b>/10</span>
                                     <div class="progress progress-sm">
@@ -200,7 +200,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>8</b>/10</span>
                                     <div class="progress progress-sm">
@@ -213,7 +213,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>6</b>/10</span>
                                     <div class="progress progress-sm">
@@ -226,7 +226,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>4</b>/10</span>
                                     <div class="progress progress-sm">
@@ -240,7 +240,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>2</b>/10</span>
                                     <div class="progress progress-sm">
@@ -268,7 +268,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>10</b>/10</span>
                                     <div class="progress progress-sm">
@@ -281,7 +281,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>8</b>/10</span>
                                     <div class="progress progress-sm">
@@ -294,7 +294,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>6</b>/10</span>
                                     <div class="progress progress-sm">
@@ -307,7 +307,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>4</b>/10</span>
                                     <div class="progress progress-sm">
@@ -321,7 +321,7 @@
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>2</b>/10</span>
                                     <div class="progress progress-sm">

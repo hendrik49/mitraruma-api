@@ -108,7 +108,8 @@ class ConsultationOrderStatusService
     {
 
         $validator = Validator::make($params, [
-            'order_status' => 'integer|required'
+            'order_status' => 'integer|required',
+            'room_id' => 'required'
         ]);
 
         if ($validator->fails()) {

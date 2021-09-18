@@ -254,7 +254,7 @@ class ConsultationService
         $project['status'] =  $params['status'];
         $project['room_type'] =  'AC';
         $project['images'] =  json_encode($params['photos']);
-        $project['sub_status'] = $params['status'];
+        $project['sub_status'] = 120;
         $project['estimated_budget'] = $params['estimated_budget'];
         $project['service_type'] = isset($params['service_type']) ? $params['service_type'] : 'SERVICE';
         $this->projectRepo->create($project);

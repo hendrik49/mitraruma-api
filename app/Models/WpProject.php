@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Helpers\OrderStatus;
 
 class WpProject extends Model
 {
+
     use HasFactory;
 
     use SoftDeletes;
@@ -126,4 +128,10 @@ class WpProject extends Model
         'termin_vendor_5_date',
         'payment_retention_date'
     ];
+
+    public function getProjectNoteAttribute()
+    {
+        $os = OrderStatus::getActivityByCode($this->attributes['sub_status']);
+        return $os;
+    }
 }

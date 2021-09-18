@@ -193,6 +193,13 @@ class OrderStatus
     return isset($orderStatuses[$code]) ? $orderStatuses[$code]['phase'] : '';
   }
 
+  public function getActivityByCode($code)
+  {
+
+    $orderStatuses = json_decode($this->data, true);
+    return isset($orderStatuses[$code]) ? $orderStatuses[$code]['activity'] : '';
+  }
+
   public function getConsultationStatus($code, $userType = 'customer')
   {
     $phase = $this->phase;

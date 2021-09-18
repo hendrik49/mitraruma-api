@@ -85,7 +85,7 @@
                                         <td>{{ $project->vendor_name }}</td>
                                         <td width="10%">{{ $project->service_type }}</td>
                                         <td>{{ $project->status }}</td>
-                                        <td>{{ $project->sub_status }}</td>
+                                        <td>{{ $project->project_note }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $project->consultation_id }}</td>
                                         <td>{{ $project->description }}</td>

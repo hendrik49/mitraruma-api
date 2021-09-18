@@ -88,6 +88,10 @@ class ProjectRepository
         if(isset($params['status'])) {
             $Project->status= $params['status'];
         }
+        if(isset($params['sub_status'])) {
+            $Project->sub_status= $params['sub_status'];
+        }
+
         if(isset($params['phase'])) {
             $Project->status= $params['phase'];
         }

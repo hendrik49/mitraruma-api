@@ -378,7 +378,7 @@ class ChatroomService
                 ];
             }
             $consultation['orderStatus'] = $params['order_status'];
-            $consultation = $this->consultation->update($consultation, $id);
+            $consultation = $this->consultation->update($consultation, $params['consultation_id']);
 
             $userIds = [];
             if ($project->user_id) {

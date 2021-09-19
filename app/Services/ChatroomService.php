@@ -394,7 +394,7 @@ class ChatroomService
             ));
 
             foreach ($notificationUserIds as $notificationUserId) {
-                $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $params['user_jwt_name'] . " membuat order status kode. " . $params['order_status'] . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
+                $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => $params['user_jwt_name'] . " membuat order status kode. " . $params['order_status'] . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
             }
         }
 

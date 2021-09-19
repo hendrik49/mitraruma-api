@@ -57,7 +57,7 @@ class ChatroomService
      */
     private $userTokenService;
 
-        /**
+    /**
      * @var ConsultationRepository
      */
     private $consultation;
@@ -362,6 +362,10 @@ class ChatroomService
         $newStatus = $this->orderStatusHelper->updateOrderStatusByCode($orderStatus, $params);
         $orderStatus = $this->orderStatusService->update($newStatus, $id);
 
+        if ($params['user_jwt_type'] == "vendor") {
+            $params['vendor_user_id'] = $params['user_id'];
+            $params['user_id'] = null;
+        }
         $project = $this->projectRepo->findOne($params);
 
         if ($project) {

@@ -34,6 +34,21 @@
       </li> --}}
     </ul>
   </li>
+  <li class="nav-item">
+    <a href="" class="nav-link">
+      <i class="nav-icon fas fa-table"></i>
+      <p>
+        CMS Managment
+        <i class="fas fa-angle-left right"></i>
+      </p>
+    </a>
+    <ul class="nav nav-treeview" style="display: none;">
+      <li class="nav-item">
+        <a href="/admin/seting" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Seting</p>
+        </a>
+      </li>
   {{-- <li class="nav-item">
     <a href="#" class="nav-link">
       <i class="nav-icon fas fa-table"></i>

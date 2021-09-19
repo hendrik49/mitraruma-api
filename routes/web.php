@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CMS\ProjectController;
 use App\Http\Controllers\CMS\UserController;
+use App\Http\Controllers\CMS\CmsManagmentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,5 +27,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('proyek', ProjectController::class);
 
     Route::resource('users', UserController::class);
-    Route::get('pembayaran',[ProjectController::class, 'pembayaran']);
+    Route::resource('seting', CmsManagmentController::class);
 });

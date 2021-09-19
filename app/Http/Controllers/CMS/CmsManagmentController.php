@@ -52,13 +52,14 @@ class CmsManagmentController extends Controller
         $result = $this->cms->show($id);
         if ($result['data']['name'] == 'skill-set')
             return view('seting.show', ['cms' =>  $result['data']]);
-        else if($result['data']['name'] == 'category-list')
+        else if ($result['data']['name'] == 'category-list')
             return view('seting.show-category', ['cms' =>  $result['data']]);
-        else if($result['data']['name'] == 'benefit-video')
+        else if ($result['data']['name'] == 'benefit-video')
             return view('seting.show-video', ['cms' =>  $result['data']]);
-        else 
+        else if ($result['data']['name'] == 'banner')
+            return view('seting.show-banner', ['cms' =>  $result['data']]);
+        else
             return view('seting.show', ['cms' =>  $result['data']]);
-
     }
 
     /**

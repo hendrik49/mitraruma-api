@@ -421,7 +421,7 @@
                                                                         @foreach ($val['list'] as $key => $item)
                                                                             @if (isset($item['file']) && isset($item['file'][0]))
                                                                                 <li><a target="_blank"
-                                                                                        href={{ $item['file'] }}>click to view</a>
+                                                                                        href={{ $item['file'] }}>click to view {{ $item['activity'] }}</a>
                                                                                 </li>
                                                                             @elseif (isset($item['attachment']))
                                                                                 <li><i class="fas fa-file"></i> <a target="_blank" href={{ $item['attachment'][0] }}>click to view {{ $item['activity'] }}</a>

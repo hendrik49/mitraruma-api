@@ -31,7 +31,7 @@ class OrderStatus
                 "action": "Detail Project Uploaded",
                 "phase": "Pre-Purchase",
                 "type":"general",
-                "by": "customer"
+                "by": "admin"
               },
               "130": {
                 "activity": "Selected Applicator join the conversation",

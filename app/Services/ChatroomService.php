@@ -345,39 +345,43 @@ class ChatroomService
             $project['status'] = $params['phase'];
             $project['updated_at'] = date('Y-m-d H:i:s');
             $this->projectRepo->update($project, $project->id);
-        }
 
-        $userIds = [];
-        if (isset($params['user_id'])) {
-            array_push($userIds, $params['user_id']);
-        }
-        if (isset($params['vendor_user_id'])) {
-            array_push($userIds, $params['vendor_user_id']);
-        }
+            $userIds = [];
+            if ($project->user_id) {
+                array_push($userIds, $project->user_id);
+            }
+            if ($project->vendor_user_id) {
+                array_push($userIds, $project->vendor_user_id);
+            }
 
-        $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
-        if ($tokens['status'] == 200) {
-            $tokens = $tokens['data'];
-        }
+            if ($project->admin_user_id) {
+                array_push($userIds, $project->admin_user_id);
+            }
 
-        $deviceTokens = [];
-        $notificationUserIds = [];
-        foreach ($tokens as $token) {
-            array_push($notificationUserIds, $token['user_id']);
-            array_push($deviceTokens, $token['device_token']);
-        }
+            $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
+            if ($tokens['status'] == 200) {
+                $tokens = $tokens['data'];
+            }
 
-        $this->notificationService->send($deviceTokens, array(
-            "title" => "Order status diupdate ke kode ".$params['order_status'],
-            "body" => $params['user_jwt_name'] . " membuat order status kode " . $params['order_status'] . " di room id " . $id,
-            "type" => "notification",
-            "value" => [
-                "chat_room" => ""
-            ]
-        ));
+            $deviceTokens = [];
+            $notificationUserIds = [];
+            foreach ($tokens as $token) {
+                array_push($notificationUserIds, $token['user_id']);
+                array_push($deviceTokens, $token['device_token']);
+            }
 
-        foreach ($notificationUserIds as $notificationUserId) {
-            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $params['user_jwt_name'] . " membuat order status kode. " . $params['order_status'] . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
+            $this->notificationService->send($deviceTokens, array(
+                "title" => "Order status diupdate ke kode " . $params['order_status'],
+                "body" => $params['user_jwt_name'] . " membuat order status kode " . $params['order_status'] . " di room id " . $id,
+                "type" => "notification",
+                "value" => [
+                    "chat_room" => ""
+                ]
+            ));
+
+            foreach ($notificationUserIds as $notificationUserId) {
+                $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $params['user_jwt_name'] . " membuat order status kode. " . $params['order_status'] . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
+            }
         }
 
         $orderStatus = $this->orderStatusService->show($id);

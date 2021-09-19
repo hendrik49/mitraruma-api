@@ -267,7 +267,7 @@ class OrderStatus
   public function initOrderStatus()
   {
     $phase  = $this->getPhase();
-    $newOrderStatus = $this->getOrderStatusByCode(110);
+    $newOrderStatus = $this->getOrderStatusByCode(120);
     array_push($phase[$newOrderStatus['phase']], ["activity" => $newOrderStatus['activity'], 'type' => 'general', 'file' => '', 'createdAt' => Carbon::now()->format('Y-m-d\TH:i:s\Z')]);
     $newStatus = [];
     foreach ($phase as $keyPhase => $valuePhase) {

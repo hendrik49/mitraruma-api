@@ -299,6 +299,22 @@ class OrderStatus
 
         $phase['data'][$keyPhase]['list'][] = $data;
       }
+      if ($params['order_status'] == 160) {
+        $phase['data'][1]['active'] = true;
+        //design phase
+      }
+      if ($params['order_status'] == 230) {
+        $phase['data'][2]['active'] = true;
+          //constrocution phase
+      }
+      if ($params['order_status'] == 331) {
+        $phase['data'][3]['active'] = true;
+          //constrocution phase
+      }
+      if ($params['order_status'] == 480) {
+        $phase['data'][4]['active'] = true;
+      }
+      
     }
     return $phase;
   }

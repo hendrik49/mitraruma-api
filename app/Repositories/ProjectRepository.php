@@ -64,6 +64,13 @@ class ProjectRepository
         if(isset($params['room_type'])) {
             $Project->room_type = $params['room_type'];
         }
+        if(isset($params['status'])) {
+            $Project->status= $params['status'];
+        }
+        if(isset($params['sub_status'])) {
+            $Project->sub_status= $params['sub_status'];
+        }
+
         
         try {
             $Project->save();
@@ -94,7 +101,6 @@ class ProjectRepository
         if(isset($params['sub_status'])) {
             $Project->sub_status= $params['sub_status'];
         }
-
         if(isset($params['phase'])) {
             $Project->status= $params['phase'];
         }

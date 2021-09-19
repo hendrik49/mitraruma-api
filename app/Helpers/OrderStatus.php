@@ -112,7 +112,7 @@ class OrderStatus
                 "hidden": "customer"
               },
               "410": {
-                "activity": "Project Has Started",
+                "activity": "Project Has Started and Upload Progress Checklist",
                 "action": "Upload Progress Checklist",
                 "phase": "Project Started",
                 "type":"general",

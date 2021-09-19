@@ -131,10 +131,10 @@ class WpProject extends Model
         'payment_retention_date'
     ];
 
-    protected $appends = ['progres'];
+    protected $appends = ['progress'];
 
 
-    public function getProgresAttribute()
+    public function getProgressAttribute()
     {
         if ($this->attributes['status'] == "Pre-Purchase" || $this->attributes['status'] == "pre-purchase")
             return 20;

@@ -108,7 +108,8 @@ class ConsultationResource
             'updatedAt' => $params['updated_at'] ?? '',
             'ratingVendor' => $params['rating_vendor'] ?? 0,
             'ratingAdmin' => $params['rating_admin'] ?? 0,
-            'ratingCustomer' => $params['rating_customer'] ?? 0
+            'ratingCustomer' => $params['rating_customer'] ?? 0,
+            'progress' => $params['progress'] ?? 0,
         ];
     }
 
@@ -161,6 +162,7 @@ class ConsultationResource
             'order_number' => $param['orderNumber'] ?? '',
             'order_status' => $param['orderStatus'] ?? '',
             'order_status_name' =>  $this->orderStatus->getPhaseByCode($param['orderStatus']) ?? '',
+            'progress' => $param['progress'] ?? 0,
             // 'applicator_discount' => $param['applicatorDiscount'] ?? 0,
             // 'mitraruma_discount' => $param['mitrarumaDiscount'] ?? 0,
             // 'mitraruma_material_buy' => $param['mitrarumaMaterialBuy'] ?? 0,

@@ -14,8 +14,7 @@ class ConsultationResource
 
     public function __construct(
         OrderStatus $orderStatus
-    )
-    {
+    ) {
         $this->orderStatus = $orderStatus;
     }
 
@@ -134,12 +133,23 @@ class ConsultationResource
     {
         $result = [];
         foreach ($params as $param) {
+            if ($param['orderStatus'] == "Pre-Purchase" || $param['orderStatus'] == "pre-purchase")
+                $param['progress'] =  20;
+            else if ($param['orderStatus'] == "Design Phase")
+                $param['progress'] =  40;
+            else if ($param['orderStatus'] == "Consturction Phase")
+                $param['progress'] =  60;
+            else if ($param['orderStatus'] == "Project Started")
+                $param['progress'] =  80;
+            else
+                $param['progress'] =  100;
             array_push($result, self::convertFromFirebase($param));
         }
         return $result;
     }
 
-    private function convertFromFirebase($param){
+    private function convertFromFirebase($param)
+    {
         return [
             'id' => $param['id'],
             'consultation_id' => $params['consultationId'] ?? '',

@@ -140,6 +140,7 @@ class ChatroomManagementService
         $consultation['admin_user_id'] =  $consultation['admin_user_id'] ? $consultation['admin_user_id'] : $params['admin_user_id'];
         $consultation['admin_name'] =  $consultation['admin_name'] ? $consultation['admin_name'] : $params['user_jwt_name'];
         $consultation['vendor_name'] = $user['display_name'];
+        $consultation['vendor_email'] = $user['user_email'];
         $consultation['order_status'] = 130;
         $consultation['updated_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $consultation = $this->consultationService->update($consultation, $consultation['id']);
@@ -192,6 +193,7 @@ class ChatroomManagementService
         $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
         $project['room_type'] = 'AV';
         $project['vendor_name'] = $user['display_name'];
+        $project['vendor_email'] = $user['user_email'];
         $project['vendor_user_id'] =  $user['ID'];
         $project['vendor_contact'] = $user['user_phone_number'];
 

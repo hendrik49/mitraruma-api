@@ -204,6 +204,7 @@ class ConsultationService
         //create consultation
         $params['admin_user_id'] = $userAdmin['ID'];
         $params['admin_name'] = $userAdmin['display_name'];
+        $params['admin_email'] = $userAdmin['user_email'];
         $params['user_email'] = $params['user_jwt_email'];
         $params['display_name'] = $params['user_jwt_name'];
         $params['order_status'] = 120;

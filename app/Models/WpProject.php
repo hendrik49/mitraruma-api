@@ -131,10 +131,20 @@ class WpProject extends Model
         'payment_retention_date'
     ];
 
-    public function getProjectNoteAttribute()
+    protected $appends = ['progres'];
+
+
+    public function getProgresAttribute()
     {
-        $os = new OrderStatus;
-        $result = $os->getActivityByCode($this->attributes['sub_status']);
-        return $result;
+        if ($this->attributes['status'] == "Pre-Purchase" || $this->attributes['status'] == "pre-purchase")
+            return 20;
+        else if ($this->attributes['status'] == "Design Phase")
+            return 40;
+        else if ($this->attributes['status'] == "Consturction Phase")
+            return 60;
+        else if ($this->attributes['status'] == "Project Started")
+            return 80;
+        else
+            return 100;
     }
 }

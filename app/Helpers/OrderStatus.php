@@ -271,7 +271,7 @@ class OrderStatus
         $data['type'] = $params['type'];
         $data['by'] = $params['user_jwt_type'];
 
-        $phase[$keyPhase]['list'][] = $data;
+        $phase['data'][$keyPhase]['list'][] = $data;
       }
     }
     return $phase;

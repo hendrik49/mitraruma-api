@@ -56,6 +56,8 @@ class CmsManagmentController extends Controller
             return view('seting.show-category', ['cms' =>  $result['data']]);
         else if ($result['data']['name'] == 'benefit-video')
             return view('seting.show-video', ['cms' =>  $result['data']]);
+        else if ($result['data']['name'] == 'benefits-list')
+            return view('seting.show-benefit', ['cms' =>  $result['data']]);
         else if ($result['data']['name'] == 'banner')
             return view('seting.show-banner', ['cms' =>  $result['data']]);
         else

@@ -19,8 +19,7 @@ class UserChatroomController extends Controller
      */
     public function __construct(
         \App\Services\ChatroomService $chatroom
-    )
-    {
+    ) {
         $this->chatroom = $chatroom;
     }
 
@@ -137,7 +136,7 @@ class UserChatroomController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
-     /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -152,18 +151,18 @@ class UserChatroomController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
-       /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showOrderStatusSelection($name)
+    public function showOrderStatusSelection(Request $request, $name)
     {
-        $result = $this->chatroom->showOrderStatusSelection($name,'customer');
+        $params = $request->all();
+
+        $result = $this->chatroom->showOrderStatusSelection($name, $params['user_jwt_type']);
 
         return response()->json($result['data'], $result['status']);
     }
-
-
 }

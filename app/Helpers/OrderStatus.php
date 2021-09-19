@@ -266,7 +266,7 @@ class OrderStatus
       if ($valuePhase['phase'] == $newOrderStatus['phase']) {
         $data = [];
         $data['activity'] = $newOrderStatus['activity'];
-        $data['createdAt'] = date('Y-m-d H:i:s');
+        $data['createdAt'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $data['file'] = $params['file'];
         $data['type'] = $params['type'];
         $data['by'] = $params['user_jwt_type'];

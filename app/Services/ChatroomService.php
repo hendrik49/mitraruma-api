@@ -408,9 +408,12 @@ class ChatroomService
                 array_push($deviceTokens, $token['device_token']);
             }
 
+            $os = new OrderStatus;
+            $osName = $os->getActivityByCode($params['order_status']);    
+
             $this->notificationService->send($deviceTokens, array(
                 "title" => "Order status diupdate ke kode " . $params['order_status'],
-                "body" => $params['user_jwt_name'] . " membuat order status kode " . $params['order_status'] . " di room id " . $id,
+                "body" => $params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id,
                 "type" => "notification",
                 "value" => [
                     "chat_room" => ""
@@ -418,7 +421,7 @@ class ChatroomService
             ));
 
             foreach ($notificationUserIds as $notificationUserId) {
-                $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => $params['user_jwt_name'] . " membuat order status kode. " . $params['order_status'] . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
+                $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => $params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
             }
         }
 

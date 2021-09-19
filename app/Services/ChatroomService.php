@@ -338,7 +338,7 @@ class ChatroomService
         $validator = Validator::make($params, [
             'consultation_id' => 'required|string',
             'phase' => 'required|string',
-            'order_status' => 'required',
+            'order_status' => 'required|min:110',
             'file' => 'nullable',
             'type' => 'required|string',
         ]);

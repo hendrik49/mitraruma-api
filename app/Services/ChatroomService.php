@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\OrderStatus;
 use App\Repositories\ProjectRepository;
+use App\Http\Resources\ConsultationResource;
+use App\Repositories\ConsultationRepository;
 
 class ChatroomService
 {
@@ -45,7 +47,7 @@ class ChatroomService
      */
     private $projectRepo;
 
-     /**
+    /**
      * @var NotificationService
      */
     private $notificationService;
@@ -54,6 +56,11 @@ class ChatroomService
      * @var UserTokenService
      */
     private $userTokenService;
+
+        /**
+     * @var ConsultationRepository
+     */
+    private $consultation;
 
 
     /**
@@ -74,7 +81,8 @@ class ChatroomService
         OrderStatus $orderStatusHelper,
         ProjectRepository $project,
         NotificationService $notificationService,
-        UserTokenService $userTokenService
+        UserTokenService $userTokenService,
+        ConsultationRepository $consultation
     ) {
         $this->user = $user;
         $this->userNotification = $userNotification;
@@ -85,6 +93,8 @@ class ChatroomService
         $this->projectRepo = $project;
         $this->notificationService = $notificationService;
         $this->userTokenService = $userTokenService;
+        $this->consultation = $consultation;
+        $this->userNotificationService = $userNotification;
     }
 
     public function index($params)
@@ -359,6 +369,16 @@ class ChatroomService
             $project['status'] = $params['phase'];
             $project['updated_at'] = date('Y-m-d H:i:s');
             $this->projectRepo->update($project, $project->id);
+
+            $consultation = $this->consultation->findById($params['consultation_id']);
+            if ($consultation == null) {
+                return [
+                    'status' => 404,
+                    'data' => ['message' => "Consultation data not found"]
+                ];
+            }
+            $consultation['orderStatus'] = $params['order_status'];
+            $consultation = $this->consultation->update($consultation, $id);
 
             $userIds = [];
             if ($project->user_id) {

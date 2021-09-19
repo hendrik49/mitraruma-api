@@ -45,6 +45,16 @@ class ChatroomService
      */
     private $projectRepo;
 
+     /**
+     * @var NotificationService
+     */
+    private $notificationService;
+
+    /**
+     * @var UserTokenService
+     */
+    private $userTokenService;
+
 
     /**
      * Create a new controller instance.
@@ -62,7 +72,9 @@ class ChatroomService
         \App\Repositories\ChatroomRepository $chatroom,
         OrderStatusService $orderStatusService,
         OrderStatus $orderStatusHelper,
-        ProjectRepository $project
+        ProjectRepository $project,
+        NotificationService $notificationService,
+        UserTokenService $userTokenService
     ) {
         $this->user = $user;
         $this->userNotification = $userNotification;
@@ -71,6 +83,8 @@ class ChatroomService
         $this->orderStatusService = $orderStatusService;
         $this->orderStatusHelper = $orderStatusHelper;
         $this->projectRepo = $project;
+        $this->notificationService = $notificationService;
+        $this->userTokenService = $userTokenService;
     }
 
     public function index($params)

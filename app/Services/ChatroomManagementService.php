@@ -141,6 +141,7 @@ class ChatroomManagementService
         $consultation['admin_name'] =  $consultation['admin_name'] ? $consultation['admin_name'] : $params['user_jwt_name'];
         $consultation['vendor_name'] = $user['display_name'];
         $consultation['vendor_email'] = $user['user_email'];
+        $consultation['admin_email'] = $consultation['admin_email'];
         $consultation['order_status'] = 130;
         $consultation['updated_at'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $consultation = $this->consultationService->update($consultation, $consultation['id']);

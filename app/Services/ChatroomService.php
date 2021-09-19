@@ -347,6 +347,39 @@ class ChatroomService
             $this->projectRepo->update($project, $project->id);
         }
 
+        $userIds = [];
+        if (isset($params['user_id'])) {
+            array_push($userIds, $params['user_id']);
+        }
+        if (isset($params['vendor_user_id'])) {
+            array_push($userIds, $params['vendor_user_id']);
+        }
+
+        $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
+        if ($tokens['status'] == 200) {
+            $tokens = $tokens['data'];
+        }
+
+        $deviceTokens = [];
+        $notificationUserIds = [];
+        foreach ($tokens as $token) {
+            array_push($notificationUserIds, $token['user_id']);
+            array_push($deviceTokens, $token['device_token']);
+        }
+
+        $this->notificationService->send($deviceTokens, array(
+            "title" => "Order status diupdate ke kode ".$params['order_status'],
+            "body" => $params['user_jwt_name'] . " membuat order status kode " . $params['order_status'] . " di room id " . $id,
+            "type" => "notification",
+            "value" => [
+                "chat_room" => ""
+            ]
+        ));
+
+        foreach ($notificationUserIds as $notificationUserId) {
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $params['user_jwt_name'] . " membuat order status kode. " . $params['order_status'] . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
+        }
+
         $orderStatus = $this->orderStatusService->show($id);
         $orderStatus = $orderStatus['data'];
         return [

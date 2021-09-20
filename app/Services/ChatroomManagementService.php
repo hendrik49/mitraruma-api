@@ -140,7 +140,6 @@ class ChatroomManagementService
 
         $paramproj['consultation_id'] = $params['consultation_id'];
         $paramproj['vendor_user_id'] = $params['vendor_user_id'];
-        $paramproj['room_type'] = 'AV';
         $proj = $this->projectService->findOne($paramproj);
 
         if ($proj['status'] == 200) {

@@ -133,13 +133,14 @@ class ConsultationResource
     {
         $result = [];
         foreach ($params as $param) {
-            if ($param['orderStatus'] == "Pre-Purchase" || $param['orderStatus'] == "pre-purchase")
+            $phase  = $this->orderStatus->getPhaseByCode($param['orderStatus']);
+            if ($phase == "Pre-Purchase" || $phase == "pre-purchase")
                 $param['progress'] =  20;
-            else if ($param['orderStatus'] == "Design Phase")
+            else if ($phase == "Design Phase")
                 $param['progress'] =  40;
-            else if ($param['orderStatus'] == "Consturction Phase")
+            else if ($phase == "Consturction Phase")
                 $param['progress'] =  60;
-            else if ($param['orderStatus'] == "Project Started")
+            else if ($phase == "Project Started")
                 $param['progress'] =  80;
             else
                 $param['progress'] =  100;

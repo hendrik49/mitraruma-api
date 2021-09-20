@@ -80,7 +80,7 @@ class ConsultationRepository
     private function filterBuilder($model, $params)
     {
 
-        $model = $model->orderBy('createdAt', 'desc');
+        $model = $model->orderBy('updatedAt', 'desc');
         if ($params['user_jwt_type'] == "admin")
             $model = $model->where('adminId', '=', (int)$params['user_id']);
         else if ($params['user_jwt_type'] == "vendor")

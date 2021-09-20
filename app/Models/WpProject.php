@@ -19,7 +19,7 @@ class WpProject extends Model
      *
      * @var array
      */
-    protected $fillable = [        
+    protected $fillable = [
         'amount_spk_customer',
         'amount_spk_vendor',
         'amount_spk_vendor_net',
@@ -34,7 +34,7 @@ class WpProject extends Model
         'booking_fee',
         'term_payment_vendor',
         'term_payment_customer',
-    
+
         'termin_customer_1',
         'termin_customer_2',
         'termin_customer_3',
@@ -69,20 +69,20 @@ class WpProject extends Model
         'description',
         'status',
         'sub_status',
-        'customer_name',        
-        'customer_contact',        
-        'vendor_name',        
+        'customer_name',
+        'customer_contact',
+        'vendor_name',
         'admin_name',
-        'vendor_email',        
-        'admin_email',          
-        'vendor_contact',        
+        'vendor_email',
+        'admin_email',
+        'vendor_contact',
         'estimated_budget',
         'room_number',
         'project_value',
         'rating_vendor',
         'rating_customer',
         'rating_admin',
-        'room_type'        
+        'room_type'
     ];
 
     /**
@@ -91,7 +91,7 @@ class WpProject extends Model
      * @var array
      */
     protected $hidden = [
-        'deleted_at',      
+        'deleted_at',
         'amount_spk_customer',
         'amount_spk_vendor',
         'amount_spk_vendor_net',
@@ -106,7 +106,7 @@ class WpProject extends Model
         'booking_fee',
         'term_payment_vendor',
         'term_payment_customer',
-    
+
         'termin_customer_1',
         'termin_customer_2',
         'termin_customer_3',
@@ -146,5 +146,12 @@ class WpProject extends Model
             return 80;
         else
             return 100;
+    }
+
+    public function getProjectNoteAttribute()
+    {
+        $os = new OrderStatus;
+        $result = $os->getActivityByCode($this->attributes['sub_status']);
+        return $result;
     }
 }

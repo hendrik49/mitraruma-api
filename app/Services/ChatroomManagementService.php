@@ -136,6 +136,20 @@ class ChatroomManagementService
         }
 
         $consultation = $consultation['data'];
+
+
+        $paramproj['consultation_id'] = $params['consultation_id'];
+        $paramproj['vendor_user_id'] = $params['vendor_user_id'];
+        $paramproj['room_type'] = 'AV';
+        $proj = $this->projectService->findOne($paramproj);
+
+        if ($proj['status'] == 200) {
+            return [
+                'status' => 400,
+                'data' => ['message' => 'Room AV already exsist for this consultation. The room is ' . $proj['data']['room_number']],
+            ];
+        }
+
         $consultation['vendor_user_id'] = $params['vendor_user_id'];
         $consultation['admin_user_id'] =  $consultation['admin_user_id'] ? $consultation['admin_user_id'] : $params['admin_user_id'];
         $consultation['admin_name'] =  $consultation['admin_name'] ? $consultation['admin_name'] : $params['user_jwt_name'];

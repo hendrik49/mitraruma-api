@@ -51,7 +51,7 @@ class OrderStatus
                 "activity": "Booking Fee Paid",
                 "action": "Pay Booking Fee",
                 "phase": "Pre-Purchase",
-                "type":"document",
+                "type":"payment",
                 "by": "customer"
               },
               "210": {
@@ -100,14 +100,14 @@ class OrderStatus
                 "activity": "First Payment Paid by Customer",
                 "action": "Pay First Payment",
                 "phase": "Construction Phase",
-                "type":"document",
+                "type":"payment",
                 "by": "customer"
               },
               "331": {
                 "activity": "First Payment Paid by Admin",
                 "action": "Pay First Payment",
                 "phase": "Construction Phase",
-                "type":"document",
+                "type":"payment",
                 "by": "admin",
                 "hidden": "customer"
               },
@@ -129,14 +129,14 @@ class OrderStatus
                 "activity": "Second Payment Paid by Customer",
                 "action": "Pay Second Payment",
                 "phase": "Project Started",
-                "type":"document",
+                "type":"payment",
                 "by": "customer"
               },
               "431": {
                 "activity": "Second Payment Paid by Admin",
                 "action": "Pay Second Payment",
                 "phase": "Project Started",
-                "type":"document",
+                "type":"payment",
                 "by": "admin",
                 "hidden": "customer"
               },
@@ -158,14 +158,14 @@ class OrderStatus
                 "activity": "Last Payment Paid by Customer",
                 "action": "Pay Last Payment",
                 "phase": "Project Started",
-                "type":"document",
+                "type":"payment",
                 "by": "customer"
               },
               "470": {
                 "activity": "Third Payment Paid by Admin",
                 "action": "Pay Third Payment",
                 "phase": "Project Started",
-                "type":"document",
+                "type":"payment",
                 "by": "admin",
                 "hidden": "customer"
               },
@@ -195,7 +195,7 @@ class OrderStatus
                 "action": "Pay Last Payment",
                 "phase": "Project Ended",
                 "by": "admin",
-                "type":"document",
+                "type":"payment",
                 "hidden": "customer"
               },
               "540": {

@@ -9,6 +9,8 @@ use App\Helpers\OrderStatus;
 use App\Repositories\ProjectRepository;
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
+use Twilio\Rest\Client;
+use App\Models\WpUser;
 
 class ChatroomService
 {
@@ -409,7 +411,7 @@ class ChatroomService
             }
 
             $os = new OrderStatus;
-            $osName = $os->getActivityByCode($params['order_status']);    
+            $osName = $os->getActivityByCode($params['order_status']);
 
             $this->notificationService->send($deviceTokens, array(
                 "title" => "Order status diupdate ke kode " . $params['order_status'],
@@ -422,6 +424,11 @@ class ChatroomService
 
             foreach ($notificationUserIds as $notificationUserId) {
                 $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => $params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
+                $user = $this->user->show($notificationUserId);
+
+                if ($user['status'] != 404) {
+                    $this->sendMessage($params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id, $user['data']['user_phone_number']);
+                }
             }
         }
 
@@ -431,5 +438,19 @@ class ChatroomService
             'status' => 200,
             'data' => $orderStatus
         ];
+    }
+
+    private function sendMessage($message, $recipients)
+    {
+        $account_sid = getenv("TWILIO_SID");
+        $auth_token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio_number = getenv("TWILIO_NUMBER");
+        $client = new Client($account_sid, $auth_token);
+        try {
+            return $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
+        } catch (\Throwable $e) {
+            report($e);
+            return $e;
+        }
     }
 }

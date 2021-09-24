@@ -679,7 +679,7 @@ class UserService
             if ($data["errorCode"]) {
                 return [
                     'status' => 404,
-                    'data' => ['message' => $data["errorCode"]]
+                    'data' => ['message' => $data["error"]]
                 ];
             } else {
                 $result['status'] = $response->getStatusCode();

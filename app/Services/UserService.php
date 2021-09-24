@@ -528,7 +528,7 @@ class UserService
         $isEmail = !$validatorEmail->fails();
         $resp = $this->postSignInAPI($params, $isEmail);
 
-        if ($resp['errorCode'] || $resp == null) {
+        if (isset($resp['errorCode']) || $resp == null) {
             $error = $resp['error'];
             if ($resp['errorCode'] == 'IDP_API_EXCEPTION')
                 $error = "Wrong Password";

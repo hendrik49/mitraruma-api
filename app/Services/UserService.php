@@ -241,7 +241,6 @@ class UserService
                     ]
                 ],
             ];
-            
         } catch (\Exception $e) {
             DB::rollBack();
             return [
@@ -677,9 +676,16 @@ class UserService
             ]);
 
             $data =  json_decode($response->getBody(), true);
-            $result['status'] = $response->getStatusCode();
-            $result['data'] = $data;
-            return  $result;
+            if ($data["errorCode"]) {
+                return [
+                    'status' => 404,
+                    'data' => ['message' => $data["errorCode"]]
+                ];
+            } else {
+                $result['status'] = $response->getStatusCode();
+                $result['data'] = $data;
+                return  $result;
+            }
         } catch (\Exception $e) {
             $message = $e->getMessage();
             $result['status'] = $response->getStatusCode();
@@ -749,9 +755,9 @@ class UserService
                 if ($exist) {
                     $var["externalId"] = $var["id"];
                     $var["id"] = $exist->ID;
-                    $var["name"] = $var["id"].' | '.$var["display_name"] . ' | ' . $var["user_phone"];
-                    $var["finished_project"] = WpProject::where('status','Project Ended')->where('vendor_user_id',$exist->ID)->count();
-                    $var["unfinished_project"] =  WpProject::where('status','Project Ended')->where('vendor_user_id',$exist->ID)->count();
+                    $var["name"] = $var["id"] . ' | ' . $var["display_name"] . ' | ' . $var["user_phone"];
+                    $var["finished_project"] = WpProject::where('status', 'Project Ended')->where('vendor_user_id', $exist->ID)->count();
+                    $var["unfinished_project"] =  WpProject::where('status', 'Project Ended')->where('vendor_user_id', $exist->ID)->count();
                     $new[] = $var;
                 }
                 // } else {

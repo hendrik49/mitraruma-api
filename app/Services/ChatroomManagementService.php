@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Helpers\OrderStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Twilio\Rest\Client;
 
 class ChatroomManagementService
 {
@@ -251,6 +252,12 @@ class ChatroomManagementService
 
         foreach ($notificationUserIds as $notificationUserId) {
             $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $user['display_name'] . " dipilih untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
+            $user = $this->user->show($notificationUserId);
+
+            if ($user['status'] != 404) {
+                $this->sendMessage("Aplikator " . $user['display_name'] . " dipilih untuk mengerjakan konsultasi No. " . $consultation['order_number'], $user['data']['user_phone_number']);
+            }
+
         }
 
         return [
@@ -498,11 +505,31 @@ class ChatroomManagementService
 
         foreach ($notificationUserIds as $notificationUserId) {
             $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
+            $user = $this->user->show($notificationUserId);
+
+            if ($user['status'] != 404) {
+                $this->sendMessage("Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], $user['data']['user_phone_number']);
+            }
+
         }
 
         return [
             'status' => 201,
             'data' => $chatroom,
         ];
+    }
+
+    private function sendMessage($message, $recipients)
+    {
+        $account_sid = getenv("TWILIO_SID");
+        $auth_token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio_number = getenv("TWILIO_NUMBER");
+        $client = new Client($account_sid, $auth_token);
+        try {
+            return $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
+        } catch (\Throwable $e) {
+            report($e);
+            return $e;
+        }
     }
 }

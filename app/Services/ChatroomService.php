@@ -10,7 +10,6 @@ use App\Repositories\ProjectRepository;
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
 use Twilio\Rest\Client;
-use App\Models\WpUser;
 
 class ChatroomService
 {

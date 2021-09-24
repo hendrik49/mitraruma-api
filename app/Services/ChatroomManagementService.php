@@ -252,10 +252,10 @@ class ChatroomManagementService
 
         foreach ($notificationUserIds as $notificationUserId) {
             $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $user['display_name'] . " dipilih untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
-            $user = $this->user->show($notificationUserId);
+            $userNotif = $this->user->show($notificationUserId);
 
-            if ($user['status'] != 404) {
-                $this->sendMessage("Aplikator " . $user['display_name'] . " dipilih untuk mengerjakan konsultasi No. " . $consultation['order_number'], $user['data']['user_phone_number']);
+            if ($userNotif['status'] != 404) {
+                $this->sendMessage("Aplikator " . $user['display_name'] . " dipilih untuk mengerjakan konsultasi No. " . $consultation['order_number'], $userNotif['data']['user_phone_number']);
             }
 
         }
@@ -505,10 +505,10 @@ class ChatroomManagementService
 
         foreach ($notificationUserIds as $notificationUserId) {
             $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
-            $user = $this->user->show($notificationUserId);
+            $userNotif = $this->user->show($notificationUserId);
 
-            if ($user['status'] != 404) {
-                $this->sendMessage("Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], $user['data']['user_phone_number']);
+            if ($userNotif['status'] != 404) {
+                $this->sendMessage("Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], $userNotif['data']['user_phone_number']);
             }
 
         }

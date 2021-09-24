@@ -54,6 +54,13 @@ class OrderStatus
                 "type":"payment",
                 "by": "customer"
               },
+              "170": {
+                "activity": "Schedule a Survey",
+                "action": "Schedule a Survey",
+                "phase": "Pre-Purchase",
+                "type":"schedule",
+                "by": ""
+              },
               "210": {
                 "activity": "Build of Quantity (BOQ) Uploaded",
                 "action": "Upload Build of Quantity (BOQ)",
@@ -74,6 +81,13 @@ class OrderStatus
                 "phase": "Design Phase",
                 "type":"document",
                 "by": "vendor"
+              },
+              "240": {
+                "activity": "Schedule a Survey",
+                "action": "Schedule a Survey",
+                "phase": "Design Phase",
+                "type":"schedule",
+                "by": ""
               },
               "310": {
                 "activity": "Draft Contract Uploaded",
@@ -110,6 +124,13 @@ class OrderStatus
                 "type":"payment",
                 "by": "admin",
                 "hidden": "customer"
+              },
+              "340": {
+                "activity": "Schedule a Survey",
+                "action": "Schedule a Survey",
+                "phase": "Construction Phase",
+                "type":"schedule",
+                "by": ""
               },
               "410": {
                 "activity": "Project Has Started and Upload Progress Checklist",
@@ -176,6 +197,13 @@ class OrderStatus
                 "type":"general",
                 "by": "customer"
               },
+              "490": {
+                "activity": "Schedule a Survey",
+                "action": "Schedule a Survey",
+                "phase": "Project Started",
+                "type":"schedule",
+                "by": ""
+              },
               "510": {
                 "activity": "Project 100% Finished",
                 "action": "Upload Progress 100%",
@@ -204,6 +232,13 @@ class OrderStatus
                 "phase": "Project Ended",
                 "type":"general",
                 "by": "customer"
+              },
+              "550": {
+                "activity": "Schedule a Survey",
+                "action": "Schedule a Survey",
+                "phase": "Project Ended",
+                "type":"schedule",
+                "by": ""
               }
             }';
 

@@ -493,7 +493,7 @@ class ChatroomService
         if ($project) {
             $params['uniq_id'] = $project->uniq_id;
             $resp = $this->postSignPayment($params);
-            if (isset($resp['success']) && !$resp['success']) {
+            if (!$resp['success']) {
                 return [
                     'status' => 404,
                     'data' => ['message' => $resp['message']],

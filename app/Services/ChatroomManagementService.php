@@ -234,7 +234,7 @@ class ChatroomManagementService
             ];
         }
 
-        
+
 
         $userIds = [];
         if (isset($params['user_id'])) {
@@ -412,124 +412,125 @@ class ChatroomManagementService
                 'status' => 400,
                 'data' => ['message' => 'Room AVC already exsist. The room is ' . $proj['data']['room_number']],
             ];
-        }
+        } else {
 
-        $user = $this->user->show($consultation['user_id']);
-        if ($user['status'] != 200) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'User not found'],
-            ];
-        }
-        $user = $user['data'];
-
-        $chatroom = $this->chatroomService->show($roomId);
-
-        if ($chatroom['status'] == 404) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'Chat room not found'],
-            ];
-        }
-
-        $chatroom = $chatroom['data'];
-        $chatroom['is_approve'] = true;
-        //update old room vendor
-        $chatroom = $this->chatroomService->update($chatroom, $chatroom['id']);
-
-        $params['user_id'] = $consultation['user_id'];
-        $params['admin_user_id'] = $consultation['admin_user_id'];
-        $params['vendor_user_id'] = $consultation['vendor_user_id'];
-        $params['user_id'] = $consultation['user_id'];
-        $params['consultation_id'] = $consultation['id'];
-        $params['status'] = 'Pre-Purchase';
-        $params['image_url'] = $user['user_picture_url'] ?? "";
-        $params['name'] =  $consultation['name'] . '-AVC-' . $consultation['order_number'];
-        $params['text'] = 'Halo saya siap berdiskusi dengan projek ini';
-        $params['consultation_description'] = $consultation['description'];
-        $params['room_type'] = 'admin-vendor-customer';
-        $chatroom = $this->chatroomService->create($params);
-        $chatroom = $chatroom['data'];
-
-        $orderStatus = $this->orderStatusService->show($roomId);
-        $orderStatus = isset($orderStatus['data']['data']) ? $orderStatus['data']['data'] : $orderStatus['data'];
-        $os['data'] = $orderStatus;
-        $this->orderStatusService->update($os, $chatroom['id']);
-
-        $chatParams['user_id'] = $consultation['vendor_user_id'];
-        $chatParams['chat'] = $consultation['id'];
-        $chatParams['notification_chat'] = 'Halo saya siap berdiskusi dengan projek ini';
-        $chatParams['is_system'] = true;
-        $chatParams['room_id'] = $chatroom['id'];
-        $chatParams['user_type'] = 'vendor';
-        $this->chatService->create($chatParams, $chatroom['id']);
-
-        $project  = $this->projectService->showByConsultation($consultation['id']);
-
-        if ($project['status'] == 404) {
-            return [
-                'status' => 404,
-                'data' => ['message' => 'Chat room not found'],
-            ];
-        }
-        $project = $project['data'];
-        $project = json_decode(json_encode($project), true);
-        $project['room_number'] = 'AVC-' . $chatroom['room_id'];
-        $project['room_type'] = 'AVC';
-        $project['room_id'] = $chatroom['id'];
-        $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
-        $resp = $this->projectService->update($project, $project['id']);
-
-        if ($resp['status'] == 422) {
-            return [
-                'status' => 422,
-                'data' => ['message' => $resp],
-            ];
-        }
-        //todo create notification
-
-        $userIds = [];
-        if (isset($params['user_id'])) {
-            array_push($userIds, $params['user_id']);
-        }
-        if (isset($params['admin_user_id'])) {
-            array_push($userIds, $params['admin_user_id']);
-        }
-
-        $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
-        if ($tokens['status'] == 200) {
-            $tokens = $tokens['data'];
-        }
-
-        $deviceTokens = [];
-        $notificationUserIds = [];
-        foreach ($tokens as $token) {
-            array_push($notificationUserIds, $token['user_id']);
-            array_push($deviceTokens, $token['device_token']);
-        }
-
-        $this->notificationService->send($deviceTokens, array(
-            "title" => "Notifiksi Aplikator menyetujui mengerjakan konsultasi" . $params['name'],
-            "body" => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
-            "type" => "notification",
-            "value" => [
-                "chat_room" => $chatroom
-            ]
-        ));
-
-        foreach ($notificationUserIds as $notificationUserId) {
-            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
-            $userNotif = $this->user->show($notificationUserId);
-
-            if ($userNotif['status'] != 404) {
-                $this->sendMessage("Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], $userNotif['data']['user_phone_number']);
+            $user = $this->user->show($consultation['user_id']);
+            if ($user['status'] != 200) {
+                return [
+                    'status' => 404,
+                    'data' => ['message' => 'User not found'],
+                ];
             }
-        }
+            $user = $user['data'];
 
-        return [
-            'status' => 201,
-            'data' => $chatroom,
-        ];
+            $chatroom = $this->chatroomService->show($roomId);
+
+            if ($chatroom['status'] == 404) {
+                return [
+                    'status' => 404,
+                    'data' => ['message' => 'Chat room not found'],
+                ];
+            }
+
+            $chatroom = $chatroom['data'];
+            $chatroom['is_approve'] = true;
+            //update old room vendor
+            $chatroom = $this->chatroomService->update($chatroom, $chatroom['id']);
+
+            $params['user_id'] = $consultation['user_id'];
+            $params['admin_user_id'] = $consultation['admin_user_id'];
+            $params['vendor_user_id'] = $consultation['vendor_user_id'];
+            $params['user_id'] = $consultation['user_id'];
+            $params['consultation_id'] = $consultation['id'];
+            $params['status'] = 'Pre-Purchase';
+            $params['image_url'] = $user['user_picture_url'] ?? "";
+            $params['name'] =  $consultation['name'] . '-AVC-' . $consultation['order_number'];
+            $params['text'] = 'Halo saya siap berdiskusi dengan projek ini';
+            $params['consultation_description'] = $consultation['description'];
+            $params['room_type'] = 'admin-vendor-customer';
+            $chatroom = $this->chatroomService->create($params);
+            $chatroom = $chatroom['data'];
+
+            $orderStatus = $this->orderStatusService->show($roomId);
+            $orderStatus = isset($orderStatus['data']['data']) ? $orderStatus['data']['data'] : $orderStatus['data'];
+            $os['data'] = $orderStatus;
+            $this->orderStatusService->update($os, $chatroom['id']);
+
+            $chatParams['user_id'] = $consultation['vendor_user_id'];
+            $chatParams['chat'] = $consultation['id'];
+            $chatParams['notification_chat'] = 'Halo saya siap berdiskusi dengan projek ini';
+            $chatParams['is_system'] = true;
+            $chatParams['room_id'] = $chatroom['id'];
+            $chatParams['user_type'] = 'vendor';
+            $this->chatService->create($chatParams, $chatroom['id']);
+
+            $project  = $this->projectService->showByConsultation($consultation['id']);
+
+            if ($project['status'] == 404) {
+                return [
+                    'status' => 404,
+                    'data' => ['message' => 'Chat room not found'],
+                ];
+            }
+            $project = $project['data'];
+            $project = json_decode(json_encode($project), true);
+            $project['room_number'] = 'AVC-' . $chatroom['room_id'];
+            $project['room_type'] = 'AVC';
+            $project['room_id'] = $chatroom['id'];
+            $project['city'] =  $project['city'] ? $project['city'] : "Kota Bogor";
+            $resp = $this->projectService->update($project, $project['id']);
+
+            if ($resp['status'] == 422) {
+                return [
+                    'status' => 422,
+                    'data' => ['message' => $resp],
+                ];
+            }
+            //todo create notification
+
+            $userIds = [];
+            if (isset($params['user_id'])) {
+                array_push($userIds, $params['user_id']);
+            }
+            if (isset($params['admin_user_id'])) {
+                array_push($userIds, $params['admin_user_id']);
+            }
+
+            $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
+            if ($tokens['status'] == 200) {
+                $tokens = $tokens['data'];
+            }
+
+            $deviceTokens = [];
+            $notificationUserIds = [];
+            foreach ($tokens as $token) {
+                array_push($notificationUserIds, $token['user_id']);
+                array_push($deviceTokens, $token['device_token']);
+            }
+
+            $this->notificationService->send($deviceTokens, array(
+                "title" => "Notifiksi Aplikator menyetujui mengerjakan konsultasi" . $params['name'],
+                "body" => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi " . $consultation['order_number'],
+                "type" => "notification",
+                "value" => [
+                    "chat_room" => $chatroom
+                ]
+            ));
+
+            foreach ($notificationUserIds as $notificationUserId) {
+                $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => "Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], 'type' => 'notification', 'chat_room_id' => $chatroom['id']]);
+                $userNotif = $this->user->show($notificationUserId);
+
+                if ($userNotif['status'] != 404) {
+                    $this->sendMessage("Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], $userNotif['data']['user_phone_number']);
+                }
+            }
+
+            return [
+                'status' => 201,
+                'data' => $chatroom,
+            ];
+        }
     }
 
     private function sendMessage($message, $recipients)

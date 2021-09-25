@@ -330,6 +330,7 @@ class OrderStatus
         $data['createdAt'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $data['file'] = isset($params['file']) ? $params['file'] : null;
         $data['type'] = $params['type'];
+        $data['paymentLink'] = isset($params['payment_link']) ? $params['payment_link'] : null;
         $data['by'] = $params['user_jwt_type'];
 
         $phase['data'][$keyPhase]['list'][] = $data;

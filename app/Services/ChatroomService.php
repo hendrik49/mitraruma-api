@@ -481,9 +481,6 @@ class ChatroomService
                 'data' => ['message' => 'Data not found'],
             ];
         }
-        $orderStatus = $orderStatus['data'];
-        $newStatus = $this->orderStatusHelper->updateOrderStatusByCode($orderStatus, $params);
-        $orderStatus = $this->orderStatusService->update($newStatus, $id);
 
 
         if ($params['user_jwt_type'] == "vendor") {
@@ -502,6 +499,10 @@ class ChatroomService
                     'data' => ['message' => $resp['message']],
                 ];
             }
+            $params['payment_link'] =  isset($resp['data']['invoice_url']) ? $resp['data']['invoice_url'] : "";
+            $orderStatus = $orderStatus['data'];
+            $newStatus = $this->orderStatusHelper->updateOrderStatusByCode($orderStatus, $params);
+            $orderStatus = $this->orderStatusService->update($newStatus, $id);
 
             $project['sub_status'] = $params['order_status'];
             $project['status'] = $params['phase'];

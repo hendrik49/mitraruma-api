@@ -496,7 +496,7 @@ class ChatroomService
             if (!isset($resp['success']) || ! $resp['success']) {
                 return [
                     'status' => 404,
-                    'data' => ['message' => $resp['message']],
+                    'data' => ['message' => $resp],
                 ];
             }
             $params['payment_link'] =  isset($resp['data']['invoice_url']) ? $resp['data']['invoice_url'] : "";

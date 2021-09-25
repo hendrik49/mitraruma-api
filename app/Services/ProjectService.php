@@ -209,12 +209,12 @@ class ProjectService
 
         $project = $this->projectService->find($id);
         if ($project == null) {
-            $address = $this->projectService->create($params);
+            $project = $this->projectService->create($params);
         } else {
 
-            $address = $this->projectService->update($params, $id);
+            $project = $this->projectService->update($params, $id);
         }
-        if (!$address) {
+        if (!$project) {
             return [
                 'status' => 404,
                 'data' => ['message' => 'Project not found'],
@@ -222,7 +222,7 @@ class ProjectService
         }
         return [
             'status' => 200,
-            'data' => $address,
+            'data' => $project,
         ];
     }
 

@@ -490,7 +490,8 @@ class ChatroomService
             $params['vendor_user_id'] = $params['user_id'];
             $params['user_id'] = null;
         }
-        $project = $this->projectRepo->findOne($params);
+
+        $project = $this->projectRepo->findByConsultationId($params['consultation_id']);
 
         if ($project) {
             $params['uniq_id'] = $project->uniq_id;
@@ -581,6 +582,8 @@ class ChatroomService
 
         $orderStatus = $this->orderStatusService->show($id);
         $orderStatus = $orderStatus['data'];
+        $orderStatus['payment_link'] = isset($resp['data']['invoice_url']) ? $resp['data']['invoice_url'] : "";
+
         return [
             'status' => 200,
             'data' => $orderStatus

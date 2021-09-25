@@ -83,7 +83,8 @@ class WpProject extends Model
         'rating_vendor',
         'rating_customer',
         'rating_admin',
-        'room_type'
+        'room_type',
+        'uniq_id'
     ];
 
     /**

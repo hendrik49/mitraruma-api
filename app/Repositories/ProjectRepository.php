@@ -55,6 +55,9 @@ class ProjectRepository
         if(isset($params['vendor_email'])) {
             $Project->vendor_email = $params['vendor_email'];
         }
+        if(isset($params['customer_email'])) {
+            $Project->customer_email = $params['customer_email'];
+        }
         if(isset($params['vendor_user_id'])) {
             $Project->vendor_user_id = $params['vendor_user_id'];
         }
@@ -91,7 +94,9 @@ class ProjectRepository
         if(isset($params['termin_vendor_3'])) {
             $Project->termin_vendor_3= $params['termin_vendor_3'];
         }
-        
+        if(isset($params['uniq_id'])) {
+            $Project->uniq_id= $params['uniq_id'];
+        }
         
         try {
             $Project->save();

@@ -211,8 +211,19 @@ class ChatroomManagementService
         $project['room_type'] = 'AV';
         $project['vendor_name'] = $user['display_name'];
         $project['vendor_email'] = $user['user_email'];
+        $project['customer_email'] = $consultation['user_email'];
         $project['vendor_user_id'] =  $user['ID'];
         $project['vendor_contact'] = $user['user_phone_number'];
+
+        $resp = $this->postSignProject($project);
+        if (!$resp['success']) {
+            return [
+                'status' => 400,
+                'data' => ['message' => $resp['message']],
+            ];
+        }
+
+        $project['uniq_id'] = $resp['data']['id'];
 
         $resp = $this->projectService->update($project, $project['id']);
 
@@ -223,13 +234,7 @@ class ChatroomManagementService
             ];
         }
 
-        $resp = $this->postSignProject($project);
-        if (!$resp['success']) {
-            return [
-                'status' => 400,
-                'data' => ['message' => $resp['message']],
-            ];
-        }
+        
 
         $userIds = [];
         if (isset($params['user_id'])) {

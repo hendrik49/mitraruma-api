@@ -473,14 +473,6 @@ class ChatroomService
             ];
         }
 
-        $resp = $this->postSignPayment($params);
-        if (!$resp['success']) {
-            return [
-                'status' => 404,
-                'data' => ['message' => $resp['message']],
-            ];
-        }
-
         $orderStatus = $this->orderStatusService->show($id);
 
         if ($orderStatus['status'] == 404) {
@@ -501,6 +493,15 @@ class ChatroomService
         $project = $this->projectRepo->findOne($params);
 
         if ($project) {
+            $params['uniq_id'] = $project->uniq_id;
+            $resp = $this->postSignPayment($params);
+            if (!$resp['success']) {
+                return [
+                    'status' => 404,
+                    'data' => ['message' => $resp['message']],
+                ];
+            }
+
             $project['sub_status'] = $params['order_status'];
             $project['status'] = $params['phase'];
             $project['updated_at'] = date('Y-m-d H:i:s');
@@ -632,7 +633,7 @@ class ChatroomService
                 "amount" => $params['amount']
             ];
 
-            $response = Http::withHeaders($headers)->post(env('PAYMENT_MITRARUMA', 'https://dev-test.mitraruma.com') . '/api/payment/initialize-invoice/' . $params['consultation_id'], $json);
+            $response = Http::withHeaders($headers)->post(env('PAYMENT_MITRARUMA', 'https://dev-test.mitraruma.com') . '/api/payment/initialize-invoice/' . $params['uniq_id'], $json);
 
             $data =  json_decode($response->getBody(), true);
             if ($response->getStatusCode() == 200) {

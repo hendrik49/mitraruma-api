@@ -6,6 +6,7 @@ use App\Helpers\OrderStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\Http;
 
 class ChatroomManagementService
 {
@@ -150,6 +151,7 @@ class ChatroomManagementService
             ];
         }
 
+
         $consultation['vendor_user_id'] = $params['vendor_user_id'];
         $consultation['admin_user_id'] =  $consultation['admin_user_id'] ? $consultation['admin_user_id'] : $params['admin_user_id'];
         $consultation['admin_name'] =  $consultation['admin_name'] ? $consultation['admin_name'] : $params['user_jwt_name'];
@@ -221,6 +223,14 @@ class ChatroomManagementService
             ];
         }
 
+        $resp = $this->postSignProject($project);
+        if (!$resp['success']) {
+            return [
+                'status' => 400,
+                'data' => ['message' => $resp['message']],
+            ];
+        }
+
         $userIds = [];
         if (isset($params['user_id'])) {
             array_push($userIds, $params['user_id']);
@@ -257,7 +267,6 @@ class ChatroomManagementService
             if ($userNotif['status'] != 404) {
                 $this->sendMessage("Aplikator " . $user['display_name'] . " dipilih untuk mengerjakan konsultasi No. " . $consultation['order_number'], $userNotif['data']['user_phone_number']);
             }
-
         }
 
         return [
@@ -510,7 +519,6 @@ class ChatroomManagementService
             if ($userNotif['status'] != 404) {
                 $this->sendMessage("Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], $userNotif['data']['user_phone_number']);
             }
-
         }
 
         return [
@@ -530,6 +538,79 @@ class ChatroomManagementService
         } catch (\Throwable $e) {
             report($e);
             return $e;
+        }
+    }
+
+    public function postSignProject($params)
+    {
+        try {
+
+            $headers = [
+                'Content-Type'          => 'application/json'
+            ];
+
+            $json =  [
+                "username" =>  env('PAYMENT_USERNAME', "master-mitra@gmail.com"),
+                "password" => env('PAYMENT_PASSWORD', "userdp2021")
+            ];
+
+            $response = Http::withHeaders($headers)->post(env('PAYMENT_MITRARUMA', 'https://dev-test.mitraruma.com') . '/api/login', $json);
+
+            $data =  json_decode($response->getBody(), true);
+
+            if ($response->getStatusCode() == 200) {
+                $token = $data['data']['token'];
+                $res = $this->postProject($token, $params);
+                return $res;
+            } else {
+                return $data;
+            }
+        } catch (\Exception $e) {
+            $message = $e->getMessage() . ". Line " . $e->getLine();
+            return $message;
+        }
+    }
+
+    public function postProject($token, $params)
+    {
+        try {
+
+            $headers = [
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer ' . $token
+            ];
+
+            $json =  [
+                "customer_id"  =>  $params['user_id'],
+                "customer_email" => $params['customer_email'],
+                "customer_name" => $params['customer_name'],
+                "customer_phone" => $params['customer_contact'],
+                "code" => $params['order_number'],
+                "room_id" => $params['room_id'],
+                "project_name" => $params['description'],
+                "est_budget" => $params['estimated_budget'],
+                "spk_amount" => 0,
+                "discount" => 0,
+                "commission" => 0,
+                "service_type" => $params['service_type'],
+                "admin_name" => "MR Admin",
+                "admin_email" => "admin-email@email.com",
+                "created_by" => "API@email.com",
+                "vendor" => array(
+                    "name" =>  $params['vendor_name'],
+                    "email" => $params['vendor_email'],
+                    "phone" => $params['vendor_contact']
+                ),
+
+            ];
+
+            $response = Http::withHeaders($headers)->post(env('PAYMENT_MITRARUMA', 'https://dev-test.mitraruma.com') . '/api/project', $json);
+
+            $data =  json_decode($response->getBody(), true);
+            return $data;
+        } catch (\Exception $e) {
+            $message = $e->getMessage() . ". Line " . $e->getLine();
+            return $message;
         }
     }
 }

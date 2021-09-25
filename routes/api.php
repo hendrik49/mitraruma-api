@@ -101,7 +101,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::GET('/user/chatroom/{id}/order-status', [UserChatroomController::class, 'showOrderStatus'])->middleware('jwt.user');
     Route::PUT('/user/chatroom/{id}/order-status', [UserChatroomController::class, 'updateOrderStatus'])->middleware('jwt.user');
     Route::GET('/user/chatroom/{id}/order-status-selection', [UserChatroomController::class, 'showOrderStatusSelection'])->middleware('jwt.user');
-
+    Route::PUT('/user/chatroom/{id}/order-status-payment', [UserChatroomController::class, 'paymentOrderStatus'])->middleware('jwt.user');
 
     Route::GET('/user/chat/{roomId}', [UserChatController::class, 'show'])->middleware('jwt.user');
     Route::POST('/user/chat/{roomId}', [UserChatController::class, 'store'])->middleware('jwt.user');

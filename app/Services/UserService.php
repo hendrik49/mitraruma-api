@@ -218,7 +218,7 @@ class UserService
 
             $otp = $this->otp->generateToken($user['ID']);
 
-            $resp = self::sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
+            $resp = $this->sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
 
             if ($resp->getStatusCode() == 400) {
 

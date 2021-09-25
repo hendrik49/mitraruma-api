@@ -71,6 +71,7 @@ class WpProject extends Model
         'sub_status',
         'customer_name',
         'customer_contact',
+        'customer_email',
         'vendor_name',
         'admin_name',
         'vendor_email',

@@ -328,7 +328,7 @@ class OrderStatus
         $data = [];
         $data['activity'] = $newOrderStatus['activity'];
         $data['createdAt'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
-        $data['file'] = $params['file'];
+        $data['file'] = isset($params['file']) ? $params['file'] : null;
         $data['type'] = $params['type'];
         $data['by'] = $params['user_jwt_type'];
 
@@ -340,16 +340,15 @@ class OrderStatus
       }
       if ($params['order_status'] == 230) {
         $phase['data'][2]['active'] = true;
-          //constrocution phase
+        //constrocution phase
       }
       if ($params['order_status'] == 331) {
         $phase['data'][3]['active'] = true;
-          //constrocution phase
+        //constrocution phase
       }
       if ($params['order_status'] == 480) {
         $phase['data'][4]['active'] = true;
       }
-      
     }
     return $phase;
   }

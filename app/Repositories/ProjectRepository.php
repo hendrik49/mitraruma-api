@@ -70,7 +70,28 @@ class ProjectRepository
         if(isset($params['sub_status'])) {
             $Project->sub_status= $params['sub_status'];
         }
-
+        if(isset($params['booking_fee'])) {
+            $Project->booking_fee= $params['booking_fee'];
+        }
+        if(isset($params['termin_customer_1'])) {
+            $Project->termin_customer_1= $params['termin_customer_1'];
+        }
+        if(isset($params['termin_customer_2'])) {
+            $Project->termin_customer_2= $params['termin_customer_2'];
+        }    
+        if(isset($params['termin_customer_3'])) {
+            $Project->termin_customer_3= $params['termin_customer_3'];
+        }
+        if(isset($params['termin_vendor_1'])) {
+            $Project->termin_vendor_1= $params['termin_vendor_1'];
+        }
+        if(isset($params['termin_vendor_2'])) {
+            $Project->termin_vendor_2= $params['termin_vendor_2'];
+        }    
+        if(isset($params['termin_vendor_3'])) {
+            $Project->termin_vendor_3= $params['termin_vendor_3'];
+        }
+        
         
         try {
             $Project->save();

@@ -10,6 +10,7 @@ use App\Repositories\ProjectRepository;
 use App\Http\Resources\ConsultationResource;
 use App\Repositories\ConsultationRepository;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\Http;
 
 class ChatroomService
 {
@@ -450,6 +451,222 @@ class ChatroomService
         } catch (\Throwable $e) {
             report($e);
             return $e;
+        }
+    }
+
+    public function paymentOrderStatus($params, $id)
+    {
+
+        $validator = Validator::make($params, [
+            'consultation_id' => 'required|string',
+            'phase' => 'required|string',
+            'order_status' => 'required',
+            'file' => 'nullable',
+            'amount' => 'nullable|numeric',
+            'type' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $resp = $this->postSignPayment($params);
+        if (!$resp['success']) {
+            return [
+                'status' => 404,
+                'data' => ['message' => $resp['message']],
+            ];
+        }
+
+        $orderStatus = $this->orderStatusService->show($id);
+
+        if ($orderStatus['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+        $orderStatus = $orderStatus['data'];
+        $newStatus = $this->orderStatusHelper->updateOrderStatusByCode($orderStatus, $params);
+        $orderStatus = $this->orderStatusService->update($newStatus, $id);
+
+
+        if ($params['user_jwt_type'] == "vendor") {
+            $params['vendor_user_id'] = $params['user_id'];
+            $params['user_id'] = null;
+        }
+        $project = $this->projectRepo->findOne($params);
+
+        if ($project) {
+            $project['sub_status'] = $params['order_status'];
+            $project['status'] = $params['phase'];
+            $project['updated_at'] = date('Y-m-d H:i:s');
+
+            if ($params['order_status'] == 160) {
+                $params['booking_fee'] = $params['amount'];
+            } else if ($params['order_status'] == 330) {
+                $params['termin_customer_1'] = $params['amount'];
+            } else if ($params['order_status'] == 430) {
+                $params['termin_customer_2'] = $params['amount'];
+            } else if ($params['order_status'] == 460) {
+                $params['termin_customer_3'] = $params['amount'];
+            } else if ($params['order_status'] == 331) {
+                $params['termin_customer_3'] = $params['amount'];
+            } else if ($params['order_status'] == 431) {
+                $params['termin_customer_3'] = $params['amount'];
+            } else if ($params['order_status'] == 470) {
+                $params['termin_customer_3'] = $params['amount'];
+            }
+            $this->projectRepo->update($project, $project->id);
+
+            $consultation = $this->consultation->findById($params['consultation_id']);
+            if ($consultation == null) {
+                return [
+                    'status' => 404,
+                    'data' => ['message' => "Consultation data not found"]
+                ];
+            }
+            $consultation['orderStatus'] = $params['order_status'];
+            $consultation = $this->consultation->update($consultation, $params['consultation_id']);
+
+            $userIds = [];
+            if ($project->user_id) {
+                array_push($userIds, $project->user_id);
+            }
+            if ($project->vendor_user_id) {
+                array_push($userIds, $project->vendor_user_id);
+            }
+
+            if ($project->admin_user_id) {
+                array_push($userIds, $project->admin_user_id);
+            }
+
+            $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
+            if ($tokens['status'] == 200) {
+                $tokens = $tokens['data'];
+            }
+
+            $deviceTokens = [];
+            $notificationUserIds = [];
+            foreach ($tokens as $token) {
+                array_push($notificationUserIds, $token['user_id']);
+                array_push($deviceTokens, $token['device_token']);
+            }
+
+            $os = new OrderStatus;
+            $osName = $os->getActivityByCode($params['order_status']);
+
+            $this->notificationService->send($deviceTokens, array(
+                "title" => "Order status diupdate ke kode " . $params['order_status'],
+                "body" => $params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id,
+                "type" => "notification",
+                "value" => [
+                    "chat_room" => ""
+                ]
+            ));
+
+            foreach ($notificationUserIds as $notificationUserId) {
+                $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => $params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
+                $user = $this->user->show($notificationUserId);
+
+                if ($user['status'] != 404) {
+                    $this->sendMessage($params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id, $user['data']['user_phone_number']);
+                }
+            }
+        }
+
+        $orderStatus = $this->orderStatusService->show($id);
+        $orderStatus = $orderStatus['data'];
+        return [
+            'status' => 200,
+            'data' => $orderStatus
+        ];
+    }
+
+    public function postSignPayment($params)
+    {
+        try {
+
+            $headers = [
+                'Content-Type'          => 'application/json'
+            ];
+
+            $json =  [
+                "username" =>  env('PAYMENT_USERNAME', "master-mitra@gmail.com"),
+                "password" => env('PAYMENT_PASSWORD', "userdp2021")
+            ];
+
+            $response = Http::withHeaders($headers)->post(env('PAYMENT_MITRARUMA', 'https://dev-test.mitraruma.com') . '/api/login', $json);
+
+            $data =  json_decode($response->getBody(), true);
+
+            if ($response->getStatusCode() == 200) {
+                $token = $data['data']['token'];
+                $res = $this->postPayment($token, $params);
+                return $res;
+            } else {
+                return $data;
+            }
+        } catch (\Exception $e) {
+            $message = $e->getMessage() . ". Line " . $e->getLine();
+            return $message;
+        }
+    }
+
+    public function postPayment($token, $params)
+    {
+        try {
+
+            $headers = [
+                'Content-Type'   => 'application/json',
+                'Authorization' => 'Bearer ' . $token
+            ];
+
+            $json =  [
+                "invoice_no" => "CHAT/INVOICE/" . mt_rand(1000000, 9999999),
+                "customer_email" => $params['user_jwt_email'],
+                "description" => $params['phase'] . '-' . $params['order_status'],
+                "amount" => $params['amount']
+            ];
+
+            $response = Http::withHeaders($headers)->post(env('PAYMENT_MITRARUMA', 'https://dev-test.mitraruma.com') . '/api/payment/initialize-invoice/' . $params['consultation_id'], $json);
+
+            $data =  json_decode($response->getBody(), true);
+            if ($response->getStatusCode() == 200) {
+                $res = $this->postPaymentXendit($token, $data);
+                return $res;
+            } else {
+                return $data;
+            }
+        } catch (\Exception $e) {
+            $message = $e->getMessage() . ". Line " . $e->getLine();
+            return $message;
+        }
+    }
+
+    public function postPaymentXendit($token, $params)
+    {
+        try {
+
+            $headers = [
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer ' . $token
+            ];
+
+            $json =  [
+                "uniq_id" => $params['data']['uniq_id']
+            ];
+
+            $response = Http::withHeaders($headers)->post(env('PAYMENT_MITRARUMA', 'https://dev-test.mitraruma.com') . '/api/payment/generate-invoice', $json);
+
+            $data =  json_decode($response->getBody(), true);
+            return $data;
+        } catch (\Exception $e) {
+            $message = $e->getMessage() . ". Line " . $e->getLine();
+            return $message;
         }
     }
 }

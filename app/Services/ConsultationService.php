@@ -250,6 +250,7 @@ class ConsultationService
         $project['room_number'] = 'AC-' . $chatroom['room_id'];
         $project['street'] =  $params['street'];
         $project['customer_name'] =  $params['user_jwt_name'];
+        $project['customer_email'] =  $params['user_jwt_email'];
         $project['customer_contact'] =  $params['contact'];
         $project['description'] = $params['description'];
         $project['status'] =  $params['status'];

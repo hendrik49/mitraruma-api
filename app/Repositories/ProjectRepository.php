@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\WpProject;
 use App\Models\WpPayment;
+use App\Models\WpSchedule;
 
 class ProjectRepository
 {
@@ -20,8 +21,24 @@ class ProjectRepository
         return WpPayment::where('user_id',$id)->get();
     }
 
+    public function findSchedulesByUserId($id){
+        return WpSchedule::where('user_id',$id)->get();
+    }
+
+    public function findSchedulesByVendorId($id){
+        return WpSchedule::where('vendor_id',$id)->get();
+    }
+
+    public function findSchedulesByAdminId($id){
+        return WpSchedule::where('admin_id',$id)->get();
+    }
+
     public function createPayment($params) {
         return WpPayment::create($params);
+    }
+
+    public function createSchedule($params) {
+        return WpSchedule::create($params);
     }
 
 

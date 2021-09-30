@@ -77,6 +77,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::GET('/user/consultation', [UserConsultationController::class, 'index'])->middleware('jwt.user');
     Route::GET('/user/consultation/top', [UserConsultationController::class, 'top'])->middleware('jwt.user');
     Route::GET('/user/consultation/recent', [UserConsultationController::class, 'recent'])->middleware('jwt.user');
+    Route::GET('/user/consultation/payments', [UserConsultationController::class, 'payments'])->middleware('jwt.user');
  
     Route::GET('/user/consultation/export', [UserConsultationController::class, 'export'])->middleware('jwt.user');
     Route::POST('/user/consultation', [UserConsultationController::class, 'store'])->middleware('jwt.user');

@@ -149,6 +149,24 @@ class ConsultationService
         ];
     }
 
+    public function payments($params)
+    {
+        $userId = $params['user_id'];
+        $consultation = $this->projectRepo->findPaymentsByUserId($userId);
+        if (!$consultation) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $consultation,
+        ];
+    }
+
+
     public function show($id)
     {
 

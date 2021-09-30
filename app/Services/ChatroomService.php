@@ -510,20 +510,44 @@ class ChatroomService
 
             if ($params['order_status'] == 160) {
                 $params['booking_fee'] = $params['amount'];
+                $project['booking_fee'] = $params['amount'];
             } else if ($params['order_status'] == 330) {
                 $params['termin_customer_1'] = $params['amount'];
+                $project['termin_customer_1'] = $params['amount'];
             } else if ($params['order_status'] == 430) {
                 $params['termin_customer_2'] = $params['amount'];
+                $project['termin_customer_2'] = $params['amount'];
             } else if ($params['order_status'] == 460) {
                 $params['termin_customer_3'] = $params['amount'];
+                $project['termin_customer_3'] = $params['amount'];
             } else if ($params['order_status'] == 331) {
-                $params['termin_customer_3'] = $params['amount'];
+                $params['termin_vendor_1'] = $params['amount'];
+                $project['termin_vendor_1'] = $params['amount'];
             } else if ($params['order_status'] == 431) {
-                $params['termin_customer_3'] = $params['amount'];
+                $params['termin_vendor_2'] = $params['amount'];
+                $project['termin_vendor_2'] = $params['amount'];
             } else if ($params['order_status'] == 470) {
-                $params['termin_customer_3'] = $params['amount'];
+                $params['termin_vendor_3'] = $params['amount'];
+                $project['termin_vendor_3'] = $params['amount'];
             }
             $this->projectRepo->update($project, $project->id);
+
+            $os = new OrderStatus;
+            $osName = $os->getActivityByCode($params['order_status']);
+
+            $paramPayment = array();
+            $paramPayment['user_id'] = $params['user_id'];
+            $paramPayment['code'] = $params['order_status'];
+            $paramPayment['amount'] = $params['amount'];
+            $paramPayment['room_id'] = $id;
+            $paramPayment['status'] = 'pending';
+            $paramPayment['phase'] = $params['phase'];
+            $paramPayment['consultation_id'] = $params['consultation_id'];
+            $paramPayment['uniq_id'] = $params['uniq_id'];
+            $paramPayment['activity'] = $osName;
+            $paramPayment['link'] = $params['payment_link'];
+
+            $this->projectRepo->createPayment($paramPayment);
 
             $consultation = $this->consultation->findById($params['consultation_id']);
             if ($consultation == null) {

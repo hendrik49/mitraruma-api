@@ -62,7 +62,7 @@ class UserConsultationController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -73,6 +73,21 @@ class UserConsultationController extends Controller
         $params = $request->all();
 
         $result = $this->consultation->index($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function payments(Request $request)
+    {
+        $params = $request->all();
+
+        $result = $this->consultation->payments($params);
 
         return response()->json($result['data'], $result['status']);
     }

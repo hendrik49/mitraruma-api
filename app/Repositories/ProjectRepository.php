@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\WpProject;
+use App\Models\WpPayment;
 
 class ProjectRepository
 {
@@ -14,6 +15,15 @@ class ProjectRepository
     public function findByConsultationId($id){
         return WpProject::where('consultation_id',$id)->first();
     }
+
+    public function findPaymentsByUserId($id){
+        return WpPayment::where('user_id',$id)->get();
+    }
+
+    public function createPayment($params) {
+        return WpPayment::create($params);
+    }
+
 
     public function find($params){
         $Project = WpProject::query();

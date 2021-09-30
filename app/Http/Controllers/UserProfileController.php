@@ -52,6 +52,20 @@ class UserProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
+    public function getSchedule(Request $request)
+    {
+        $params = $request->all();
+        $result = $this->user->showSchedule($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
         $params = $request->all();

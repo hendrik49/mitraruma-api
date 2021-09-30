@@ -28,6 +28,9 @@ class UserService
 
     private $user;
 
+    private $project;
+
+
     /**
      * Create a new controller instance.
      *
@@ -39,11 +42,13 @@ class UserService
     public function __construct(
         OtpService $otp,
         JwtService $jwt,
+        \App\Repositories\ProjectRepository $project,
         \App\Repositories\UserRepository $user
     ) {
         $this->otp = $otp;
         $this->jwt = $jwt;
         $this->user = $user;
+        $this->projectRepo = $project;
     }
 
     public function find($params)
@@ -106,6 +111,29 @@ class UserService
             return [
                 'status' => 404,
                 'data' => ['message' => 'User not found'],
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $user,
+        ];
+    }
+
+
+    public function showSchedule($params)
+    {
+        if ($params['user_jwt_type'] == "customer")
+            $user = $this->projectRepo->findSchedulesByUserId($params['user_id']);
+        else if ($params['user_jwt_type'] == "vendor")
+            $user = $this->projectRepo->findSchedulesByVendorId($params['user_id']);
+        else
+            $user = $this->projectRepo->findSchedulesByAdminId($params['user_id']);
+
+        if (!$user->count()) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Schedule not found'],
             ];
         }
 

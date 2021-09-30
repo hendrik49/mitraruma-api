@@ -83,4 +83,22 @@ class VendorChatroomController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+    public function scheduleOrderStatus(Request $request, $id)
+    {
+        $params = $request->all();
+
+        $result = $this->chatroom->scheduleOrderStatus($params, $id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+   public function getScheduleOrderStatus(Request $request, $id)
+   {
+       $params = $request->all();
+
+       $result = $this->chatroom->getScheduleOrderStatus($params, $id);
+
+       return response()->json($result['data'], $result['status']);
+   }
+
 }

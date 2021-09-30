@@ -18,8 +18,8 @@ class CreateWpSchedulesTable extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->bigInteger('vendor_id')->nullable();
             $table->bigInteger('admin_id')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->string('title',150)->nullable();
             $table->string('link')->nullable();
             $table->string('consultation_id')->nullable();

@@ -33,6 +33,14 @@ class ProjectRepository
         return WpSchedule::where('admin_id',$id)->get();
     }
 
+    public function findSchedulesByRoomId($id){
+        return WpSchedule::where('room_id',$id)->get();
+    }
+
+    public function findSchedulesByConsId($id){
+        return WpSchedule::where('consultation_id',$id)->get();
+    }
+
     public function createPayment($params) {
         return WpPayment::create($params);
     }

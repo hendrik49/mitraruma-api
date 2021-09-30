@@ -166,7 +166,7 @@ class UserChatroomController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -180,4 +180,35 @@ class UserChatroomController extends Controller
 
         return response()->json($result['data'], $result['status']);
     }
+
+            /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function scheduleOrderStatus(Request $request, $id)
+    {
+        $params = $request->all();
+
+        $result = $this->chatroom->scheduleOrderStatus($params, $id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+                /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getScheduleOrderStatus(Request $request, $id)
+    {
+        $params = $request->all();
+
+        $result = $this->chatroom->getScheduleOrderStatus($params, $id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
 }

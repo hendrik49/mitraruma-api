@@ -55,8 +55,8 @@ class OrderStatus
                 "by": "customer"
               },
               "170": {
-                "activity": "Schedule a Survey",
-                "action": "Schedule a Survey",
+                "activity": "Create a Schedule",
+                "action": "Create a Schedule",
                 "phase": "Pre-Purchase",
                 "type":"schedule",
                 "by": ""
@@ -83,8 +83,8 @@ class OrderStatus
                 "by": "vendor"
               },
               "240": {
-                "activity": "Schedule a Survey",
-                "action": "Schedule a Survey",
+                "activity": "Create a Schedule",
+                "action": "Create a Schedule",
                 "phase": "Design Phase",
                 "type":"schedule",
                 "by": ""
@@ -126,8 +126,8 @@ class OrderStatus
                 "hidden": "customer"
               },
               "340": {
-                "activity": "Schedule a Survey",
-                "action": "Schedule a Survey",
+                "activity": "Create a Schedule",
+                "action": "Create a Schedule",
                 "phase": "Construction Phase",
                 "type":"schedule",
                 "by": ""
@@ -198,8 +198,8 @@ class OrderStatus
                 "by": "customer"
               },
               "490": {
-                "activity": "Schedule a Survey",
-                "action": "Schedule a Survey",
+                "activity": "Create a Schedule",
+                "action": "Create a Schedule",
                 "phase": "Project Started",
                 "type":"schedule",
                 "by": ""
@@ -234,8 +234,8 @@ class OrderStatus
                 "by": "customer"
               },
               "550": {
-                "activity": "Schedule a Survey",
-                "action": "Schedule a Survey",
+                "activity": "Create a Schedule",
+                "action": "Create a Schedule",
                 "phase": "Project Ended",
                 "type":"schedule",
                 "by": ""
@@ -331,9 +331,13 @@ class OrderStatus
       if ($valuePhase['phase'] == $newOrderStatus['phase']) {
         $data = [];
         $data['activity'] = $newOrderStatus['activity'];
+        if ($params['type'] == "schedule")
+          $data['activity'] = $newOrderStatus['activity'] . ": " . $params['title'] . " from " . $params['start_date'] . " - " . $params['end_date'];
         $data['createdAt'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $data['file'] = isset($params['file']) ? $params['file'] : null;
         $data['type'] = $params['type'];
+        $data['location'] = isset($params['location']) ? $params['location'] : "";
+        $data['link'] = isset($params['link']) ? $params['link'] : "";
         $data['paymentLink'] = isset($params['payment_link']) ? $params['payment_link'] : null;
         $data['by'] = $params['user_jwt_type'];
 

@@ -493,7 +493,7 @@ class ChatroomService
         if ($project) {
             $params['uniq_id'] = $project->uniq_id;
             $resp = $this->postSignPayment($params);
-            if (!isset($resp['success']) || ! $resp['success']) {
+            if (!isset($resp['success']) || !$resp['success']) {
                 return [
                     'status' => 404,
                     'data' => ['message' => $resp],
@@ -614,6 +614,141 @@ class ChatroomService
             'data' => $orderStatus
         ];
     }
+
+    public function scheduleOrderStatus($params, $id)
+    {
+
+        $validator = Validator::make($params, [
+            'consultation_id' => 'required|string',
+            'title' => 'required|string',
+            'order_status' => 'required',
+            'type'=>'required',
+            'location' => 'required|string',
+            'start_date' => 'required|date_format:Y-m-d H:i:s',
+            'end_date' => 'required|date_format:Y-m-d H:i:s',
+            'link' => 'nullable|string'
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $orderStatus = $this->orderStatusService->show($id);
+
+        if ($orderStatus['status'] == 404) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $project = $this->projectRepo->findByConsultationId($params['consultation_id']);
+        if (!$project) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data consultation not found'],
+            ];
+        }
+        $orderStatus = $orderStatus['data'];
+        $newStatus = $this->orderStatusHelper->updateOrderStatusByCode($orderStatus, $params);
+        $orderStatus = $this->orderStatusService->update($newStatus, $id);
+
+        $os = new OrderStatus;
+        $osName = $os->getActivityByCode($params['order_status']);
+
+        $paramSchedule = array();
+        $paramSchedule['user_id'] = $project->user_id;
+        $paramSchedule['admin_id'] = $project->admin_user_id;
+        $paramSchedule['vendor_id'] = $project->vendor_user_id;
+        $paramSchedule['code'] = $params['order_status'];
+        $paramSchedule['location'] = $params['location'];
+        $paramSchedule['room_id'] = $id;
+        $paramSchedule['status'] = 'pending';
+        $paramSchedule['title'] = $params['title'];
+        $paramSchedule['consultation_id'] = $params['consultation_id'];
+        $paramSchedule['start_date'] = $params['start_date'];
+        $paramSchedule['end_date'] = $params['end_date'];
+        $paramSchedule['link'] = $params['link'];
+
+        $this->projectRepo->createSchedule($paramSchedule);
+
+        $userIds = [];
+        if ($project->user_id) {
+            array_push($userIds, $project->user_id);
+        }
+        if ($project->vendor_user_id) {
+            array_push($userIds, $project->vendor_user_id);
+        }
+
+        if ($project->admin_user_id) {
+            array_push($userIds, $project->admin_user_id);
+        }
+
+        $tokens = $this->userTokenService->get(['user_ids' => $userIds]);
+        if ($tokens['status'] == 200) {
+            $tokens = $tokens['data'];
+        }
+
+        $deviceTokens = [];
+        $notificationUserIds = [];
+        foreach ($tokens as $token) {
+            array_push($notificationUserIds, $token['user_id']);
+            array_push($deviceTokens, $token['device_token']);
+        }
+
+        $os = new OrderStatus;
+        $osName = $os->getActivityByCode($params['order_status']);
+
+        $this->notificationService->send($deviceTokens, array(
+            "title" => "Order status diupdate ke kode " . $params['order_status'],
+            "body" => $params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id,
+            "type" => "notification",
+            "value" => [
+                "chat_room" => ""
+            ]
+        ));
+
+        foreach ($notificationUserIds as $notificationUserId) {
+            $this->userNotificationService->store(['user_id' => $notificationUserId, 'text' => $params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id, 'type' => 'notification', 'chat_room_id' => $id]);
+            $user = $this->user->show($notificationUserId);
+
+            if ($user['status'] != 404) {
+                $this->sendMessage($params['user_jwt_name'] . " membuat order status: " . $osName . " di room id " . $id, $user['data']['user_phone_number']);
+            }
+        }
+
+
+        $orderStatus = $this->orderStatusService->show($id);
+        $orderStatus = $orderStatus['data'];
+        $orderStatus['payment_link'] = isset($resp['data']['invoice_url']) ? $resp['data']['invoice_url'] : "";
+
+        return [
+            'status' => 200,
+            'data' => $orderStatus
+        ];
+    }
+
+    public function getScheduleOrderStatus($params, $id)
+    {
+
+        $schedule = $this->projectRepo->findSchedulesByRoomId($id);
+        if (!$schedule) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+        
+        return [
+            'status' => 200,
+            'data' => $schedule
+        ];
+    }
+
+
 
     public function postSignPayment($params)
     {

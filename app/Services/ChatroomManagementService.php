@@ -522,7 +522,8 @@ class ChatroomManagementService
                 $userNotif = $this->user->show($notificationUserId);
 
                 if ($userNotif['status'] != 404) {
-                    $this->sendMessage("Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], $userNotif['data']['user_phone_number']);
+                    if($userNotif['data']['user_phone_number'])
+                        $this->sendMessage("Aplikator " . $consultation['vendor_name'] . " menyetujui untuk mengerjakan konsultasi No. " . $consultation['order_number'], $userNotif['data']['user_phone_number']);
                 }
             }
 

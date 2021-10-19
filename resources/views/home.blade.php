@@ -72,7 +72,33 @@
                     <div class="inner">
                         <h2>{{ $projects }} </h2>
 
-                        <p>Jumlah Proyek</p>
+                        <p>Jumlah Konsultasi</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-card"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h2>{{ $projects }} </h2>
+
+                        <p>Jumlah Konsultasi Berjalan</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-card"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h2>{{ $projects }} </h2>
+
+                        <p>Jumlah Konsultasi Selesai</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-card"></i>
@@ -155,8 +181,8 @@
                             class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            --}}
         </div>
-
         <div class="row">
             <!-- ./col -->
             <div class="col-lg-6 col-xs-8">
@@ -164,7 +190,7 @@
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
-                            Metode Pembayaran
+                            Jenis Konsultasi
                         </h3>
                     </div>
                     <div class="card-body">
@@ -172,7 +198,21 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-            </div> --}}
+            </div> 
+            <div class="col-lg-6 col-xs-8">
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Status Konsultasi
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="height: 300px; width: 340px;" height="340" width="500"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div> 
             <div class="col-lg-6 col-xs-8">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">

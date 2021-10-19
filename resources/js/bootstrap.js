@@ -30,6 +30,7 @@ try {
     require( 'datatables.net-searchpanes-bs4');
     require( 'datatables.net-select-bs4');
     require( 'daterangepicker');
+    require( 'chart.js')
 
 } catch (e) {
 }

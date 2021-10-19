@@ -32,24 +32,24 @@ class HomeController extends Controller
             $vendor = WpProject::where('user_id',$user->ID)->whereNotNull('vendor_user_id')->groupBy('vendor_user_id')->count();
             $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
             $projects = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
-            $progres = WpProject::where('user_id',$user->ID)->get();
-            $progresVendor = WpProject::where('user_id',$user->ID)->whereNotNull('vendor_user_id')->get();
+            $progres = WpProject::where('user_id',$user->ID)->limit(5)->get();
+            $progresVendor = WpProject::where('user_id',$user->ID)->whereNotNull('vendor_user_id')->limit(5)->get();
 
         } else if ($user->user_type == "vendor") {
             $customer =  WpProject::where('vendor_user_id',$user->ID)->groupBy('user_id')->count();
             $vendor =  WpProject::where('vendor_user_id',$user->ID)->whereNotNull('vendor_user_id')->groupBy('vendor_user_id')->count();
             $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
             $projects = WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
-            $progres = WpProject::where('user_id',$user->ID)->get();
-            $progresVendor = WpProject::where('vendor_user_id',$user->ID)->whereNotNull('vendor_user_id')->get();
+            $progres = WpProject::where('user_id',$user->ID)->limit(5)->get();
+            $progresVendor = WpProject::where('vendor_user_id',$user->ID)->whereNotNull('vendor_user_id')->limit(5)->get();
 
         } else {
             $customer =  WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->count();
             $vendor =  WpUser::where('user_type', WpUser::TYPE_VENDOR)->count();
             $admin =  WpUser::where('user_type', WpUser::TYPE_ADMIN)->count();
             $projects = WpProject::where('admin_user_id',$user->ID)->count();
-            $progres = WpProject::where('admin_user_id',$user->ID)->get();
-            $progresVendor = WpProject::whereNotNull('vendor_user_id')->get();
+            $progres = WpProject::where('admin_user_id',$user->ID)->limit(5)->get();
+            $progresVendor = WpProject::whereNotNull('vendor_user_id')->limit(5)->get();
         }
 
         $spk_customer = WpProject::sum('amount_spk_customer');

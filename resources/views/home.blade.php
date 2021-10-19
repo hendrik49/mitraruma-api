@@ -180,8 +180,7 @@
                     <a href="admin/manage-Pembayaran-user" class="small-box-footer">More info <i
                             class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div>
-            --}}
+            </div> --}}
         </div>
         <div class="row">
             <!-- ./col -->
@@ -198,7 +197,7 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-            </div> 
+            </div>
             <div class="col-lg-6 col-xs-8">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
@@ -208,11 +207,11 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="pieChart" style="height: 300px; width: 340px;" height="340" width="500"></canvas>
+                        <canvas id="pieChartStatus" style="height: 300px; width: 340px;" height="340" width="500"></canvas>
                     </div>
                     <!-- /.card-body -->
                 </div>
-            </div> 
+            </div>
             <div class="col-lg-6 col-xs-8">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
@@ -225,9 +224,11 @@
                         @foreach ($progres as $val)
                             @if ($val->status == 'Project Ended')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->order_number }} - {{ $val->description }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>10</b>/10</span>
                                     <div class="progress progress-sm">
@@ -238,9 +239,11 @@
                             @endif
                             @if ($val->status == 'Project Started')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->order_number }} - {{ $val->description }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>8</b>/10</span>
                                     <div class="progress progress-sm">
@@ -251,9 +254,11 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Construction Phase')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->order_number }} - {{ $val->description }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>6</b>/10</span>
                                     <div class="progress progress-sm">
@@ -264,9 +269,11 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Design Phase')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->order_number }} - {{ $val->description }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>4</b>/10</span>
                                     <div class="progress progress-sm">
@@ -278,9 +285,11 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'pre-purchase' || $val->status == 'Pre-Purchase')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->order_number }} - {{ $val->description }} 
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->order_number }} - {{ $val->description }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>2</b>/10</span>
                                     <div class="progress progress-sm">
@@ -306,9 +315,11 @@
                         @foreach ($progresVendor as $val)
                             @if ($val->status == 'Project Ended')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>10</b>/10</span>
                                     <div class="progress progress-sm">
@@ -319,9 +330,11 @@
                             @endif
                             @if ($val->status == 'Project Started')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>8</b>/10</span>
                                     <div class="progress progress-sm">
@@ -332,9 +345,11 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Construction Phase')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>6</b>/10</span>
                                     <div class="progress progress-sm">
@@ -345,9 +360,11 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'Design Phase')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>4</b>/10</span>
                                     <div class="progress progress-sm">
@@ -359,9 +376,11 @@
                             <!-- /.progress-group -->
                             @if ($val->status == 'pre-purchase' || $val->status == 'Pre-Purchase')
                                 <div class="progress-group">
-                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}"> {{ $val->vendor_name }} - {{ $val->order_number }}
+                                    <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
+                                        {{ $val->vendor_name }} - {{ $val->order_number }}
                                     </a>
-                                    <p class="progress-text text-green text-sm"> {{ $val->status }} : {{ $val->project_note }}
+                                    <p class="progress-text text-green text-sm"> {{ $val->status }} :
+                                        {{ $val->project_note }}
                                     </p>
                                     <span class="float-right"><b>2</b>/10</span>
                                     <div class="progress progress-sm">
@@ -414,4 +433,75 @@
             </div> --}}
 
         </div>
+    @endsection
+    @section('scripts')
+        @parent
+        <script type="text/javascript">
+            $(function() {
+
+                var config = {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: [
+                                4,
+                                6
+                            ],
+                            backgroundColor: [
+                                "#F7464A",
+                                "#46BFBD"
+                            ],
+                        }],
+                        labels: [
+                            "Home Service",
+                            "Home Renovation"
+                        ]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                };
+
+                var configStatus = {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: [
+                                1,
+                                2,
+                                1,
+                                3,
+                                5
+                            ],
+                            backgroundColor: [
+                                "#12464A",
+                                "#4600BD",
+                                "#07424A",
+                                "#123655",
+                                "#F73300"
+                            ],
+                        }],
+                        labels: [
+                            "Pre-Project",
+                            "Design",
+                            "Construction",
+                            "Project Started",
+                            "Project Ended"
+                        ]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                };
+
+                window.onload = function() {
+                    var ctx = document.getElementById("pieChart").getContext("2d");
+                    window.myPie = new Chart(ctx, config);
+
+                    var ctxStatus = document.getElementById("pieChartStatus").getContext("2d");
+                    window.myPieStatus = new Chart(ctxStatus, configStatus);
+
+                };
+            });
+        </script>
     @endsection

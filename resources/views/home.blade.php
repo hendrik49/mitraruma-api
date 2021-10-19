@@ -81,7 +81,7 @@
             </div>
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-primary">
+                <div class="small-box bg-info">
                     <div class="inner">
                         <h2>{{ $projects }} </h2>
 
@@ -94,7 +94,7 @@
             </div>
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-primary">
+                <div class="small-box bg-success">
                     <div class="inner">
                         <h2>{{ $projects }} </h2>
 

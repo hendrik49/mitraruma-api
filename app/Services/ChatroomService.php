@@ -671,7 +671,7 @@ class ChatroomService
         $paramSchedule['consultation_id'] = $params['consultation_id'];
         $paramSchedule['start_date'] = $params['start_date'];
         $paramSchedule['end_date'] = $params['end_date'];
-        $paramSchedule['link'] = $params['link'];
+        $paramSchedule['link'] = isset($params['link'])?$params['link']:'';
 
         $this->projectRepo->createSchedule($paramSchedule);
 

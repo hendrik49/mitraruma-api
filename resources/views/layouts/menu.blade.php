@@ -49,7 +49,7 @@
           <p>Seting</p>
         </a>
       </li>
-      @if( Auth::user()->role=="admin")
+      @if( Auth::user()->user_type=="admin")
       <li class="nav-item">
         <a href="/admin/users" class="nav-link">
           <i class="far fa-circle nav-icon"></i>

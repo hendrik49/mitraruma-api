@@ -109,13 +109,14 @@
                                                     </span>
                                                 @endif
                                         </div>
-                                    <div class="well well-sm">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <div class="well well-sm mb-2">
+                                        <a href="{{ route('users.edit', ['user' => $user]) }}"
+                                            class="btn btn-primary"> <i class="glyphicon glyphicon-eye-open"></i>
+                                            Edit </a>
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                    
+                        </div>                    
                     </div>
                 </div>
             </div>

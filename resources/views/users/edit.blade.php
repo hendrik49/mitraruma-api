@@ -81,7 +81,26 @@
                                                     <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_nik) src="{{ $user->file_nik }}" @endif>
                                                 </div>
                                             @endif
-                                      </div>    
+                                        </div>
+                                        <div class="form-group @if($errors->has('bank_account')) has-error @endif">
+                                            <label for="nik-field">No. Rekening</label>
+                                            <input type="text" id="bank_account-field" name="bank_account" class="form-control" value="{{ is_null(old("bank_account")) ? $user->bank_account : old("bank_account") }}"/>
+                                                @if($errors->has("bank_account"))
+                                                <span class="help-block">{{ $errors->first("bank_account") }}</span>
+                                                @endif
+                                        </div>    
+                                        <div class="form-group @if($errors->has('file_bank')) has-error @endif">
+                                        <label for="nik-field">File Tabungan</label>        
+                                            <input type="file" id="file_bank-field" name="file_bank" class="form-control" value="{{ is_null(old("file_bank")) ? $user->file_bank : old("file_bank") }}"/>
+                                            @if($errors->has("file_bank"))
+                                            <span class="help-block">{{ $errors->first("file_bank") }}</span>
+                                            @endif
+                                            @if($user->file_bank)
+                                                <div class="img mt-2">
+                                                    <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_bank) src="{{ $user->file_bank }}" @endif>
+                                                </div>
+                                            @endif
+                                        </div>    
                                          <div class="form-group @if($errors->has('npwp')) has-error @endif">
                                             <label for="npwp-field">No. NPWP</label>
                                             <input type="text" id="npwp-field" name="npwp" class="form-control" value="{{ is_null(old("npwp")) ? $user->npwp : old("npwp") }}"/>

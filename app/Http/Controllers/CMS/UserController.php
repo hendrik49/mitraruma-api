@@ -81,7 +81,10 @@ class UserController extends Controller
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
                 'display_name'=>'required|min:3',
-                'user_picture_url'=>'required|file'
+                'user_picture_url'=>'required|file',
+                'file_bank' => 'nullable|file',
+                'bank_account' => 'nullable|min:6',
+                'bank' => 'nullable|min:3'
             ]);
 
 
@@ -105,7 +108,11 @@ class UserController extends Controller
                 $user_path = $foto_npwp->store('file_npwp', 'public');
                 $user->file_npwp = $user_path;
             }
-            $user->save();
+            $foto_bank = $request->file('file_bank');
+            if ($foto_bank) {
+                $user_path = $foto_nik->store('file_ktp', 'public');
+                $user->file_bank = $user_path;
+            }
 
             $user->save();
 
@@ -141,7 +148,10 @@ class UserController extends Controller
             $this->validate($request, [
                 'nik' => 'nullable|min:16',
                 'file_nik' => 'nullable|file',
+                'file_bank' => 'nullable|file',
                 'npwp' => 'nullable|min:16',
+                'bank_account' => 'nullable|min:6',
+                'bank' => 'nullable|min:3',
                 'file_npwp' => 'nullable|file',
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
@@ -166,6 +176,11 @@ class UserController extends Controller
             if ($foto_npwp) {
                 $user_path = $foto_npwp->store('file_npwp', 'public');
                 $user->file_npwp = $user_path;
+            }
+            $foto_bank = $request->file('file_bank');
+            if ($foto_bank) {
+                $user_path = $foto_nik->store('file_ktp', 'public');
+                $user->file_bank = $user_path;
             }
             $user->save();
 

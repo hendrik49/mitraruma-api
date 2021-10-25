@@ -38,6 +38,9 @@ class WpUser extends Model
         'nik',
         'file_npwp',
         'file_nik',
+        'file_bank',
+        'bank',
+        'bank_account',
         'ID'
     ];
 

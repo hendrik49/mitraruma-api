@@ -33,7 +33,7 @@
                                 @foreach ($users as $key => $user)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $user->user_nicename }}</td>
+                                        <td>{{ $user->ID }}</td>
                                         <td>{{ $user->display_name }}</td>
                                         <td>{{ $user->user_email }}</td>
                                         <td>{{ $user->user_phone_number }}</td>

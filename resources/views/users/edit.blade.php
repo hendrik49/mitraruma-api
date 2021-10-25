@@ -76,11 +76,9 @@
                                             @if($errors->has("file_nik"))
                                             <span class="help-block">{{ $errors->first("file_nik") }}</span>
                                             @endif
-                                            @if($user->file_nik)
-                                                <div class="img mt-2">
-                                                    <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_nik) src="{{ $user->file_nik }}" @endif>
-                                                </div>
-                                            @endif
+                                            <div class="img mt-2">
+                                                <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_nik) src="{{ $user->file_nik }}" @endif>
+                                            </div>
                                         </div>
                                         <div class="form-group @if($errors->has('bank')) has-error @endif">
                                             <label for="name-field">Bank</label>
@@ -102,11 +100,9 @@
                                             @if($errors->has("file_bank"))
                                             <span class="help-block">{{ $errors->first("file_bank") }}</span>
                                             @endif
-                                            @if($user->file_bank)
-                                                <div class="img mt-2">
-                                                    <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_bank) src="{{ $user->file_bank }}" @endif>
-                                                </div>
-                                            @endif
+                                            <div class="img mt-2">
+                                                <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_bank) src="{{ $user->file_bank }}" @endif>
+                                            </div>
                                         </div>    
                                          <div class="form-group @if($errors->has('npwp')) has-error @endif">
                                             <label for="npwp-field">No. NPWP</label>
@@ -121,11 +117,9 @@
                                             @if($errors->has("file_npwp"))
                                              <span class="help-block">{{ $errors->first("file_npwp") }}</span>
                                             @endif
-                                            @if($user->file_npwp)
-                                                <div class="img mt-2">
-                                                    <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_npwp) src="{{ $user->file_npwp }}" @endif>
-                                                </div>
-                                            @endif
+                                            <div class="img mt-2">
+                                                <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_npwp) src="{{ $user->file_npwp }}" @endif>
+                                            </div>
                                         </div>                 
                                         <div class="form-group @if($errors->has('user_email')) has-error @endif">
                                            <label for="user_email-field">Email</label>

@@ -56,6 +56,13 @@
                                             <span class="help-block">{{ $errors->first("display_name") }}</span>
                                            @endif
                                         </div>
+                                        <div class="form-group @if($errors->has('user_type')) has-error @endif">
+                                            <label for="name-field">Role</label>
+                                         <input type="text" id="name-field" name="user_type" class="form-control" value="{{ is_null(old("user_type")) ? $user->user_type : old("user_type") }}" readonly/>
+                                            @if($errors->has("user_typee"))
+                                             <span class="help-block">{{ $errors->first("user_type") }}</span>
+                                            @endif
+                                         </div>
                                         <div class="form-group @if($errors->has('nik')) has-error @endif">
                                             <label for="nik-field">NIK KTP</label>
                                             <input type="text" id="nik-field" name="nik" class="form-control" value="{{ is_null(old("nik")) ? $user->nik : old("nik") }}"/>

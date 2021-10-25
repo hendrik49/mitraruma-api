@@ -34,6 +34,10 @@ class WpUser extends Model
         'company_name',
         'user_status',
         'deleted_at',
+        'npwp',
+        'nik',
+        'file_npwp',
+        'file_nik',
         'ID'
     ];
 

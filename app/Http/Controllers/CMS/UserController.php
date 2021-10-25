@@ -74,34 +74,32 @@ class UserController extends Controller
         try {
 
             $this->validate($request, [
-                'bank' => 'required|min:3',
-                'account' => 'nullable|min:5',
-                'label' => 'required|min:3',
-                'tipe' => 'required|min:3',
-                'owner' => 'required|min:3',
-                'logo' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
+                'nik' => 'required|min:16',
+                'file_nik' => 'required|file',
+                'npwp' => 'required|min:16',
+                'file_npwp' => 'required|file',
+                'user_email' => 'required|email',
+                'user_phone_number' => 'required',
+                'display_name'=>'required|min:3',
             ]);
+
 
             DB::beginTransaction();
 
             $user = new WpUser;
-            $foto = $request->file('logo');
-            if ($foto) {
-                $user_path = $foto->store('fotouser', 'public');
-                $user->dokumentasi = $user_path;
+            $foto_nik = $request->file('file_nik');
+            if ($foto_nik) {
+                $user_path = $foto_nik->store('file_ktp', 'public');
+                $user->file_nik = $user_path;
             }
-            $user->bank    = strtolower($request->bank);
-            $user->account  = $request->account;
-            $user->branch  = $request->label;
-            $user->tipe  = $request->tipe;
-            $user->owner  = $request->owner;
-            $user->created_by = Auth::user()->id;
-            $user->judul_panduan_pembayaran1 = $request->judul_panduan_pembayaran1;
-            $user->judul_panduan_pembayaran2 = $request->judul_panduan_pembayaran2;
-            $user->judul_panduan_pembayaran3 = $request->judul_panduan_pembayaran3;
-            $user->panduan_pembayaran1 = $request->panduan_pembayaran1;
-            $user->panduan_pembayaran2 = $request->panduan_pembayaran2;
-            $user->panduan_pembayaran3 = $request->panduan_pembayaran3;
+            $foto_npwp = $request->file('file_npwp');
+            if ($foto_npwp) {
+                $user_path = $foto_npwp->store('file_npwp', 'public');
+                $user->file_npwp = $user_path;
+            }
+
+            $user->fill($request->all());
+            $user->save();
 
             $user->save();
 
@@ -135,15 +133,27 @@ class UserController extends Controller
         try {
 
             $this->validate($request, [
-                'amount_spk_customer_gross' => 'numeric',
-                'amount_spk_customer' => 'numeric',
-                'amount_spk_vendor' => 'numeric',
-                'discount' => 'numeric',
-                'commision' => 'numeric'
+                'nik' => 'required|min:16',
+                'file_nik' => 'required|file',
+                'npwp' => 'required|min:16',
+                'file_npwp' => 'required|file',
+                'user_email' => 'required|email',
+                'user_phone_number' => 'required',
+                'display_name'=>'required|min:3',
             ]);
 
             $user = WpUser::findOrfail($id);
 
+            $foto_nik = $request->file('file_nik');
+            if ($foto_nik) {
+                $user_path = $foto_nik->store('file_ktp', 'public');
+                $user->file_nik = $user_path;
+            }
+            $foto_npwp = $request->file('file_npwp');
+            if ($foto_npwp) {
+                $user_path = $foto_npwp->store('file_npwp', 'public');
+                $user->file_npwp = $user_path;
+            }
             $user->fill($request->all());
             $user->save();
 

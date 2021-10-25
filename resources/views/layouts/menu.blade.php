@@ -49,6 +49,14 @@
           <p>Seting</p>
         </a>
       </li>
+      @if( Auth::user()->role=="admin")
+      <li class="nav-item">
+        <a href="/admin/users" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Users</p>
+        </a>
+      </li>
+      @endif
   {{-- <li class="nav-item">
     <a href="#" class="nav-link">
       <i class="nav-icon fas fa-table"></i>

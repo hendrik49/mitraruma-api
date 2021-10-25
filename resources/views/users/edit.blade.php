@@ -56,9 +56,36 @@
                                             <span class="help-block">{{ $errors->first("display_name") }}</span>
                                            @endif
                                         </div>
-                    
+                                        <div class="form-group @if($errors->has('nik')) has-error @endif">
+                                            <label for="nik-field">NIK KTP</label>
+                                            <input type="text" id="nik-field" name="nik" class="form-control" value="{{ is_null(old("nik")) ? $user->nik : old("nik") }}"/>
+                                                @if($errors->has("nik"))
+                                                <span class="help-block">{{ $errors->first("nik") }}</span>
+                                                @endif
+                                        </div>    
+                                        <div class="form-group @if($errors->has('file_nik')) has-error @endif">
+                                        <label for="nik-field">File KTP</label>        
+                                            <input type="file" id="file_nik-field" name="file_nik" class="form-control" value="{{ is_null(old("file_nik")) ? $user->file_nik : old("file_nik") }}"/>
+                                            @if($errors->has("file_nik"))
+                                            <span class="help-block">{{ $errors->first("file_nik") }}</span>
+                                            @endif
+                                      </div>    
+                                         <div class="form-group @if($errors->has('npwp')) has-error @endif">
+                                            <label for="npwp-field">No. NPWP</label>
+                                            <input type="text" id="npwp-field" name="npwp" class="form-control" value="{{ is_null(old("npwp")) ? $user->npwp : old("npwp") }}"/>
+                                            @if($errors->has("npwp"))
+                                             <span class="help-block">{{ $errors->first("npwp") }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group @if($errors->has('file_npwp')) has-error @endif">
+                                            <label for="nik-field">File NPWP</label>    
+                                            <input type="file" id="npwp-field" name="file_npwp" class="form-control" value="{{ is_null(old("file_npwp")) ? $user->file_npwp : old("file_npwp") }}"/>
+                                            @if($errors->has("file_npwp"))
+                                             <span class="help-block">{{ $errors->first("file_npwp") }}</span>
+                                            @endif
+                                        </div>                 
                                         <div class="form-group @if($errors->has('user_email')) has-error @endif">
-                                           <label for="user_email-field">user_email</label>
+                                           <label for="user_email-field">Email</label>
                                         <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"/>
                                            @if($errors->has("user_email"))
                                             <span class="help-block">{{ $errors->first("user_email") }}</span>
@@ -109,8 +136,8 @@
                                                     </span>
                                                 @endif
                                         </div>
-                                    <div class="well well-sm">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <div class="well well-sm mb-2">
+                                        <button type="submit" value="Save" class="btn btn-primary pull-right right"> Save </button>
                                     </div>
                                 </form>
                             </div>

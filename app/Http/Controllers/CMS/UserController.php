@@ -74,10 +74,10 @@ class UserController extends Controller
         try {
 
             $this->validate($request, [
-                'nik' => 'required|min:16',
-                'file_nik' => 'required|file',
-                'npwp' => 'required|min:16',
-                'file_npwp' => 'required|file',
+                'nik' => 'nullable|min:16',
+                'file_nik' => 'nullable|file',
+                'npwp' => 'nullable|min:16',
+                'file_npwp' => 'nullable|file',
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
                 'display_name'=>'required|min:3',
@@ -139,10 +139,10 @@ class UserController extends Controller
         try {
 
             $this->validate($request, [
-                'nik' => 'required|min:16',
-                'file_nik' => 'required|file',
-                'npwp' => 'required|min:16',
-                'file_npwp' => 'required|file',
+                'nik' => 'nullable|min:16',
+                'file_nik' => 'nullable|file',
+                'npwp' => 'nullable|min:16',
+                'file_npwp' => 'nullable|file',
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
                 'display_name'=>'required|min:3',

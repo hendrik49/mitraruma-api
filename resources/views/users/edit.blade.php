@@ -108,6 +108,7 @@
                                             <span class="help-block">{{ $errors->first('user_phone_number') }}</span>
                                            @endif
                                         </div>
+                                        @if($user->user_type=="vendor")
                                         <div class="form-group @if($errors->has('skill_set')) has-error @endif">
                                            <label for="triwulan-field">Skill Set</label>
                                             <select class="form-control" id="skill_set-field" name="skill_set">                    
@@ -146,6 +147,7 @@
                                                     </span>
                                                 @endif
                                         </div>
+                                        @endif
                                     <div class="well well-sm mb-2">
                                         <button type="submit" value="Save" class="btn btn-primary pull-right right"> Save </button>
                                     </div>

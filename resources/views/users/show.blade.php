@@ -50,15 +50,20 @@
                                         <div class="form-group @if($errors->has('nik')) has-error @endif">
                                             <label for="nik-field">NIK KTP</label>
                                             <input type="text" id="nik-field" name="nik" class="form-control" value="{{ is_null(old("nik")) ? $user->nik : old("nik") }}"readonly/>
-                                                @if($errors->has("nik"))
-                                                <span class="help-block">{{ $errors->first("nik") }}</span>
-                                                @endif
+                                            @if($errors->has("nik"))
+                                            <span class="help-block">{{ $errors->first("nik") }}</span>
+                                            @endif
                                         </div>    
                                         <div class="form-group @if($errors->has('file_nik')) has-error @endif">
                                         <label for="nik-field">File KTP</label>        
                                             <input type="file" id="file_nik-field" name="file_nik" class="form-control" value="{{ is_null(old("file_nik")) ? $user->file_nik : old("file_nik") }}"readonly/>
                                             @if($errors->has("file_nik"))
                                             <span class="help-block">{{ $errors->first("file_nik") }}</span>
+                                            @endif
+                                            @if($user->file_nik)
+                                                <div class="img">
+                                                    <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_nik) src="{{ $user->file_nik }}" @endif>
+                                                </div>
                                             @endif
                                       </div>    
                                          <div class="form-group @if($errors->has('npwp')) has-error @endif">
@@ -73,6 +78,11 @@
                                             <input type="file" id="npwp-field" name="file_npwp" class="form-control" value="{{ is_null(old("file_npwp")) ? $user->file_npwp : old("file_npwp") }}"readonly/>
                                             @if($errors->has("file_npwp"))
                                              <span class="help-block">{{ $errors->first("file_npwp") }}</span>
+                                            @endif
+                                            @if($user->file_npwp)
+                                                <div class="img">
+                                                    <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_npwp) src="{{ $user->file_npwp }}" @endif>
+                                                </div>
                                             @endif
                                         </div>                 
                                         <div class="form-group @if($errors->has('user_email')) has-error @endif">

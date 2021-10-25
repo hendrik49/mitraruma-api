@@ -84,6 +84,13 @@
                                                 </div>
                                             @endif
                                         </div>         
+                                        <div class="form-group @if($errors->has('bank')) has-error @endif">
+                                            <label for="name-field">Nama</label>
+                                         <input type="text" id="name-field" name="bank" class="form-control" value="{{ is_null(old("bank")) ? $user->bank : old("bank") }}" readonly/>
+                                            @if($errors->has("bank"))
+                                             <span class="help-block">{{ $errors->first("bank") }}</span>
+                                            @endif
+                                         </div>
                                         <div class="form-group @if($errors->has('bank_account')) has-error @endif">
                                             <label for="bank_account-field">No. Rekening</label>
                                             <input type="text" id="bank_account-field" name="bank_account" class="form-control" value="{{ is_null(old("bank_account")) ? $user->bank_account : old("bank_account") }}"readonly/>

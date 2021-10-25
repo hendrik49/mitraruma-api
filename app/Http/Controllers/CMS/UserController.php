@@ -87,6 +87,8 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $user = new WpUser;
+            
+            $user->fill($request->all());
             $foto_nik = $request->file('file_nik');
             if ($foto_nik) {
                 $user_path = $foto_nik->store('file_ktp', 'public');
@@ -97,8 +99,6 @@ class UserController extends Controller
                 $user_path = $foto_npwp->store('file_npwp', 'public');
                 $user->file_npwp = $user_path;
             }
-
-            $user->fill($request->all());
             $user->save();
 
             $user->save();
@@ -143,7 +143,8 @@ class UserController extends Controller
             ]);
 
             $user = WpUser::findOrfail($id);
-
+           
+            $user->fill($request->all());
             $foto_nik = $request->file('file_nik');
             if ($foto_nik) {
                 $user_path = $foto_nik->store('file_ktp', 'public');
@@ -154,7 +155,6 @@ class UserController extends Controller
                 $user_path = $foto_npwp->store('file_npwp', 'public');
                 $user->file_npwp = $user_path;
             }
-            $user->fill($request->all());
             $user->save();
 
             DB::commit();

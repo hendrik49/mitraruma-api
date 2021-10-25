@@ -34,66 +34,57 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">                
-                                <form action="{{ route('users.update', $user) }}" enctype="multipart/form-data" method="POST">
-                                    <input type="hidden" name="_method" value="PUT">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <form action="#" enctype="multipart/form-data" method="POST">
                                         <div class="form-group @if($errors->has('user_picture_url')) has-error @endif">
                                             <div class="img">
                                                 <img class="img-circle" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->user_picture_url) src="{{ $user->user_picture_url }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
-                                                <br>
-                                                <input type="file" id="user_picture_url" name="user_picture_url" accept="image/x-png,image/gif,image/jpeg" onchange="loadFile(event)">
-                                                @if ($errors->has('user_picture_url'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('user_picture_url') }}</strong>
-                                                    </span>
-                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group @if($errors->has('display_name')) has-error @endif">
                                            <label for="name-field">Nama</label>
-                                        <input type="text" id="name-field" name="display_name" class="form-control" value="{{ is_null(old("display_name")) ? $user->display_name : old("display_name") }}"/>
+                                        <input type="text" id="name-field" name="display_name" class="form-control" value="{{ is_null(old("display_name")) ? $user->display_name : old("display_name") }}"readonly/>
                                            @if($errors->has("display_name"))
                                             <span class="help-block">{{ $errors->first("display_name") }}</span>
                                            @endif
                                         </div>
                                         <div class="form-group @if($errors->has('nik')) has-error @endif">
                                             <label for="nik-field">NIK KTP</label>
-                                            <input type="text" id="nik-field" name="nik" class="form-control" value="{{ is_null(old("nik")) ? $user->nik : old("nik") }}"/>
+                                            <input type="text" id="nik-field" name="nik" class="form-control" value="{{ is_null(old("nik")) ? $user->nik : old("nik") }}"readonly/>
                                                 @if($errors->has("nik"))
                                                 <span class="help-block">{{ $errors->first("nik") }}</span>
                                                 @endif
                                         </div>    
                                         <div class="form-group @if($errors->has('file_nik')) has-error @endif">
                                         <label for="nik-field">File KTP</label>        
-                                            <input type="file" id="file_nik-field" name="file_nik" class="form-control" value="{{ is_null(old("file_nik")) ? $user->file_nik : old("file_nik") }}"/>
+                                            <input type="file" id="file_nik-field" name="file_nik" class="form-control" value="{{ is_null(old("file_nik")) ? $user->file_nik : old("file_nik") }}"readonly/>
                                             @if($errors->has("file_nik"))
                                             <span class="help-block">{{ $errors->first("file_nik") }}</span>
                                             @endif
                                       </div>    
                                          <div class="form-group @if($errors->has('npwp')) has-error @endif">
                                             <label for="npwp-field">No. NPWP</label>
-                                            <input type="text" id="npwp-field" name="npwp" class="form-control" value="{{ is_null(old("npwp")) ? $user->npwp : old("npwp") }}"/>
+                                            <input type="text" id="npwp-field" name="npwp" class="form-control" value="{{ is_null(old("npwp")) ? $user->npwp : old("npwp") }}"readonly/>
                                             @if($errors->has("npwp"))
                                              <span class="help-block">{{ $errors->first("npwp") }}</span>
                                             @endif
                                         </div>
                                         <div class="form-group @if($errors->has('file_npwp')) has-error @endif">
                                             <label for="nik-field">File NPWP</label>    
-                                            <input type="file" id="npwp-field" name="file_npwp" class="form-control" value="{{ is_null(old("file_npwp")) ? $user->file_npwp : old("file_npwp") }}"/>
+                                            <input type="file" id="npwp-field" name="file_npwp" class="form-control" value="{{ is_null(old("file_npwp")) ? $user->file_npwp : old("file_npwp") }}"readonly/>
                                             @if($errors->has("file_npwp"))
                                              <span class="help-block">{{ $errors->first("file_npwp") }}</span>
                                             @endif
                                         </div>                 
                                         <div class="form-group @if($errors->has('user_email')) has-error @endif">
                                            <label for="user_email-field">Email</label>
-                                        <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"/>
+                                        <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"readonly/>
                                            @if($errors->has("user_email"))
                                             <span class="help-block">{{ $errors->first("user_email") }}</span>
                                            @endif
                                         </div>
                                         <div class="form-group @if($errors->has('user_phone_number')) has-error @endif">
                                            <label for="user_phone_number-field">Nomor kontak</label>
-                                        <input type="text" id="user_phone_number-field" name='user_phone_number' class="form-control" value="{{ is_null(old('user_phone_number')) ? $user->user_phone_number : old('user_phone_number') }}"/>
+                                        <input type="text" id="user_phone_number-field" name='user_phone_number' class="form-control" value="{{ is_null(old('user_phone_number')) ? $user->user_phone_number : old('user_phone_number') }}"readonly/>
                                            @if($errors->has('user_phone_number'))
                                             <span class="help-block">{{ $errors->first('user_phone_number') }}</span>
                                            @endif

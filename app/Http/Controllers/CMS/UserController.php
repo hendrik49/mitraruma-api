@@ -81,6 +81,7 @@ class UserController extends Controller
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
                 'display_name'=>'required|min:3',
+                'user_picture_url'=>'required|file'
             ]);
 
 
@@ -93,6 +94,11 @@ class UserController extends Controller
             if ($foto_nik) {
                 $user_path = $foto_nik->store('file_ktp', 'public');
                 $user->file_nik = $user_path;
+            }
+            $user_picture_url = $request->file('user_picture_url');
+            if ($user_picture_url) {
+                $user_path = $foto_nik->store('user_picture', 'public');
+                $user->user_picture_url = $user_path;
             }
             $foto_npwp = $request->file('file_npwp');
             if ($foto_npwp) {
@@ -140,6 +146,7 @@ class UserController extends Controller
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
                 'display_name'=>'required|min:3',
+                'user_picture_url'=>'required|file'
             ]);
 
             $user = WpUser::findOrfail($id);
@@ -149,6 +156,11 @@ class UserController extends Controller
             if ($foto_nik) {
                 $user_path = $foto_nik->store('file_ktp', 'public');
                 $user->file_nik = $user_path;
+            }
+            $user_picture_url = $request->file('user_picture_url');
+            if ($user_picture_url) {
+                $user_path = $foto_nik->store('user_picture', 'public');
+                $user->user_picture_url = $user_path;
             }
             $foto_npwp = $request->file('file_npwp');
             if ($foto_npwp) {

@@ -72,4 +72,15 @@ class WpUser extends Model
         else
             return url('/') . '/images/img-customer.png';
     }
+
+    public function getFileNikAttribute()
+    {
+        return url('/') . '/storage/' . $this->attributes['file_nik'];
+    }
+
+    public function getFileNpwpAttribute()
+    {
+        return url('/') . '/storage/' . $this->attributes['file_npwp'];
+    }
+    
 }

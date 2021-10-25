@@ -156,7 +156,7 @@ class UserController extends Controller
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
                 'display_name'=>'required|min:3',
-                'user_picture_url'=>'required|file'
+                'user_picture_url'=>'nullable|file'
             ]);
 
             $user = WpUser::findOrfail($id);

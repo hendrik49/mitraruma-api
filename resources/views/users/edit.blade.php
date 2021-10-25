@@ -138,11 +138,12 @@
                                         @if($user->user_type=="vendor")
                                         <div class="form-group @if($errors->has('skill_set')) has-error @endif">
                                            <label for="triwulan-field">Skill Set</label>
-                                            <select class="form-control" id="skill_set-field" name="skill_set">                    
-                                                <option value="">Pilih skill Set</option>
-                                                {{-- @foreach($skill_sets as $p)
-                                                    <option value="{{ $p->id }}" @if($user->skill_set==$p->id) selected @endif>{{ $p->name }}</option>
-                                                @endforeach --}}
+                                                <select class="form-control" id="skill_set-field" name="skill_set">                    
+                                                    @if($user->extension->where('name','SKILLSET')->first())
+                                                        @foreach($user->extension->where('name','SKILLSET')->first()->value as $p)
+                                                            <option value="{{ $p }}">{{ $p }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>                       
                                            @if($errors->has("skill_set"))
                                             <span class="help-block">{{ $errors->first("skill_set") }}</span>
@@ -151,11 +152,12 @@
                                         <div class="form-group{{ $errors->has('coverage-area') ? ' has-error' : '' }}">
                                             <label for="coverage-area" >Coverage Area</label>
                                             <select class="form-control" id="coverage-area-field" name="skill_set">                    
-                                                <option value="">Pilih coverage area</option>
-                                                {{-- @foreach($skill_sets as $p)
-                                                    <option value="{{ $p->id }}" @if($user->skill_set==$p->id) selected @endif>{{ $p->name }}</option>
-                                                @endforeach --}}
-                                                </select>                       
+                                                @if($user->extension->where('name','Coverage')->first())
+                                                @foreach($user->extension->where('name','Coverage')->first()->value as $p)
+                                                    <option value="{{ $p }}">{{ $p }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>                      
                                            @if($errors->has("coverage-area"))
                                             <span class="help-block">{{ $errors->first("coverage-area") }}</span>
                                            @endif                                            
@@ -163,16 +165,17 @@
                                         <div class="form-group{{ $errors->has('customer_segmentation') ? ' has-error' : '' }}">
                                             <label for="customer_segmentation" >Customer Segmentation</label>
                                             <select class="form-control" id="coverage-area-field" name="skill_set">                    
-                                                <option value="">Pilih customer segmentation</option>
-                                                {{-- @foreach($skill_sets as $p)
-                                                    <option value="{{ $p->id }}" @if($user->skill_set==$p->id) selected @endif>{{ $p->name }}</option>
-                                                @endforeach --}}
-                                                </select>                                                                           
-                                                @if ($errors->has('customer_segmentation'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('customer_segmentation') }}</strong>
-                                                    </span>
+                                                @if($user->extension->where('name','segment')->first())
+                                                @foreach($user->extension->where('name','segment')->first()->value as $p)
+                                                    <option value="{{ $p }}">{{ $p }}</option>
+                                                    @endforeach
                                                 @endif
+                                            </select>                                                                       
+                                            @if ($errors->has('customer_segmentation'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('customer_segmentation') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                         @endif
                                     <div class="well well-sm mb-2">

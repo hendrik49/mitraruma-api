@@ -130,13 +130,13 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = WpUser::findOrfail($id);
+        $user = WpUser::with('extension')->findOrfail($id);
         return view('users.show', ['user' => $user]);
     }
 
     public function edit($id)
     {
-        $user = WpUser::findOrfail($id);
+        $user = WpUser::with('extension')->findOrfail($id);
         return view('users.edit', ['user' => $user]);
     }
 

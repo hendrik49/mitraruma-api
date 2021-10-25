@@ -56,7 +56,6 @@
                                         </div>    
                                         <div class="form-group @if($errors->has('file_nik')) has-error @endif">
                                         <label for="nik-field">File KTP</label>        
-                                            <input type="file" id="file_nik-field" name="file_nik" class="form-control" value="{{ is_null(old("file_nik")) ? $user->file_nik : old("file_nik") }}"readonly/>
                                             @if($errors->has("file_nik"))
                                             <span class="help-block">{{ $errors->first("file_nik") }}</span>
                                             @endif
@@ -75,7 +74,6 @@
                                         </div>
                                         <div class="form-group @if($errors->has('file_npwp')) has-error @endif">
                                             <label for="nik-field">File NPWP</label>    
-                                            <input type="file" id="npwp-field" name="file_npwp" class="form-control" value="{{ is_null(old("file_npwp")) ? $user->file_npwp : old("file_npwp") }}"readonly/>
                                             @if($errors->has("file_npwp"))
                                              <span class="help-block">{{ $errors->first("file_npwp") }}</span>
                                             @endif

@@ -179,7 +179,7 @@ class UserController extends Controller
             }
             $foto_bank = $request->file('file_bank');
             if ($foto_bank) {
-                $user_path = $foto_nik->store('file_ktp', 'public');
+                $user_path = $foto_bank->store('file_bank', 'public');
                 $user->file_bank = $user_path;
             }
             $user->save();

@@ -90,5 +90,10 @@ class WpUser extends Model
     {
         return url('/') . '/storage/' . $this->attributes['file_npwp'];
     }
+
+    public function getFileBankAttribute()
+    {
+        return url('/') . '/storage/' . $this->attributes['file_bank'];
+    }
     
 }

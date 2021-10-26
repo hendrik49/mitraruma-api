@@ -25,6 +25,7 @@ Auth::routes();
 
 Route::prefix('admin')->group(function () {
     Route::resource('proyek', ProjectController::class);
+    Route::get('/proyek/edit-rate', [ProjectController::class, 'editRate'])->name('proyek.edit-rate');
 
     Route::resource('users', UserController::class);
     Route::resource('seting', CmsManagmentController::class);

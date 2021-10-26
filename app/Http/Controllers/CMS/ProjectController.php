@@ -158,6 +158,12 @@ class ProjectController extends Controller
         return view('project.edit', ['project' => $project]);
     }
 
+    public function editRate($id)
+    {
+        $project = WpProject::findOrfail($id);
+        return view('project.edit', ['project' => $project]);
+    }
+
     public function update(Request $request, $id)
     {
 

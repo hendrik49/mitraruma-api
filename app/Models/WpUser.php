@@ -41,6 +41,7 @@ class WpUser extends Model
         'file_bank',
         'bank',
         'bank_account',
+        'portfolio',
         'ID'
     ];
 
@@ -65,6 +66,11 @@ class WpUser extends Model
     public function extension()
     {
         return $this->hasMany(WpUserExtensionAttribute::class, 'user_id');        
+    }
+
+    public function extensionvendor()
+    {
+        return $this->hasOne(WpVendorExtensionAttribute::class, 'user_id');        
     }
 
     public function getUserPictureUrlAttribute()
@@ -94,6 +100,11 @@ class WpUser extends Model
     public function getFileBankAttribute()
     {
         return url('/') . '/storage/' . $this->attributes['file_bank'];
+    }
+
+    public function getPortfolioAttribute()
+    {
+        return url('/') . '/storage/' . $this->attributes['portfolio'];
     }
     
 }

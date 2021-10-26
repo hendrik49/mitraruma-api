@@ -17,7 +17,7 @@ use App\Http\Controllers\CMS\CmsManagmentController;
 |
 */
 
-Route::middleware('auth')->get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

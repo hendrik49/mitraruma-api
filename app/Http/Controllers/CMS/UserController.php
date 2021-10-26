@@ -182,6 +182,12 @@ class UserController extends Controller
                 $user_path = $foto_bank->store('file_bank', 'public');
                 $user->file_bank = $user_path;
             }
+
+            $portfolio = $request->file('portfolio');
+            if ($portfolio) {
+                $user_path = $portfolio->store('portfolio', 'public');
+                $user->portfolio = $user_path;
+            }
             $user->save();
 
             DB::commit();

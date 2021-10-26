@@ -120,7 +120,17 @@
                                             <div class="img mt-2">
                                                 <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_npwp) src="{{ $user->file_npwp }}" @endif>
                                             </div>
-                                        </div>                 
+                                        </div> 
+                                        <div class="form-group @if($errors->has('portfolio')) has-error @endif">
+                                            <label for="nik-field">Portfolio</label>    
+                                            <input type="file" id="npwp-field" name="portfolio" class="form-control" value="{{ is_null(old("portfolio")) ? $user->portfolio : old("portfolio") }}"/>
+                                            @if($errors->has("portfolio"))
+                                             <span class="help-block">{{ $errors->first("portfolio") }}</span>
+                                            @endif
+                                            <div class="img mt-2">
+                                                <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->portfolio) src="{{ $user->portfolio }}" @endif>
+                                            </div>
+                                        </div>                         
                                         <div class="form-group @if($errors->has('user_email')) has-error @endif">
                                            <label for="user_email-field">Email</label>
                                         <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"/>

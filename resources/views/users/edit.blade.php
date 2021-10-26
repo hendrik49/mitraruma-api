@@ -127,11 +127,18 @@
                                             @if($errors->has("portfolio"))
                                              <span class="help-block">{{ $errors->first("portfolio") }}</span>
                                             @endif
-                                            <div class="img mt-2">
-                                                <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->portfolio) src="{{ $user->portfolio }}" @endif>
-                                            </div>
-                                        </div>                         
-                                        <div class="form-group @if($errors->has('user_email')) has-error @endif">
+                                            @if($user->portfolio)
+                                                @if(true)
+                                                    <div class="img mt-2">
+                                                        <embed src= "{{ $user->portfolio }}" width= "500" height= "375">
+                                                    </div>
+                                                @else
+                                                    <div class="img mt-2">
+                                                        <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->portfolio) src="{{ $user->portfolio }}" @endif>
+                                                    </div>
+                                                @endif
+                                            @endif                                        </div>                         
+                                            <div class="form-group @if($errors->has('user_email')) has-error @endif">
                                            <label for="user_email-field">Email</label>
                                         <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"/>
                                            @if($errors->has("user_email"))

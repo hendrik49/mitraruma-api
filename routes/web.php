@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CMS\ProjectController;
 use App\Http\Controllers\CMS\UserController;
 use App\Http\Controllers\CMS\CmsManagmentController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,9 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::resource('seting', CmsManagmentController::class);
+
+    Route::get('/aplikator-dashboard', [HomeController::class, 'aplikatorDash'])->name('aplikator-dashboard');
+    Route::get('/aplikator-review', [HomeController::class, 'aplikatorReview'])->name('aplikator-review');
+    Route::get('/aplikator-review-show/{id}', [HomeController::class, 'aplikatorReviewShow'])->name('aplikator-review-show');
+
 });

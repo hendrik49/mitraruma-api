@@ -60,4 +60,27 @@ class HomeController extends Controller
 
         return view('home', compact('progresVendor','progres','amount_spk_vendor_net', 'total_expanse', 'project_value', 'spk_vendor', 'spk_customer', 'customer', 'admin', 'vendor', 'projects'));
     }
+
+    public function aplikatorDash()
+    {
+        $user = Auth::user();
+
+        $projects = WpProject::where('admin_user_id',$user->ID)->count();
+
+        return view('aplikator.dashboard', compact('projects'));
+    }
+
+    public function aplikatorReview()
+    {
+        $users = WpUser::with('extensionvendor')->where('user_type', WpUser::TYPE_VENDOR)->get();
+
+        return view('aplikator.index', compact('users'));
+    }
+
+    public function aplikatorReviewShow($id)
+    {
+        $user = WpUser::with('extensionvendor')->where('ID', $id)->first();
+
+        return view('aplikator.edit', compact('user'));
+    }
 }

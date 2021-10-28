@@ -38,6 +38,31 @@
     <a href="" class="nav-link">
       <i class="nav-icon fas fa-table"></i>
       <p>
+        Aplikator
+        <i class="fas fa-angle-left right"></i>
+      </p>
+    </a>
+    <ul class="nav nav-treeview" style="display: none;">
+      <li class="nav-item">
+        <a href="/admin/aplikator-dashboard" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+      @if( Auth::user()->user_type)
+      <li class="nav-item">
+        <a href="/admin/aplikator-review" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Review</p>
+        </a>
+      </li>
+      @endif
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a href="" class="nav-link">
+      <i class="nav-icon fas fa-table"></i>
+      <p>
         CMS Managment
         <i class="fas fa-angle-left right"></i>
       </p>
@@ -57,6 +82,8 @@
         </a>
       </li>
       @endif
+    </ul>
+  </li>
   {{-- <li class="nav-item">
     <a href="#" class="nav-link">
       <i class="nav-icon fas fa-table"></i>

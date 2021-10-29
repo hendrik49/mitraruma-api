@@ -113,6 +113,55 @@
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
+                            Profil
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-xs-6">
+                                <div class="col-xs-4">
+                                    <div class="form-group @if ($errors->has('user_picture_url')) has-error @endif">
+                                        <div class="img">
+                                            <img class="img-circle" style="margin-bottom:5px;" width="100" height="100"
+                                                id="avatar" @if ($user->vendor['user_picture_url']) src="{{ $user->vendor['user_picture_url'] }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
+                                        </div>
+                                    </div>
+                                </div>                               
+                            </div>
+                            <div class="col-lg-4 col-xs-6">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="name-field">Nama</label>
+                                        <label for="name-field">{{ $user->vendor_name}}</label>
+                                        <span  class="form-control">{{ $user->vendor_name }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="name-field">Kontak</label>
+                                        <span  class="form-control">{{ $user->vendor_contact }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="name-field">NPWP</label>
+                                        <span  class="form-control">{{ $user->vendor['npwp'] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- ./col -->
+            <div class="col-lg-6 col-xs-8">
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
                             Jenis Konsultasi
                         </h3>
                     </div>

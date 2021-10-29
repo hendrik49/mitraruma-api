@@ -28,8 +28,6 @@ class VendorController extends Controller
     public function aplikatorDash()
     {
         $user = Auth::user();
-
-        $user = Auth::user();
         if ($user->user_type == "customer") {
             $projects = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
             $progres = WpProject::where('user_id',$user->ID)->limit(5)->get();
@@ -50,7 +48,7 @@ class VendorController extends Controller
 
         $aplikators = WpProject::with('review', 'vendor', 'customer')->where('status', WpProject::Project_Ended)->get();
 
-        return view('aplikators.dashboard', compact('masters','aplikators','progresVendor','progres', 'projects'));
+        return view('aplikators.dashboard', compact('user','masters','aplikators','progresVendor','progres', 'projects'));
 
     }
 

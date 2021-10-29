@@ -65,8 +65,8 @@
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
-                            <i class="fas fa-chart-pie mr-1"></i>
-                            Filter
+                            <i class="fas fa-table mr-1"></i>
+                            Data
                         </h3>
                     </div>
                     <div class="card-body">

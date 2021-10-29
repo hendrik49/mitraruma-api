@@ -93,11 +93,11 @@
                                     <tr>
                                         <td>{{ $review->vendor_user_id }}</td>
                                         <td>{{ $review->vendor_name }}</td>
-                                        <td>{{ $review->review['quality']?'' }} </td>
-                                        <td>{{ $review->review['responsiveness_to_customer']?'' }} </td>
-                                        <td>{{ $review->review['responsiveness_to_mitraruma']?'' }} </td>
-                                        <td>{{ $review->review['behaviour']?'' }} </td>
-                                        <td>{{ $review->review['helpful']?'' }} </td>
+                                        <td>{{ $review->review['quality']??'' }} </td>
+                                        <td>{{ $review->review['responsiveness_to_customer']??'' }} </td>
+                                        <td>{{ $review->review['responsiveness_to_mitraruma']??'' }} </td>
+                                        <td>{{ $review->review['behaviour']??'' }} </td>
+                                        <td>{{ $review->review['helpful']??'' }} </td>
                                     </tr>
                                 @endforeach
                             </tbody>

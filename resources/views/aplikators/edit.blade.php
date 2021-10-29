@@ -34,7 +34,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">                
-                                <form action="{{ route('aplikators.update', ['id'=>$user->id]) }}" enctype="multipart/form-data" method="POST">
+                                <form action="{{ route('aplikators.update', $user->id) }}" enctype="multipart/form-data" method="POST">
                                     <input type="hidden" name="_method" value="PUT">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="form-group @if($errors->has('user_picture_url')) has-error @endif">

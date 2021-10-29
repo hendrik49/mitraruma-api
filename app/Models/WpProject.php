@@ -164,7 +164,7 @@ class WpProject extends Model
 
     public function review()
     {
-        return $this->hasOne(WpVendorExtensionAttribute::class,'user_id','vendor_user_id');        
+        return $this->hasOne(WpVendorExtensionAttribute::class,'project_id');        
     }
 
     public function customer()

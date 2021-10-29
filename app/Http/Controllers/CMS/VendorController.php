@@ -126,7 +126,8 @@ class VendorController extends Controller
                 $user = WpVendorExtensionAttribute::where('project_id', $id)->where('user_id', $project->vendor_user_id)->first();
                 if ($user == null) {
                     $user = new WpVendorExtensionAttribute;
-                    $user->user_id = $id;
+                    $user->user_id = $project->vendor_user_id;
+                    $user->project_id = $id;
                 }
 
                 $user->fill($request->all());

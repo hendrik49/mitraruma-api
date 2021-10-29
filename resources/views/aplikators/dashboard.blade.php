@@ -122,53 +122,53 @@
                                 <div class="col-xs-5">
                                     <div class="form-group @if ($errors->has('user_picture_url')) has-error @endif">
                                         <div class="img">
-                                            <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="65"
-                                                id="avatar" @if ($user->user_picture_url) src="{{ $user->user_picture_url }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
+                                            <img class="img img-responsive" style="margin-bottom:5px;" width="100"
+                                                height="65" id="avatar" @if ($user->user_picture_url) src="{{ $user->user_picture_url }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
                                         </div>
                                     </div>
-                                </div>   
+                                </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="name-field">Service</label>
-                                        <span  class="form-control">Home Service</span>
+                                        <span class="form-control">Home Service</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="name-field">Service Area</label>
-                                        <span  class="form-control">Kota Bogor</span>
+                                        <span class="form-control">Kota Bogor</span>
                                     </div>
-                                </div>    
+                                </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="name-field">Skill Type</label>
-                                        <span  class="form-control">Interior, Civil, Specialty</span>
+                                        <span class="form-control">Interior, Civil, Specialty</span>
                                     </div>
-                                </div>                              
+                                </div>
                             </div>
                             <div class="col-lg-5 col-xs-6 ml-2">
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="name-field">Nama</label>
-                                        <span  class="form-control">{{ $user->display_name }}</span>
+                                        <span class="form-control">{{ $user->display_name }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="name-field">Kontak</label>
-                                        <span  class="form-control">{{ $user->user_phone_number }}</span>
+                                        <span class="form-control">{{ $user->user_phone_number }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="name-field">NIK</label>
-                                        <span  class="form-control">{{ $user->nik }}</span>
+                                        <span class="form-control">{{ $user->nik }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="name-field">NPWP</label>
-                                        <span  class="form-control">{{ $user->npwp }}</span>
+                                        <span class="form-control">{{ $user->npwp }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -182,11 +182,11 @@
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
-                            Jenis Konsultasi
+                            Performance
                         </h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="pieChart" style="height: 300px; width: 340px;" height="340" width="500"></canvas>
+                        <canvas id="radar" style="height: 370px; width: 340px;" height="370" width="500"></canvas>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -194,7 +194,7 @@
         </div>
         <div class="row">
             <!-- ./col -->
-        
+
             <div class="col-lg-6 col-xs-8">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
@@ -489,7 +489,44 @@
                     }
                 };
 
+                const configRadar = {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            'Quality',
+                            'Responsiveness to customer',
+                            'Responsiveness to mitraruma',
+                            'Behavior',
+                            'Helpful',
+                            'Commitment',
+                            'Activeness'
+                        ],
+                        datasets: [{
+                            label: 'Key Performance',
+                            data: [5, 4, 3, 3, 2, 4, 4],
+                            fill: true,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            pointBackgroundColor: 'rgb(255, 99, 132)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(255, 99, 132)'
+                        }]
+                    },
+                    options: {
+                        elements: {
+                            line: {
+                                borderWidth: 3
+                            }
+                        }
+                    },
+                };
+
                 window.onload = function() {
+
+                    var ctxRadar = document.getElementById("radar").getContext("2d");
+                    window.ctxRadar = new Chart(ctxRadar, configRadar);
+
                     var ctx = document.getElementById("pieChart").getContext("2d");
                     window.myPie = new Chart(ctx, config);
 

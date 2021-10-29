@@ -21,7 +21,7 @@ class WpVendorExtensionAttribute extends Model
         'user_id',
         'quality',
         'responsiveness_to_customer',
-        'responsivene]ss_to_mitraruma',
+        'responsiveness_to_mitraruma',
         'behaviour',
         'helpful',
         'commitment',

@@ -358,7 +358,7 @@
             $(function() {
                 var dTable = $('#userrange').dataTable({
                     'paging': true,
-                    "pageLength": 5,
+                    "pageLength": 4,
                     'lengthChange': true,
                     'searching': true,
                     'ordering': true,

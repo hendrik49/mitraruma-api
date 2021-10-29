@@ -97,7 +97,7 @@
                                         <td>{{ $review->review['responsiveness_to_customer']??'' }} </td>
                                         <td>{{ $review->review['responsiveness_to_mitraruma']??'' }} </td>
                                         <td>{{ $review->review['behaviour']??'' }} </td>
-                                        <td>{{ $review->review['helpful']??'' }} </td>
+                                        <td>{{ $review->review['quality']??'' }} {{ $review->review['responsiveness_to_customer']??'' }} {{ $review->review['responsiveness_to_mitraruma']??'' }} {{ $review->review['helpful']??'' }} {{ $review->review['behaviour']??'' }}  </td>
                                     </tr>
                                 @endforeach
                             </tbody>

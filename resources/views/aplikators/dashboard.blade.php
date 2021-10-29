@@ -145,6 +145,12 @@
                                         <span class="form-control">Interior, Civil, Specialty</span>
                                     </div>
                                 </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="name-field">Segmentation</label>
+                                        <span class="form-control">Low</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-5 col-xs-6 ml-2">
                                 <div class="col-xs-4">
@@ -169,6 +175,12 @@
                                     <div class="form-group">
                                         <label for="name-field">NPWP</label>
                                         <span class="form-control">{{ $user->npwp }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="name-field">No. Rekening</label>
+                                        <span class="form-control">{{ $user->bank_account }}</span>
                                     </div>
                                 </div>
                             </div>

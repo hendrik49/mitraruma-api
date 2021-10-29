@@ -25,10 +25,12 @@
                         </div>
                         <div class="form-group{{ $errors->has('coverage-area') ? ' has-error' : '' }}">
                             <label for="coverage-area">Service Area</label>
-                            <select class="form-control" id="coverage-area-field" name="skill_set">
-                                {{-- @foreach ($masters->where('name', 'area-coverage')->first()->value as $p)
-                                    <option value="{{ $p }}">{{ $p }}</option>
-                                @endforeach --}}
+                            <select class="form-control select2" id="coverage-area-field" name="skill_set">
+                                @foreach ($masters->where('name', 'area-coverage')->first()->value as $p)
+                                    @foreach ($p['child'] as $v)
+                                        <option value="{{ $v }}">{{ $v }}</option>
+                                    @endforeach
+                                @endforeach
                             </select>
                             @if ($errors->has('coverage-area'))
                                 <span class="help-block">{{ $errors->first('coverage-area') }}</span>
@@ -57,6 +59,10 @@
                                     <strong>{{ $errors->first('customer_segmentation') }}</strong>
                                 </span>
                             @endif
+                        </div>
+                        <div class="well well-sm mb-2">
+                            <button type="submit" value="filter" class="btn btn-primary pull-right right"> Filter
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -356,9 +362,11 @@
         @parent
         <script type="text/javascript">
             $(function() {
+                // $('.select2').select2();
+
                 var dTable = $('#userrange').dataTable({
                     'paging': true,
-                    "pageLength": 3,
+                    "pageLength": 4,
                     'lengthChange': true,
                     'searching': true,
                     'ordering': true,

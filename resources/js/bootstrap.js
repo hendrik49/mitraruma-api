@@ -31,6 +31,7 @@ try {
     require( 'datatables.net-select-bs4');
     require( 'daterangepicker');
     require( 'chart.js')
+    require( 'select2')
 
 } catch (e) {
 }

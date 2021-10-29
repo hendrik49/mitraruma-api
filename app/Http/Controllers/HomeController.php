@@ -52,7 +52,7 @@ class HomeController extends Controller
             $progresVendor = WpProject::whereNotNull('vendor_user_id')->limit(5)->get();
         }
 
-        $masters = WpProject::sum('amount_spk_customer');
+        $spk_customer = WpProject::sum('amount_spk_customer');
         $spk_vendor = WpProject::sum('amount_spk_vendor');
         $project_value = WpProject::sum('project_value');
         $total_expanse = WpProject::sum('total_expanse');

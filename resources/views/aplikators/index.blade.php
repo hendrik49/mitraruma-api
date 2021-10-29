@@ -19,7 +19,8 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>ID Mitraruma</th>
+                                    <th>Project Number</th>
+                                    <th>User ID</th>
                                     <th>Name</th>
                                     <th>Quality</th>
                                     <th>Resp. to customer</th>
@@ -33,21 +34,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $key => $user)
+                                @foreach ($aplikators as $key => $user)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $user->ID }}</td>
-                                        <td>{{ $user->display_name }}</td>
-                                        <td>{{ $user->extensionvendor['quality'] }} </td>
-                                        <td>{{ $user->extensionvendor['responsiveness_to_customer'] }} </td>
-                                        <td>{{ $user->extensionvendor['responsiveness_to_mitraruma'] }} </td>
-                                        <td>{{ $user->extensionvendor['behaviour'] }} </td>
-                                        <td>{{ $user->extensionvendor['helpful'] }} </td>
-                                        <td>{{ $user->extensionvendor['commitment'] }} </td>
-                                        <td>{{ $user->extensionvendor['activeness'] }} </td>
-                                        <td>{{ $user->extensionvendor['overall_score'] }} </td>
+                                        <td>{{ $user->order_number }}</td>
+                                        <td>{{ $user->vendor_user_id }}</td>
+                                        <td>{{ $user->vendor_name }}</td>
+                                        <td>{{ $user->review['quality'] }} </td>
+                                        <td>{{ $user->review['responsiveness_to_customer'] }} </td>
+                                        <td>{{ $user->review['responsiveness_to_mitraruma'] }} </td>
+                                        <td>{{ $user->review['behaviour'] }} </td>
+                                        <td>{{ $user->review['helpful'] }} </td>
+                                        <td>{{ $user->review['commitment'] }} </td>
+                                        <td>{{ $user->review['activeness'] }} </td>
+                                        <td>{{ $user->review['overall_score'] }} </td>
                                         <td width="15%">
-                                            <a href="{{ url('admin/aplikator-review-show', ['user' => $user]) }}"
+                                            <a href="{{ route('aplikators.edit', ['aplikator' => $user]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>
                                                 View </a>
                                         </td>

@@ -13,7 +13,12 @@ class WpProject extends Model
     use HasFactory;
 
     use SoftDeletes;
-
+    const Pre_Purchase ="Pre-Purchase";
+    const Design_Phase ="Design Phase";
+    const Construction_Phase ="Construction_Phase";
+    const Project_Started ="Project Started";
+    const Project_Ended ="Project Ended";
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -155,5 +160,20 @@ class WpProject extends Model
         $os = new OrderStatus;
         $result = $os->getActivityByCode($this->attributes['sub_status']);
         return $result;
+    }
+
+    public function review()
+    {
+        return $this->hasOne(WpVendorExtensionAttribute::class,'user_id','vendor_user_id');        
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(WpUser::class,'user_id');        
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(WpUser::class,'vendor_user_id');        
     }
 }

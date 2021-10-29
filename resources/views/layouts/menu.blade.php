@@ -51,7 +51,7 @@
       </li>
       @if( Auth::user()->user_type)
       <li class="nav-item">
-        <a href="/admin/aplikator-review" class="nav-link">
+        <a href="/admin/aplikators" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
           <p>Review</p>
         </a>

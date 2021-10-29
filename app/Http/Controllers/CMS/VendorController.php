@@ -102,8 +102,15 @@ class VendorController extends Controller
     public function edit($id)
     {
         $user = WpProject::with('review', 'vendor', 'customer')->where('ID', $id)->first();
+        $reviews = [
+            1 => "Kurang",
+            2 => "Cukup",
+            3 => "Baik",
+            4 => "Sangat Baik",
+            5 => "Terbaik"
+        ];
 
-        return view('aplikators.edit', compact('user'));
+        return view('aplikators.edit', compact('user','reviews'));
     }
 
     public function update(Request $request, $id)

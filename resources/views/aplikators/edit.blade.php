@@ -56,7 +56,7 @@
                                         <label for="triwulan-field">Quality</label>
                                         <select class="form-control" id="quality-field" name="quality">
                                             @foreach ($reviews as $key => $val)
-                                                <option value="{{ $key }}" @if ($key == $user->review['quality']) selected @endif>
+                                                <option value="{{ $key }}" @if ($key == $user->review['quality']??'') selected @endif>
                                                     {{ $val }}</option>
                                             @endforeach
                                         </select>

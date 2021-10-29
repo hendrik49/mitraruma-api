@@ -198,7 +198,7 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="radar" style="height: 450px; width: 340px;" height="450" width="500"></canvas>
+                        <canvas id="radar" style="height: 475px; width: 340px;" height="475" width="500"></canvas>
                     </div>
                     <!-- /.card-body -->
                 </div>

@@ -89,15 +89,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($aplikators as $key => $user)
+                                @foreach ($aplikators as $key => $review)
                                     <tr>
-                                        <td>{{ $user->vendor_user_id }}</td>
-                                        <td>{{ $user->vendor_name }}</td>
-                                        <td>{{ $user->review['quality'] }} </td>
-                                        <td>{{ $user->review['responsiveness_to_customer'] }} </td>
-                                        <td>{{ $user->review['responsiveness_to_mitraruma'] }} </td>
-                                        <td>{{ $user->review['behaviour'] }} </td>
-                                        <td>{{ $user->review['helpful'] }} </td>
+                                        <td>{{ $review->vendor_user_id }}</td>
+                                        <td>{{ $review->vendor_name }}</td>
+                                        <td>{{ $review->review['quality'] }} </td>
+                                        <td>{{ $review->review['responsiveness_to_customer'] }} </td>
+                                        <td>{{ $review->review['responsiveness_to_mitraruma'] }} </td>
+                                        <td>{{ $review->review['behaviour'] }} </td>
+                                        <td>{{ $review->review['helpful'] }} </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -118,34 +118,57 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-4 col-xs-6">
-                                <div class="col-xs-4">
+                            <div class="col-lg-6 col-xs-6">
+                                <div class="col-xs-5">
                                     <div class="form-group @if ($errors->has('user_picture_url')) has-error @endif">
                                         <div class="img">
-                                            <img class="img-circle" style="margin-bottom:5px;" width="100" height="100"
-                                                id="avatar" @if ($user->vendor['user_picture_url']) src="{{ $user->vendor['user_picture_url'] }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
+                                            <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="65"
+                                                id="avatar" @if ($user->user_picture_url) src="{{ $user->user_picture_url }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
                                         </div>
                                     </div>
-                                </div>                               
+                                </div>   
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="name-field">Service</label>
+                                        <span  class="form-control">Home Service</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="name-field">Service Area</label>
+                                        <span  class="form-control">Kota Bogor</span>
+                                    </div>
+                                </div>    
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="name-field">Skill Type</label>
+                                        <span  class="form-control">Interior, Civil, Specialty</span>
+                                    </div>
+                                </div>                              
                             </div>
-                            <div class="col-lg-4 col-xs-6">
+                            <div class="col-lg-5 col-xs-6 ml-2">
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="name-field">Nama</label>
-                                        <label for="name-field">{{ $user->vendor_name}}</label>
-                                        <span  class="form-control">{{ $user->vendor_name }}</span>
+                                        <span  class="form-control">{{ $user->display_name }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="name-field">Kontak</label>
-                                        <span  class="form-control">{{ $user->vendor_contact }}</span>
+                                        <span  class="form-control">{{ $user->user_phone_number }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="name-field">NIK</label>
+                                        <span  class="form-control">{{ $user->nik }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="name-field">NPWP</label>
-                                        <span  class="form-control">{{ $user->vendor['npwp'] }}</span>
+                                        <span  class="form-control">{{ $user->npwp }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -154,9 +177,6 @@
                     <!-- /.card-body -->
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <!-- ./col -->
             <div class="col-lg-6 col-xs-8">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
@@ -171,20 +191,10 @@
                     <!-- /.card-body -->
                 </div>
             </div>
-            <div class="col-lg-6 col-xs-8">
-                <div class="card ">
-                    <div class="card-header ui-sortable-handle">
-                        <h3 class="card-title">
-                            <i class="fas fa-chart-pie mr-1"></i>
-                            Status Konsultasi
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="pieChartStatus" style="height: 300px; width: 340px;" height="340" width="500"></canvas>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-            </div>
+        </div>
+        <div class="row">
+            <!-- ./col -->
+        
             <div class="col-lg-6 col-xs-8">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">

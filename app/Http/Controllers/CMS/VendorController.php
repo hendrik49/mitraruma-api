@@ -110,7 +110,7 @@ class VendorController extends Controller
             5 => "Terbaik"
         ];
 
-        return view('aplikators.edit', compact('user','reviews'));
+        return view('aplikators.edit', compact('user', 'reviews'));
     }
 
     public function update(Request $request, $id)
@@ -138,6 +138,14 @@ class VendorController extends Controller
                 }
 
                 $user->fill($request->all());
+                $user->overall_score =
+                    ($user->quality +
+                        $user->responsiveness_to_customer +
+                        $user->responsiveness_to_mitraruma +
+                        $user->behaviour +
+                        $user->helpful +
+                        $user->commitment +
+                        $user->activeness) / 7;
                 $user->save();
 
                 DB::commit();

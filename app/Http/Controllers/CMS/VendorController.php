@@ -82,7 +82,7 @@ class VendorController extends Controller
 
             DB::commit();
 
-            return redirect()->route('aplikators.index')->with('status', 'Data user berhasil disimpan');
+            return redirect()->route('aplikators.index')->with('status', 'Data Review berhasil disimpan');
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->with('errors', $e->validator->getMessageBag());
@@ -150,16 +150,16 @@ class VendorController extends Controller
 
                 DB::commit();
             } else {
-                return redirect()->back()->with('gagal', 'Ubah user gagal. ' . 'data aplikator tidak ditemukan');
+                return redirect()->back()->with('gagal', 'Ubah Data gagal. ' . 'data aplikator tidak ditemukan');
             }
 
-            return redirect()->route('aplikators.index')->with('status', 'Data user berhasil diubah');
+            return redirect()->route('aplikators.index')->with('status', 'Data Review berhasil diubah');
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->with('errors', $e->validator->getMessageBag());
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('gagal', 'Ubah user gagal. ' . $e->getMessage());
+            return redirect()->back()->with('gagal', 'Ubah Data gagal. ' . $e->getMessage());
         }
     }
 
@@ -167,6 +167,6 @@ class VendorController extends Controller
     {
         $user = WpUser::findOrfail($id);
         $user->delete();
-        return redirect()->back()->with('status', 'Data user Telah Dihapus');
+        return redirect()->back()->with('status', 'Data Review Telah Dihapus');
     }
 }

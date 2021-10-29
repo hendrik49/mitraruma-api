@@ -56,8 +56,13 @@
                                         <label for="triwulan-field">Quality</label>
                                         <select class="form-control" id="quality-field" name="quality">
                                             @foreach ($reviews as $key => $val)
-                                                <option value="{{ $key }}" @if ($key == $user->review['quality']??'') selected @endif>
-                                                    {{ $val }}</option>
+                                                @if ($user->review)
+                                                    <option value="{{ $key }}" @if ($key == $user->review['quality']) selected @endif>
+                                                        {{ $val }}</option>
+                                                @else
+                                                    <option value="{{ $key }}">
+                                                        {{ $val }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @if ($errors->has('quality'))
@@ -70,8 +75,14 @@
                                         <select class="form-control" id="responsiveness_to_customer-field"
                                             name="responsiveness_to_customer">
                                             @foreach ($reviews as $key => $val)
-                                                <option value="{{ $key }}" @if ($key == $user->review['responsiveness_to_customer']??'') selected @endif>
-                                                    {{ $val }}</option>
+                                                @if ($user->review)
+                                                    <option value="{{ $key }}" @if ($key == $user->review['responsiveness_to_customer']) selected @endif>
+                                                        {{ $val }}</option>
+                                                @else
+                                                    <option value="{{ $key }}">
+                                                        {{ $val }}</option>
+                                                @endif
+
                                             @endforeach
                                         </select>
                                         @if ($errors->has('responsiveness_to_customer'))
@@ -85,8 +96,14 @@
                                         <select class="form-control" id="responsiveness_to_mitraruma-field"
                                             name="responsiveness_to_mitraruma">
                                             @foreach ($reviews as $key => $val)
-                                                <option value="{{ $key }}" @if ($key == $user->review['responsiveness_to_mitraruma']??'') selected @endif>
-                                                    {{ $val }}</option>
+                                                @if ($user->review)
+                                                    <option value="{{ $key }}" @if ($key == $user->review['responsiveness_to_mitraruma']) selected @endif>
+                                                        {{ $val }}</option>
+                                                @else
+                                                    <option value="{{ $key }}">
+                                                        {{ $val }}</option>
+                                                @endif
+
                                             @endforeach
                                         </select>
                                         @if ($errors->has('responsiveness_to_mitraruma'))
@@ -99,8 +116,14 @@
                                         <label for="behaviour">Behavior</label>
                                         <select class="form-control" id="behaviour-field" name="behaviour">
                                             @foreach ($reviews as $key => $val)
-                                                <option value="{{ $key }}" @if ($key == $user->review['behaviour']??'') selected @endif>
-                                                    {{ $val }}</option>
+                                                @if ($user->review)
+                                                    <option value="{{ $key }}" @if ($key == $user->review['behaviour']) selected @endif>
+                                                        {{ $val }}</option>
+                                                @else
+                                                    <option value="{{ $key }}">
+                                                        {{ $val }}</option>
+                                                @endif
+
                                             @endforeach
                                         </select>
                                         @if ($errors->has('behaviour'))
@@ -113,8 +136,14 @@
                                         <label for="helpful">Helpful</label>
                                         <select class="form-control" id="helpful-field" name="helpful">
                                             @foreach ($reviews as $key => $val)
-                                                <option value="{{ $key }}" @if ($key == $user->review['helpful']??'') selected @endif>
-                                                    {{ $val }}</option>
+                                                @if ($user->review)
+                                                    <option value="{{ $key }}" @if ($key == $user->review['helpful']) selected @endif>
+                                                        {{ $val }}</option>
+                                                @else
+                                                    <option value="{{ $key }}">
+                                                        {{ $val }}</option>
+                                                @endif
+
                                             @endforeach
                                         </select>
                                         @if ($errors->has('helpful'))
@@ -127,8 +156,14 @@
                                         <label for="commitment">Commitment</label>
                                         <select class="form-control" id="commitment-field" name="commitment">
                                             @foreach ($reviews as $key => $val)
-                                                <option value="{{ $key }}" @if ($key == $user->review['commitment']??'') selected @endif>
-                                                    {{ $val }}</option>
+                                                @if ($user->review)
+                                                    <option value="{{ $key }}" @if ($key == $user->review['commitment']) selected @endif>
+                                                        {{ $val }}</option>
+                                                @else
+                                                    <option value="{{ $key }}">
+                                                        {{ $val }}</option>
+                                                @endif
+
                                             @endforeach
                                         </select>
                                         @if ($errors->has('commitment'))
@@ -141,8 +176,14 @@
                                         <label for="activeness">Activeness</label>
                                         <select class="form-control" id="activeness-field" name="activeness">
                                             @foreach ($reviews as $key => $val)
-                                                <option value="{{ $key }}" @if ($key == $user->review['activeness']??'') selected @endif>
-                                                    {{ $val }}</option>
+                                                @if ($user->review)
+                                                    <option value="{{ $key }}" @if ($key == $user->review['activeness']) selected @endif>
+                                                        {{ $val }}</option>
+                                                @else
+                                                    <option value="{{ $key }}">
+                                                        {{ $val }}</option>
+                                                @endif
+
                                             @endforeach
                                         </select>
                                         @if ($errors->has('activeness'))

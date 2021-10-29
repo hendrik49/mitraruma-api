@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Models\WpUser;
 use App\Models\WpProject;
+use App\Models\WpCms;
 use App\Http\Controllers\Controller;
 use App\Models\WpVendorExtensionAttribute;
 
@@ -28,9 +29,29 @@ class VendorController extends Controller
     {
         $user = Auth::user();
 
-        $projects = WpProject::where('admin_user_id', $user->ID)->count();
+        $user = Auth::user();
+        if ($user->user_type == "customer") {
+            $projects = WpProject::where('user_id',$user->ID)->groupBy('user_id')->count();
+            $progres = WpProject::where('user_id',$user->ID)->limit(5)->get();
+            $progresVendor = WpProject::where('user_id',$user->ID)->whereNotNull('vendor_user_id')->limit(5)->get();
 
-        return view('aplikators.dashboard', compact('projects'));
+        } else if ($user->user_type == "vendor") {
+            $projects = WpProject::where('vendor_user_id',$user->ID)->groupBy('vendor_user_id')->count();
+            $progres = WpProject::where('user_id',$user->ID)->limit(5)->get();
+            $progresVendor = WpProject::where('vendor_user_id',$user->ID)->whereNotNull('vendor_user_id')->limit(5)->get();
+
+        } else {
+            $projects = WpProject::where('admin_user_id',$user->ID)->count();
+            $progres = WpProject::where('admin_user_id',$user->ID)->limit(5)->get();
+            $progresVendor = WpProject::whereNotNull('vendor_user_id')->limit(5)->get();
+        }
+
+        $masters = WpCms::get();
+
+        $aplikators = WpProject::with('review', 'vendor', 'customer')->where('status', WpProject::Project_Ended)->get();
+
+        return view('aplikators.dashboard', compact('masters','aplikators','progresVendor','progres', 'projects'));
+
     }
 
     public function index()

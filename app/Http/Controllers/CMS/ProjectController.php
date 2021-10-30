@@ -106,6 +106,8 @@ class ProjectController extends Controller
                 'description' => 'required|min:3',
                 'service_type' => 'required|min:3',
                 'street' => 'required|min:3',
+                'status' => 'required',
+                'sub_status' => 'required',
                 'order_number' => 'required|min:6',
                 'customer_name' => 'nullable|min:3',
                 'vendor_name' => 'nullable|min:3',
@@ -179,11 +181,20 @@ class ProjectController extends Controller
         try {
 
             $this->validate($request, [
-                'amount_spk_customer_gross' => 'numeric',
-                'amount_spk_customer' => 'numeric',
-                'amount_spk_vendor' => 'numeric',
-                'discount' => 'numeric',
-                'commision' => 'numeric'
+                'user_id' => 'required|exists:wp_users,ID',
+                'vendor_user_id' => 'required|exists:wp_users,ID',
+                'vendor_contact' => 'required|min:6',
+                'description' => 'required|min:3',
+                'service_type' => 'required|min:3',
+                'street' => 'required|min:3',
+                'status' => 'required',
+                'sub_status' => 'required',
+                'order_number' => 'required|min:6',
+                'customer_name' => 'nullable|min:3',
+                'vendor_name' => 'nullable|min:3',
+                'customer_contact' => 'required|min:6',
+                'estimated_budget' => 'required|numeric',
+                'dokumentasi' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
             ]);
 
             $project = WpProject::findOrfail($id);

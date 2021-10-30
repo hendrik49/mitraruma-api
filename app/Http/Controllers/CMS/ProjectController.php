@@ -194,7 +194,7 @@ class ProjectController extends Controller
                 'vendor_name' => 'nullable|min:3',
                 'customer_contact' => 'required|min:6',
                 'estimated_budget' => 'required|numeric',
-                'dokumentasi' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
+                'dokumentasi' => 'image|mimes:jpeg,png,jpg,svg|max:1024'
             ]);
 
             $project = WpProject::findOrfail($id);

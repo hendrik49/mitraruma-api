@@ -47,7 +47,8 @@
                                         <div class="col-sm-6">
                                             <label for="title">No. Room</label>
                                             <input type="text" class="form-control" name="room_id"
-                                                placeholder="Masukkan no room" value="{{ $project->room_number }}" readonly>
+                                                placeholder="Masukkan no room" value="{{ $project->room_number }}"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -98,303 +99,67 @@
                                                 placeholder="Masukkan budget" onkeypress="return isNumberKey(event)"
                                                 value="{{ $project->estimated_budget }}" readonly>
                                         </div>
-                                        {{-- <div class="col-sm-6">
-                                            <label for="title">Booking Fee</label>
-                                            <input type="number" class="form-control" name="booking_fee"
-                                                placeholder="Masukkan booking fee" value="{{ $project->booking_fee }}">
-                                        </div> --}}
-                                    </div>
-                                    {{-- <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Nilai Proyek</label>
-                                            <input type="number" class="form-control" name="project_value"
-                                                placeholder="Masukkan project value"
-                                                value="{{ $project->project_value }}" required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Applikator Diskon </label>
-                                            <input type="number" class="form-control" name="applicator_discount"
-                                                placeholder="Masukkan diskon" value="{{ $project->applicator_discount }}"
-                                                required>
+                                            <label for="title">Tgl Konsultasi</label>
+                                            <input type="date" class="form-control" id="tgl_Konsultasi" name="created_at"
+                                                placeholder="Masukkan tanggal Konsultasi"
+                                                value="{{ $project->created_at->format('d/m/Y') }}" required>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div>
-                                                <label for="title">Mitraruma Diskon </label>
-                                                <input type="number" class="form-control" name="mitraruma_discount"
-                                                    placeholder="Masukkan diskon"
-                                                    value="{{ $project->mitraruma_discount }}" required>
-                                            </div>
-                                            <div>
-                                                <label for="title">Other Expanse</label>
-                                                <input type="number" class="form-control" name="other_expanse"
-                                                    placeholder="Masukkan other expanse"
-                                                    value="{{ $project->other_expanse }}" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Catatan Expanse</label>
-                                            <textarea rows="4" class="form-control" name="expanse_note"
-                                                placeholder="Masukkan expanse note">{{ $project->expanse_note }}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Total Expanse</label>
-                                            <input type="number" class="form-control" name="total_expanse"
-                                                placeholder="Masukkan total expanse"
-                                                value="{{ $project->total_expanse }}" required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Amount SPK Customer</label>
-                                            <input type="number" class="form-control" name="amount_spk_customer"
-                                                placeholder="Masukkan nilai spk customer"
-                                                value="{{ $project->amount_spk_customer }}" required>
-                                        </div>
-                                    </div> --}}
+
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Status</label>
                                             <select class="form-control" id="status" name="status" readonly>
-                                                <option value="verified" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
+                                                <option value="pre purchase" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
                                                 </option>
-                                                <option value="pending" @if ($project->status == 'design phase') selected='selected' @endif>Design Phase
+                                                <option value="design phase" @if ($project->status == 'design phase') selected='selected' @endif>Design Phase
                                                 </option>
-                                                <option value="cancel" @if ($project->status == 'construction phase') selected='selected' @endif>Construction
+                                                <option value="construction phase" @if ($project->status == 'construction phase') selected='selected' @endif>Construction
                                                     Phase
                                                 </option>
-                                                <option value="expire" @if ($project->status == 'project started') selected='selected' @endif>Project
+                                                <option value="project started" @if ($project->status == 'project started') selected='selected' @endif>Project
                                                     Started
                                                 </option>
-                                                <option value="success" @if ($project->status == 'project ended') selected='selected' @endif>Project Ended
+                                                <option value="project ended" @if ($project->status == 'project ended') selected='selected' @endif>Project Ended
                                                 </option>
+                                                <option value="delay" @if ($project->status == 'delay') selected='selected' @endif>Delay</option>
+                                                <option value="complaint" @if ($project->status == 'complaint') selected='selected' @endif>Complaint</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="title">Sub Status</label>
+                                            <select class="form-control" id="sub_status" name="sub_status" required>
+                                                @foreach ($subStatus as $key => $val)
+                                                    <option value="{{ $key }}">{{ $val->activity }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="cover">Foto</label>
-                                        @if($project->images!=null)
-                                            @foreach (json_decode($project->images) as $image)
-                                                <div class="col-sm-6">
-                                                    <img src="{{ $image->pathUrl }}" width="320px" />
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    {{-- <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Term Payment Customer</label>
-                                            <textarea rows="4" class="form-control" name="term_payment_customer"
-                                                placeholder="Masukkan term payment customer">{{ $project->term_payment_customer }}</textarea>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Persentase Termin</label>
-                                            <input type="number" class="form-control" max="100" name="termin_persentase"
-                                                placeholder="termin persentase" value="">
-                                            <label for="title">Amount Termin</label>
-                                            <input type="number" class="form-control" name="termin_persentase"
-                                                placeholder="termin amount" value="" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 1</label>
-                                            <input type="number" class="form-control" name="termin_customer_1"
-                                                placeholder="termin customer 1"
-                                                value="{{ $project->termin_customer_1 }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 2</label>
-                                            <input type="number" class="form-control" name="termin_customer_2"
-                                                placeholder="termin customer 2"
-                                                value="{{ $project->termin_customer_2 }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Customer 1</label>
-                                            <input type="date" class="form-control tgl" name="termin_customer_1_date"
-                                                placeholder="termin customer 1"
-                                                value="{{ $project->termin_customer_1 }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Customer 2</label>
-                                            <input type="date" class="form-control tgl" name="termin_customer_2_date"
-                                                placeholder="termin customer 2"
-                                                value="{{ $project->termin_customer_2 }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 3</label>
-                                            <input type="number" class="form-control" name="termin_customer_3"
-                                                placeholder="termin customer 3"
-                                                value="{{ $project->termin_customer_3 }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 4</label>
-                                            <input type="number" class="form-control" name="termin_customer_4"
-                                                placeholder="termin customer 4"
-                                                value="{{ $project->termin_customer_4 }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Customer 3</label>
-                                            <input type="date" class="form-control tgl" name="termin_customer_3_date"
-                                                placeholder="termin customer 3"
-                                                value="{{ $project->termin_customer_3 }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Customer 4</label>
-                                            <input type="date" class="form-control tgl" name="termin_customer_4_date"
-                                                placeholder="termin customer 4"
-                                                value="{{ $project->termin_customer_4 }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 5</label>
-                                            <input type="number" class="form-control" name="termin_customer_5"
-                                                placeholder="termin customer 5"
-                                                value="{{ $project->termin_customer_5 }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Customer 5</label>
-                                            <input type="date" class="form-control tgl" name="termin_customer_5_date"
-                                                placeholder="termin customer 5"
-                                                value="{{ $project->termin_customer_5 }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Amount SPK Applikator</label>
-                                            <input type="number" class="form-control" name="amount_spk_vendor"
-                                                placeholder="Masukkan amount spk applicator"
-                                                value="{{ $project->amount_spk_vendor }}" required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Total Payment To Applikator</label>
-                                            <input type="number" class="form-control" name="amount_spk_vendor_net"
-                                                placeholder="Masukkan amount spk applicator net"
-                                                value="{{ $project->amount_spk_vendor_net }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Biaya Material</label>
-                                            <input type="number" class="form-control" name="material_buy"
-                                                placeholder="Masukkan material" value="{{ $project->material_buy }}"
-                                                required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Komisi</label>
-                                            <input type="number" class="form-control" name="commision"
-                                                placeholder="Masukkan komisi" value="{{ $project->commision }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Term Payment Applikator</label>
-                                            <textarea rows="4" class="form-control" name="term_payment_vendor"
-                                                placeholder="Masukkan term payment applikator">{{ $project->term_payment_vendor }}</textarea>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Persentase Termin</label>
-                                            <input type="number" class="form-control" max="100" name="termin_persentase"
-                                                placeholder="termin persentase" value="">
-                                            <label for="title">Amount Termin</label>
-                                            <input type="number" class="form-control" name="termin_persentase"
-                                                placeholder="termin amount" value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Applikator 1</label>
-                                            <input type="number" class="form-control" name="termin_vendor_1"
-                                                placeholder="termin Applikator 1"
-                                                value="{{ $project->termin_vendor_1 }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Applikator 2</label>
-                                            <input type="number" class="form-control" name="termin_vendor_2"
-                                                placeholder="termin Applikator 2"
-                                                value="{{ $project->termin_vendor_2 }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Applikator 1</label>
-                                            <input type="date" class="form-control tgl" name="termin_vendor_1_date"
-                                                placeholder="termin 1" value="{{ $project->termin_vendor_1_date }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Applikator 2</label>
-                                            <input type="date" class="form-control tgl" name="termin_vendor_2_date"
-                                                placeholder="termin 2" value="{{ $project->termin_vendor_2_date }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Applikator 3</label>
-                                            <input type="number" class="form-control" name="termin_vendor_3"
-                                                placeholder="termin Applikator 3"
-                                                value="{{ $project->termin_vendor_3 }}">
+                                            <label for="title">Tipe Service</label>
+                                            <select class="form-control" id="service_type" name="service_type" required>
+                                                <option value="SERVICE" @if ($project->service_type = 'SERVICE') selected @endif>Home Service</option>
+                                                <option value="RENOVATION" @if ($project->service_type = 'RENOVATION') selected @endif>Home Renovation</option>
+                                            </select>
                                         </div>
 
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Applikator 4</label>
-                                            <input type="number" class="form-control" name="termin_vendor_4"
-                                                placeholder="termin Applikator 4"
-                                                value="{{ $project->termin_vendor_4 }}">
-                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Applikator 3</label>
-                                            <input type="date" class="form-control tgl" name="termin_vendor_3_date"
-                                                placeholder="termin 3" value="{{ $project->termin_vendor_3_date }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Applikator 4</label>
-                                            <input type="date" class="form-control tgl" name="termin_vendor_4_date"
-                                                placeholder="termin 4" value="{{ $project->termin_vendor_4_date }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Applikator 4</label>
-                                            <input type="number" class="form-control" name="termin_vendor_4"
-                                                placeholder="termin Applikator 4"
-                                                value="{{ $project->termin_vendor_4 }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Applikator 5</label>
-                                            <input type="number" class="form-control" name="termin_vendor_5"
-                                                placeholder="termin Applikator 5"
-                                                value="{{ $project->termin_vendor_5 }}">
+                                            <label for="cover">Foto</label>
+                                            @if ($project->images != null)
+                                                @foreach (json_decode($project->images) as $image)
+                                                    <div class="col-sm-6">
+                                                        <img src="{{ $image->pathUrl }}" width="320px" />
+                                                    </div>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Applikator 4</label>
-                                            <input type="date" class="form-control tgl" name="termin_vendor_4_date"
-                                                placeholder="termin 4" value="{{ $project->termin_vendor_4_date }}">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Termin Applikator 5</label>
-                                            <input type="date" class="form-control tgl" name="termin_vendor_5_date"
-                                                placeholder="termin 5" value="{{ $project->termin_vendor_5_date }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Tanggal Retensi</label>
-                                            <input type="date" class="form-control tgl" name="payment_retention_date"
-                                                placeholder="termin 5" value="{{ $project->payment_retention_date }}">
-                                        </div>
-                                    </div> --}}
+
                                     <input type="hidden" value="PUT" name="_method">
                                     <button class="btn btn-primary btn-flat" name="save_action"
                                         value="PUBLISH">Simpan</button>

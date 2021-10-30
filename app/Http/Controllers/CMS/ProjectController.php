@@ -73,7 +73,12 @@ class ProjectController extends Controller
 
     public function create()
     {
-        return view('project.create');
+        $orderStatus = new OrderStatus;
+        $subStatus = json_decode($orderStatus->data);
+        $aplikators = WpUser::where('user_type', WpUser::TYPE_VENDOR)->get();
+        $customers = WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->get();
+
+        return view('project.create', compact('aplikators', 'customers','subStatus'));
     }
 
     public function projectStatus($id, $status)
@@ -87,7 +92,7 @@ class ProjectController extends Controller
             $project->save();
         }
 
-        return redirect()->route('project.index')->with('status', 'Item updated successfully.');
+        return redirect()->route('proyek.index')->with('status', 'Item updated successfully.');
     }
 
     public function store(Request $request)
@@ -95,40 +100,42 @@ class ProjectController extends Controller
         try {
 
             $this->validate($request, [
-                'bank' => 'required|min:3',
-                'account' => 'nullable|min:5',
-                'label' => 'required|min:3',
-                'tipe' => 'required|min:3',
-                'owner' => 'required|min:3',
-                'logo' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
+                'user_id' => 'required|exists:wp_users,ID',
+                'vendor_user_id' => 'required|exists:wp_users,ID',
+                'vendor_contact' => 'required|min:6',
+                'description' => 'required|min:3',
+                'service_type' => 'required|min:3',
+                'street' => 'required|min:3',
+                'order_number' => 'required|min:6',
+                'customer_name' => 'nullable|min:3',
+                'vendor_name' => 'nullable|min:3',
+                'customer_contact' => 'required|min:6',
+                'estimated_budget' => 'required|numeric',
+                'dokumentasi' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
             ]);
 
             DB::beginTransaction();
 
             $project = new WpProject;
-            $foto = $request->file('logo');
+            $cust = WpUser::findOrfail($request->user_id);
+            if ($cust)
+                $project->customer_name = $cust->display_name;
+            $vendor = WpUser::findOrfail($request->vendor_user_id);
+            if ($vendor)
+                $project->vendor_name = $vendor->display_name;
+
+            $foto = $request->file('foto');
             if ($foto) {
                 $project_path = $foto->store('fotoproject', 'public');
                 $project->dokumentasi = $project_path;
             }
-            $project->bank    = strtolower($request->bank);
-            $project->account  = $request->account;
-            $project->branch  = $request->label;
-            $project->tipe  = $request->tipe;
-            $project->owner  = $request->owner;
-            $project->created_by = Auth::user()->id;
-            $project->judul_panduan_pembayaran1 = $request->judul_panduan_pembayaran1;
-            $project->judul_panduan_pembayaran2 = $request->judul_panduan_pembayaran2;
-            $project->judul_panduan_pembayaran3 = $request->judul_panduan_pembayaran3;
-            $project->panduan_pembayaran1 = $request->panduan_pembayaran1;
-            $project->panduan_pembayaran2 = $request->panduan_pembayaran2;
-            $project->panduan_pembayaran3 = $request->panduan_pembayaran3;
 
+            $project->fill($request->all());
             $project->save();
 
             DB::commit();
 
-            return redirect()->route('project.index')->with('status', 'Data project berhasil disimpan');
+            return redirect()->route('proyek.index')->with('status', 'Data konsultasi no. '.$project->order_number.' berhasil disimpan');
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->with('errors', $e->validator->getMessageBag());
@@ -154,8 +161,10 @@ class ProjectController extends Controller
 
     public function edit($id)
     {
+        $orderStatus = new OrderStatus;
+        $subStatus = json_decode($orderStatus->data);
         $project = WpProject::findOrfail($id);
-        return view('project.edit', ['project' => $project]);
+        return view('project.edit', ['project' => $project,'subStatus'=>$subStatus]);
     }
 
     public function editRate($id)

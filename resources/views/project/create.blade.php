@@ -29,7 +29,7 @@
                 @endif
                 <div class="box">
                     <div class="box-header with-border">
-                        <h2 align="center" class="box-title">Edit Konsultasi</h2>
+                        <h2 align="center" class="box-title">Tambah Konsultasi</h2>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -41,25 +41,29 @@
                                         <div class="col-sm-6">
                                             <label for="title">No Konsultasi</label>
                                             <input type="text" class="form-control" name="order_number"
-                                                placeholder="Masukkan no Konsultasi" value="{{ old('order_number') }}"
-                                                readonly>
+                                                placeholder="Masukkan no Konsultasi"
+                                                value="{{ mt_rand(1000000, 9999999) }}">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">No Room</label>
                                             <input type="text" class="form-control" name="room_id"
-                                                placeholder="Masukkan no room" value="{{ old('room_id') }}" readonly>
+                                                placeholder="Masukkan no room" value="{{ mt_rand(1000000, 9999999) }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Nama Customer</label>
-                                            <input type="text" class="form-control" name="customer_name"
-                                                placeholder="Masukkan nama customer" value="{{ old('customer_name') }}"
-                                                required>
+                                            <select class="form-control" id="user_id" name="user_id" required>
+                                                @foreach ($customers as $key => $val)
+                                                    <option value="{{ $val->ID }}"
+                                                        value-name="{{ $val->display_name }}">{{ $val->display_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Kontak Customer</label>
-                                            <input type="text" class="form-control" name="customer_name"
+                                            <input type="text" class="form-control" name="customer_contact"
                                                 placeholder="Masukkan kontak customer"
                                                 value="{{ old('customer_contact') }}" required>
                                         </div>
@@ -67,9 +71,13 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Nama Applikator </label>
-                                            <input type="email" class="form-control" name="vendor_name"
-                                                placeholder="Masukkan nama applikator" value="{{ old('vendor_name') }}"
+                                            <select class="form-control" id="vendor_user_id" name="vendor_user_id"
                                                 required>
+                                                @foreach ($aplikators as $key => $val)
+                                                    <option value="{{ $val->ID }}">{{ $val->display_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Kontak Applikator</label>
@@ -108,129 +116,44 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="cover">Foto</label>
-                                            <input type="file" class="form-control" name="bukti_bayar" accept="image/*">
+                                            <input type="file" class="form-control" name="dokumentasi" accept="image/*">
                                             <small class="text-muted">Format Image:png,jpg</small>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Status</label>
                                             <select class="form-control" id="status" name="status" required>
-                                                <option value="verified">Pre Purchase
+                                                <option value="pre purchase">Pre-Purchase
                                                 </option>
-                                                <option value="pending">Design Phase
+                                                <option value="design phase">Design Phase
                                                 </option>
-                                                <option value="cancel">Construction Phase
+                                                <option value="construction phase">Construction Phase
                                                 </option>
-                                                <option value="expire">Project Started
+                                                <option value="project started">Project Started
                                                 </option>
-                                                <option value="success">Project Ended</option>
+                                                <option value="project ended">Project Ended</option>
+                                                <option value="delay">Delay</option>
+                                                <option value="complaint">Complaint</option>
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Amount SPK Customer Gross</label>
-                                            <input type="number" class="form-control" name="amount_spk_customer_gross"
-                                                placeholder="Masukkan no Konsultasi"
-                                                value="{{ old('amount_spk_customer_gross') }}" readonly>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Amount SPK Customer</label>
-                                            <input type="number" class="form-control" name="amount_spk_customer"
-                                                placeholder="Masukkan no Konsultasi"
-                                                value="{{ old('amount_spk_customer') }}">
-                                        </div>
-                                    </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
-                                            <label for="title">Diskon </label>
-                                            <input type="number" class="form-control" name="discount"
-                                                placeholder="Masukkan diskon" value="{{ old('discount') }}" required>
+                                            <label for="title">Tipe Service</label>
+                                            <select class="form-control" id="service_type" name="service_type" required>
+                                                <option value="SERVICE">Home Service</option>
+                                                <option value="RENOVATION">Home Renovation</option>
+                                            </select>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="title">Komisi</label>
-                                            <input type="number" class="form-control" name="commision"
-                                                placeholder="Masukkan komisi" value="{{ old('commision') }}" required>
+                                            <label for="title">Sub Status</label>
+                                            <select class="form-control" id="sub_status" name="sub_status" required>
+                                                @foreach ($subStatus as $key => $val)
+                                                    <option value="{{ $key }}">{{ $val->activity }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 1</label>
-                                            <input type="number" class="form-control" name="termin_customer_1"
-                                                placeholder="termin customer 1" value="{{ old('termin_customer_1') }}"
-                                                required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 2</label>
-                                            <input type="number" class="form-control" name="termin_customer_2"
-                                                placeholder="termin customer 2" value="{{ old('termin_customer_2') }}"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 3</label>
-                                            <input type="number" class="form-control" name="termin_customer_3"
-                                                placeholder="termin customer 3" value="{{ old('termin_customer_3') }}"
-                                                required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 4</label>
-                                            <input type="number" class="form-control" name="termin_customer_4"
-                                                placeholder="termin customer 4" value="{{ old('termin_customer_4') }}"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Customer 5</label>
-                                            <input type="number" class="form-control" name="termin_customer_5"
-                                                placeholder="termin customer 5" value="{{ old('termin_customer_5') }}"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Amount SPK Applikator</label>
-                                            <input type="number" class="form-control" name="amount_spk_vendor"
-                                                placeholder="Masukkan amount spk applicator"
-                                                value="{{ old('amount_spk_vendor') }}" required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 1</label>
-                                            <input type="number" class="form-control" name="termin_vendor_1"
-                                                placeholder="termin Applikator 1" value="{{ old('termin_vendor_1') }}"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 2</label>
-                                            <input type="number" class="form-control" name="termin_vendor_2"
-                                                placeholder="termin Applikator 2" value="{{ old('termin_vendor_2') }}"
-                                                required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 3</label>
-                                            <input type="number" class="form-control" name="termin_vendor_3"
-                                                placeholder="termin Applikator 3" value="{{ old('termin_vendor_3') }}"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 4</label>
-                                            <input type="number" class="form-control" name="termin_vendor_4"
-                                                placeholder="termin Applikator 4" value="{{ old('termin_vendor_4') }}"
-                                                required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="title">Termin Appliaktor 5</label>
-                                            <input type="number" class="form-control" name="termin_vendor_5"
-                                                placeholder="termin Applikator 5" value="{{ old('termin_vendor_5') }}"
-                                                required>
-                                        </div>
-                                    </div> --}}
-                                    <input type="hidden" value="PUT" name="_method">
                                     <button class="btn btn-primary btn-flat" name="save_action"
                                         value="PUBLISH">Publish</button>
                                 </form>

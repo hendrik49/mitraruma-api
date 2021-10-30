@@ -68,7 +68,9 @@ class VendorController extends Controller
 
     public function create()
     {
-        return view('aplikators.create');
+        $aplikators = WpUser::where('user_type', WpUser::TYPE_VENDOR)->get();
+ 
+        return view('aplikators.create',compact('aplikators'));
     }
 
     public function aplikatorstatus($id, $status)

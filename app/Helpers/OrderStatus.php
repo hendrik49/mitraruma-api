@@ -17,7 +17,7 @@ class OrderStatus
     "Project Ended" => []
   ];
 
-  private $data = '
+  public $data = '
             {
               "110": {
                 "activity": "Start of Conversation",

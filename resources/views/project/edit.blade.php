@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Kontak Customer</label>
-                                            <input type="text" class="form-control" name="customer_name"
+                                            <input type="text" class="form-control" name="customer_contact"
                                                 placeholder="Masukkan kontak customer"
                                                 value="{{ $project->customer_contact }}" readonly>
                                         </div>

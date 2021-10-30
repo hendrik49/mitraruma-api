@@ -126,7 +126,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Amount SPK Customer Gross</label>
                                             <input type="number" class="form-control" name="amount_spk_customer_gross"
@@ -229,7 +229,7 @@
                                                 placeholder="termin Applikator 5" value="{{ old('termin_vendor_5') }}"
                                                 required>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <input type="hidden" value="PUT" name="_method">
                                     <button class="btn btn-primary btn-flat" name="save_action"
                                         value="PUBLISH">Publish</button>

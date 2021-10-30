@@ -13,14 +13,21 @@
                         {{ session('gagal') }}
                     </div>
                 @endif
-                <div class="box">
-                    <div class="box-body">
+                <h2>List Konsultasi
+                    <div style="float: right!important;">
+                        <a
+                        href="{{route('proyek.create')}}"
+                        class="btn btn-success"
+                        ><i class="fa fa-plus" aria-hidden="true"></i> Tambah Konsultasi</a>
+                    </div>
+                </h2>
+                <div class="card">
+                    <div class="card-body">
                         <table class="table table-bordered table-striped" id="projectrange">
                             <thead>
                                 <tr>
                                     <th>no.</th>
                                     <th>order number</th>
-                                    <th>room number</th>
                                     <th>customer ID</th>
                                     <th>customer name</th>
                                     <th>customer contact</th>
@@ -31,45 +38,6 @@
                                     <th>date</th>
                                     <th>consultation ID</th>
                                     <th>description</th>
-                                    {{-- @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
-
-                                        <th> amount spk customer </th>
-                                        <th> amount spk vendor </th>
-                                        <th> amount spk vendor net </th>
-                                        <th> mitraruma discount </th>
-                                        <th> applicator discount </th>
-                                        <th> commision </th>
-                                        <th> other expanse </th>
-                                        <th> total expanse </th>
-                                        <th> expanse note </th>
-                                        <th> project note </th>
-                                        <th> material buy </th>
-                                        <th> booking fee </th>
-                                        <th> term payment vendor </th>
-                                        <th> term payment customer </th>
-                                        <th> termin customer 1 </th>
-                                        <th> termin customer 2 </th>
-                                        <th> termin customer 3 </th>
-                                        <th> termin customer 4 </th>
-                                        <th> termin customer 5 </th>
-                                        <th> termin customer 1 date </th>
-                                        <th> termin customer 2 date </th>
-                                        <th> termin customer 3 date </th>
-                                        <th> termin customer 4 date </th>
-                                        <th> termin customer 5 date </th>
-                                    @elseif(Auth::user()->user_type=="vendor"||Auth::user()->user_type=="admin")
-                                        <th> termin vendor 1 </th>
-                                        <th> termin vendor 2 </th>
-                                        <th> termin vendor 3 </th>
-                                        <th> termin vendor 4 </th>
-                                        <th> termin vendor 5 </th>
-                                        <th> termin vendor 1 date </th>
-                                        <th> termin vendor 2 date </th>
-                                        <th> termin vendor 3 date </th>
-                                        <th> termin vendor 4 date </th>
-                                        <th> termin vendor 5 date </th>
-                                        <th> payment retention date </th>
-                                    @endif --}}
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -78,7 +46,6 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $project->order_number }}</td>
-                                        <td>{{ $project->room_id }}</td>
                                         <td>{{ $project->user_id }}</td>
                                         <td>{{ $project->customer_name }}</td>
                                         <td>{{ $project->customer_contact }}</td>
@@ -88,46 +55,7 @@
                                         <td>{{ $project->project_note }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $project->consultation_id }}</td>
-                                        <td>{{ $project->description }}</td>
-                                        {{-- 
-                                        <td>{{ $project->amount_spk_customer }}</td>
-                                        <td>{{ $project->amount_spk_vendor }}</td>
-                                        <td>{{ $project->amount_spk_vendor_net }}</td>
-                                        <td>{{ $project->mitraruma_discount }}</td>
-                                        <td>{{ $project->applicator_discount }}</td>
-                                        <td>{{ $project->commision }}</td>
-                                        <td>{{ $project->other_expanse }}</td>
-                                        <td>{{ $project->total_expanse }}</td>
-                                        <td>{{ $project->expanse_note }}</td>
-                                        <td>{{ $project->project_note }}</td>
-                                        <td>{{ $project->material_buy }}</td>
-                                        <td>{{ $project->booking_fee }}</td>
-                                        <td>{{ $project->term_payment_vendor }}</td>
-                                        <td>{{ $project->term_payment_customer }}</td>
-                                        @if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'admin')
-                                            <td>{{ $project->termin_customer_1 }}</td>
-                                            <td>{{ $project->termin_customer_2 }}</td>
-                                            <td>{{ $project->termin_customer_3 }}</td>
-                                            <td>{{ $project->termin_customer_4 }}</td>
-                                            <td>{{ $project->termin_customer_5 }}</td>
-                                            <td>{{ $project->termin_customer_1_date }}</td>
-                                            <td>{{ $project->termin_customer_2_date }}</td>
-                                            <td>{{ $project->termin_customer_3_date }}</td>
-                                            <td>{{ $project->termin_customer_4_date }}</td>
-                                            <td>{{ $project->termin_customer_5_date }}</td>
-                                        @elseif(Auth::user()->user_type=="vendor"||Auth::user()->user_type=="admin")
-                                            <td>{{ $project->termin_vendor_1 }}</td>
-                                            <td>{{ $project->termin_vendor_2 }}</td>
-                                            <td>{{ $project->termin_vendor_3 }}</td>
-                                            <td>{{ $project->termin_vendor_4 }}</td>
-                                            <td>{{ $project->termin_vendor_5 }}</td>
-                                            <td>{{ $project->termin_vendor_1_date }}</td>
-                                            <td>{{ $project->termin_vendor_2_date }}</td>
-                                            <td>{{ $project->termin_vendor_3_date }}</td>
-                                            <td>{{ $project->termin_vendor_4_date }}</td>
-                                            <td>{{ $project->termin_vendor_5_date }}</td>
-                                            <td>{{ $project->payment_retention_date }}</td>
-                                        @endif --}}
+                                        <td>{{ $project->description }}</td>                      
                                         <td width="15%">
                                             @if (Auth::user()->user_type == 'admin')
                                             <a href="{{ route('proyek.edit', ['proyek' => $project->id]) }}"

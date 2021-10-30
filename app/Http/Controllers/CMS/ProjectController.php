@@ -181,8 +181,6 @@ class ProjectController extends Controller
         try {
 
             $this->validate($request, [
-                'user_id' => 'required|exists:wp_users,ID',
-                'vendor_user_id' => 'required|exists:wp_users,ID',
                 'vendor_contact' => 'required|min:6',
                 'description' => 'required|min:3',
                 'service_type' => 'required|min:3',

@@ -332,7 +332,7 @@ class OrderStatus
         $data = [];
         $data['activity'] = $newOrderStatus['activity'];
         if ($params['type'] == "schedule")
-          $data['activity'] = $newOrderStatus['activity'] . ": " . $params['title'] . " from " . $params['start_date'] . " - " . $params['end_date'];
+          $data['activity'] = $newOrderStatus['activity'] . ": " . $params['title'] ?? '' . " from " . $params['start_date'] ?? '' . " - " . $params['end_date'] ?? '';
         $data['createdAt'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
         $data['file'] = isset($params['file']) ? $params['file'] : null;
         $data['type'] = $params['type'];

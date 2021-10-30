@@ -248,7 +248,7 @@ class UserService
 
             $resp = $this->sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
 
-            if ($resp->getStatusCode() == 400) {
+            if ($resp->getCode() == 400) {
 
                 DB::rollBack();
                 return [

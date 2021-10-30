@@ -197,6 +197,12 @@ class ProjectController extends Controller
 
             $project = WpProject::findOrfail($id);
 
+            $foto = $request->file('foto');
+            if ($foto) {
+                $project_path = $foto->store('fotoproject', 'public');
+                $project->dokumentasi = $project_path;
+            }
+
             $project->fill($request->all());
             $project->save();
 

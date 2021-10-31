@@ -82,6 +82,13 @@
                                         <input type="text" id="user_phone_number-field" name='user_phone_number' class="form-control" value="{{ is_null(old('user_phone_number')) ? $user->user_phone_number : old('user_phone_number') }}"readonly/>
                                         </div>
                                         @if($user->user_type=="vendor")
+                                        <div class="form-group @if($errors->has('capacity')) has-error @endif">
+                                            <label for="name-field">Kapasitas</label>
+                                         <input type="text" id="name-field" name="capacity" class="form-control" value="{{ is_null(old("capacity")) ? $user->capacity : old("capacity") }}" readonly/>
+                                            @if($errors->has("capacitye"))
+                                             <span class="help-block">{{ $errors->first("capacity") }}</span>
+                                            @endif
+                                         </div>
                                         <div class="form-group @if($errors->has('bank')) has-error @endif">
                                             <label for="name-field">Bank</label>
                                          <input type="text" id="name-field" name="bank" class="form-control" value="{{ is_null(old("bank")) ? $user->bank : old("bank") }}" readonly/>

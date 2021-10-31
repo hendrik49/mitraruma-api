@@ -27,8 +27,10 @@ class UserController extends Controller
         $user = Auth::user();
         $start_date = $end_date = date('Y-m-d H:i:s');
 
-        $users = WpUser::whereNotNull('user_type')->orderByDesc('created_at');
-        $users = $users->get();
+        if ($user->user_type == WpUser::TYPE_ADMIN)
+            $users = WpUser::whereNotNull('user_type')->orderByDesc('created_at')->get();
+        else
+            $users = WpUser::whereNotNull('user_type')->where('ID', $user->ID)->get();
 
         return view('users.index', compact('users', 'start_date', 'end_date'));
     }
@@ -80,8 +82,8 @@ class UserController extends Controller
                 'file_npwp' => 'nullable|file',
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
-                'display_name'=>'required|min:3',
-                'user_picture_url'=>'required|file',
+                'display_name' => 'required|min:3',
+                'user_picture_url' => 'required|file',
                 'file_bank' => 'nullable|file',
                 'bank_account' => 'nullable|min:6',
                 'bank' => 'nullable|min:3'
@@ -91,7 +93,7 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $user = new WpUser;
-            
+
             $user->fill($request->all());
             $foto_nik = $request->file('file_nik');
             if ($foto_nik) {
@@ -155,12 +157,12 @@ class UserController extends Controller
                 'file_npwp' => 'nullable|file',
                 'user_email' => 'required|email',
                 'user_phone_number' => 'required',
-                'display_name'=>'required|min:3',
-                'user_picture_url'=>'nullable|file'
+                'display_name' => 'required|min:3',
+                'user_picture_url' => 'nullable|file'
             ]);
 
             $user = WpUser::findOrfail($id);
-           
+
             $user->fill($request->all());
             $foto_nik = $request->file('file_nik');
             if ($foto_nik) {

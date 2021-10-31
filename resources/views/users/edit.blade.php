@@ -140,7 +140,7 @@
                                         </div>    
                                         <div class="form-group @if($errors->has('capacity')) has-error @endif">
                                             <label for="name-field">Kapasitas</label>
-                                         <input type="text" id="name-field" name="capacity" class="form-control" value="{{ is_null(old("capacity")) ? $user->capacity : old("capacity") }}" readonly/>
+                                         <input type="number" id="name-field" name="capacity" class="form-control" value="{{ is_null(old("capacity")) ? $user->capacity : old("capacity") }}"/>
                                             @if($errors->has("capacitye"))
                                              <span class="help-block">{{ $errors->first("capacity") }}</span>
                                             @endif

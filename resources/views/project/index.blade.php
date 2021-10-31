@@ -61,11 +61,6 @@
                                             <a href="{{ route('proyek.edit', ['proyek' => $project->id]) }}"
                                                 class="btn btn-sm btn-primary"> <i class="glyphicon glyphicon-edit"></i>
                                                 Edit </a>
-                                                @if ($project->status)
-                                                    <a href="{{ route('proyek.edit-rate', ['proyek' => $project->id]) }}"
-                                                    class="btn btn-sm btn-danger"> <i class="glyphicon glyphicon-edit"></i>
-                                                    Rate Aplikator </a>
-                                                    @endif
                                             @endif
                                             <a href="{{ route('proyek.show', ['proyek' => $project->id]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>

@@ -93,11 +93,16 @@
                                     <tr>
                                         <td>{{ $review->ID }}</td>
                                         <td>{{ $review->display_name }}</td>
-                                        <td>{{ $review->review['quality']??'' }} </td>
-                                        <td>{{ $review->review['responsiveness_to_customer']??'' }} </td>
-                                        <td>{{ $review->review['responsiveness_to_mitraruma']??'' }} </td>
-                                        <td>{{ $review->review['behaviour']??'' }} </td>
-                                        <td>{{ $review->review['quality']??'' }} {{ $review->review['responsiveness_to_customer']??'' }} {{ $review->review['responsiveness_to_mitraruma']??'' }} {{ $review->review['helpful']??'' }} {{ $review->review['behaviour']??'' }}  </td>
+                                        <td>{{ $review->capacity }} </td>
+                                        <td>{{ $review->projects->where('status', '<>', 'project end')->count() }} </td>
+                                        <td>{{ ($review->projects->where('status', '<>', 'project end')->count() / $review->capacity) * 100 }}
+                                        </td>
+                                        <td>{{ $review->review['behaviour'] ?? '' }} </td>
+                                        <td>{{ $review->review['quality'] ?? '' }}
+                                            {{ $review->review['responsiveness_to_customer'] ?? '' }}
+                                            {{ $review->review['responsiveness_to_mitraruma'] ?? '' }}
+                                            {{ $review->review['helpful'] ?? '' }}
+                                            {{ $review->review['behaviour'] ?? '' }} </td>
                                     </tr>
                                 @endforeach
                             </tbody>

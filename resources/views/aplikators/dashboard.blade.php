@@ -243,6 +243,47 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-6 col-xs-8">
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Portfolio
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        @if ($user->portfolio)
+                            @if (true)
+                                <div class="img mt-2">
+                                    <embed src="/storage/{{ $user->portfolio }}" width="450" height="375">
+                                </div>
+                            @else
+                                <div class="img mt-2">
+                                    <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100"
+                                        id="avatar" @if ($user->portfolio) src="{{ $user->portfolio }}" @endif>
+                                </div>
+                            @endif
+                        @endif
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <div class="col-lg-6 col-xs-8">
+                <div class="card ">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Konsultasi By Tipe Service
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="height: 375px; width: 340px;" height="375" width="500"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <!-- ./col -->
 
             <div class="col-lg-6 col-xs-8">
@@ -464,7 +505,7 @@
                                         <td>{{ $project->status }}</td>
                                         <td>{{ $project->project_note }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
-                                        <td>{{ $project->description }}</td>                             
+                                        <td>{{ $project->description }}</td>
                                     </tr>
                                 @endforeach
 

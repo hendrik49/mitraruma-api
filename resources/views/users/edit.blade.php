@@ -62,7 +62,7 @@
                                             @if($errors->has("user_typee"))
                                              <span class="help-block">{{ $errors->first("user_type") }}</span>
                                             @endif
-                                         </div>
+                                         </div>                                        
                                         <div class="form-group @if($errors->has('nik')) has-error @endif">
                                             <label for="nik-field">NIK KTP</label>
                                             <input type="text" id="nik-field" name="nik" class="form-control" value="{{ is_null(old("nik")) ? $user->nik : old("nik") }}"/>
@@ -80,6 +80,40 @@
                                                 <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_nik) src="{{ $user->file_nik }}" @endif>
                                             </div>
                                         </div>
+                                        
+                                         <div class="form-group @if($errors->has('npwp')) has-error @endif">
+                                            <label for="npwp-field">No. NPWP</label>
+                                            <input type="text" id="npwp-field" name="npwp" class="form-control" value="{{ is_null(old("npwp")) ? $user->npwp : old("npwp") }}"/>
+                                            @if($errors->has("npwp"))
+                                             <span class="help-block">{{ $errors->first("npwp") }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group @if($errors->has('file_npwp')) has-error @endif">
+                                            <label for="nik-field">File NPWP</label>    
+                                            <input type="file" id="npwp-field" name="file_npwp" class="form-control" value="{{ is_null(old("file_npwp")) ? $user->file_npwp : old("file_npwp") }}"/>
+                                            @if($errors->has("file_npwp"))
+                                             <span class="help-block">{{ $errors->first("file_npwp") }}</span>
+                                            @endif
+                                            <div class="img mt-2">
+                                                <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_npwp) src="{{ $user->file_npwp }}" @endif>
+                                            </div>
+                                        </div> 
+                                                     
+                                            <div class="form-group @if($errors->has('user_email')) has-error @endif">
+                                           <label for="user_email-field">Email</label>
+                                        <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"/>
+                                           @if($errors->has("user_email"))
+                                            <span class="help-block">{{ $errors->first("user_email") }}</span>
+                                           @endif
+                                        </div>
+                                        <div class="form-group @if($errors->has('user_phone_number')) has-error @endif">
+                                           <label for="user_phone_number-field">Nomor kontak</label>
+                                        <input type="text" id="user_phone_number-field" name='user_phone_number' class="form-control" value="{{ is_null(old('user_phone_number')) ? $user->user_phone_number : old('user_phone_number') }}"/>
+                                           @if($errors->has('user_phone_number'))
+                                            <span class="help-block">{{ $errors->first('user_phone_number') }}</span>
+                                           @endif
+                                        </div>
+                                        @if($user->user_type=="vendor")
                                         <div class="form-group @if($errors->has('bank')) has-error @endif">
                                             <label for="name-field">Bank</label>
                                          <input type="text" id="name-field" name="bank" class="form-control" value="{{ is_null(old("bank")) ? $user->bank : old("bank") }}"/>
@@ -104,24 +138,14 @@
                                                 <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_bank) src="{{ $user->file_bank }}" @endif>
                                             </div>
                                         </div>    
-                                         <div class="form-group @if($errors->has('npwp')) has-error @endif">
-                                            <label for="npwp-field">No. NPWP</label>
-                                            <input type="text" id="npwp-field" name="npwp" class="form-control" value="{{ is_null(old("npwp")) ? $user->npwp : old("npwp") }}"/>
-                                            @if($errors->has("npwp"))
-                                             <span class="help-block">{{ $errors->first("npwp") }}</span>
+                                        <div class="form-group @if($errors->has('capacity')) has-error @endif">
+                                            <label for="name-field">Kapasitas</label>
+                                         <input type="text" id="name-field" name="capacity" class="form-control" value="{{ is_null(old("capacity")) ? $user->capacity : old("capacity") }}" readonly/>
+                                            @if($errors->has("capacitye"))
+                                             <span class="help-block">{{ $errors->first("capacity") }}</span>
                                             @endif
-                                        </div>
-                                        <div class="form-group @if($errors->has('file_npwp')) has-error @endif">
-                                            <label for="nik-field">File NPWP</label>    
-                                            <input type="file" id="npwp-field" name="file_npwp" class="form-control" value="{{ is_null(old("file_npwp")) ? $user->file_npwp : old("file_npwp") }}"/>
-                                            @if($errors->has("file_npwp"))
-                                             <span class="help-block">{{ $errors->first("file_npwp") }}</span>
-                                            @endif
-                                            <div class="img mt-2">
-                                                <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->file_npwp) src="{{ $user->file_npwp }}" @endif>
-                                            </div>
-                                        </div> 
-                                        <div class="form-group @if($errors->has('portfolio')) has-error @endif">
+                                         </div>
+                                         <div class="form-group @if($errors->has('portfolio')) has-error @endif">
                                             <label for="nik-field">Portfolio</label>    
                                             <input type="file" id="npwp-field" name="portfolio" class="form-control" value="{{ is_null(old("portfolio")) ? $user->portfolio : old("portfolio") }}"/>
                                             @if($errors->has("portfolio"))
@@ -137,22 +161,8 @@
                                                         <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100" id="avatar" @if($user->portfolio) src="{{ $user->portfolio }}" @endif>
                                                     </div>
                                                 @endif
-                                            @endif                                        </div>                         
-                                            <div class="form-group @if($errors->has('user_email')) has-error @endif">
-                                           <label for="user_email-field">Email</label>
-                                        <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"/>
-                                           @if($errors->has("user_email"))
-                                            <span class="help-block">{{ $errors->first("user_email") }}</span>
-                                           @endif
-                                        </div>
-                                        <div class="form-group @if($errors->has('user_phone_number')) has-error @endif">
-                                           <label for="user_phone_number-field">Nomor kontak</label>
-                                        <input type="text" id="user_phone_number-field" name='user_phone_number' class="form-control" value="{{ is_null(old('user_phone_number')) ? $user->user_phone_number : old('user_phone_number') }}"/>
-                                           @if($errors->has('user_phone_number'))
-                                            <span class="help-block">{{ $errors->first('user_phone_number') }}</span>
-                                           @endif
-                                        </div>
-                                        @if($user->user_type=="vendor")
+                                            @endif                                        
+                                        </div>   
                                         <div class="form-group @if($errors->has('skill_set')) has-error @endif">
                                            <label for="triwulan-field">Skill Set</label>
                                                 <select class="form-control" id="skill_set-field" name="skill_set">                    

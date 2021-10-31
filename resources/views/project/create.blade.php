@@ -40,13 +40,13 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">No Konsultasi</label>
-                                            <input type="text" class="form-control" name="order_number"
+                                            <input type="text" class="form-control" name="order_number" id="order_number"
                                                 placeholder="Masukkan no Konsultasi"
                                                 value="{{ mt_rand(1000000, 9999999) }}">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">No Room</label>
-                                            <input type="text" class="form-control" name="room_id"
+                                            <input type="text" class="form-control" name="room_id" id="room_id"
                                                 placeholder="Masukkan no room" value="{{ mt_rand(1000000, 9999999) }}">
                                         </div>
                                     </div>

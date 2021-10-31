@@ -91,8 +91,8 @@
                             <tbody>
                                 @foreach ($aplikators as $key => $review)
                                     <tr>
-                                        <td>{{ $review->vendor_user_id }}</td>
-                                        <td>{{ $review->vendor_name }}</td>
+                                        <td>{{ $review->ID }}</td>
+                                        <td>{{ $review->display_name }}</td>
                                         <td>{{ $review->review['quality']??'' }} </td>
                                         <td>{{ $review->review['responsiveness_to_customer']??'' }} </td>
                                         <td>{{ $review->review['responsiveness_to_mitraruma']??'' }} </td>

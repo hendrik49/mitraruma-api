@@ -47,8 +47,8 @@
                                         <div class="col-sm-6">
                                             <label for="title">No. Room</label>
                                             <input type="text" class="form-control" name="room_id"
-                                                placeholder="Masukkan no room" value="{{ $project->room_number }}"
-                                                readonly>
+                                                placeholder="Masukkan no room"
+                                                value="{{ $project->room_id ?? mt_rand(1000000, 9999999) }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -83,12 +83,12 @@
                                         <div class="col-sm-6">
                                             <label for="title">Konsultasi</label>
                                             <textarea rows="4" class="form-control" name="description"
-                                                placeholder="Masukkan nama donatur" readonly
+                                                placeholder="Masukkan nama donatur"
                                                 required>{{ $project->description }}</textarea>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Alamat</label>
-                                            <textarea rows="4" class="form-control" name="street" readonly
+                                            <textarea rows="4" class="form-control" name="street"
                                                 placeholder="Masukkan alamat">{{ $project->street }}</textarea>
                                         </div>
                                     </div>
@@ -97,20 +97,20 @@
                                             <label for="title">Estimasi Budget Konsultasi (Rp)</label>
                                             <input type="number" min="1" class="form-control" name="estimated_budget"
                                                 placeholder="Masukkan budget" onkeypress="return isNumberKey(event)"
-                                                value="{{ $project->estimated_budget }}" readonly>
+                                                value="{{ $project->estimated_budget }}">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="title">Tgl Konsultasi</label>
                                             <input type="date" class="form-control" id="tgl_Konsultasi" name="created_at"
                                                 placeholder="Masukkan tanggal Konsultasi"
-                                                value="{{ $project->created_at->format('d/m/Y') }}" required>
+                                                value="{{ $project->created_at }}" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="title">Status</label>
-                                            <select class="form-control" id="status" name="status" readonly>
+                                            <select class="form-control" id="status" name="status">
                                                 <option value="pre purchase" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
                                                 </option>
                                                 <option value="design phase" @if ($project->status == 'design phase') selected='selected' @endif>Design Phase

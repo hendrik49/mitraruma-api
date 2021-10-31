@@ -72,6 +72,16 @@
                                                 </div>
                                             @endif
                                         </div>         
+                                        
+                                        <div class="form-group @if($errors->has('user_email')) has-error @endif">
+                                           <label for="user_email-field">Email</label>
+                                        <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"readonly/>
+                                        </div>
+                                        <div class="form-group @if($errors->has('user_phone_number')) has-error @endif">
+                                           <label for="user_phone_number-field">Nomor kontak</label>
+                                        <input type="text" id="user_phone_number-field" name='user_phone_number' class="form-control" value="{{ is_null(old('user_phone_number')) ? $user->user_phone_number : old('user_phone_number') }}"readonly/>
+                                        </div>
+                                        @if($user->user_type=="vendor")
                                         <div class="form-group @if($errors->has('bank')) has-error @endif">
                                             <label for="name-field">Bank</label>
                                          <input type="text" id="name-field" name="bank" class="form-control" value="{{ is_null(old("bank")) ? $user->bank : old("bank") }}" readonly/>
@@ -102,15 +112,6 @@
                                                 @endif
                                             @endif
                                         </div>            
-                                        <div class="form-group @if($errors->has('user_email')) has-error @endif">
-                                           <label for="user_email-field">Email</label>
-                                        <input type="text" id="user_email-field" name="user_email" class="form-control" value="{{ is_null(old("user_email")) ? $user->user_email : old("user_email") }}"readonly/>
-                                        </div>
-                                        <div class="form-group @if($errors->has('user_phone_number')) has-error @endif">
-                                           <label for="user_phone_number-field">Nomor kontak</label>
-                                        <input type="text" id="user_phone_number-field" name='user_phone_number' class="form-control" value="{{ is_null(old('user_phone_number')) ? $user->user_phone_number : old('user_phone_number') }}"readonly/>
-                                        </div>
-                                        @if($user->user_type=="vendor")
                                         <div class="form-group @if($errors->has('skill_set')) has-error @endif">
                                            <label for="triwulan-field">Skill Set </label>
                                             <select class="form-control" id="skill_set-field" name="skill_set">                    

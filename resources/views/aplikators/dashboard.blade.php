@@ -273,11 +273,11 @@
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
-                            Konsultasi By Tipe Service
+                            Kapasitas
                         </h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="pieChart" style="height: 375px; width: 340px;" height="375" width="500"></canvas>
+                        <canvas id="barChart" style="height: 375px; width: 340px;" height="375" width="500"></canvas>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -631,6 +631,39 @@
                         }
                     },
                 };
+                
+                const configBar = {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            'Jan',
+                            'Feb',
+                            'Mar',
+                            'Apr',
+                            'Mei',
+                            'Jun',
+                            'July'
+                        ],
+                        datasets: [{
+                            label: 'Kapasitas',
+                            data: [5, 4, 3, 3, 2, 4, 4],
+                            fill: true,
+                            backgroundColor: 'rgba(000, 002, 132, 0.8)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            pointBackgroundColor: 'rgb(255, 99, 132)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(255, 99, 132)'
+                        }]
+                    },
+                    options: {
+                        elements: {
+                            line: {
+                                borderWidth: 3
+                            }
+                        }
+                    },
+                };
 
                 window.onload = function() {
 
@@ -642,6 +675,10 @@
 
                     var ctxStatus = document.getElementById("pieChartStatus").getContext("2d");
                     window.myPieStatus = new Chart(ctxStatus, configStatus);
+
+                    var ctxBar = document.getElementById("barChart").getContext("2d");
+                    window.myBar = new Chart(ctxBar, configBar);
+
 
                 };
             });

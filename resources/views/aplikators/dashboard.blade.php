@@ -475,6 +475,12 @@
             <!-- ./col -->
             <div class="col-md-12">
                 <div class="card">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Daftar Proyek
+                        </h3>
+                    </div>
                     <div class="card-body">
                         <table class="table table-bordered table-striped dt-dashboard" id="projectrange">
                             <thead>

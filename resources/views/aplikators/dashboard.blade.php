@@ -97,7 +97,7 @@
                                             <td>{{ $review->capacity }} </td>
                                             <td>{{ $review->projects->where('status', '<>', 'project ended')->count() }}
                                             </td>
-                                            <td>{{ ($review->projects->where('status', '<>', 'project ended')->count() / $review->capacity == 0 ? 1 : $review->capacity) * 100 }}
+                                            <td>{{ ($review->projects->where('status', '<>', 'project ended')->count() / $review->capacity) * 100 }}
                                             </td>
                                             <td>{{ round($review->review['overall_score'], 2) ?? '' }} </td>
                                             <td>{{ $review->review['quality'] ?? '' }}

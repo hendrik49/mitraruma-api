@@ -111,20 +111,20 @@
                                         <div class="col-sm-6">
                                             <label for="title">Status</label>
                                             <select class="form-control" id="status" name="status">
-                                                <option value="pre purchase" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
+                                                <option value="Pre-Purchase" @if ($project->status == 'pre pruchase') selected='selected' @endif>Pre Purchase
                                                 </option>
-                                                <option value="design phase" @if ($project->status == 'design phase') selected='selected' @endif>Design Phase
+                                                <option value="Design Phase" @if ($project->status == 'design phase') selected='selected' @endif>Design Phase
                                                 </option>
-                                                <option value="construction phase" @if ($project->status == 'construction phase') selected='selected' @endif>Construction
+                                                <option value="Construction Phase" @if ($project->status == 'construction phase') selected='selected' @endif>Construction
                                                     Phase
                                                 </option>
-                                                <option value="project started" @if ($project->status == 'project started') selected='selected' @endif>Project
+                                                <option value="Project Started" @if ($project->status == 'project started') selected='selected' @endif>Project
                                                     Started
                                                 </option>
-                                                <option value="project ended" @if ($project->status == 'project ended') selected='selected' @endif>Project Ended
+                                                <option value="Project Ended" @if ($project->status == 'project ended') selected='selected' @endif>Project Ended
                                                 </option>
-                                                <option value="delay" @if ($project->status == 'delay') selected='selected' @endif>Delay</option>
-                                                <option value="complaint" @if ($project->status == 'complaint') selected='selected' @endif>Complaint</option>
+                                                <option value="Delay" @if ($project->status == 'delay') selected='selected' @endif>Delay</option>
+                                                <option value="Complaint" @if ($project->status == 'complaint') selected='selected' @endif>Complaint</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">

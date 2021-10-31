@@ -94,8 +94,8 @@
                                         <td>{{ $review->ID }}</td>
                                         <td>{{ $review->display_name }}</td>
                                         <td>{{ $review->capacity }} </td>
-                                        <td>{{ $review->projects->where('status', '<>', 'project end')->count() }} </td>
-                                        <td>{{ ($review->projects->where('status', '<>', 'project end')->count() / $review->capacity) * 100 }}
+                                        <td>{{ $review->projects->where('status', '<>', 'project ended')->count() }} </td>
+                                        <td>{{ ($review->projects->where('status', '<>', 'project ended')->count() / $review->capacity) * 100 }}
                                         </td>
                                         <td>{{ round($review->review['overall_score'],2) ?? '' }} </td>
                                         <td>{{ $review->review['quality'] ?? '' }}
@@ -217,12 +217,12 @@
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
-                            Progres Konsulltasi
+                            Progres Konsultasi
                         </h3>
                     </div>
                     <div class="card-body">
                         @foreach ($progres as $val)
-                            @if ($val->status == 'Project Ended')
+                            @if ($val->status == 'Project Ended' || $val->status == 'project ended')
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
                                         {{ $val->order_number }} - {{ $val->description }}
@@ -237,7 +237,7 @@
                                 </div>
                                 <!-- /.progress-group -->
                             @endif
-                            @if ($val->status == 'Project Started')
+                            @if ($val->status == 'Project Started' || $val->status == 'project started')
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
                                         {{ $val->order_number }} - {{ $val->description }}
@@ -252,7 +252,7 @@
                                 </div>
                             @endif
                             <!-- /.progress-group -->
-                            @if ($val->status == 'Construction Phase')
+                            @if ($val->status == 'Construction Phase' || $val->status == 'construction phase')
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
                                         {{ $val->order_number }} - {{ $val->description }}
@@ -267,7 +267,7 @@
                                 </div>
                             @endif
                             <!-- /.progress-group -->
-                            @if ($val->status == 'Design Phase')
+                            @if ($val->status == 'Design Phase' || $val->status == 'design phase')
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
                                         {{ $val->order_number }} - {{ $val->description }}
@@ -283,7 +283,7 @@
                                 <!-- /.progress-group -->
                             @endif
                             <!-- /.progress-group -->
-                            @if ($val->status == 'pre-purchase' || $val->status == 'Pre-Purchase')
+                            @if ($val->status == 'pre purchase' || $val->status == 'Pre-Purchase')
                                 <div class="progress-group">
                                     <a class="progress-text" href="{{ route('proyek.show', ['proyek' => $val->id]) }}">
                                         {{ $val->order_number }} - {{ $val->description }}
@@ -308,7 +308,7 @@
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
-                            Progres Aplikator
+                            Konsultasi Berakhir
                         </h3>
                     </div>
                     <div class="card-body">
@@ -544,11 +544,11 @@
                     var ctxRadar = document.getElementById("radar").getContext("2d");
                     window.ctxRadar = new Chart(ctxRadar, configRadar);
 
-                    var ctx = document.getElementById("pieChart").getContext("2d");
-                    window.myPie = new Chart(ctx, config);
+                    // var ctx = document.getElementById("pieChart").getContext("2d");
+                    // window.myPie = new Chart(ctx, config);
 
-                    var ctxStatus = document.getElementById("pieChartStatus").getContext("2d");
-                    window.myPieStatus = new Chart(ctxStatus, configStatus);
+                    // var ctxStatus = document.getElementById("pieChartStatus").getContext("2d");
+                    // window.myPieStatus = new Chart(ctxStatus, configStatus);
 
                 };
             });

@@ -122,17 +122,17 @@
                                         <div class="col-sm-6">
                                             <label for="title">Status</label>
                                             <select class="form-control" id="status" name="status" required>
-                                                <option value="pre purchase">Pre-Purchase
+                                                <option value="Pre-Purchase">Pre-Purchase
                                                 </option>
-                                                <option value="design phase">Design Phase
+                                                <option value="Design Phase">Design Phase
                                                 </option>
-                                                <option value="construction phase">Construction Phase
+                                                <option value="Construction Phase">Construction Phase
                                                 </option>
-                                                <option value="project started">Project Started
+                                                <option value="Project Started">Project Started
                                                 </option>
-                                                <option value="project ended">Project Ended</option>
-                                                <option value="delay">Delay</option>
-                                                <option value="complaint">Complaint</option>
+                                                <option value="Project Ended">Project Ended</option>
+                                                <option value="Delay">Delay</option>
+                                                <option value="Complaint">Complaint</option>
                                             </select>
                                         </div>
                                     </div>

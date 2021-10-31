@@ -28,28 +28,22 @@ class VendorController extends Controller
     public function aplikatorDash()
     {
         $user = Auth::user();
-        if ($user->user_type == "customer") {
-            $projects = WpProject::where('user_id', $user->ID)->groupBy('user_id')->count();
-            $progres = WpProject::where('user_id', $user->ID)->limit(5)->get();
-            $progresVendor = WpProject::where('user_id', $user->ID)->whereNotNull('vendor_user_id')->limit(5)->get();
-        } else if ($user->user_type == "vendor") {
-            $projects = WpProject::where('vendor_user_id', $user->ID)->groupBy('vendor_user_id')->count();
-            $progres = WpProject::where('user_id', $user->ID)->limit(5)->get();
-            $progresVendor = WpProject::where('vendor_user_id', $user->ID)->whereNotNull('vendor_user_id')->limit(5)->get();
+        if ($user->user_type == "vendor") {
+            $progres = WpProject::where('vendor_user_id', $user->ID)->where('status', '<>', WpProject::Project_Ended)->get();
+            $progresVendor = WpProject::where('vendor_user_id', $user->ID)->where('status','=', WpProject::Project_Ended)->get();
         } else {
-            $projects = WpProject::where('admin_user_id', $user->ID)->count();
-            $progres = WpProject::where('admin_user_id', $user->ID)->limit(5)->get();
-            $progresVendor = WpProject::whereNotNull('vendor_user_id')->limit(5)->get();
+            $progres = WpProject::where('admin_user_id', $user->ID)->where('status', '<>', WpProject::Project_Ended)->get();
+            $progresVendor = WpProject::whereNotNull('vendor_user_id')->where('status', '<>', WpProject::Project_Ended)->get();
         }
 
         $masters = WpCms::get();
 
         if ($user->user_type == WpUser::TYPE_ADMIN)
-            $aplikators = WpUser::with('projects','review')->where('user_type',WpUser::TYPE_VENDOR)->get();
+            $aplikators = WpUser::with('projects', 'review')->where('user_type', WpUser::TYPE_VENDOR)->get();
         else
-            $aplikators = WpUser::with('projects','review')->where('ID', $user->ID)->where('user_type',WpUser::TYPE_VENDOR)->get();
+            $aplikators = WpUser::with('projects', 'review')->where('ID', $user->ID)->where('user_type', WpUser::TYPE_VENDOR)->get();
 
-        return view('aplikators.dashboard', compact('user', 'masters', 'aplikators', 'progresVendor', 'progres', 'projects'));
+        return view('aplikators.dashboard', compact('user', 'masters', 'aplikators', 'progresVendor', 'progres'));
     }
 
     public function index()
@@ -68,8 +62,8 @@ class VendorController extends Controller
     public function create()
     {
         $aplikators = WpUser::where('user_type', WpUser::TYPE_VENDOR)->get();
- 
-        return view('aplikators.create',compact('aplikators'));
+
+        return view('aplikators.create', compact('aplikators'));
     }
 
     public function aplikatorstatus($id, $status)

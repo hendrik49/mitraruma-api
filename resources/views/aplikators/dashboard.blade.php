@@ -477,7 +477,7 @@
                 <div class="card">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
-                            <i class="fas fa-chart-pie mr-1"></i>
+                            <i class="fas fa-table mr-1"></i>
                             Daftar Proyek
                         </h3>
                     </div>

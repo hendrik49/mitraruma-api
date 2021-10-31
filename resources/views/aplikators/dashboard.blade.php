@@ -3,6 +3,7 @@
 @section('content')
     <section class="content">
         <!-- Small boxes (Stat box) -->
+        @if(Auth::user()->user_type=="admin")
         <div class="row">
             <div class="col-md-3 mt-4">
                 <div class="card ">
@@ -111,6 +112,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="row">
             <!-- ./col -->
             <div class="col-lg-6 col-xs-8">

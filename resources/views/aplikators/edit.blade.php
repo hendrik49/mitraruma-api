@@ -34,22 +34,22 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="{{ route('aplikators.update', $user->id) }}" enctype="multipart/form-data"
+                                <form action="{{ route('aplikators.update', $user->ID) }}" enctype="multipart/form-data"
                                     method="POST">
                                     <input type="hidden" name="_method" value="PUT">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="form-group @if ($errors->has('user_picture_url')) has-error @endif">
                                         <div class="img">
                                             <img class="img-circle" style="margin-bottom:5px;" width="100" height="100"
-                                                id="avatar" @if ($user->vendor['user_picture_url']) src="{{ $user->vendor['user_picture_url'] }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
+                                                id="avatar" @if ($user->user_picture_url) src="{{ $user->user_picture_url }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
                                         </div>
                                     </div>
-                                    <div class="form-group @if ($errors->has('vendor_name')) has-error @endif">
+                                    <div class="form-group @if ($errors->has('display_name')) has-error @endif">
                                         <label for="name-field">Nama</label>
-                                        <input type="text" id="name-field" name="vendor_name" class="form-control"
-                                            value="{{ is_null(old('vendor_name')) ? $user->vendor_name : old('vendor_name') }}" />
-                                        @if ($errors->has('vendor_name'))
-                                            <span class="help-block">{{ $errors->first('vendor_name') }}</span>
+                                        <input type="text" id="name-field" name="display_name" class="form-control"
+                                            value="{{ is_null(old('vendor_name')) ? $user->display_name : old('display_name') }}" />
+                                        @if ($errors->has('display_name'))
+                                            <span class="help-block">{{ $errors->first('display_name') }}</span>
                                         @endif
                                     </div>
                                     <div class="form-group @if ($errors->has('quality')) has-error @endif">

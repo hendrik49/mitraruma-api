@@ -159,12 +159,12 @@ class VendorController extends Controller
                 'activeness' => 'required|numeric',
             ]);
 
-            $project = WpProject::where('ID', $id)->first();
-            if ($project->vendor_user_id) {
-                $user = WpVendorExtensionAttribute::where('project_id', $id)->where('user_id', $project->vendor_user_id)->first();
+            $project = WpUser::where('ID', $id)->first();
+            if ($project) {
+                $user = WpVendorExtensionAttribute::where('user_id', $project->ID)->first();
                 if ($user == null) {
                     $user = new WpVendorExtensionAttribute;
-                    $user->user_id = $project->vendor_user_id;
+                    $user->user_id = $project->ID;
                     $user->project_id = $id;
                 }
 

@@ -45,12 +45,16 @@ class VendorController extends Controller
 
         $masters = WpCms::get();
 
-        if ($user->user_type == WpUser::TYPE_ADMIN)
+        if ($user->user_type == WpUser::TYPE_ADMIN){
             $aplikators = WpUser::with('projects', 'review')->where('user_type', WpUser::TYPE_VENDOR)->get();
-        else
+            $pf = WpVendorExtensionAttribute::where('user_id', $user->ID)->first();
+        }
+        else{
             $aplikators = WpUser::with('projects', 'review')->where('ID', $user->ID)->where('user_type', WpUser::TYPE_VENDOR)->get();
+            $pf = WpVendorExtensionAttribute::where('user_id', $user->ID)->first();
+        }
 
-        return view('aplikators.dashboard', compact('user','projects','masters', 'aplikators', 'progresVendor', 'progres','pie','pieStatus'));
+        return view('aplikators.dashboard', compact('pf','user','projects','masters', 'aplikators', 'progresVendor', 'progres','pie','pieStatus'));
     }
 
     public function index()
@@ -121,14 +125,14 @@ class VendorController extends Controller
 
     public function show($id)
     {
-        $user = WpProject::with('review', 'vendor', 'customer')->where('ID', $id)->first();
+        $user = WpUser::with('review')->where('ID', $id)->first();
 
         return view('aplikators.show', compact('user'));
     }
 
     public function edit($id)
     {
-        $user = WpProject::with('review', 'vendor', 'customer')->where('ID', $id)->first();
+        $user = WpUser::with('review')->where('ID', $id)->first();
         $reviews = [
             1 => "Kurang",
             2 => "Cukup",

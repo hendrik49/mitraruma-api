@@ -543,6 +543,8 @@
         $pieLabel = $pie->pluck('label');
         $pieValue = $pie->pluck('value');
         
+        $per = json_encode([$pf->quality ?? 0, $pf->responsiveness_to_customer ?? 0, $pf->responsiveness_to_mitraruma ?? 0, $pf->behaviour ?? 0, $pf->helpful ?? 0, $pf->commitment ?? 0, $pf->activeness ?? 0]);
+        
     @endphp
     @section('scripts')
         @parent
@@ -613,7 +615,7 @@
                         ],
                         datasets: [{
                             label: 'Key Performance',
-                            data: [5, 4, 3, 3, 2, 4, 4],
+                            data: <?php echo $per; ?>,
                             fill: true,
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             borderColor: 'rgb(255, 99, 132)',
@@ -631,7 +633,7 @@
                         }
                     },
                 };
-                
+
                 const configBar = {
                     type: 'bar',
                     data: {

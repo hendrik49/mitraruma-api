@@ -77,7 +77,7 @@
                             </h3>
                         </div>
                         <div class="card-body">
-                            <table class="table" id="userrange">
+                            <table class="table dt-dashboard" id="userrange">
                                 <thead>
                                     <tr>
                                         <th>User ID</th>
@@ -432,20 +432,47 @@
 
         <div class="row">
             <!-- ./col -->
-            {{-- <div class="col-md-12">
-                <div class="card ">
-                    <div class="card-header ui-sortable-handle">
-                        <h3 class="card-title">
-                            <i class="fas fa-chart-bar mr-1"></i>
-                            Pembayaran Bulanan
-                        </h3>
-                    </div>
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-body">
-                        <canvas id="barChart" style="height: 150px; width: 228px;" height="250" width="456"></canvas>
+                        <table class="table table-bordered table-striped dt-dashboard" id="projectrange">
+                            <thead>
+                                <tr>
+                                    <th>no.</th>
+                                    <th>order number</th>
+                                    <th>customer ID</th>
+                                    <th>customer name</th>
+                                    <th>customer contact</th>
+                                    <th>applicator name</th>
+                                    <th>tipe proyek</th>
+                                    <th>status</th>
+                                    <th>sub status</th>
+                                    <th>date</th>
+                                    <th>description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($projects as $key => $project)
+                                    <tr>
+                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $project->order_number }}</td>
+                                        <td>{{ $project->user_id }}</td>
+                                        <td>{{ $project->customer_name }}</td>
+                                        <td>{{ $project->customer_contact }}</td>
+                                        <td>{{ $project->vendor_name }}</td>
+                                        <td width="10%">{{ $project->service_type }}</td>
+                                        <td>{{ $project->status }}</td>
+                                        <td>{{ $project->project_note }}</td>
+                                        <td>{{ $project->created_at->format('Y-m-d') }}</td>
+                                        <td>{{ $project->description }}</td>                             
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-            </div> --}}
+            </div>
         </div>
 
         <div class="row">
@@ -471,7 +498,7 @@
         // charting
         $pieStatusLabel = $pieStatus->pluck('label');
         $pieStatusValue = $pieStatus->pluck('value');
-
+        
         $pieLabel = $pie->pluck('label');
         $pieValue = $pie->pluck('value');
         
@@ -482,7 +509,7 @@
             $(function() {
                 // $('.select2').select2();
 
-                var dTable = $('#userrange').dataTable({
+                var dTable = $('.dt-dashboard').dataTable({
                     'paging': true,
                     "pageLength": 4,
                     'lengthChange': true,

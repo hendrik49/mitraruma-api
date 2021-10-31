@@ -29,12 +29,14 @@ class VendorController extends Controller
     {
         $user = Auth::user();
         if ($user->user_type == "vendor") {
+            $projects = WpProject::where('vendor_user_id', $user->ID)->get();
             $progres = WpProject::where('vendor_user_id', $user->ID)->where('status', '<>', WpProject::Project_Ended)->get();
             $progresVendor = WpProject::where('vendor_user_id', $user->ID)->where('status','=', WpProject::Project_Ended)->get();
             $pie = WpProject::where('vendor_user_id', $user->ID)->select(DB::raw('status as label'), DB::raw('count(*) as value'))->groupBy('status')->get();
             $pieStatus = WpProject::where('vendor_user_id', $user->ID)->whereNotNull('service_type')->select(DB::raw('service_type as label'), DB::raw('count(*) as value'))->groupBy('service_type')->get();
 
         } else {
+            $projects = WpProject::where('admin_user_id', $user->ID)->get();
             $progres = WpProject::where('admin_user_id', $user->ID)->where('status', '<>', WpProject::Project_Ended)->get();
             $progresVendor = WpProject::whereNotNull('vendor_user_id')->where('status', '<>', WpProject::Project_Ended)->get();
             $pie = WpProject::where('vendor_user_id', $user->ID)->select(DB::raw('status as label'), DB::raw('count(*) as value'))->groupBy('status')->get();
@@ -48,7 +50,7 @@ class VendorController extends Controller
         else
             $aplikators = WpUser::with('projects', 'review')->where('ID', $user->ID)->where('user_type', WpUser::TYPE_VENDOR)->get();
 
-        return view('aplikators.dashboard', compact('user', 'masters', 'aplikators', 'progresVendor', 'progres','pie','pieStatus'));
+        return view('aplikators.dashboard', compact('user','projects','masters', 'aplikators', 'progresVendor', 'progres','pie','pieStatus'));
     }
 
     public function index()

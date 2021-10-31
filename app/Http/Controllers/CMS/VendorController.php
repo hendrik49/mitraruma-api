@@ -31,9 +31,14 @@ class VendorController extends Controller
         if ($user->user_type == "vendor") {
             $progres = WpProject::where('vendor_user_id', $user->ID)->where('status', '<>', WpProject::Project_Ended)->get();
             $progresVendor = WpProject::where('vendor_user_id', $user->ID)->where('status','=', WpProject::Project_Ended)->get();
+            $pie = WpProject::where('vendor_user_id', $user->ID)->select(DB::raw('status as label'), DB::raw('count(*) as value'))->groupBy('status')->get();
+            $pieStatus = WpProject::where('vendor_user_id', $user->ID)->whereNotNull('service_type')->select(DB::raw('service_type as label'), DB::raw('count(*) as value'))->groupBy('service_type')->get();
+
         } else {
             $progres = WpProject::where('admin_user_id', $user->ID)->where('status', '<>', WpProject::Project_Ended)->get();
             $progresVendor = WpProject::whereNotNull('vendor_user_id')->where('status', '<>', WpProject::Project_Ended)->get();
+            $pie = WpProject::where('vendor_user_id', $user->ID)->select(DB::raw('status as label'), DB::raw('count(*) as value'))->groupBy('status')->get();
+            $pieStatus = WpProject::where('vendor_user_id', $user->ID)->whereNotNull('service_type')->select(DB::raw('service_type as label'), DB::raw('count(*) as value'))->groupBy('service_type')->get();
         }
 
         $masters = WpCms::get();
@@ -43,7 +48,7 @@ class VendorController extends Controller
         else
             $aplikators = WpUser::with('projects', 'review')->where('ID', $user->ID)->where('user_type', WpUser::TYPE_VENDOR)->get();
 
-        return view('aplikators.dashboard', compact('user', 'masters', 'aplikators', 'progresVendor', 'progres'));
+        return view('aplikators.dashboard', compact('user', 'masters', 'aplikators', 'progresVendor', 'progres','pie','pieStatus'));
     }
 
     public function index()

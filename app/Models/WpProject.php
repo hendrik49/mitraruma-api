@@ -18,6 +18,8 @@ class WpProject extends Model
     const Construction_Phase ="Construction_Phase";
     const Project_Started ="Project Started";
     const Project_Ended ="Project Ended";
+    const Delay ="Delay";
+    const Complaint ="Complaint";
     
     /**
      * The attributes that are mass assignable.

@@ -19,7 +19,6 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Project Number</th>
                                     <th>User ID</th>
                                     <th>Name</th>
                                     <th>Quality</th>
@@ -37,9 +36,8 @@
                                 @foreach ($aplikators as $key => $user)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $user->order_number }}</td>
-                                        <td>{{ $user->vendor_user_id }}</td>
-                                        <td>{{ $user->vendor_name }}</td>
+                                        <td>{{ $user->ID }}</td>
+                                        <td>{{ $user->display_name }}</td>
                                         <td>{{ $user->review['quality']??'' }} </td>
                                         <td>{{ $user->review['responsiveness_to_customer']??'' }} </td>
                                         <td>{{ $user->review['responsiveness_to_mitraruma']??'' }} </td>
@@ -47,7 +45,7 @@
                                         <td>{{ $user->review['helpful']??'' }} </td>
                                         <td>{{ $user->review['commitment']??'' }} </td>
                                         <td>{{ $user->review['activeness']??'' }} </td>
-                                        <td>{{ $user->review['overall_score']??'' }} </td>
+                                        <td>{{ round($user->review['overall_score'],2)??'' }} </td>
                                         <td width="15%">
                                             <a href="{{ route('aplikators.edit', ['aplikator' => $user]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>

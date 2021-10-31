@@ -74,6 +74,11 @@ class WpUser extends Model
         return $this->hasMany(WpProject::class, 'vendor_user_id');        
     }
 
+    public function review()
+    {
+        return $this->hasOne(WpVendorExtensionAttribute::class,'user_id');        
+    }
+
     public function getUserPictureUrlAttribute()
     {
         if ($this->attributes['user_type'] == "customer" && strpos($this->attributes['user_picture_url'], "http") !== false)

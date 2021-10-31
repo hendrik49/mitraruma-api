@@ -45,9 +45,9 @@ class VendorController extends Controller
         $masters = WpCms::get();
 
         if ($user->user_type == WpUser::TYPE_ADMIN)
-            $aplikators = WpUser::with('projects')->where('user_type',WpUser::TYPE_VENDOR)->get();
+            $aplikators = WpUser::with('projects','review')->where('user_type',WpUser::TYPE_VENDOR)->get();
         else
-            $aplikators = WpUser::with('projects')->where('ID', $user->ID)->where('user_type',WpUser::TYPE_VENDOR)->get();
+            $aplikators = WpUser::with('projects','review')->where('ID', $user->ID)->where('user_type',WpUser::TYPE_VENDOR)->get();
 
         return view('aplikators.dashboard', compact('user', 'masters', 'aplikators', 'progresVendor', 'progres', 'projects'));
     }

@@ -15,10 +15,12 @@
                 @endif
                 <h2>List Konsultasi
                     <div style="float: right!important;">
+                        @if(Auth::user()->user_type=="admin")
                         <a
                         href="{{route('proyek.create')}}"
                         class="btn btn-success"
                         ><i class="fa fa-plus" aria-hidden="true"></i> Tambah Konsultasi</a>
+                        @endif
                     </div>
                 </h2>
                 <div class="card">

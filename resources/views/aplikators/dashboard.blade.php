@@ -129,6 +129,11 @@
                             <div class="col-lg-6 col-xs-6">
                                 <div class="col-xs-5">
                                     <div class="form-group @if ($errors->has('user_picture_url')) has-error @endif">
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
                                         <div class="img">
                                             <img class="img img-responsive" style="margin-bottom:5px;" width="100"
                                                 height="75" id="avatar" @if ($user->user_picture_url) src="{{ $user->user_picture_url }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>

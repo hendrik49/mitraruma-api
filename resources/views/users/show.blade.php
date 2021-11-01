@@ -162,7 +162,6 @@
                                                     @endforeach
                                                 @endif
                                             </select>
-
                                         </div>
                                         <div
                                             class="form-group{{ $errors->has('customer_segmentation') ? ' has-error' : '' }}">

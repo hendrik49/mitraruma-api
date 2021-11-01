@@ -197,7 +197,7 @@
                                                     @endforeach
                                                 @else
                                                     @foreach ($masters->where('name', 'skill-set')->first()->value as $p)
-                                                        <option value="{{ $p['code'] }}">
+                                                        <option value="{{ $p['name'] }}">
                                                             {{ $p['name'] }}</option>
                                                     @endforeach
                                                 @endif

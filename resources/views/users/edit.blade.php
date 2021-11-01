@@ -191,7 +191,7 @@
                                         </div>
                                         <div class="form-group{{ $errors->has('customer_segmentation') ? ' has-error' : '' }}">
                                             <label for="customer_segmentation" >Customer Segmentation</label>
-                                            <select class="form-control select2" id="coverage-area-field" name="skill_set">                    
+                                            <select multiple class="form-control select2" id="coverage-area-field" name="skill_set">                    
                                                 @if($user->extension->where('name','segment')->first())
                                                     @foreach ($masters->where('name', 'segment')->first()->value as $p)
                                                         <option @if(in_array($p['name'],$user->extension->where('name','segment')->first()->value)) selected @endif value="{{ $p['code'] }}">{{ $p['name'] }}</option>

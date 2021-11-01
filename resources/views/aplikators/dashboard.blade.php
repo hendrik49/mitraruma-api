@@ -578,6 +578,14 @@
         $pieLabel = $pie->pluck('label');
         $pieValue = $pie->pluck('value');
         
+        $stackBarData = [];
+        foreach ($pie as $p) {
+            $el = [];
+            $el['label'] = $p->label;
+            $el['data'] = [0, $p->value];
+            $el['backgroundColor'] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+            $stackBarData[] = $el;
+        }
         $per = json_encode([$pf->quality ?? 0, $pf->responsiveness_to_customer ?? 0, $pf->responsiveness_to_mitraruma ?? 0, $pf->behaviour ?? 0, $pf->helpful ?? 0, $pf->commitment ?? 0, $pf->activeness ?? 0]);
         $overall = round(($pf->quality + $pf->responsiveness_to_customer + $pf->responsiveness_to_mitraruma + $pf->behaviour + $pf->helpful + $pf->commitment + $pf->activeness) / 7);
     @endphp
@@ -669,30 +677,14 @@
                     },
                 };
 
+                var data = <?php echo json_encode($stackBarData); ?>;
                 var configBar = {
                     type: 'bar',
                     data: {
                         labels: ['',
                             'Capacity'
                         ],
-                        datasets: [{
-                            label: 'Complete',
-                            data: [0, 2],
-                            backgroundColor: 'green'
-                        },{
-                            label: 'On Progress',
-                            data: [0, 4],
-                            backgroundColor: 'orange'
-                        }, {
-                            label: 'Delay',
-                            data: [0, 2],
-                            backgroundColor: 'red'
-                        },
-                        {
-                            label: 'Complaint',
-                            data: [0, 2],
-                            backgroundColor: '#07424A'
-                        }]
+                        datasets: data
                     },
                     options: {
                         responsive: true,

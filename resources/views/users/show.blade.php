@@ -155,7 +155,7 @@
                                         </div>
                                         <div class="form-group{{ $errors->has('coverage-area') ? ' has-error' : '' }}">
                                             <label for="coverage-area">Coverage Area</label>
-                                            <select class="form-control" id="coverage-area-field" name="skill_set">
+                                            <select class="form-control" id="coverage-area-field" name="area-coverage">
                                                 @if ($user->extension->where('name', 'Coverage')->first())
                                                     @foreach ($user->extension->where('name', 'Coverage')->first()->value as $p)
                                                         <option value="{{ $p }}">{{ $p }}</option>

@@ -208,7 +208,7 @@
                                         </div>
                                         <div class="form-group{{ $errors->has('coverage-area') ? ' has-error' : '' }}">
                                             <label for="coverage-area">Coverage Area</label>
-                                            <select multiple class="form-control select2" id="coverage-area-field" name="skill_set">
+                                            <select multiple class="form-control select2" id="coverage-area-field" name="area-coverage">
                                                 @if ($user->extension->where('name', 'Coverage')->first())
                                                     @foreach ($masters->where('name', 'area-coverage')->first()->value as $p)
                                                         @foreach ($p['child'] as $v)

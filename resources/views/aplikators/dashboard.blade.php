@@ -144,19 +144,41 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="name-field">Service Area</label>
-                                        <span class="form-control">Kota Bogor</span>
+                                        <select class="form-control" id="coverage-area-field" name="area-coverage">
+                                            @if ($user->extension->where('name', 'Coverage')->first())
+                                                @foreach ($user->extension->where('name', 'Coverage')->first()->value as $p)
+                                                    <option value="{{ $p }}">{{ $p }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="name-field">Skill Type</label>
-                                        <span class="form-control">Interior, Civil, Specialty</span>
+                                        <select multiple class="form-control select2" id="skill_set-field"
+                                            name="skill_set[]" disabled>
+                                            @if ($user->extension->where('name', 'SKILLSET')->first())
+                                                @foreach ($masters->where('name', 'skill-set')->first()->value as $p)
+                                                    <option @if (in_array($p['name'], $user->extension->where('name', 'SKILLSET')->first()->value)) selected @endif value="{{ $p['name'] }}">
+                                                        {{ $p['name'] }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="name-field">Segmentation</label>
-                                        <span class="form-control">Low</span>
+                                        <select class="form-control select2" multiple id="coverage-area-field"
+                                            name="skill_set" disabled>
+                                            @if ($user->extension->where('name', 'segment')->first())
+                                                @foreach ($masters->where('name', 'segment')->first()->value as $p)
+                                                    <option @if (in_array($p['name'], $user->extension->where('name', 'segment')->first()->value)) selected @endif value="{{ $p['code'] }}">
+                                                        {{ $p['name'] }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -556,7 +578,7 @@
         @parent
         <script type="text/javascript">
             $(function() {
-                // $('.select2').select2();
+                $('.select2').select2();
 
                 var dTable = $('.dt-dashboard').dataTable({
                     'paging': true,

@@ -33,5 +33,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('seting', CmsManagmentController::class);
 
     Route::get('/aplikator-dashboard', [VendorController::class, 'aplikatorDash'])->name('aplikator-dashboard');
+    Route::get('/aplikator-dashboard-index', [VendorController::class, 'aplikatorDashIndex'])->name('aplikator-dashboard-index');
     Route::resource('aplikators', VendorController::class);
 });

@@ -3,7 +3,7 @@
 @section('content')
     <section class="content">
         <!-- Small boxes (Stat box) -->
-        @if (Auth::user()->user_type == 'admin')
+        {{-- @if (Auth::user()->user_type == 'admin')
             <div class="row">
                 <div class="col-md-3 mt-4">
                     <div class="card ">
@@ -113,8 +113,8 @@
                     </div>
                 </div>
             </div>
-        @endif
-        <div class="row">
+        @endif --}}
+        <div class="row mt-2">
             <!-- ./col -->
             <div class="col-lg-6 col-xs-8">
                 <div class="card ">
@@ -131,7 +131,7 @@
                                     <div class="form-group @if ($errors->has('user_picture_url')) has-error @endif">
                                         <div class="img">
                                             <img class="img img-responsive" style="margin-bottom:5px;" width="100"
-                                                height="65" id="avatar" @if ($user->user_picture_url) src="{{ $user->user_picture_url }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
+                                                height="75" id="avatar" @if ($user->user_picture_url) src="{{ $user->user_picture_url }}" @else src="http://nanoup.net/assets/userdata/avatar/thumbs/default-avatar.png" @endif>
                                         </div>
                                     </div>
                                 </div>

@@ -130,11 +130,12 @@
                                         <div class="form-group @if ($errors->has('portfolio')) has-error @endif">
                                             <label for="nik-field">Portfolio</label>
                                             @if ($user->portfolio)
-                                                @if (true)
+                                                @if (str_contains($user->portfolio, '.pdf'))
                                                     <div class="img mt-2">
                                                         <embed src="{{ $user->portfolio }}" width="500" height="375">
                                                     </div>
-                                                @else
+                                                @elseif (str_contains($user->portfolio,'.jpg') ||
+                                                    str_contains($user->portfolio,'.png')||str_contains($user->portfolio,'.jpeg'))
                                                     <div class="img mt-2">
                                                         <img class="img img-responsive" style="margin-bottom:5px;"
                                                             width="100" height="100" id="avatar" @if ($user->portfolio) src="{{ $user->portfolio }}" @endif>
@@ -144,7 +145,8 @@
                                         </div>
                                         <div class="form-group @if ($errors->has('skill_set')) has-error @endif">
                                             <label for="triwulan-field">Skill Set </label>
-                                            <select multiple class="form-control select2" id="skill_set-field" name="skill_set">
+                                            <select multiple class="form-control select2" id="skill_set-field"
+                                                name="skill_set">
                                                 @if ($user->extension->where('name', 'SKILLSET')->first())
                                                     @foreach ($masters->where('name', 'skill-set')->first()->value as $p)
                                                         <option @if (in_array($p['name'], $user->extension->where('name', 'SKILLSET')->first()->value)) selected @endif value="{{ $p['code'] }}">

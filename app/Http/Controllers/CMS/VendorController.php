@@ -37,6 +37,7 @@ class VendorController extends Controller
             $pieStatus = WpProject::where('vendor_user_id', $user->ID)->whereNotNull('service_type')->select(DB::raw('service_type as label'), DB::raw('count(*) as value'))->groupBy('service_type')->get();
 
         } else {
+            $user = WpUser::where('ID',$id)->first();
             $projects = WpProject::where('vendor_user_id', $id)->get();
             $progres = WpProject::where('vendor_user_id', $id)->where('status', '<>', WpProject::Project_Ended)->get();
             $progresVendor = WpProject::where('vendor_user_id', $id)->whereNotNull('vendor_user_id')->where('status', '=', WpProject::Project_Ended)->get();

@@ -107,7 +107,7 @@
                                                 {{ $review->review['helpful'] ?? '' }}
                                                 {{ $review->review['behaviour'] ?? '' }} </td>
                                             <td>
-                                                <a href="{{ url('aplikator-dashboard', ['review' => $review->ID]) }}"
+                                                <a href="{{ url('admin/aplikator-dashboard', ['id' => $review->ID]) }}"
                                                     class="btn btn-sm btn-warning"> <i
                                                         class="glyphicon glyphicon-eye-open"></i>
                                                     View </a>

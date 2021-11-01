@@ -30,6 +30,7 @@ class VendorController extends Controller
         $user = Auth::user();
         
         if ($user->user_type == "vendor") {
+            $user = WpUser::where('ID',$user->ID)->first();
             $projects = WpProject::where('vendor_user_id', $user->ID)->get();
             $progres = WpProject::where('vendor_user_id', $user->ID)->where('status', '<>', WpProject::Project_Ended)->get();
             $progresVendor = WpProject::where('vendor_user_id', $user->ID)->where('status','=', WpProject::Project_Ended)->get();

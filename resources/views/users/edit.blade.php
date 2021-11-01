@@ -194,7 +194,7 @@
                                             <select class="form-control" id="coverage-area-field" name="skill_set">                    
                                                 @if($user->extension->where('name','segment')->first())
                                                     @foreach ($masters->where('name', 'segment')->first()->value as $p)
-                                                        <option value="{{ $p['code'] }}">{{ $p['name'] }}</option>
+                                                        <option @if(in_array($p['name'],$user->extension->where('name','segment')->first()->value)) selected @endif value="{{ $p['code'] }}">{{ $p['name'] }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>                                                                       

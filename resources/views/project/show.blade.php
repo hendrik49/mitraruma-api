@@ -142,12 +142,12 @@
                                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                                 <ol class="carousel-indicators">
                                                     @foreach(json_decode($project->images) as $key => $image )
-                                                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="active"></li>
+                                                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="{{$key == 0 ? 'active' : '' }}"></li>
                                                     @endforeach
                                                 </ol>                                              
                                                 <div class="carousel-inner" role="listbox">
                                                   @foreach(json_decode($project->images) as $key => $image )
-                                                     <div class="carousel-item active">
+                                                     <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
                                                          <img class="d-block img-fluid" src="{{ asset('storage/' . $image) }}" width="320px" alt="imge">
                                                      </div>
                                                   @endforeach

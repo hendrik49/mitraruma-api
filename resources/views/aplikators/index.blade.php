@@ -45,7 +45,7 @@
                                         <td>{{ $user->review['helpful']??'' }} </td>
                                         <td>{{ $user->review['commitment']??'' }} </td>
                                         <td>{{ $user->review['activeness']??'' }} </td>
-                                        <td>{{ round($user->review['overall_score'],2)??'' }} </td>
+                                        <td>{{ $user->review['overall_score']??'' }} </td>
                                         <td width="15%">
                                             <a href="{{ route('aplikators.edit', ['aplikator' => $user]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>

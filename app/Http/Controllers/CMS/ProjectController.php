@@ -78,7 +78,7 @@ class ProjectController extends Controller
         $aplikators = WpUser::where('user_type', WpUser::TYPE_VENDOR)->get();
         $customers = WpUser::where('user_type', WpUser::TYPE_CUSTOMER)->get();
 
-        return view('project.create', compact('aplikators', 'customers','subStatus'));
+        return view('project.create', compact('aplikators', 'customers', 'subStatus'));
     }
 
     public function projectStatus($id, $status)
@@ -113,7 +113,7 @@ class ProjectController extends Controller
                 'vendor_name' => 'nullable|min:3',
                 'customer_contact' => 'required|min:6',
                 'estimated_budget' => 'required|numeric',
-                'dokumentasi' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
+                'foto' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
             ]);
 
             DB::beginTransaction();
@@ -126,10 +126,14 @@ class ProjectController extends Controller
             if ($vendor)
                 $project->vendor_name = $vendor->display_name;
 
-            $foto = $request->file('foto');
-            if ($foto) {
-                $project_path = $foto->store('fotoproject', 'public');
-                $project->images = $project_path;
+            $fotos = $request->file('foto');
+            $fotoArray = [];
+            if ($fotos) {
+                foreach ($fotos as $file) {
+                    $project_path = $file->store('fotoproject', 'public');
+                    $fotoArray[] = $project_path;
+                }
+                $project->images = $fotoArray;
             }
 
             $project->fill($request->all());
@@ -137,7 +141,7 @@ class ProjectController extends Controller
 
             DB::commit();
 
-            return redirect()->route('proyek.index')->with('status', 'Data konsultasi no. '.$project->order_number.' berhasil disimpan');
+            return redirect()->route('proyek.index')->with('status', 'Data konsultasi no. ' . $project->order_number . ' berhasil disimpan');
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->with('errors', $e->validator->getMessageBag());
@@ -166,7 +170,7 @@ class ProjectController extends Controller
         $orderStatus = new OrderStatus;
         $subStatus = json_decode($orderStatus->data);
         $project = WpProject::findOrfail($id);
-        return view('project.edit', ['project' => $project,'subStatus'=>$subStatus]);
+        return view('project.edit', ['project' => $project, 'subStatus' => $subStatus]);
     }
 
     public function editRate($id)

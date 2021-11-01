@@ -116,7 +116,7 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="cover">Foto</label>
-                                            <input type="file" class="form-control" name="dokumentasi" accept="image/*" multiple>
+                                            <input type="file" class="form-control" name="foto[]" accept="image/*" multiple>
                                             <small class="text-muted">Format Image:png,jpg</small>
                                         </div>
                                         <div class="col-sm-6">

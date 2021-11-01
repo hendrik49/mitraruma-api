@@ -165,10 +165,11 @@
                                         </div>   
                                         <div class="form-group @if($errors->has('skill_set')) has-error @endif">
                                            <label for="triwulan-field">Skill Set</label>
-                                                <select class="form-control" id="skill_set-field" name="skill_set">                    
-                                                    @if($user->extension->where('name','SKILLSET')->first())
-                                                        @foreach($user->extension->where('name','SKILLSET')->first()->value as $p)
-                                                            <option value="{{ $p }}">{{ $p }}</option>
+                                                <select multiple class="form-control select2" id="skill_set-field" name="skill_set">                    
+                                                    @if ($user->extension->where('name', 'SKILLSET')->first())
+                                                        @foreach ($masters->where('name', 'skill-set')->first()->value as $p)
+                                                            <option @if (in_array($p['name'], $user->extension->where('name', 'SKILLSET')->first()->value)) selected @endif value="{{ $p['code'] }}">
+                                                                {{ $p['name'] }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>                       

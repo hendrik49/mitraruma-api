@@ -493,8 +493,8 @@
                                     <th>applicator name</th>
                                     <th>tipe proyek</th>
                                     <th>status</th>
-                                    <th>sub status</th>
                                     <th>date</th>
+                                    <th>sub status</th>
                                     <th>description</th>
                                 </tr>
                             </thead>
@@ -509,8 +509,8 @@
                                         <td>{{ $project->vendor_name }}</td>
                                         <td width="10%">{{ $project->service_type }}</td>
                                         <td>{{ $project->status }}</td>
-                                        <td>{{ $project->project_note }}</td>
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
+                                        <td>{{ $project->project_note }}</td>
                                         <td>{{ $project->description }}</td>
                                     </tr>
                                 @endforeach

@@ -518,6 +518,7 @@
                                     <th>date</th>
                                     <th>sub status</th>
                                     <th>description</th>
+                                    <th>location</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -534,6 +535,7 @@
                                         <td>{{ $project->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $project->project_note }}</td>
                                         <td>{{ $project->description }}</td>
+                                        <td>{{ $project->street }}</td>
                                     </tr>
                                 @endforeach
 

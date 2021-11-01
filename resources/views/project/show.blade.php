@@ -132,13 +132,6 @@
                                     <div class="form-group row">
                                         <label for="cover">Foto</label>
                                         @if ($project->images != null)
-                                            @foreach (json_decode($project->images) as $key => $image)
-                                                <div class="col-sm-6">
-                                                    @if(isset($image->pathUrl))
-                                                        <img src="{{ $image->pathUrl }}" width="320px" />                                                                                        
-                                                    @endif
-                                                </div>
-                                            @endforeach
                                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                                 <ol class="carousel-indicators">
                                                     @foreach(json_decode($project->images) as $key => $image )
@@ -148,7 +141,7 @@
                                                 <div class="carousel-inner" role="listbox">
                                                   @foreach(json_decode($project->images) as $key => $image )
                                                      <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
-                                                         <img class="d-block img-fluid" src="{{ asset('storage/' . $image) }}" width="320px" alt="imge">
+                                                         <img class="d-block img-fluid" src="{{ asset('storage/' . isset($image->pathUrl)?$image->pathUrl:$image) }}" width="320px" alt="imge">
                                                      </div>
                                                   @endforeach
                                                 </div>

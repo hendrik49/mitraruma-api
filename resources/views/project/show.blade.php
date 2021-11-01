@@ -141,7 +141,11 @@
                                                 <div class="carousel-inner" role="listbox">
                                                   @foreach(json_decode($project->images) as $key => $image )
                                                      <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
-                                                         <img class="d-block img-fluid" src="{{ asset('storage/' . isset($image->pathUrl)?$image->pathUrl:$image) }}" width="320px" alt="imge">
+                                                        @if(isset($image->pathUrl))
+                                                         <img class="d-block img-fluid" src="{{ $image->pathUrl }}" width="320px" alt="imge">
+                                                         @else
+                                                         <img class="d-block img-fluid" src="{{ asset('storage/' . $image) }}" width="320px" alt="imge">
+                                                         @endif
                                                      </div>
                                                   @endforeach
                                                 </div>

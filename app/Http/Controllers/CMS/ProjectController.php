@@ -129,7 +129,7 @@ class ProjectController extends Controller
             $foto = $request->file('foto');
             if ($foto) {
                 $project_path = $foto->store('fotoproject', 'public');
-                $project->dokumentasi = $project_path;
+                $project->images = $project_path;
             }
 
             $project->fill($request->all());
@@ -200,7 +200,7 @@ class ProjectController extends Controller
             $foto = $request->file('foto');
             if ($foto) {
                 $project_path = $foto->store('fotoproject', 'public');
-                $project->dokumentasi = $project_path;
+                $project->images = $project_path;
             }
 
             $project->fill($request->all());

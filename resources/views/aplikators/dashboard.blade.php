@@ -255,7 +255,7 @@
                         @if ($user->portfolio)
                             @if (true)
                                 <div class="img mt-2">
-                                    <embed src="/storage/{{ $user->portfolio }}" width="450" height="375">
+                                    <embed src="{{ $user->portfolio }}" width="450" height="375">
                                 </div>
                             @else
                                 <div class="img mt-2">

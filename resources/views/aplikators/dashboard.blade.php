@@ -579,7 +579,7 @@
         $pieValue = $pie->pluck('value');
         
         $per = json_encode([$pf->quality ?? 0, $pf->responsiveness_to_customer ?? 0, $pf->responsiveness_to_mitraruma ?? 0, $pf->behaviour ?? 0, $pf->helpful ?? 0, $pf->commitment ?? 0, $pf->activeness ?? 0]);
-        
+        $overall = round(($pf->quality + $pf->responsiveness_to_customer + $pf->responsiveness_to_mitraruma  + $pf->behaviour  + $pf->helpful + $pf->commitment + $pf->activeness )/7);
     @endphp
     @section('scripts')
         @parent
@@ -649,7 +649,7 @@
                             'Activeness'
                         ],
                         datasets: [{
-                            label: 'Key Performance',
+                            label: 'Overall Score: {{$overall}}',
                             data: <?php echo $per; ?>,
                             fill: true,
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',

@@ -579,7 +579,7 @@
         $pieValue = $pie->pluck('value');
         
         $per = json_encode([$pf->quality ?? 0, $pf->responsiveness_to_customer ?? 0, $pf->responsiveness_to_mitraruma ?? 0, $pf->behaviour ?? 0, $pf->helpful ?? 0, $pf->commitment ?? 0, $pf->activeness ?? 0]);
-        $overall = round(($pf->quality + $pf->responsiveness_to_customer + $pf->responsiveness_to_mitraruma  + $pf->behaviour  + $pf->helpful + $pf->commitment + $pf->activeness )/7);
+        $overall = round(($pf->quality + $pf->responsiveness_to_customer + $pf->responsiveness_to_mitraruma + $pf->behaviour + $pf->helpful + $pf->commitment + $pf->activeness) / 7);
     @endphp
     @section('scripts')
         @parent
@@ -649,7 +649,7 @@
                             'Activeness'
                         ],
                         datasets: [{
-                            label: 'Overall Score: {{$overall}}',
+                            label: 'Overall Score: {{ $overall }}',
                             data: <?php echo $per; ?>,
                             fill: true,
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -669,37 +669,45 @@
                     },
                 };
 
-                const configBar = {
+                var configBar = {
                     type: 'bar',
                     data: {
-                        labels: [
-                            'Jan',
-                            'Feb',
-                            'Mar',
-                            'Apr',
-                            'Mei',
-                            'Jun',
-                            'July'
+                        labels: ['',
+                            'Capacity'
                         ],
                         datasets: [{
-                            label: 'Kapasitas',
-                            data: [5, 4, 3, 3, 2, 4, 4],
-                            fill: true,
-                            backgroundColor: 'rgba(000, 002, 132, 0.8)',
-                            borderColor: 'rgb(255, 99, 132)',
-                            pointBackgroundColor: 'rgb(255, 99, 132)',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgb(255, 99, 132)'
+                            label: 'Complete',
+                            data: [0, 2],
+                            backgroundColor: 'green'
+                        },{
+                            label: 'On Progress',
+                            data: [0, 4],
+                            backgroundColor: 'orange'
+                        }, {
+                            label: 'Delay',
+                            data: [0, 2],
+                            backgroundColor: 'red'
+                        },
+                        {
+                            label: 'Complaint',
+                            data: [0, 2],
+                            backgroundColor: '#07424A'
                         }]
                     },
                     options: {
-                        elements: {
-                            line: {
-                                borderWidth: 3
-                            }
+                        responsive: true,
+                        legend: {
+                            position: 'right' // place legend on the right side of chart
+                        },
+                        scales: {
+                            xAxes: [{
+                                stacked: true // this should be set to make the bars stacked
+                            }],
+                            yAxes: [{
+                                stacked: true // this also..
+                            }]
                         }
-                    },
+                    }
                 };
 
                 window.onload = function() {

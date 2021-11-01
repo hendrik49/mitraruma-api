@@ -50,6 +50,10 @@
                                             <a href="{{ route('aplikators.edit', ['aplikator' => $user]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>
                                                 View </a>
+                                            <a href="{{ url('admin/aplikator-dashboard', ['id' => $user->ID]) }}"
+                                                    class="btn btn-sm btn-warning"> <i
+                                                        class="glyphicon glyphicon-eye-open"></i>
+                                                    View Dashboard </a>
                                         </td>
                                     </tr>
                                 @endforeach

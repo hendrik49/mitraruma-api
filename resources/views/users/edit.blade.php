@@ -193,8 +193,8 @@
                                             <label for="customer_segmentation" >Customer Segmentation</label>
                                             <select class="form-control" id="coverage-area-field" name="skill_set">                    
                                                 @if($user->extension->where('name','segment')->first())
-                                                @foreach($user->extension->where('name','segment')->first()->value as $p)
-                                                    <option value="{{ $p }}">{{ $p }}</option>
+                                                    @foreach ($masters->where('name', 'segment')->first()->value as $p)
+                                                        <option value="{{ $p['code'] }}">{{ $p['name'] }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>                                                                       

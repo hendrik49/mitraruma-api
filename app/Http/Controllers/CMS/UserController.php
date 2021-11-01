@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Models\WpUser;
 use App\Http\Controllers\Controller;
+use App\Models\WpCms;
 
 class UserController extends Controller
 {
@@ -133,13 +134,16 @@ class UserController extends Controller
     public function show($id)
     {
         $user = WpUser::with('extension')->findOrfail($id);
-        return view('users.show', ['user' => $user]);
+        $masters = WpCms::get();
+        return view('users.show', ['user' => $user,'masters'=>$masters]);
     }
 
     public function edit($id)
     {
         $user = WpUser::with('extension')->findOrfail($id);
-        return view('users.edit', ['user' => $user]);
+        $masters = WpCms::get();
+
+        return view('users.edit', ['user' => $user,'masters'=>$masters]);
     }
 
     public function update(Request $request, $id)

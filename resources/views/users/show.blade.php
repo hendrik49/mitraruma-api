@@ -142,10 +142,10 @@
                                         </div>
                                         <div class="form-group{{ $errors->has('customer_segmentation') ? ' has-error' : '' }}">
                                             <label for="customer_segmentation" >Customer Segmentation </label>
-                                            <select class="form-control" id="coverage-area-field" name="skill_set">                    
+                                            <select class="form-control select2" multiple id="coverage-area-field" name="skill_set">                    
                                                     @if($user->extension->where('name','segment')->first())
-                                                    @foreach($user->extension->where('name','segment')->first()->value as $p)
-                                                        <option value="{{ $p }}">{{ $p }}</option>
+                                                        @foreach ($masters->where('name', 'segment')->first()->value as $p)
+                                                            <option value="{{ $p['code'] }}">{{ $p['name'] }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>                                                                           
@@ -164,4 +164,13 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
+@section('scripts')
+@parent
+<script type="text/javascript">
+    $(function() {
+        $('.select2').select2();
+    });
+</script>
+@endsection
+

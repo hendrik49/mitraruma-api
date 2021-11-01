@@ -25,9 +25,10 @@ class VendorController extends Controller
         $this->middleware('auth');
     }
 
-    public function aplikatorDash()
+    public function aplikatorDash(Request $request, $id=null)
     {
         $user = Auth::user();
+        
         if ($user->user_type == "vendor") {
             $projects = WpProject::where('vendor_user_id', $user->ID)->get();
             $progres = WpProject::where('vendor_user_id', $user->ID)->where('status', '<>', WpProject::Project_Ended)->get();
@@ -36,18 +37,18 @@ class VendorController extends Controller
             $pieStatus = WpProject::where('vendor_user_id', $user->ID)->whereNotNull('service_type')->select(DB::raw('service_type as label'), DB::raw('count(*) as value'))->groupBy('service_type')->get();
 
         } else {
-            $projects = WpProject::get();
-            $progres = WpProject::where('status', '<>', WpProject::Project_Ended)->get();
-            $progresVendor = WpProject::whereNotNull('vendor_user_id')->where('status', '=', WpProject::Project_Ended)->get();
-            $pie = WpProject::where('vendor_user_id', $user->ID)->select(DB::raw('status as label'), DB::raw('count(*) as value'))->groupBy('status')->get();
-            $pieStatus = WpProject::where('vendor_user_id', $user->ID)->whereNotNull('service_type')->select(DB::raw('service_type as label'), DB::raw('count(*) as value'))->groupBy('service_type')->get();
+            $projects = WpProject::where('vendor_user_id', $id)->get();
+            $progres = WpProject::where('vendor_user_id', $id)->where('status', '<>', WpProject::Project_Ended)->get();
+            $progresVendor = WpProject::where('vendor_user_id', $id)->whereNotNull('vendor_user_id')->where('status', '=', WpProject::Project_Ended)->get();
+            $pie = WpProject::where('vendor_user_id', $id)->select(DB::raw('status as label'), DB::raw('count(*) as value'))->groupBy('status')->get();
+            $pieStatus = WpProject::where('vendor_user_id', $id)->whereNotNull('service_type')->select(DB::raw('service_type as label'), DB::raw('count(*) as value'))->groupBy('service_type')->get();
         }
 
         $masters = WpCms::get();
 
-        if ($user->user_type == WpUser::TYPE_ADMIN){
-            $aplikators = WpUser::with('projects', 'review')->where('user_type', WpUser::TYPE_VENDOR)->get();
-            $pf = WpVendorExtensionAttribute::where('user_id', $user->ID)->first();
+        if ($user->user_type != "vendor"){
+            $aplikators = WpUser::with('projects', 'review')->where('ID', $id)->where('user_type', WpUser::TYPE_VENDOR)->get();
+            $pf = WpVendorExtensionAttribute::where('user_id', $id)->first();
         }
         else{
             $aplikators = WpUser::with('projects', 'review')->where('ID', $user->ID)->where('user_type', WpUser::TYPE_VENDOR)->get();

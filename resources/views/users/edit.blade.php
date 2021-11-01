@@ -190,12 +190,10 @@
                                             <label for="triwulan-field">Skill Set</label>
                                             <select multiple class="form-control select2" id="skill_set-field"
                                                 name="skill_set">
-                                                @if ($user->extension->where('name', 'SKILLSET')->first())
-                                                    @foreach ($masters->where('name', 'skill-set')->first()->value as $p)
-                                                        <option @if (in_array($p['name'], $user->extension->where('name', 'SKILLSET')->first()->value)) selected @endif value="{{ $p['code'] }}">
-                                                            {{ $p['name'] }}</option>
-                                                    @endforeach
-                                                @endif
+                                                @foreach ($masters->where('name', 'skill-set')->first()->value as $p)
+                                                    <option @if (in_array($p['name'], $user->extension->where('name', 'SKILLSET')->first()->value)) selected @endif value="{{ $p['code'] }}">
+                                                        {{ $p['name'] }}</option>
+                                                @endforeach
                                             </select>
                                             @if ($errors->has('skill_set'))
                                                 <span class="help-block">{{ $errors->first('skill_set') }}</span>
@@ -204,14 +202,12 @@
                                         <div class="form-group{{ $errors->has('coverage-area') ? ' has-error' : '' }}">
                                             <label for="coverage-area">Coverage Area</label>
                                             <select class="form-control" id="coverage-area-field" name="skill_set">
-                                                @if ($user->extension->where('name', 'Coverage')->first())
-                                                    @foreach ($masters->where('name', 'area-coverage')->first()->value as $p)
-                                                        @foreach ($p['child'] as $v)
-                                                            <option value="{{ $v }}">{{ $v }}
-                                                            </option>
-                                                        @endforeach
+                                                @foreach ($masters->where('name', 'area-coverage')->first()->value as $p)
+                                                    @foreach ($p['child'] as $v)
+                                                        <option value="{{ $v }}">{{ $v }}
+                                                        </option>
                                                     @endforeach
-                                                @endif
+                                                @endforeach
                                             </select>
                                             @if ($errors->has('coverage-area'))
                                                 <span class="help-block">{{ $errors->first('coverage-area') }}</span>
@@ -222,12 +218,10 @@
                                             <label for="customer_segmentation">Customer Segmentation</label>
                                             <select multiple class="form-control select2" id="coverage-area-field"
                                                 name="skill_set">
-                                                @if ($user->extension->where('name', 'segment')->first())
-                                                    @foreach ($masters->where('name', 'segment')->first()->value as $p)
-                                                        <option @if (in_array($p['name'], $user->extension->where('name', 'segment')->first()->value)) selected @endif value="{{ $p['code'] }}">
-                                                            {{ $p['name'] }}</option>
-                                                    @endforeach
-                                                @endif
+                                                @foreach ($masters->where('name', 'segment')->first()->value as $p)
+                                                    <option @if (in_array($p['name'], $user->extension->where('name', 'segment')->first()->value)) selected @endif value="{{ $p['code'] }}">
+                                                        {{ $p['name'] }}</option>
+                                                @endforeach
                                             </select>
                                             @if ($errors->has('customer_segmentation'))
                                                 <span class="help-block">

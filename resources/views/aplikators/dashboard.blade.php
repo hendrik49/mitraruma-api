@@ -126,7 +126,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-7 col-xs-6">
+                            <div class="col-lg-6 col-xs-6">
                                 <div class="col-xs-5">
                                     <div class="form-group @if ($errors->has('user_picture_url')) has-error @endif">
                                         <div class="img">
@@ -197,7 +197,7 @@
                     <!-- /.card-body -->
                 </div>
             </div>
-            <div class="col-lg-5 col-xs-8">
+            <div class="col-lg-6 col-xs-8">
                 <div class="card ">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">

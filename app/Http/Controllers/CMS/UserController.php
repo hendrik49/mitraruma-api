@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Models\WpUser;
+use App\Models\WpUserExtensionAttribute;
 use App\Http\Controllers\Controller;
 use App\Models\WpCms;
 
@@ -135,7 +136,7 @@ class UserController extends Controller
     {
         $user = WpUser::with('extension')->findOrfail($id);
         $masters = WpCms::get();
-        return view('users.show', ['user' => $user,'masters'=>$masters]);
+        return view('users.show', ['user' => $user, 'masters' => $masters]);
     }
 
     public function edit($id)
@@ -143,7 +144,7 @@ class UserController extends Controller
         $user = WpUser::with('extension')->findOrfail($id);
         $masters = WpCms::get();
 
-        return view('users.edit', ['user' => $user,'masters'=>$masters]);
+        return view('users.edit', ['user' => $user, 'masters' => $masters]);
     }
 
     public function update(Request $request, $id)
@@ -196,9 +197,52 @@ class UserController extends Controller
             }
             $user->save();
 
+
+            if ($request->has('skill_set')) {
+                $exs = WpUserExtensionAttribute::where('name', 'SKILLSET')->where('user_id', $id)->first();
+                if ($exs) {
+                    $exs->value = $request->skill_set;
+                    $exs->save();
+                } else {
+                    $exs = new WpUserExtensionAttribute;
+                    $exs->user_id = $id;
+                    $exs->name = 'SKILLSET';
+                    $exs->value = $request->skill_set;
+                    $exs->save();
+                }
+            }
+
+            if ($request->has('coverage')) {
+                $exs = WpUserExtensionAttribute::where('name', 'Coverage')->where('user_id', $id)->first();
+                if ($exs) {
+                    $exs->value = $request->coverage;
+                    $exs->save();
+                } else {
+                    $exs = new WpUserExtensionAttribute;
+                    $exs->user_id = $id;
+                    $exs->name = 'Coverage';
+                    $exs->value = $request->coverage;
+                    $exs->save();
+                }
+            }
+
+            if ($request->has('segment')) {
+                $exs = WpUserExtensionAttribute::where('name', 'segment')->where('user_id', $id)->first();
+                if ($exs) {
+                    $exs->value = $request->segment;
+                    $exs->save();
+                } else {
+                    $exs = new WpUserExtensionAttribute;
+                    $exs->user_id = $id;
+                    $exs->name = 'segment';
+                    $exs->value = $request->segment;
+                    $exs->save();
+                }
+            }
+
             DB::commit();
 
-            return redirect()->route('users.index')->with('status', 'Data user berhasil diubah');
+            return redirect()->route('users.index')->with('status', 'Data user ID ' . $id . ' berhasil diubah');
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->with('errors', $e->validator->getMessageBag());

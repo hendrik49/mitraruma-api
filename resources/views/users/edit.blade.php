@@ -192,7 +192,7 @@
                                                 name="skill_set[]">
                                                 @if ($user->extension->where('name', 'SKILLSET')->first())
                                                     @foreach ($masters->where('name', 'skill-set')->first()->value as $p)
-                                                        <option @if (in_array($p['name'], $user->extension->where('name', 'SKILLSET')->first()->value)) selected @endif value="{{ $p['code'] }}">
+                                                        <option @if (in_array($p['name'], $user->extension->where('name', 'SKILLSET')->first()->value)) selected @endif value="{{ $p['name'] }}">
                                                             {{ $p['name'] }}</option>
                                                     @endforeach
                                                 @else
@@ -208,7 +208,7 @@
                                         </div>
                                         <div class="form-group{{ $errors->has('coverage-area') ? ' has-error' : '' }}">
                                             <label for="coverage-area">Coverage Area</label>
-                                            <select class="form-control" id="coverage-area-field" name="area-coverage">
+                                            <select class="form-control" id="coverage-area-field" name="coverage[]">
                                                 @if ($user->extension->where('name', 'Coverage')->first())
                                                     @foreach ($masters->where('name', 'area-coverage')->first()->value as $p)
                                                         @foreach ($p['child'] as $v)
@@ -236,12 +236,12 @@
                                                 name="segment[]">
                                                 @if ($user->extension->where('name', 'segment')->first())
                                                     @foreach ($masters->where('name', 'segment')->first()->value as $p)
-                                                        <option @if (in_array($p['name'], $user->extension->where('name', 'segment')->first()->value)) selected @endif value="{{ $p['code'] }}">
+                                                        <option @if (in_array($p['name'], $user->extension->where('name', 'segment')->first()->value)) selected @endif value="{{ $p['name'] }}">
                                                             {{ $p['name'] }}</option>
                                                     @endforeach
                                                 @else
                                                     @foreach ($masters->where('name', 'segment')->first()->value as $p)
-                                                        <option value="{{ $p['code'] }}">
+                                                        <option value="{{ $p['name'] }}">
                                                             {{ $p['name'] }}</option>
                                                     @endforeach
                                                 @endif

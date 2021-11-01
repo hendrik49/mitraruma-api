@@ -113,7 +113,7 @@ class ProjectController extends Controller
                 'vendor_name' => 'nullable|min:3',
                 'customer_contact' => 'required|min:6',
                 'estimated_budget' => 'required|numeric',
-                'foto' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
+                'foto*' => 'required|image|mimes:jpeg,png,jpg,svg|max:1024'
             ]);
 
             DB::beginTransaction();
@@ -133,7 +133,7 @@ class ProjectController extends Controller
                     $project_path = $file->store('fotoproject', 'public');
                     $fotoArray[] = $project_path;
                 }
-                $project->images = $fotoArray;
+                $project->images = json_encode($fotoArray);
             }
 
             $project->fill($request->all());

@@ -47,8 +47,7 @@
                                         <div class="col-sm-6">
                                             <label for="title">No. Room</label>
                                             <input type="text" class="form-control" name="room_id"
-                                                placeholder="Masukkan no room" value="{{ $project->room_id }}"
-                                                readonly>
+                                                placeholder="Masukkan no room" value="{{ $project->room_id }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -127,21 +126,43 @@
                                         <div class="col-sm-6">
                                             <label for="title">Room ID</label>
                                             <input type="text" class="form-control" name="room_id"
-                                                placeholder="Masukkan no room" value="{{ $project->room_id }}"
-                                                readonly>
+                                                placeholder="Masukkan no room" value="{{ $project->room_id }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="cover">Foto</label>
                                         @if ($project->images != null)
-                                            @foreach (json_decode($project->images) as $image)
+                                            @foreach (json_decode($project->images) as $key => $image)
                                                 <div class="col-sm-6">
-                                                    <img src="{{ $image->pathUrl }}" width="320px" />
+                                                    @if(isset($image->pathUrl))
+                                                        <img src="{{ $image->pathUrl }}" width="320px" />                                                                                        
+                                                    @endif
                                                 </div>
                                             @endforeach
+                                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                                <ol class="carousel-indicators">
+                                                    @foreach(json_decode($project->images) as $key => $image )
+                                                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="active"></li>
+                                                    @endforeach
+                                                </ol>                                              
+                                                <div class="carousel-inner" role="listbox">
+                                                  @foreach(json_decode($project->images) as $key => $image )
+                                                     <div class="carousel-item active">
+                                                         <img class="d-block img-fluid" src="{{ asset('storage/' . $image) }}" width="320px" alt="imge">
+                                                     </div>
+                                                  @endforeach
+                                                </div>
+                                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                  <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                  <span class="sr-only">Next</span>
+                                                </a>
+                                              </div>  
                                         @endif
                                     </div>
-      
                                     <h3>List Order Status </h3>
 
                                     <div class="card">
@@ -163,7 +184,7 @@
                                                         <tr>
                                                             <td>{{ ++$key }}</td>
                                                             <td width="15%"">{{ $val['phase'] }}</td>
-                                                            <td width="30%">
+                                                                    <td width=" 30%">
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
@@ -189,7 +210,8 @@
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)
-                                                                            <li>{{ date('Y-m-d',strtotime($item['createdAt'])) }}</li>
+                                                                            <li>{{ date('Y-m-d', strtotime($item['createdAt'])) }}
+                                                                            </li>
                                                                         @endforeach
                                                                     @endif
                                                                 </ul>
@@ -200,10 +222,15 @@
                                                                         @foreach ($val['list'] as $key => $item)
                                                                             @if (isset($item['file']) && isset($item['file'][0]))
                                                                                 <li><a target="_blank"
-                                                                                        href={{ $item['file'] }}>click to view {{ $item['activity'] }}</a>
+                                                                                        href={{ $item['file'] }}>click to
+                                                                                        view {{ $item['activity'] }}</a>
                                                                                 </li>
                                                                             @elseif (isset($item['attachment']))
-                                                                                <li><i class="fas fa-file"></i> <a target="_blank" href={{ $item['attachment'][0] }}>click to view {{ $item['activity'] }}</a>
+                                                                                <li><i class="fas fa-file"></i> <a
+                                                                                        target="_blank"
+                                                                                        href={{ $item['attachment'][0] }}>click
+                                                                                        to view
+                                                                                        {{ $item['activity'] }}</a>
                                                                                 </li>
                                                                             @endif
                                                                         @endforeach

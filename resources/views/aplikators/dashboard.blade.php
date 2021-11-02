@@ -280,11 +280,12 @@
                     </div>
                     <div class="card-body">
                         @if ($user->portfolio)
-                            @if (true)
+                            @if (str_contains($user->portfolio, '.pdf'))
                                 <div class="img mt-2">
-                                    <embed src="{{ $user->portfolio }}" width="450" height="375">
+                                    <embed src="{{ $user->portfolio }}" width="500" height="375">
                                 </div>
-                            @else
+                            @elseif (str_contains($user->portfolio,'.jpg') ||
+                                str_contains($user->portfolio,'.png')||str_contains($user->portfolio,'.jpeg'))
                                 <div class="img mt-2">
                                     <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100"
                                         id="avatar" @if ($user->portfolio) src="{{ $user->portfolio }}" @endif>
@@ -583,13 +584,13 @@
             $el = [];
             $el['label'] = $p->label;
             $el['data'] = [0, $p->value];
-            $el['backgroundColor'] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+            $el['backgroundColor'] = sprintf('#%06X', mt_rand(0, 0xffffff));
             $stackBarData[] = $el;
         }
-        if($pf){
+        if ($pf) {
             $per = json_encode([$pf->quality ?? 0, $pf->responsiveness_to_customer ?? 0, $pf->responsiveness_to_mitraruma ?? 0, $pf->behaviour ?? 0, $pf->helpful ?? 0, $pf->commitment ?? 0, $pf->activeness ?? 0]);
             $overall = round(($pf->quality + $pf->responsiveness_to_customer + $pf->responsiveness_to_mitraruma + $pf->behaviour + $pf->helpful + $pf->commitment + $pf->activeness) / 7);
-        }else{
+        } else {
             $per = json_encode([0, 0, 0, 0, 0, 0, 0]);
             $overall = 0;
         }

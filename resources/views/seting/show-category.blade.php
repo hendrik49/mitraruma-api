@@ -69,9 +69,9 @@
                                                             <td width="45%">{{ $val['link'] }}</td>   
                                                             <td width="45%">{{ $val['icon'] }}</td>   
                                                             <td width="15%">
-                                                                <a href="{{ route('seting.show', ['seting' => $cms->id]) }}"
+                                                                {{-- <a href="{{ route('seting.show', ['seting' => $cms->id]) }}"
                                                                     class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>
-                                                                    Edit </a>
+                                                                    Edit </a> --}}
                                                             </td>                                                                             
                                                         </tr>
                                                     @endforeach

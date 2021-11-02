@@ -4,7 +4,9 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\WpCms;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class CmsManagmentController extends Controller
 {
@@ -87,12 +89,36 @@ class CmsManagmentController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+            $this->validate($request, [
+                'seting' => 'required|min:3',
+                'code' => 'required|min:1',
+                'name' => 'required|min:3'
+            ]);
+            DB::beginTransaction();
+            $params = $request->all();
+            $cms = WpCms::where('name', $params['seting'])->first();
+            if ($cms){
+                $val['code'] =  $params['code'];
+                $val['name'] =  $params['name'];            
+                $paramsSave['value'] =  $cms->value;
+                $paramsSave['value'][] = $val;
+                $paramsSave['name'] =  $params['seting'];
+                $this->cms->update($paramsSave, $cms->id);
+            }
+            else
+                $this->cms->create($params);
 
-        $params = $request->all();
+            DB::commit();
 
-        $result = $this->cms->create($params);
-
-        return response()->json($result['data'], $result['status']);
+            return redirect()->route('seting.index')->with('status', 'Data seting ' .  $params['seting'] . ' berhasil disimpan');
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return redirect()->back()->with('errors', $e->validator->getMessageBag());
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('gagal', 'Simpan project gagal. ' . $e->getMessage());
+        }
     }
 
     /**

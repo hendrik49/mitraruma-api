@@ -6,8 +6,10 @@
 @section('content')
 
     <div class="row">
+        <!-- /.modal -->
         <div class="container col-sm-12">
             <div class="col-md-12">
+
                 @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
@@ -27,9 +29,46 @@
                         </ul>
                     </div>
                 @endif
+                <div class="modal fade" id="modal-default">
+                    <div class="modal-dialog">
+                        <form action="{{ route('seting.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" class="form-control" id="seting" name="seting"
+                                value="{{ $cms->name }}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Kode</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="code" name="code">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nama</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="name" name="name">
+                                        </div>
+                                    </div>
+                                    <!-- /.form group -->
+                                    <!-- /.box -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                    </div>
+                    </form>
+                    <!-- /.modal-dialog -->
+                </div>
+
                 <div class="box">
                     <div class="box-header with-border">
-                        <h2 align="center" class="box-title">Seting {{ $cms->name }}</h2>
+                        <h2 align="center" class="box-title">Seting {{ $cms->name }}                            
+                        </h2>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -41,12 +80,18 @@
                                         <div class="col-sm-6">
                                             <label for="title">Name</label>
                                             <input type="text" class="form-control" name="name"
-                                                placeholder="Masukkan nama seting" value="{{ $cms->name }}"
-                                                readonly>
+                                                placeholder="Masukkan nama seting" value="{{ $cms->name }}" readonly>
                                         </div>
-                                    </div>                                    
-                             
-                                    <h3>List Setting</h3>
+                                    </div>
+
+                                    <h3>List Setting
+                                        <div style="float: right!important;">
+                                            <button type="button" class="btn btn-sm btn-success open-status-dialog"
+                                                    data-toggle="modal" data-target="#modal-default"> <i
+                                                    class="fa fa-plus"></i> Tambah
+                                            </button>
+                                        </div>
+                                    </h3>
 
                                     <div class="card">
                                         <div class="card-body">
@@ -61,16 +106,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ( $cms['value'] as $key => $val)
+                                                    @foreach ($cms['value'] as $key => $val)
                                                         <tr>
                                                             <td width="5%">{{ ++$key }}</td>
                                                             <td width="15%">{{ $val['code'] }}</td>
-                                                            <td width="45%">{{ $val['name'] }}</td>   
+                                                            <td width="45%">{{ $val['name'] }}</td>
                                                             <td width="15%">
-                                                                <a href="{{ route('seting.show', ['seting' => $cms->id]) }}"
-                                                                    class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>
-                                                                    Edit </a>
-                                                            </td>                                                                             
+                                                                {{-- <button type="button"
+                                                                    class="btn btn-sm btn-warning open-status-dialog"
+                                                                    data-code="{{ $val['code'] }}"
+                                                                    data-name="{{ $val['name'] }}"
+                                                                    data-id="{{ $key }}" data-toggle="modal"
+                                                                    data-target="#modal-default"> <i
+                                                                        class="glyphicon glyphicon-edit"></i> Edit
+                                                                </button> --}}
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -92,6 +142,12 @@
     @parent
     <script type="text/javascript">
         $(function() {
+
+            $('.open-status-dialog').on("click", function() {
+                $('#code').val($(this).data('code'));
+                $('#name').val($(this).data('name'));
+            });
+
             var dTable = $('#tab-status').dataTable({
                 'paging': true,
                 'lengthChange': true,

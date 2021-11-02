@@ -42,7 +42,7 @@ if ($pf) {
                             <div class="col-lg-6 col-xs-6">
                                 <div class="col-xs-5">
                                     <div class="form-group @if ($errors->has('user_picture_url')) has-error @endif">
-                                        @if ($overal)
+                                        @if ($overall)
                                             <span class="fa fa-star checked"></span>
                                             <span class="fa fa-star checked"></span>
                                             <span class="fa fa-star checked"></span>

@@ -100,7 +100,7 @@
                                             </td>
                                             <td>{{ ($review->projects->where('status', '<>', 'Project Ended')->count() / $review->capacity) * 100 }}
                                             </td>
-                                            <td>{{ round($review->review['overall_score'], 2) ?? '' }} </td>
+                                            <td>{{ $review->review['overall_score'] ?? '' }} </td>
                                             <td>{{ $review->review['quality'] ?? '' }}
                                                 {{ $review->review['responsiveness_to_customer'] ?? '' }}
                                                 {{ $review->review['responsiveness_to_mitraruma'] ?? '' }}

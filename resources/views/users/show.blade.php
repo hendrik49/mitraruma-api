@@ -146,7 +146,7 @@
                                         <div class="form-group @if ($errors->has('skill_set')) has-error @endif">
                                             <label for="triwulan-field">Skill Set </label>
                                             <select multiple class="form-control select2" id="skill_set-field"
-                                                name="skill_set">
+                                                name="skill_set" disabled>
                                                 @if ($user->extension->where('name', 'SKILLSET')->first())
                                                     @foreach ($masters->where('name', 'skill-set')->first()->value as $p)
                                                         <option @if (in_array($p['name'], $user->extension->where('name', 'SKILLSET')->first()->value)) selected @endif value="{{ $p['code'] }}">
@@ -169,7 +169,7 @@
                                             class="form-group{{ $errors->has('customer_segmentation') ? ' has-error' : '' }}">
                                             <label for="customer_segmentation">Customer Segmentation </label>
                                             <select class="form-control select2" multiple id="coverage-area-field"
-                                                name="skill_set">
+                                                name="skill_set" disabled>
                                                 @if ($user->extension->where('name', 'segment')->first())
                                                     @foreach ($masters->where('name', 'segment')->first()->value as $p)
                                                         <option @if (in_array($p['name'], $user->extension->where('name', 'segment')->first()->value)) selected @endif value="{{ $p['code'] }}">

@@ -126,7 +126,6 @@
         @parent
         <script type="text/javascript">
             $(function() {
-                // $('.select2').select2();
 
                 var dTable = $('.dt-dashboard').dataTable({
                     'paging': true,
@@ -136,7 +135,11 @@
                     'ordering': true,
                     'responsive': true,
                     'info': true,
-                    'scrollX': true
+                    'scrollX': true,
+                    'dom': 'Bfrtip',
+                    'buttons': [{
+                        extend: 'excel'
+                    }]
                 });
             });
         </script>

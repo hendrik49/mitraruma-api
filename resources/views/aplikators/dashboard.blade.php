@@ -203,7 +203,7 @@ if ($pf) {
                         @if ($user->portfolio)
                             @if (str_contains($user->portfolio, '.pdf'))
                                 <div class="img mt-2">
-                                    <embed src="{{ $user->portfolio }}" width="375" height="375">
+                                    <embed src="{{ $user->portfolio }}" width="425" height="375">
                                 </div>
                             @elseif (str_contains($user->portfolio,'.jpg') ||
                                 str_contains($user->portfolio,'.png')||str_contains($user->portfolio,'.jpeg'))

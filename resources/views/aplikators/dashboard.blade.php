@@ -586,8 +586,13 @@
             $el['backgroundColor'] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
             $stackBarData[] = $el;
         }
-        $per = json_encode([$pf->quality ?? 0, $pf->responsiveness_to_customer ?? 0, $pf->responsiveness_to_mitraruma ?? 0, $pf->behaviour ?? 0, $pf->helpful ?? 0, $pf->commitment ?? 0, $pf->activeness ?? 0]);
-        $overall = round(($pf->quality + $pf->responsiveness_to_customer + $pf->responsiveness_to_mitraruma + $pf->behaviour + $pf->helpful + $pf->commitment + $pf->activeness) / 7);
+        if($pf){
+            $per = json_encode([$pf->quality ?? 0, $pf->responsiveness_to_customer ?? 0, $pf->responsiveness_to_mitraruma ?? 0, $pf->behaviour ?? 0, $pf->helpful ?? 0, $pf->commitment ?? 0, $pf->activeness ?? 0]);
+            $overall = round(($pf->quality + $pf->responsiveness_to_customer + $pf->responsiveness_to_mitraruma + $pf->behaviour + $pf->helpful + $pf->commitment + $pf->activeness) / 7);
+        }else{
+            $per = json_encode(0, 0, 0, 0, 0, 0, 0]);
+            $overall = 0;
+        }
     @endphp
     @section('scripts')
         @parent

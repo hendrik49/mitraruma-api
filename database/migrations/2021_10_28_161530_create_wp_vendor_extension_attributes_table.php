@@ -13,20 +13,22 @@ class CreateWpVendorExtensionAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('wp_vendor_extension_attributes', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id');
-            $table->integer('quality')->nullable();
-            $table->integer('responsiveness_to_customer')->nullable();
-            $table->integer('responsiveness_to_mitraruma')->nullable();
-            $table->integer('behaviour')->nullable();
-            $table->integer('helpful')->nullable();
-            $table->integer('commitment')->nullable();
-            $table->integer('activeness')->nullable();
-            $table->double('overall_score')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        if (!Schema::hasTable('wp_vendor_extension_attributes')) {
+            Schema::create('wp_vendor_extension_attributes', function (Blueprint $table) {
+                $table->id();
+                $table->bigInteger('user_id');
+                $table->integer('quality')->nullable();
+                $table->integer('responsiveness_to_customer')->nullable();
+                $table->integer('responsiveness_to_mitraruma')->nullable();
+                $table->integer('behaviour')->nullable();
+                $table->integer('helpful')->nullable();
+                $table->integer('commitment')->nullable();
+                $table->integer('activeness')->nullable();
+                $table->double('overall_score')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        }
     }
 
     /**

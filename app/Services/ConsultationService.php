@@ -7,6 +7,7 @@ use App\Exports\CustomerConsultationExport;
 use App\Exports\VendorConsultationExport;
 use App\Helpers\OrderStatus;
 use App\Http\Resources\ConsultationResource;
+use App\Models\WpUser;
 use App\Repositories\ConsultationRepository;
 use App\Repositories\ProjectRepository;
 use Carbon\Carbon;
@@ -76,6 +77,13 @@ class ConsultationService
         'service_type' => 'nullable|string',
         'orderNumber' => 'integer',
         'orderStatus' => 'integer',
+    ];
+
+    /**
+     * @var Validator
+     */
+    private $validatorRating = [
+        'rating' => 'required|numeric'
     ];
 
     /**
@@ -333,6 +341,61 @@ class ConsultationService
                 'status' => 404,
                 'data' => ['message' => 'Data not found'],
             ];
+        }
+
+        return [
+            'status' => 200,
+            'data' => $consultation,
+        ];
+    }
+
+    public function rating($params, $id)
+    {
+
+        $validator = Validator::make($params, $this->validatorRating);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $consultation = $this->consultation->findById($id);
+        if ($consultation == null) {
+            return [
+                'status' => 404,
+                'data' => ['message' => "Consultation data not found"]
+            ];
+        }
+        if ($params['user_jwt_type'] == WpUser::TYPE_CUSTOMER)
+            $consultation['ratingCustomer'] = $params['rating'];
+        else if ($params['user_jwt_type'] == WpUser::TYPE_VENDOR)
+            $consultation['ratingVendor'] = $params['rating'];
+        else
+            $consultation['ratingAdmin'] = $params['rating'];
+
+        $consultation['updatedAt'] = Carbon::now()->format('Y-m-d\TH:i:s\Z');
+
+        $consultation = $this->consultation->update($consultation, $id);
+        $consultation = $this->consultationResource->fromFirebase($consultation);
+        if (!$consultation) {
+            return [
+                'status' => 404,
+                'data' => ['message' => 'Data not found'],
+            ];
+        }
+
+        $project = $this->projectRepo->findByConsultationId($id);
+        if ($project) {
+            if ($params['user_jwt_type'] == WpUser::TYPE_CUSTOMER)
+                $project['rating_customer'] = $params['rating'];
+            else if ($params['user_jwt_type'] == WpUser::TYPE_VENDOR)
+                $project['rating_vendor'] = $params['rating'];
+            else
+                $project['rating_admin'] = $params['rating'];
+            $project['updated_at'] = date('Y-m-d H:i:s');
+            $this->projectRepo->update($project, $project->id);
         }
 
         return [

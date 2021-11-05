@@ -132,6 +132,16 @@ class ProjectRepository
         if(isset($params['uniq_id'])) {
             $Project->uniq_id= $params['uniq_id'];
         }
+
+        if(isset($params['rating_customer'])) {
+            $Project->rating_customer= $params['rating_customer'];
+        }
+        if(isset($params['rating_vendor'])) {
+            $Project->rating_vendor= $params['rating_vendor'];
+        }
+        if(isset($params['rating_admin'])) {
+            $Project->rating_admin= $params['rating_admin'];
+        }
         
         try {
             $Project->save();

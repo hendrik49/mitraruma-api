@@ -196,6 +196,21 @@ class UserConsultationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
+    public function rating(Request $request, $id)
+    {
+        $params = $request->all();
+
+        $result = $this->consultation->rating($params, $id);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function approve($id)
     {
 

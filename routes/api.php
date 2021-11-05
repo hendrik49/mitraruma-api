@@ -91,6 +91,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::GET('/user/consultation/{id}/order-status', [UserConsultationOrderStatusController::class, 'show'])->middleware('jwt.user');
     Route::GET('/user/consultation/{id}/order-status-selection', [UserConsultationOrderStatusController::class, 'showSelection'])->middleware('jwt.user');
     Route::PUT('/user/consultation/{id}/order-status', [UserConsultationOrderStatusController::class, 'update'])->middleware('jwt.user');
+    Route::POST('/user/consultation/{id}/rating', [UserConsultationController::class, 'rating'])->middleware('jwt.user');
 
     Route::GET('/user/chatroom', [UserChatroomController::class, 'index'])->middleware('jwt.user');
     Route::POST('/user/chatroom', [UserChatroomController::class, 'store'])->middleware('jwt.user');

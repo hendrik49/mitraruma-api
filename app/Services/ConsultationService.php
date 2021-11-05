@@ -83,7 +83,9 @@ class ConsultationService
      * @var Validator
      */
     private $validatorRating = [
-        'rating' => 'required|numeric'
+        'rating' => 'required|numeric',
+        'ulasan' => 'nullable|string',
+        'rating_images' => 'nullable|array'
     ];
 
     /**
@@ -388,13 +390,18 @@ class ConsultationService
 
         $project = $this->projectRepo->findByConsultationId($id);
         if ($project) {
-            if ($params['user_jwt_type'] == WpUser::TYPE_CUSTOMER)
+            if ($params['user_jwt_type'] == WpUser::TYPE_CUSTOMER) {
                 $project['rating_customer'] = $params['rating'];
-            else if ($params['user_jwt_type'] == WpUser::TYPE_VENDOR)
+                $project['rating_customer_note'] = isset($params['ulasan'])?$params['ulasan']:'';
+            } else if ($params['user_jwt_type'] == WpUser::TYPE_VENDOR) {
                 $project['rating_vendor'] = $params['rating'];
-            else
+                $project['rating_vendor_note'] = isset($params['ulasan'])?$params['ulasan']:'';
+            } else {
                 $project['rating_admin'] = $params['rating'];
+                $project['rating_admin_note'] = isset($params['ulasan'])?$params['ulasan']:'';
+            }
             $project['updated_at'] = date('Y-m-d H:i:s');
+            $project['rating_images'] = isset($params['rating_images'])?$params['rating_images']:[];
             $this->projectRepo->update($project, $project->id);
         }
 

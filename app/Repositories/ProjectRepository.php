@@ -142,6 +142,20 @@ class ProjectRepository
         if(isset($params['rating_admin'])) {
             $Project->rating_admin= $params['rating_admin'];
         }
+
+        if(isset($params['rating_customer_note'])) {
+            $Project->rating_customer_note= $params['rating_customer_note'];
+        }
+        if(isset($params['rating_vendor_note'])) {
+            $Project->rating_vendor_note= $params['rating_vendor_note'];
+        }
+        if(isset($params['rating_admin_note'])) {
+            $Project->rating_admin_note= $params['rating_admin_note'];
+        }
+
+        if(isset($params['rating_images'])) {
+            $Project->rating_images= $params['rating_images'];
+        }
         
         try {
             $Project->save();

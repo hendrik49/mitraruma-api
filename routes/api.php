@@ -57,7 +57,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::POST('/applicator/register', [ApplicatorController::class, 'store']);
     Route::POST('/applicator/register/integration', [ApplicatorController::class, 'storeIntegration']);
     Route::POST('/user/remove', [UserController::class, 'remove']);
-
+    Route::POST('/payment/notification', [ConsultationController::class, 'updatePayment']);   
 
     Route::POST('/user/token', [UserTokenController::class, 'store'])->middleware('jwt.user');
     Route::DELETE('/user/token', [UserTokenController::class, 'destroy'])->middleware('jwt.user');

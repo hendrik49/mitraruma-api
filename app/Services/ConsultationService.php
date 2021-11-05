@@ -88,6 +88,12 @@ class ConsultationService
         'rating_images' => 'nullable|array'
     ];
 
+    private $validatorPayment = [
+        'uniq_id' => 'required|string',
+        'status' => 'nullable|string'
+    ];
+    
+
     /**
      * Create a new controller instance.
      *
@@ -408,6 +414,35 @@ class ConsultationService
         return [
             'status' => 200,
             'data' => $consultation,
+        ];
+    }
+
+    public function updatePayment($params)
+    {
+
+        $validator = Validator::make($params, $this->validatorPayment);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }  
+        $id = $params['uniq_id'];
+        $payment = $this->projectRepo->findPaymentsByUniqId($id);
+
+        if ($payment == null) {
+            return [
+                'status' => 404,
+                'data' => ['message' => "Payment data not found"]
+            ];
+        }
+  
+        $payment = $this->projectRepo->updatePayment($params, $payment->id);
+
+        return [
+            'status' => 200,
+            'data' => $payment
         ];
     }
 

@@ -77,6 +77,23 @@ class ConsultationController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePayment(Request $request)
+    {
+
+        $params = $request->all();
+
+        $result = $this->consultation->updatePayment($params);
+
+        return response()->json($result['data'], $result['status']);
+    }
+
+
 
     /**
      * Store a newly created resource in storage.

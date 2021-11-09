@@ -93,6 +93,7 @@ class CmsManagmentController extends Controller
             $this->validate($request, [
                 'seting' => 'required|min:3',
                 'code' => 'required|min:1',
+                'index' => 'nullable|min:1',
                 'name' => 'required|min:3'
             ]);
             DB::beginTransaction();
@@ -100,8 +101,12 @@ class CmsManagmentController extends Controller
             $cms = WpCms::where('name', $params['seting'])->first();
             if ($cms){
                 $val['code'] =  $params['code'];
-                $val['name'] =  $params['name'];            
-                $paramsSave['value'] =  $cms->value;
+                $val['name'] =  $params['name'];   
+                $array =  $cms->value;     
+                if(isset($params['index'])){    
+                    unset($array[$params['index']]);
+                }
+                $paramsSave['value'] =  $array;
                 $paramsSave['value'][] = $val;
                 $paramsSave['name'] =  $params['seting'];
                 $this->cms->update($paramsSave, $cms->id);

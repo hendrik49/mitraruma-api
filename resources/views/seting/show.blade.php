@@ -35,6 +35,8 @@
                             @csrf
                             <input type="hidden" class="form-control" id="seting" name="seting"
                                 value="{{ $cms->name }}">
+                            <input type="hidden" class="form-control" id="index" name="index"
+                                value="">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Edit</h4>
@@ -112,14 +114,15 @@
                                                             <td width="15%">{{ $val['code'] }}</td>
                                                             <td width="45%">{{ $val['name'] }}</td>
                                                             <td width="15%">
-                                                                {{-- <button type="button"
+                                                                <button type="button"
                                                                     class="btn btn-sm btn-warning open-status-dialog"
+                                                                    data-index="{{ --$key }}"
                                                                     data-code="{{ $val['code'] }}"
                                                                     data-name="{{ $val['name'] }}"
                                                                     data-id="{{ $key }}" data-toggle="modal"
                                                                     data-target="#modal-default"> <i
                                                                         class="glyphicon glyphicon-edit"></i> Edit
-                                                                </button> --}}
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -146,6 +149,7 @@
             $('.open-status-dialog').on("click", function() {
                 $('#code').val($(this).data('code'));
                 $('#name').val($(this).data('name'));
+                $('#index').val($(this).data('index'));
             });
 
             var dTable = $('#tab-status').dataTable({

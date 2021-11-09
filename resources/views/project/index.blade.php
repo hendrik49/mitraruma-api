@@ -62,8 +62,14 @@
                                             @if (Auth::user()->user_type == 'admin')
                                             <a href="{{ route('proyek.edit', ['proyek' => $project->id]) }}"
                                                 class="btn btn-sm btn-primary"> <i class="glyphicon glyphicon-edit"></i>
-                                                Edit </a>
-                                            @endif
+                                                Edit 
+                                            </a>
+                                            <form action="{{ route('proyek.destroy', ['proyek' => $project->id]) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete Proyek ID {{$project->order_number}} ? Are you sure?')) { return true } else {return false };">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <button type="submit" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                                            </form>                                            
+                                                @endif
                                             <a href="{{ route('proyek.show', ['proyek' => $project->id]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>
                                                 View </a>

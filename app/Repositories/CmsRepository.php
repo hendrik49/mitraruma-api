@@ -61,7 +61,7 @@ class CmsRepository
         if(isset($params['name'])) {
             $model = $model->where('name', '=', $params['name']);
         }
-        $model = $model->where('name', '<>', 'area-coverage');
+        // $model = $model->where('name', '<>', 'area-coverage');
 
         return $model;
 

@@ -212,6 +212,18 @@ if ($pf) {
                                         id="avatar" @if ($user->portfolio) src="{{ $user->portfolio }}" @endif>
                                 </div>
                             @endif
+                        @else
+                            @if (str_contains($user->portfolio_link, '.pdf'))
+                                <div class="img mt-2">
+                                    <embed src="{{ $user->portfolio_link }}" width="460" height="375">
+                                </div>
+                            @elseif (str_contains($user->portfolio_link,'.jpg') ||
+                                str_contains($user->portfolio_link,'.png')||str_contains($user->portfolio_link,'.jpeg'))
+                                <div class="img mt-2">
+                                    <img class="img img-responsive" style="margin-bottom:5px;" width="100" height="100"
+                                        id="avatar" @if ($user->portfolio_link) src="{{ $user->portfolio_link }}" @endif>
+                                </div>
+                            @endif
                         @endif
                     </div>
                     <!-- /.card-body -->

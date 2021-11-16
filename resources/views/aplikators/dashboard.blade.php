@@ -212,7 +212,7 @@ if ($pf) {
                                         id="avatar" @if ($user->portfolio) src="{{ $user->portfolio }}" @endif>
                                 </div>
                             @endif
-                        @else
+                        @elseif($user->portfolio_link)
                             @if (str_contains($user->portfolio_link, '.pdf'))
                                 <div class="img mt-2">
                                     <embed src="{{ $user->portfolio_link }}" width="460" height="375">

@@ -164,7 +164,7 @@ class UserController extends Controller
                 'user_phone_number' => 'required',
                 'display_name' => 'required|min:3',
                 'user_picture_url' => 'nullable|file',
-                'portfolio' => 'nullable|file|mimes:jpeg,png,jpg|max:5024'
+                'portfolio' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:5024'
             ]);
 
             $user = WpUser::findOrfail($id);

@@ -208,7 +208,7 @@
                                         </div>
                                         <div class="form-group{{ $errors->has('coverage-area') ? ' has-error' : '' }}">
                                             <label for="coverage-area">Coverage Area</label>
-                                            <select class="form-control" id="coverage-area-field" name="coverage[]">
+                                            <select multiple class="form-control select2" id="coverage-area-field" name="coverage[]">
                                                 @if ($user->extension->where('name', 'Coverage')->first())
                                                     @foreach ($masters->where('name', 'area-coverage')->first()->value as $p)
                                                         @foreach ($p['child'] as $v)
@@ -232,7 +232,7 @@
                                         <div
                                             class="form-group{{ $errors->has('customer_segmentation') ? ' has-error' : '' }}">
                                             <label for="customer_segmentation">Customer Segmentation</label>
-                                            <select multiple class="form-control select2" id="coverage-area-field"
+                                            <select multiple class="form-control select2" id="segment-field"
                                                 name="segment[]">
                                                 @if ($user->extension->where('name', 'segment')->first())
                                                     @foreach ($masters->where('name', 'segment')->first()->value as $p)
@@ -271,7 +271,10 @@
     @parent
     <script type="text/javascript">
         $(function() {
-            $('.select2').select2();
+            $('.select2').select2({
+                minimumInputLength: 2,
+                allowClear: true
+            });
         });
     </script>
 @endsection

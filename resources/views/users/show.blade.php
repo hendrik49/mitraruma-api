@@ -157,10 +157,10 @@
                                         </div>
                                         <div class="form-group{{ $errors->has('coverage-area') ? ' has-error' : '' }}">
                                             <label for="coverage-area">Coverage Area</label>
-                                            <select class="form-control" id="coverage-area-field" name="area-coverage">
+                                            <select  multiple class="form-control select2" id="coverage-area-field" name="area-coverage" disabled>
                                                 @if ($user->extension->where('name', 'Coverage')->first())
                                                     @foreach ($user->extension->where('name', 'Coverage')->first()->value as $p)
-                                                        <option value="{{ $p }}">{{ $p }}</option>
+                                                        <option value="{{ $p }}" selected>{{ $p }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -168,7 +168,7 @@
                                         <div
                                             class="form-group{{ $errors->has('customer_segmentation') ? ' has-error' : '' }}">
                                             <label for="customer_segmentation">Customer Segmentation </label>
-                                            <select class="form-control select2" multiple id="coverage-area-field"
+                                            <select multiple class="form-control select2" multiple id="segment-field"
                                                 name="skill_set" disabled>
                                                 @if ($user->extension->where('name', 'segment')->first())
                                                     @foreach ($masters->where('name', 'segment')->first()->value as $p)

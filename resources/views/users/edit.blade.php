@@ -186,6 +186,14 @@
                                                 @endif
                                             @endif
                                         </div>
+                                        <div class="form-group @if ($errors->has('portfolio_link')) has-error @endif">
+                                            <label for="nik-field">Link Portfolio</label>
+                                            <input type="text" id="npwp-field" name="portfolio_link" class="form-control"
+                                                value="{{ is_null(old('portfolio_link')) ? $user->portfolio_link : old('portfolio_link') }}" />
+                                            @if ($errors->has('portfolio_link'))
+                                                <span class="help-block">{{ $errors->first('portfolio_link') }}</span>
+                                            @endif                                         
+                                        </div>
                                         <div class="form-group @if ($errors->has('skill_set')) has-error @endif">
                                             <label for="triwulan-field">Skill Set</label>
                                             <select multiple class="form-control select2" id="skill_set-field"

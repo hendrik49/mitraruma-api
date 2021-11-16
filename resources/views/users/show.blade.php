@@ -143,6 +143,13 @@
                                                 @endif
                                             @endif
                                         </div>
+                                        <div class="form-group @if ($errors->has('portfolio_link')) has-error @endif">
+                                            <label for="portfolio_link-field">Link Portofolio</label>
+                                            <input type="text" id="portfolio_link-field" name="portfolio_link"
+                                                class="form-control"
+                                                value="{{ is_null(old('portfolio_link')) ? $user->portfolio_link : old('portfolio_link') }}"
+                                                readonly />
+                                        </div>
                                         <div class="form-group @if ($errors->has('skill_set')) has-error @endif">
                                             <label for="triwulan-field">Skill Set </label>
                                             <select multiple class="form-control select2" id="skill_set-field"

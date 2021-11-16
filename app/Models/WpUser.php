@@ -42,6 +42,7 @@ class WpUser extends Model
         'bank',
         'bank_account',
         'portfolio',
+        'portfolio_link',
         'capacity',
         'ID'
     ];

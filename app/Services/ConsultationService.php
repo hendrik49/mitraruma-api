@@ -70,7 +70,7 @@ class ConsultationService
         'admin_user_id' => 'nullable|integer',
         'vendor_user_id' => 'nullable|integer',
         'description' => 'required|string',
-        'photos' => 'array',
+        'photos' => 'required|array',
         'estimated_budget' => 'numeric',
         'contact' => 'required|string',
         'street' => 'required|string',

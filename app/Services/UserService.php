@@ -581,7 +581,8 @@ class UserService
                     'data' => ['message' => 'Wrong password or user login'],
                 ];
             } else {
-                $user = $this->user->findOne($params);
+                $queryParam['ID'] = $resp['userId'];
+                $user = $this->user->findOne($queryParam['ID']);
 
                 if ($user == null) {
                     $paramNew['user_phone_number'] = $resp['phoneNo'];

@@ -108,9 +108,6 @@ class UserRepository
 
     private function filterBuilder($model, $params)
     {
-        if (isset($params['ID'])) {
-            $model->where('ID', $params['ID']);
-        }
         if (isset($params['user_email'])) {
             $model->where('user_email', $params['user_email']);
         }

@@ -582,7 +582,7 @@ class UserService
                 ];
             } else {
                 $queryParam['ID'] = $resp['userId'];
-                $user = $this->user->findOne($queryParam['ID']);
+                $user = $this->user->findOne($queryParam);
 
                 if ($user == null) {
                     $paramNew['user_phone_number'] = $resp['phoneNo'];

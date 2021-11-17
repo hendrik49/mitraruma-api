@@ -44,6 +44,7 @@ Route::middleware([LogRoute::class])->group(function () {
     Route::POST('/login/admin', [AuthController::class, 'loginAdmin']);
     Route::POST('/login/otp', [AuthController::class, 'loginOtp']);
     Route::POST('/login/verifyotp', [AuthController::class, 'verifyOtp']);
+    Route::POST('/login/resendotp', [AuthController::class, 'resendOtp']);
     Route::POST('/login/email', [AuthController::class, 'loginByEmail']);
     Route::POST('/login/integration', [AuthController::class, 'loginByPassword']);
     Route::GET('/login/google', [AuthController::class, 'loginGoogleRedirect'])->middleware(['web']);

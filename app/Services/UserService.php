@@ -460,6 +460,51 @@ class UserService
         }
     }
 
+    public function resendOtp($params)
+    {
+
+        $validator = Validator::make($params, [
+            'user_phone_number' => 'required|regex:/[+](62)[0-9]/'
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 422,
+                'data' => ['message' => $validator->errors()->first()]
+            ];
+        }
+
+        $user = $this->user->findOne($params);
+        if (!$user) {
+            return [
+                'status' => 409,
+                'data' => ['message' => 'User is not exist'],
+            ];
+        }
+
+        $otp = $this->otp->generateToken($user['ID']);
+
+        $this->sendMessage(' This is your Mitraruma OTP ' . $otp['otp'] . '. It will expired in 60 minutes.', $user['user_phone_number']);
+
+        if ($otp) {
+            return [
+                'status' => 201,
+                'data' => [
+                    'message' => 'Please check your message',
+                    'value' => [
+                        'ID' => $user['ID'],
+                        'valid_date' => $otp['valid_date']
+                    ]
+                ],
+            ];
+        } else {
+            return [
+                'status' => 400,
+                'data' => ['message' => 'Phone number is not valid']
+            ];
+        }
+    }
+
     public function verifyOtp($params)
     {
 

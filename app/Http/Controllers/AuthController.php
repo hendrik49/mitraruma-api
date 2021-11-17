@@ -92,6 +92,23 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
+    public function resendOtp(Request $request)
+    {
+
+        $params = $request->all();
+
+        $result = $this->user->resendOtp($params);
+
+        return response()->json($result['data'], $result['status']);
+
+    }
+
+     /**
+     * Login.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verifyOtp(Request $request)
     {
 

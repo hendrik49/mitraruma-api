@@ -26,16 +26,18 @@
                             </thead>
                             <tbody>
                                 @foreach ($result as $key => $v)
-                                    <tr>
-                                        <td>{{ ++$key }}</td>
-                                        <td width="60%">{{ $v->name }}</td>
-                                        <td width="20%">{{ $v->updated_at->format('Y-m-d') }}</td>
-                                        <td width="15%">
-                                            <a href="{{ route('seting.show', ['seting' => $v->id]) }}"
-                                                class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>
-                                                View </a>
-                                        </td>
-                                    </tr>
+                                    @if($v->name!=='area-coverage')
+                                        <tr>
+                                            <td>{{ ++$key }}</td>
+                                            <td width="60%">{{ $v->name }}</td>
+                                            <td width="20%">{{ $v->updated_at->format('Y-m-d') }}</td>
+                                            <td width="15%">
+                                                <a href="{{ route('seting.show', ['seting' => $v->id]) }}"
+                                                    class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>
+                                                    View </a>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
 
                             </tbody>

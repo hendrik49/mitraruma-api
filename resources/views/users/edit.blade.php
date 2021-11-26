@@ -62,10 +62,11 @@
                                     </div>
                                     <div class="form-group @if ($errors->has('user_type')) has-error @endif">
                                         <label for="name-field">Role</label>
-                                        <input type="text" id="name-field" name="user_type" class="form-control"
-                                            value="{{ is_null(old('user_type')) ? $user->user_type : old('user_type') }}"
-                                            readonly />
-                                        @if ($errors->has('user_typee'))
+                                            <select class="form-control" id="user_type" name="user_type">
+                                                <option value="vendor" @if ($user->user_type == 'vendor') selected='selected' @endif>Aplikator</option>
+                                                <option value="customer" @if ($user->user_type == 'customer') selected='selected' @endif>Customer</option>
+                                            </select>
+                                        @if ($errors->has('user_type'))
                                             <span class="help-block">{{ $errors->first('user_type') }}</span>
                                         @endif
                                     </div>

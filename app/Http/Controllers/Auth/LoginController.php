@@ -108,6 +108,8 @@ class LoginController extends Controller
                     $user->user_status = 1;
                     $user->user_registered =  date('y-m-d');
                     $user->save();
+                    Auth::login($user);
+
                     return Redirect::to('/home');
                     //return redirect()->route('login')->with('error', 'Failed to login. This account ' . $decoded->email . ' not exist');
                 }

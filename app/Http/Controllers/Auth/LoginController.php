@@ -85,6 +85,14 @@ class LoginController extends Controller
                 $decoded = $this->jwt->decodechat($token);
                 $user = User::where('ID', $decoded->id)->orWhere('user_phone_number', $decoded->phone)->orWhere('user_email', $decoded->email)->first();
                 if ($user) {
+                    $user->display_name =  $decoded->displayName;
+                    $user->user_nicename =  $decoded->userId;
+                    $user->user_email =  $decoded->email;
+                    $user->user_type =  $decoded->userType;                    
+                    $user->user_phone_number = $decoded->phone;
+                    $user->user_picture_url =  $decoded->picture;
+                    $user->user_status = 1;
+                    $user->save();
                     Auth::login($user);
                     return Redirect::to('/home');
                 } else {
@@ -93,7 +101,6 @@ class LoginController extends Controller
                     $user->ID =  $decoded->id;
                     $user->display_name =  $decoded->displayName;
                     $user->user_nicename =  $decoded->userId;
-                    $user->user_email =  $decoded->email;
                     $user->user_email =  $decoded->email;
                     $user->user_type =  $decoded->userType;                    
                     $user->user_phone_number = $decoded->phone;

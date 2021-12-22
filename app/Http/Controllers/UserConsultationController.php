@@ -58,9 +58,8 @@ class UserConsultationController extends Controller
         $params = $request->all();
 
         $result = $this->consultation->top($params);
-        $data = $result['data'];
-        $status = $result['status'];
-        return compact('data','status');
+
+        return response()->json($result['data'], $result['status']);
     }
 
     /**

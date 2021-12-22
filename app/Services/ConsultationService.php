@@ -158,8 +158,8 @@ class ConsultationService
         }
 
         $consultation = $this->consultationResource->fromFirebaseArray($consultation);
-        foreach ($consultation as $param) {
-            $param['description'] =  $param['name'];
+        foreach ($consultation as $key =>  $param) {
+            $consultation[$key]['description'] =  $param['name'];
         }
 
 

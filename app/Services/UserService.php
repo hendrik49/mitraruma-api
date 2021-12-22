@@ -620,7 +620,7 @@ class UserService
 
         try {
             $user = Auth::attempt($params);
-            if (!$user && $userExsist && $resp['errorCode'] == null) {
+            if (!$user && $userExsist) {
                 return [
                     'status' => 401,
                     'data' => ['message' => 'Wrong password or user login'],

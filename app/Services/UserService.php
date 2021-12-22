@@ -629,7 +629,7 @@ class UserService
                 $queryParam['ID'] = $resp['userId'];
                 $user = $this->user->findOne($queryParam);
 
-                if ($user == null) {
+                if ($user == null && $userExsist == null)  {
                     $paramNew['user_phone_number'] = $resp['phoneNo'];
                     $paramNew['user_type'] = $resp['buyerType'] == 'CUSTOMER' ? 'customer' : 'vendor';
                     $paramNew['ID'] = $resp['userId'];
@@ -649,6 +649,8 @@ class UserService
                             'data' => ['message' =>  $resp == null ? 'External API Integration error' : $resp['error']],
                         ];
                     }
+                }else{
+                    $user = $userExsist;
                 }
             }
             if ($user->user_status != 0) {

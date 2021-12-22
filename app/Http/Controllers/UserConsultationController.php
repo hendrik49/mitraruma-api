@@ -56,7 +56,7 @@ class UserConsultationController extends Controller
     public function top(Request $request)
     {
         $params = $request->all();
-
+        $params['limit'] = 10;
         $result = $this->consultation->top($params);
 
         return response()->json($result['data'], $result['status']);
@@ -71,6 +71,7 @@ class UserConsultationController extends Controller
     public function recent(Request $request)
     {
         $params = $request->all();
+        $params['limit'] = 10;
 
         $result = $this->consultation->index($params);
 

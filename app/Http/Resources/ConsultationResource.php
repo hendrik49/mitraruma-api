@@ -167,7 +167,7 @@ class ConsultationResource
             'service_type' => $param['serviceType'] ?? '',
             'street' => $param['address'] ?? '',
             'city' => $param['city'] ?? '',
-            'description' => substr($param['detail'],0,10).' ...' ?? '',
+            'description' => $param['detail'] ?? '',
             'estimated_budget' => floatval($param['budget']) ?? 0,
             'photos' => $param['photos'] ?? [],
             'order_number' => $param['orderNumber'] ?? '',

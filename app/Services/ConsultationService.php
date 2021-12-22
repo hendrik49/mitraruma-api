@@ -158,6 +158,10 @@ class ConsultationService
         }
 
         $consultation = $this->consultationResource->fromFirebaseArray($consultation);
+        foreach ($consultation as $param) {
+            $param['description'] =  substr($param['description'],0,6);
+        }
+
 
         return [
             'status' => 200,

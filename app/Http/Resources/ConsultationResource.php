@@ -168,7 +168,7 @@ class ConsultationResource
             'street' => $param['address'] ?? '',
             'city' => $param['city'] ?? '',
             'description' => $param['detail'] ?? '',
-            'estimated_budget' => $param['budget'] ?? 0,
+            'estimated_budget' => floatval($param['budget']) ?? 0,
             'photos' => $param['photos'] ?? [],
             'order_number' => $param['orderNumber'] ?? '',
             'order_status' => $param['orderStatus'] ?? '',

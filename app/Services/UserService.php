@@ -785,7 +785,7 @@ class UserService
                 "phoneNo" => $isEmail ? null : $params['user_login']
             ];
 
-            $response = Http::withHeaders($headers)->post('https://qa.mitraruma.com/buyer-service/auth/login', $json);
+            $response = Http::withHeaders($headers)->post(env('API_MITRARUMA', 'http://www.mitraruma.com').'/buyer-service/auth/login', $json);
 
             $data =  json_decode($response->getBody(), true);
             $userProfile = $this->getProfileAPI($data);

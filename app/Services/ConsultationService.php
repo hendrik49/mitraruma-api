@@ -139,6 +139,11 @@ class ConsultationService
         }
 
         $consultation = $this->consultationResource->fromFirebaseArray($consultation);
+        
+        foreach ($consultation as $key =>  $param) {
+            $consultation[$key]['description'] =  $param['name'];
+        }
+
 
         return [
             'status' => 200,

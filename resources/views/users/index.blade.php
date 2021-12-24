@@ -23,6 +23,8 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone Number</th>
+                                    <th>NIK</th>
+                                    <th>NPWP</th>
                                     <th>Type</th>
                                     <th>Status</th>
                                     <th>Date</th>
@@ -37,6 +39,8 @@
                                         <td>{{ $user->display_name }}</td>
                                         <td>{{ $user->user_email }}</td>
                                         <td>{{ $user->user_phone_number }}</td>
+                                        <td>{{ $user->nik }}</td>
+                                        <td>{{ $user->npwp }}</td>
                                         <td>{{ $user->user_type }}</td>
                                         <td>{{ $user->user_status ? 'Verified' : 'Unverified' }}</td>
                                         <td width="20%">{{ $user->created_at->format('Y-m-d') }}</td>
@@ -72,7 +76,7 @@
                 'buttons': [{
                     extend: 'excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
                     }
                 }, ]
             });

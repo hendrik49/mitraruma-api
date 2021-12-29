@@ -36,7 +36,7 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $user->ID }}</td>
-                                        <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                                        <td width="15%">{{ $user->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $user->display_name }}</td>
                                         <td>{{ $user->user_email }}</td>
                                         <td>{{ $user->user_phone_number }}</td>

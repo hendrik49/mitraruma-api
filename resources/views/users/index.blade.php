@@ -20,6 +20,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>ID Mitraruma</th>
+                                    <th>Date</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone Number</th>
@@ -27,7 +28,6 @@
                                     <th>NPWP</th>
                                     <th>Type</th>
                                     <th>Status</th>
-                                    <th>Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -36,6 +36,7 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $user->ID }}</td>
+                                        <td>{{ $user->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $user->display_name }}</td>
                                         <td>{{ $user->user_email }}</td>
                                         <td>{{ $user->user_phone_number }}</td>
@@ -43,7 +44,6 @@
                                         <td>{{ $user->npwp }}</td>
                                         <td>{{ $user->user_type }}</td>
                                         <td>{{ $user->user_status ? 'Verified' : 'Unverified' }}</td>
-                                        <td width="20%">{{ $user->created_at->format('Y-m-d') }}</td>
                                         <td width="15%">
                                             <a href="{{ route('users.show', ['user' => $user]) }}"
                                                 class="btn btn-sm btn-warning"> <i class="glyphicon glyphicon-eye-open"></i>

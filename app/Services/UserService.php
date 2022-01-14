@@ -831,7 +831,7 @@ class UserService
                 if ($exist) {
                     $var["externalId"] = $var["id"];
                     $var["id"] = $exist->ID;
-                    $var["name"] = $var["id"] . ' | ' . $var["display_name"] . ' | ' . $var["user_phone"];
+                    $var["name"] = $var["id"] . ' | ' . $var["display_name"];
                     $var["finished_project"] = WpProject::where('status', 'Project Ended')->where('vendor_user_id', $exist->ID)->count();
                     $var["unfinished_project"] =  WpProject::where('status', 'Project Ended')->where('vendor_user_id', $exist->ID)->count();
                     $new[] = $var;

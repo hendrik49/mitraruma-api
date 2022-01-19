@@ -130,35 +130,47 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="cover">Foto</label>
-                                        @if ($project->images != null)
-                                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                                                <ol class="carousel-indicators">
-                                                    @foreach(json_decode($project->images) as $key => $image )
-                                                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="{{$key == 0 ? 'active' : '' }}"></li>
-                                                    @endforeach
-                                                </ol>                                              
-                                                <div class="carousel-inner" role="listbox">
-                                                  @foreach(json_decode($project->images) as $key => $image )
-                                                     <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
-                                                        @if(isset($image->pathUrl))
-                                                         <img class="d-block img-fluid" src="{{ $image->pathUrl }}" width="320px" alt="imge">
-                                                         @else
-                                                         <img class="d-block img-fluid" src="{{ asset('storage/' . $image) }}" width="320px" alt="imge">
-                                                         @endif
-                                                     </div>
-                                                  @endforeach
+                                        <div class="col-sm-11">
+                                            <label for="cover">Foto</label>
+                                            <br>
+                                            @if ($project->images != null)
+                                                <div id="carouselExampleControls" class="carousel slide"
+                                                    data-ride="carousel">
+                                                    <ol class="carousel-indicators">
+                                                        @foreach (json_decode($project->images) as $key => $image)
+                                                            <li data-target="#carouselExampleIndicators"
+                                                                data-slide-to="{{ $key }}"
+                                                                class="{{ $key == 0 ? 'active' : '' }}"></li>
+                                                        @endforeach
+                                                    </ol>
+                                                    <div class="carousel-inner" role="listbox">
+                                                        @foreach (json_decode($project->images) as $key => $image)
+                                                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                                @if (isset($image->pathUrl))
+                                                                    <img class="d-block img-fluid"
+                                                                        src="{{ $image->pathUrl }}" width="320px"
+                                                                        alt="imge">
+                                                                @else
+                                                                    <img class="d-block img-fluid"
+                                                                        src="{{ asset('storage/' . $image) }}"
+                                                                        width="320px" alt="imge">
+                                                                @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <a class="carousel-control-prev" href="#carouselExampleControls"
+                                                        role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carouselExampleControls"
+                                                        role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
                                                 </div>
-                                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                  <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                  <span class="sr-only">Next</span>
-                                                </a>
-                                              </div>  
-                                        @endif
+                                            @endif
+                                        </div>
                                     </div>
                                     <h3>List Order Status </h3>
 
@@ -181,7 +193,7 @@
                                                         <tr>
                                                             <td>{{ ++$key }}</td>
                                                             <td width="15%"">{{ $val['phase'] }}</td>
-                                                                    <td width=" 30%">
+                                                                            <td width=" 30%">
                                                                 <ul>
                                                                     @if (isset($val['list']))
                                                                         @foreach ($val['list'] as $key => $item)

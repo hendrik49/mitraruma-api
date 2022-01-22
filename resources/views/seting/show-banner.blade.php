@@ -111,8 +111,8 @@
                                                             <td width="5%">{{ ++$key }}</td>
                                                             <td width="15%">{{ $val['text'] }}</td>
                                                             <td width="25%">{{ $val['image'] }}</td>
-                                                            <td width="20%"> <img class="d-block img-fluid"
-                                                                    src="{{ $val['image'] }}" class="img" alt="imge">
+                                                            <td width="20%"> 
+                                                                <img class="img-fluid" src="{{ $val['image'] }}" width="150px" alt="imge">
                                                             </td>
                                                             <td width="15%">
                                                                 <button type="button"

@@ -111,6 +111,7 @@ class CmsManagmentController extends Controller
                 $paramsSave['name'] =  $params['seting'];
                 $this->cms->update($paramsSave, $cms->id);
             }else if($cms && $params['seting'] == 'banner'){
+                $val['id'] =  $params['index'] + 1;
                 $val['text'] =  $params['code'];
                 $val['image'] =  $params['name'];   
                 $array =  $cms->value;     

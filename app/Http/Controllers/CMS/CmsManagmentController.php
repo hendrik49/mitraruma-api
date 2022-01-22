@@ -99,9 +99,20 @@ class CmsManagmentController extends Controller
             DB::beginTransaction();
             $params = $request->all();
             $cms = WpCms::where('name', $params['seting'])->first();
-            if ($cms){
+            if ($cms && $params['seting'] != 'banner'){
                 $val['code'] =  $params['code'];
                 $val['name'] =  $params['name'];   
+                $array =  $cms->value;     
+                if(isset($params['index'])){    
+                    unset($array[$params['index']]);
+                }
+                $paramsSave['value'] =  $array;
+                $paramsSave['value'][] = $val;
+                $paramsSave['name'] =  $params['seting'];
+                $this->cms->update($paramsSave, $cms->id);
+            }else if($cms && $params['seting'] == 'banner'){
+                $val['text'] =  $params['code'];
+                $val['image'] =  $params['name'];   
                 $array =  $cms->value;     
                 if(isset($params['index'])){    
                     unset($array[$params['index']]);

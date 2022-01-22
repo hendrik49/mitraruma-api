@@ -84,7 +84,7 @@
 
                                     <h3>List Setting
                                         <div style="float: right!important;">
-                                            <button type="button" class="btn btn-sm btn-success open-status-dialog"
+                                            <button type="button" class="btn btn-sm btn-success"
                                                 data-toggle="modal" data-target="#modal-default"> <i
                                                     class="fa fa-plus"></i> Tambah
                                             </button>
@@ -116,7 +116,7 @@
                                                             </td>
                                                             <td width="15%">
                                                                 <button type="button"
-                                                                    class="btn btn-sm btn-warning open-status-dialog"
+                                                                    class="btn btn-sm btn-warning open-dialog"
                                                                     data-index="{{ --$key }}"
                                                                     data-code="{{ $val['text'] }}"
                                                                     data-name="{{ $val['image'] }}"
@@ -147,7 +147,7 @@
     <script type="text/javascript">
         $(function() {
 
-            $('.open-status-dialog').on("click", function() {
+            $('.open-dialog').on("click", function() {
                 $('#code').val($(this).data('code'));
                 $('#name').val($(this).data('name'));
                 $('#index').val($(this).data('index'));

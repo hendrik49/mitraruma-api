@@ -110,9 +110,9 @@
                                                         <tr>
                                                             <td width="5%">{{ ++$key }}</td>
                                                             <td width="15%">{{ $val['text'] }}</td>
-                                                            <td width="20%">{{ $val['image'] }}</td>
+                                                            <td width="10%">{{ $val['image'] }}</td>
                                                             <td width="30%"> 
-                                                                <img class="img" src="{{ $val['image'] }}" width="75px" alt="imge">
+                                                                <img src="{{ $val['image'] }}" width="50px" alt="imge">
                                                             </td>
                                                             <td width="15%">
                                                                 <button type="button"

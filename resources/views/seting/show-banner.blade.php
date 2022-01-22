@@ -112,7 +112,7 @@
                                                             <td width="15%">{{ $val['text'] }}</td>
                                                             <td width="10%">{{ $val['image'] }}</td>
                                                             <td width="30%"> 
-                                                                <img class="img" src="{{ $val['image'] }}" width="75px" alt="imge">
+                                                                <img class="img" src="{{ $val['image'] }}" width="100px" alt="imge">
                                                             </td>
                                                             <td width="15%">
                                                                 <button type="button"

@@ -112,7 +112,7 @@
                                                             <td width="15%">{{ $val['text'] }}</td>
                                                             <td width="10%">{{ $val['image'] }}</td>
                                                             <td width="30%"> 
-                                                                <img src="{{ $val['image'] }}" width="50px" alt="imge">
+                                                                <img class="img" src="{{ $val['image'] }}" width="75px" alt="imge">
                                                             </td>
                                                             <td width="15%">
                                                                 <button type="button"
@@ -158,7 +158,7 @@
                 'lengthChange': true,
                 'searching': true,
                 'ordering': true,
-                'responsive': true,
+                'responsive': false,
                 'info': true,
                 'scrollX': true,
                 'dom': 'Bfrtip',

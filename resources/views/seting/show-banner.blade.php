@@ -101,7 +101,7 @@
                                                         <td>No</td>
                                                         <th>Nama</th>
                                                         <th>Link</th>
-                                                        <th>Preview</th>
+                                                        {{-- <th>Preview</th> --}}
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -111,9 +111,9 @@
                                                             <td width="5%">{{ ++$key }}</td>
                                                             <td width="15%">{{ $val['text'] }}</td>
                                                             <td width="20%">{{ $val['image'] }}</td>
-                                                            <td width="20%"> 
+                                                            {{-- <td width="20%"> 
                                                                 <img class="img img-fluid" src="{{ $val['image'] }}" alt="imge">
-                                                            </td>
+                                                            </td> --}}
                                                             <td width="15%">
                                                                 <button type="button"
                                                                     class="btn btn-sm btn-warning open-dialog"

@@ -104,7 +104,7 @@ class CmsManagmentController extends Controller
                 $val['name'] =  $params['name'];   
                 $array =  $cms->value;     
                 if(isset($params['index'])){    
-                    unset($array[$params['index']]);
+                    $array[$params['index']] = $val;
                 }
                 $paramsSave['value'] =  $array;
                 $paramsSave['value'][] = $val;
@@ -116,10 +116,9 @@ class CmsManagmentController extends Controller
                 $val['image'] =  $params['name'];   
                 $array =  $cms->value;     
                 if(isset($params['index'])){    
-                    unset($array[$params['index']]);
+                    $array[$params['index']] = $val;
                 }
                 $paramsSave['value'] =  $array;
-                $paramsSave['value'][] = $val;
                 $paramsSave['name'] =  $params['seting'];
                 $this->cms->update($paramsSave, $cms->id);
             }
